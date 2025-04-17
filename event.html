@@ -2,10 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>HELPZ - Free Charity Website Template</title>
+    <title>
+      Événements – Participez à nos initiatives solidaires | SSIA International
+    </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="Free Website Template" name="keywords" />
     <meta content="Free Website Template" name="description" />
+
+    <!-- Icon -->
+    <link rel="icon" href="img/logoci.jpg" />
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon" />
@@ -42,7 +47,13 @@
             <div class="top-bar-left">
               <div class="text">
                 <i class="fa fa-envelope"></i>
-                <p>international.ssia@gmail.com</p>
+                <p>
+                  <a
+                    href="mailto:international.ssia@gmail.com"
+                    style="color: white"
+                    >international.ssia@gmail.com</a
+                  >
+                </p>
               </div>
             </div>
           </div>
@@ -62,10 +73,13 @@
     <!-- Top Bar End -->
 
     <!-- Nav Bar Start -->
-    <div class="navbar navbar-expand-lg bg-dark navbar-dark">
-      <div class="container-fluid">
+    <div
+      class="navbar navbar-expand-lg bg-dark navbar-dark"
+      style="padding-top: 0; padding-bottom: 0"
+    >
+      <div class="container-fluid" id="logo">
         <a href="index.html" class="navbar-brand"
-          ><img src="img/logoci.jpg" alt="logo"
+          ><img src="img/logorad.png" alt="logo"
         /></a>
 
         <button
@@ -85,21 +99,21 @@
             <div class="nav-item dropdown">
               <a
                 href="#"
-                class="nav-link active dropdown-toggle"
+                class="nav-link dropdown-toggle"
                 data-toggle="dropdown"
                 >SSIA</a
               >
               <div class="dropdown-menu">
-                <a href="single.html" class="dropdown-item"
+                <a href="index.html#about" class="dropdown-item"
                   >Qui sommes nous ?</a
                 >
-                <a href="service.html" class="dropdown-item"
+                <a href="index.html#zones" class="dropdown-item"
                   >Zones d'intervention</a
                 >
-                <a href="donate.html" class="dropdown-item"
+                <a href="index.html#depart" class="dropdown-item"
                   >Départements SSIA</a
                 >
-                <a href="team.html" class="dropdown-item">Témoignages</a>
+                <a href="index.html#testi" class="dropdown-item">Témoignages</a>
               </div>
             </div>
             <div class="nav-item dropdown">
@@ -110,15 +124,21 @@
                 >Expertise</a
               >
               <div class="dropdown-menu">
-                <a href="single.html" class="dropdown-item"
+                <a href="expertise.html#formation" class="dropdown-item"
                   >Formation et Insertion Professionnelle</a
                 >
-                <a href="service.html" class="dropdown-item">Éducation</a>
-                <a href="team.html" class="dropdown-item">Protection Sociale</a>
+                <a href="expertise.html#educ" class="dropdown-item"
+                  >Éducation</a
+                >
+                <a href="expertise.html#protect" class="dropdown-item"
+                  >Protection Sociale</a
+                >
               </div>
             </div>
+
             <a href="blog.html" class="nav-item nav-link">Actualités</a>
-            <a href="event.html" class="nav-item nav-link">Evenements</a>
+            <a href="event.html" class="nav-item active nav-link">Evenements</a>
+
             <div class="nav-item dropdown">
               <a
                 href="#"
@@ -127,11 +147,14 @@
                 >Agir avec nous</a
               >
               <div class="dropdown-menu">
-                <a href="donate.html" class="dropdown-item">Faire un don</a>
-                <a href="causes.html" class="dropdown-item">Nous rejoindre</a>
+                <a href="donate.html#don" class="dropdown-item">Faire un don</a>
+                <a href="donate.html#join" class="dropdown-item"
+                  >Nous rejoindre</a
+                >
               </div>
             </div>
-            <a href="contact.html" class="nav-item nav-link">Ressources</a>
+
+            <a href="ressources.html" class="nav-item nav-link">Ressources</a>
           </div>
         </div>
       </div>
@@ -139,7 +162,7 @@
     <!-- Nav Bar End -->
 
     <!-- Page Header Start -->
-    <div class="page-header">
+    <div class="page-header" id="event">
       <div class="container">
         <div class="row">
           <div class="col-12">
@@ -161,7 +184,10 @@
           <p>Evenements</p>
           <h2>Soyer prêt pour toutes nos évenements à venir</h2>
         </div>
-        <div class="row">
+        <div class="info">
+          <p>Pas de évenements planifier pour l'instant</p>
+        </div>
+        <!-- <div class="row">
           <div class="col-lg-6">
             <div class="event-item">
               <img src="img/event-1.jpg" alt="Image" />
@@ -182,6 +208,7 @@
             </div>
           </div>
         </div>
+      </div> -->
       </div>
     </div>
     <!-- Event End -->
@@ -220,12 +247,12 @@
           <div class="col-lg-3 col-md-6">
             <div class="footer-link">
               <h2>Liens</h2>
-              <a href="">SSIA</a>
-              <a href="">Expertise</a>
-              <a href="">Actualités</a>
-              <a href="">Evenements</a>
-              <a href="">Agir avec nous</a>
-              <a href="">Ressources</a>
+              <a href="index.html">SSIA</a>
+              <a href="expertise.html">Expertise</a>
+              <a href="blog.html">Actualités</a>
+              <a href="event.html">Evenements</a>
+              <a href="donate.html">Agir avec nous</a>
+              <a href="ressources.html">Ressources</a>
             </div>
           </div>
           <div class="col-lg-3 col-md-6">
@@ -233,23 +260,41 @@
               <h2>E-mail SSIA</h2>
               <div>
                 <h6>Administration SSIA International</h6>
-                <p>international.ssia@gmail.com</p>
+                <p>
+                  <a href="mailto:international.ssia@gmail.com"
+                    >international.ssia@gmail.com</a
+                  >
+                </p>
               </div>
               <div>
                 <h6>Enrôlement SSIA</h6>
-                <p>admission.ssia@gmail.com</p>
+                <p>
+                  <a href="mailto:admission.ssia@gmail.com"
+                    >admission.ssia@gmail.com</a
+                  >
+                </p>
               </div>
               <div>
                 <h6>Inclusion sociale</h6>
-                <p>ssia.bcs@gmail.com</p>
+                <p>
+                  <a href="mailto:ssia.bcs@gmail.com">ssia.bcs@gmail.com</a>
+                </p>
               </div>
               <div>
                 <h6>Scholarships Students</h6>
-                <p>scholarship.ssia@gmail.com</p>
+                <p>
+                  <a href="mailto:scholarship.ssia@gmail.com"
+                    >scholarship.ssia@gmail.com</a
+                  >
+                </p>
               </div>
               <div>
                 <h6>Internship Career</h6>
-                <p>servicecareer.ssia@gmail.com</p>
+                <p>
+                  <a href="mailto:servicecareer.ssia@gmail.com"
+                    >servicecareer.ssia@gmail.com</a
+                  >
+                </p>
               </div>
             </div>
           </div>

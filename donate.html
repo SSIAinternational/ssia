@@ -2,10 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>HELPZ - Free Charity Website Template</title>
+    <title>Agir avec nous – Rejoignez le mouvement | SSIA International</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="Free Website Template" name="keywords" />
     <meta content="Free Website Template" name="description" />
+
+    <!-- Icon -->
+     <link rel="icon" href="img/logoci.jpg">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon" />
@@ -42,7 +45,7 @@
             <div class="top-bar-left">
               <div class="text">
                 <i class="fa fa-envelope"></i>
-                <p>international.ssia@gmail.com</p>
+                <p><a href="mailto:international.ssia@gmail.com" style="color: white;">international.ssia@gmail.com</a></p>
               </div>
             </div>
           </div>
@@ -62,10 +65,10 @@
     <!-- Top Bar End -->
 
     <!-- Nav Bar Start -->
-    <div class="navbar navbar-expand-lg bg-dark navbar-dark">
-      <div class="container-fluid">
+    <div class="navbar navbar-expand-lg bg-dark navbar-dark" style="padding-top: 0; padding-bottom: 0;">
+      <div class="container-fluid" id="logo">
         <a href="index.html" class="navbar-brand"
-          ><img src="img/logoci.jpg" alt="logo"
+          ><img src="img/logorad.png" alt="logo"
         /></a>
 
         <button
@@ -85,21 +88,21 @@
             <div class="nav-item dropdown">
               <a
                 href="#"
-                class="nav-link active dropdown-toggle"
+                class="nav-link dropdown-toggle"
                 data-toggle="dropdown"
                 >SSIA</a
               >
               <div class="dropdown-menu">
-                <a href="single.html" class="dropdown-item"
+                <a href="index.html#about" class="dropdown-item"
                   >Qui sommes nous ?</a
                 >
-                <a href="service.html" class="dropdown-item"
+                <a href="index.html#zones" class="dropdown-item"
                   >Zones d'intervention</a
                 >
-                <a href="donate.html" class="dropdown-item"
+                <a href="index.html#depart" class="dropdown-item"
                   >Départements SSIA</a
                 >
-                <a href="team.html" class="dropdown-item">Témoignages</a>
+                <a href="index.html#testi" class="dropdown-item">Témoignages</a>
               </div>
             </div>
             <div class="nav-item dropdown">
@@ -110,28 +113,31 @@
                 >Expertise</a
               >
               <div class="dropdown-menu">
-                <a href="single.html" class="dropdown-item"
+                <a href="expertise.html#formation" class="dropdown-item"
                   >Formation et Insertion Professionnelle</a
                 >
-                <a href="service.html" class="dropdown-item">Éducation</a>
-                <a href="team.html" class="dropdown-item">Protection Sociale</a>
+                <a href="expertise.html#educ" class="dropdown-item">Éducation</a>
+                <a href="expertise.html#protect" class="dropdown-item">Protection Sociale</a>
               </div>
             </div>
+
             <a href="blog.html" class="nav-item nav-link">Actualités</a>
             <a href="event.html" class="nav-item nav-link">Evenements</a>
+
             <div class="nav-item dropdown">
               <a
                 href="#"
-                class="nav-link dropdown-toggle"
+                class="nav-link active dropdown-toggle"
                 data-toggle="dropdown"
                 >Agir avec nous</a
               >
               <div class="dropdown-menu">
-                <a href="donate.html" class="dropdown-item">Faire un don</a>
-                <a href="causes.html" class="dropdown-item">Nous rejoindre</a>
+                <a href="donate.html#don" class="dropdown-item">Faire un don</a>
+                <a href="donate.html#join" class="dropdown-item">Nous rejoindre</a>
               </div>
             </div>
-            <a href="contact.html" class="nav-item nav-link">Ressources</a>
+
+            <a href="ressources.html" class="nav-item nav-link">Ressources</a>
           </div>
         </div>
       </div>
@@ -139,7 +145,7 @@
     <!-- Nav Bar End -->
 
     <!-- Page Header Start -->
-    <div class="page-header">
+    <div class="page-header" id="agir">
       <div class="container">
         <div class="row">
           <div class="col-12">
@@ -155,7 +161,7 @@
     <!-- Page Header End -->
 
     <!-- Donate Start -->
-    <div class="donate" data-parallax="scroll" data-image-src="img/donate.jpg">
+    <div class="donate" id="don" data-parallax="scroll" data-image-src="img/donate.jpg">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-7">
@@ -203,44 +209,93 @@
 
     <!-- Volunteer Start -->
     <div
-      class="volunteer"
-      data-parallax="scroll"
-      data-image-src="img/volunteer.jpg"
-    >
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-5">
-            <div class="volunteer-form">
-              <form style="display: flex;
-              flex-direction: column;
-              gap: 15px;">
-                <div>
-                  <button class="btn btn-custom" href="">
-                    Remplir les formulaires
-                  </button>
-                </div>
-              </form>
-            </div>
+    class="volunteer"
+    data-parallax="scroll"
+    data-image-src="img/volunteer.jpg"
+    id="join"
+  >
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-5">
+          <div class="volunteer-form">
+            <form style="display: flex;
+            flex-direction: column;
+            gap: 15px;">
+              <div>
+                <button class="btn btn-custom">
+                  <a href="">Demande d'admission</a>
+                </button>
+              </div>
+            </form>
           </div>
-          <div class="col-lg-7">
-            <div class="volunteer-content">
-              <div class="section-header">
-                <p>Nous rejoindre</p>
-                <h2>Pourquoi rejoindre SSIA International ?
-                </h2>
-              </div>
-              <div class="volunteer-text">
-                <p>
-                  Rejoindre Save to Save International Association (SSIA), c’est intégrer une organisation dynamique engagée dans le développement humain, l’entraide, ainsi que la croissance professionnelle et spirituelle.
-Nous offrons un cadre structuré et stimulant, où chaque personne peut contribuer activement et évoluer selon ses talents et aspirations.
-                </p>
-              </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="volunteer-content">
+            <div class="section-header">
+              <p>Nous rejoindre</p>
+              <h2>Pourquoi rejoindre SSIA International ?
+              </h2>
+            </div>
+            <div class="volunteer-text">
+              <p>
+                Intégrer Save to Save International Association (SSIA), c’est rejoindre une organisation dynamique et engagée dans le développement humain, la solidarité, ainsi que l’épanouissement personnel, professionnel et spirituel.
+                Nous offrons un cadre structuré, stimulant et bienveillant, où chacun peut s’impliquer activement, mettre en valeur ses talents et progresser selon ses aspirations. <br>
+                <b>En devenant membre de SSIA International, vous aurez l’opportunité de :</b>
+                <ul>
+                  <li>Participer à une mission porteuse de sens et à fort impact humain et social</li>
+                  <li>Développer vos compétences dans un environnement collaboratif et enrichissant</li>
+                  <li>Rejoindre un réseau international de professionnels et d’acteurs du changement</li>
+                </ul>
+
+              </p>
+            </div>
+            <div class="section-header">
+              <h2>Procédure d’admission à SSIA International
+              </h2>
+            </div>
+            <div class="volunteer-text">
+              <p>
+                <b>Étape 1 : Soumission de votre candidature</b><br><br>
+                Le processus d’adhésion se déroule en plusieurs étapes : <br>
+                Paiement des frais de candidature : 3 € (trois euros) <br>
+                Remplissage du formulaire de demande d’admission en ligne<br>
+                Entretien d’évaluation avec l’un de nos représentants<br>
+                Analyse de votre dossier par notre équipe
+              </p>
+              <p>
+                <b>Documents à fournir :</b>
+              </p>
+              <p>
+                <ul>
+                  <li>Une photo d’identité récente</li>
+                  <li>Une pièce d’identité en cours de validité</li>
+                  <li>Tout document pertinent illustrant vos compétences ou parcours</li>
+                  <li>Une lettre de motivation (facultative mais fortement recommandée)</li>
+                </ul>
+              </p>
+              <p>
+                <b>⚠ Âge minimum requis : 16 ans.</b><br>
+                Pour les candidats de moins de 16 ans, une autorisation parentale écrite est obligatoire et devra être jointe au dossier. <br><br>
+
+                <b>⏳ Délai de traitement :</b> Vous recevrez une réponse dans un délai de 10 à 15 jours ouvrables après la réception complète de votre dossier.
+              </p>
+            </div>
+            <div class="section-header">
+              <h2>Étape 2 : Intégration au sein d’un pôle SSIA
+              </h2>
+            </div>
+            <div class="volunteer-text">
+              <p>
+                Après validation de votre admission, vous serez orienté(e) vers l’un des pôles de SSIA International, en adéquation avec vos compétences, centres d’intérêt et objectifs personnels. <br>
+                Vous aurez alors accès à nos programmes de formation, d’accompagnement et d’action conçus pour favoriser un développement personnel et collectif harmonieux.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Volunteer End -->
+  </div>
+  <!-- Volunteer End -->
 
     <!-- Footer Start -->
     <div class="footer">
@@ -250,8 +305,7 @@ Nous offrons un cadre structuré et stimulant, où chaque personne peut contribu
             <div class="footer-contact">
               <h2>Our Head Office</h2>
               <p>
-                <i class="fa fa-map-marker-alt"></i>12 Ter Avenue Marie
-                Reynoard, Grenoble 38100
+                <i class="fa fa-map-marker-alt"></i>12 Ter Avenue Marie Reynoard, Grenoble 38100
               </p>
               <p><i class="fa fa-envelope"></i>international.ssia@gmail.com</p>
               <div class="footer-social">
@@ -277,11 +331,11 @@ Nous offrons un cadre structuré et stimulant, où chaque personne peut contribu
             <div class="footer-link">
               <h2>Liens</h2>
               <a href="index.html">SSIA</a>
-              <a href="">Expertise</a>
+              <a href="expertise.html">Expertise</a>
               <a href="blog.html">Actualités</a>
               <a href="event.html">Evenements</a>
-              <a href="">Agir avec nous</a>
-              <a href="">Ressources</a>
+              <a href="donate.html">Agir avec nous</a>
+              <a href="ressources.html">Ressources</a>
             </div>
           </div>
           <div class="col-lg-3 col-md-6">
@@ -289,23 +343,23 @@ Nous offrons un cadre structuré et stimulant, où chaque personne peut contribu
               <h2>E-mail SSIA</h2>
               <div>
                 <h6>Administration SSIA International</h6>
-                <p>international.ssia@gmail.com</p>
+                <p><a href="mailto:international.ssia@gmail.com">international.ssia@gmail.com</a></p>
               </div>
               <div>
                 <h6>Enrôlement SSIA</h6>
-                <p>admission.ssia@gmail.com</p>
+                <p><a href="mailto:admission.ssia@gmail.com">admission.ssia@gmail.com</a></p>
               </div>
               <div>
                 <h6>Inclusion sociale</h6>
-                <p>ssia.bcs@gmail.com</p>
+                <p><a href="mailto:ssia.bcs@gmail.com">ssia.bcs@gmail.com</a></p>
               </div>
               <div>
                 <h6>Scholarships Students</h6>
-                <p>scholarship.ssia@gmail.com</p>
+                <p><a href="mailto:scholarship.ssia@gmail.com">scholarship.ssia@gmail.com</a></p>
               </div>
               <div>
                 <h6>Internship Career</h6>
-                <p>servicecareer.ssia@gmail.com</p>
+                <p><a href="mailto:servicecareer.ssia@gmail.com">servicecareer.ssia@gmail.com</a></p>
               </div>
             </div>
           </div>
