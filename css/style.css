@@ -787,7 +787,7 @@ a:focus {
 }
 
 /*******************************/
-/********* Service CSS *********/
+/********* Expertise CSS *********/
 /*******************************/
 .service {
   position: relative;
@@ -855,6 +855,29 @@ a:focus {
   margin: 0;
 }
 
+#avenir {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+}
+
+#avenir img {
+  width: 40%;
+  height: 300px;
+}
+
+@media (max-width: 992px) {
+  #avenir {
+    flex-direction: column-reverse;
+  }
+
+  #avenir img {
+    width: 70%;
+    height: 150px;
+  }
+}
+
 /*******************************/
 /********* Donate CSS **********/
 /*******************************/
@@ -862,7 +885,7 @@ a:focus {
   position: relative;
   width: 100%;
   margin: 45px 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .donate .donate-content {
@@ -882,11 +905,15 @@ a:focus {
 }
 
 .donate .donate-content .section-header h2 {
-  color: var(--color-st);
+  color: white;
+}
+
+.donate p {
+  color: white;
 }
 
 .donate .donate-text p {
-  color: var(--color-st);
+  color: white;
   font-size: 18px;
 }
 
@@ -902,7 +929,7 @@ a:focus {
 }
 
 .donate-text li {
-  color: var(--color-st);
+  color: white;
 }
 
 .donate .donate-form {
@@ -1117,12 +1144,12 @@ a:focus {
   margin: 10px 0 0;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.8s ease, opacity 0.8s ease;
+  transition: max-height 1s ease, opacity 0.8s ease;
   opacity: 0;
 }
 
 .faq-item p.active {
-  max-height: 300px; /* tu peux ajuster selon le contenu */
+  max-height: 2000px; /* assez grand pour tout contenu */
   opacity: 1;
 }
 
@@ -1354,7 +1381,7 @@ a:focus {
   position: relative;
   width: 100%;
   margin: 45px 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .volunteer .volunteer-content {
@@ -1374,12 +1401,16 @@ a:focus {
 }
 
 .volunteer .volunteer-content .section-header h2 {
-  color: var(--color-st);
+  color: white;
 }
 
 .volunteer .volunteer-text p {
-  color: var(--color-st);
+  color: white;
   font-size: 18px;
+}
+
+.volunteer p {
+  color: white;
 }
 
 .volunteer-text li {
