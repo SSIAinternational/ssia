@@ -1398,18 +1398,12 @@ a:focus {
 }
 
 .admission {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 .volunteer .volunteer-content {
   padding: 30px 0 45px 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .container .volunteer {
@@ -1426,6 +1420,13 @@ a:focus {
 
 .volunteer .volunteer-content .section-header h2 {
   color: white;
+}
+
+.volunteer-button {
+  display: flex;
+  flex-direction: column;
+  min-height: 1000px;
+  width: 80%;
 }
 
 .volunteer .volunteer-text p {
