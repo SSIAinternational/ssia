@@ -885,7 +885,6 @@ a:focus {
   position: relative;
   width: 100%;
   margin: 45px 0;
-  background: rgba(0, 0, 0, 0.6);
 }
 
 .donate .donate-content {
@@ -910,6 +909,11 @@ a:focus {
 
 .donate p {
   color: white;
+}
+
+p b {
+  text-decoration: underline white 2px;
+  margin-bottom: 10px;
 }
 
 .donate .donate-text p {
@@ -1394,7 +1398,6 @@ a:focus {
   position: relative;
   width: 100%;
   margin: 45px 0;
-  background: rgba(0, 0, 0, 0.6);
 }
 
 .admission {
