@@ -1400,7 +1400,18 @@ p b {
   margin: 45px 0;
 }
 
-.admission {
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  color: white;
+}
+
+.content h2 {
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
 }
 
 .volunteer .volunteer-content {
@@ -1499,6 +1510,12 @@ p b {
 
 .volunteer-form a:hover {
   color: var(--color-st);
+}
+
+@media (max-width: 992px) {
+  .content {
+    width: 95%;
+  }
 }
 
 /*******************************/
