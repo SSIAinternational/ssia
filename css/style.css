@@ -1683,6 +1683,74 @@ p b {
   margin: 0;
 }
 
+.actu-group {
+  overflow: clip;
+}
+
+.actu-group-track {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  padding-left: 50px;
+  gap: 50px;
+  animation: marquee 15s linear infinite;
+}
+
+.case {
+  background: rgba(173, 191, 240, 0.3);
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.case img {
+  height: 200px;
+}
+
+.actu-text {
+  padding: 0 25px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 25px;
+  height: 50%;
+}
+
+.top-text {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.actu-text h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.actu-text p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.actu-line {
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+  margin-bottom: 15px;
+}
+
+.actu-text i {
+  font-size: 15px;
+  color: var(--color-nd);
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .blog .blog-meta {
   margin: 0 30px;
   padding-top: 15px;
