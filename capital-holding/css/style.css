@@ -27,44 +27,58 @@
 }
 
 #feature_content {
-  background-color: rgba(164, 134, 45, 0.61);
-  padding: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 #global {
-  background: rgb(109, 109, 109);
+  background: var(--bs-primary);
   color: white;
 }
 
 #global h4 {
+  margin-top: 40px;
   color: white;
 }
 
 #vault {
-  background: rgba(252, 140, 84);
-  color: white;
+  background: var(--bs-dark);
+  color: var(--bs-primary);
 }
 
 #vault h4 {
-  color: white;
+  margin-top: 40px;
+  color: var(--bs-primary);
+}
+
+.btn.btn-third {
+  background: var(--bs-white);
+  color: var(--bs-primary);
+}
+
+.btn.btn-third:hover {
+  background: var(--bs-dark);
+  color: var(--bs-primary);
 }
 
 #versity {
-  background: #6e55aa;
+  background: var(--bs-primary);
   color: white;
 }
 
 #versity h4 {
+  margin-top: 40px;
   color: white;
 }
 
 #market {
-  background: #78d1c2;
-  color: white;
+  background: var(--bs-dark);
+  color: var(--bs-primary);
 }
 
 #market h4 {
-  color: white;
+  margin-top: 40px;
+  color: var(--bs-primary);
 }
 
 /*** Button Start ***/
@@ -118,6 +132,16 @@
 .btn.btn-primary:hover {
   background: var(--bs-dark);
   color: var(--bs-primary);
+}
+
+.btn.btn-second {
+  background: var(--bs-dark);
+  color: var(--bs-primary);
+}
+
+.btn.btn-second:hover {
+  background: var(--bs-primary);
+  color: var(--bs-white);
 }
 
 .btn.btn-light {
@@ -493,27 +517,30 @@
   border-radius: 10px;
   background: var(--bs-light);
   border: 1px solid transparent;
-  transition: 0.5s;
+  transition: 0.3s ease;
+  transform: scale(1);
 }
 
-/***.feature .feature-item:hover {
-  border: 1px solid var(--bs-primary);
-}***/
+.feature .feature-item:hover {
+  transform: scale(1.05);
+}
 
 #services_item {
-  background: #6cbeb1;
-  border-radius: 25px;
-  padding: 20px;
 }
 
 #services_text {
-  color: #6cbeb1;
+  color: var(--bs-dark);
 }
 
 .feature .feature-item .feature-icon {
+  margin-top: 20px;
   background: var(--bs-white);
   border-radius: 10px;
   display: inline-block;
+}
+
+.feature .feature-item .feature-icon i {
+  font-size: 40px;
 }
 /*** Features End ***/
 
@@ -596,13 +623,14 @@
 }
 
 .blog .blog-item .blog-img .blog-title a {
-  color: var(--bs-white);
-  background: var(--bs-primary);
+  color: var(--bs-primary);
+  background: var(--bs-dark);
   transition: 0.5s;
 }
 
 .blog .blog-item:hover .blog-img .blog-title a:hover {
-  color: var(--bs-dark);
+  color: var(--bs-white);
+  background: var(--bs-primary);
 }
 
 .blog-carousel .owl-stage-outer {
@@ -782,6 +810,10 @@
   z-index: -1;
 }
 
+.testimonial-img {
+  opacity: 0;
+}
+
 .testimonial .testimonial-item .testimonial-img {
   display: flex;
   justify-content: center;
@@ -828,8 +860,8 @@
   right: 25px;
   margin-top: -5px;
   border-radius: 60px;
-  color: var(--bs-primary);
-  background: var(--bs-white);
+  color: transparent;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
