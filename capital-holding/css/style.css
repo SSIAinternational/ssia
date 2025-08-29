@@ -27,8 +27,6 @@
 }
 
 #feature_content {
-  padding-left: 50px;
-  padding-right: 50px;
 }
 
 #global {
@@ -537,6 +535,10 @@
   background: var(--bs-white);
   border-radius: 10px;
   display: inline-block;
+}
+
+.feature-item p {
+  font-size: 14px;
 }
 
 .feature .feature-item .feature-icon i {
