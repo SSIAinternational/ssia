@@ -14,6 +14,10 @@
 }
 /*** Spinner End ***/
 
+.logo img {
+  background: white;
+}
+
 .back-to-top {
   position: fixed;
   right: 30px;
@@ -30,23 +34,33 @@
 }
 
 #global {
-  background: var(--bs-primary);
-  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
 }
 
-#global h4 {
-  margin-top: 40px;
-  color: white;
+#global p {
+  margin-top: 20px;
 }
 
 #vault {
-  background: var(--bs-dark);
-  color: var(--bs-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
 }
 
-#vault h4 {
+#vault img {
+  margin-top: 10px;
+  height: 130px;
+  width: 125px;
+}
+
+#vault p {
   margin-top: 40px;
-  color: var(--bs-primary);
 }
 
 .btn.btn-third {
@@ -60,23 +74,56 @@
 }
 
 #versity {
-  background: var(--bs-primary);
-  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
 }
 
-#versity h4 {
-  margin-top: 40px;
-  color: white;
+#versity img {
+  height: 150px;
+}
+
+#versity p {
+  margin-top: 20px;
 }
 
 #market {
-  background: var(--bs-dark);
-  color: var(--bs-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
 }
 
-#market h4 {
-  margin-top: 40px;
-  color: var(--bs-primary);
+#market img {
+  height: 150px;
+  width: 180px;
+}
+
+#market p {
+  margin-top: 20px;
+  color: black;
+}
+
+@media (max-width: 900px) {
+  #versity {
+    background-size: 55%;
+    background-position: top;
+  }
+
+  #versity p {
+    margin-top: 50px;
+  }
+
+  #vault {
+    background-size: 35%;
+  }
+
+  #vault p {
+    margin-top: 80px;
+  }
 }
 
 /*** Button Start ***/
@@ -521,6 +568,7 @@
 
 .feature .feature-item:hover {
   transform: scale(1.05);
+  border: 1px solid var(--bs-primary);
 }
 
 #services_item {
@@ -738,24 +786,28 @@
   margin-bottom: -50%;
   display: flex;
   justify-content: center;
-  border: 4px solid var(--bs-primary);
-  border-style: dotted;
   padding: 4px;
-  background: var(--bs-white);
   transition: 0.5s;
 }
 
-.team .team-item:hover .team-img {
+.team .team-item:hover .team-img img {
   border: 4px solid var(--bs-white);
   border-style: dotted;
   background: 0;
 }
 
 .team .team-item .team-img img {
-  width: 100%;
-  height: 100%;
+  width: 200px;
+  height: 200px;
+  border: 4px solid var(--bs-primary);
+  border-style: dotted;
+  padding: 5px;
   border-radius: 100%;
   transition: 0.5s;
+}
+
+.team-item h4 {
+  font-size: 20px;
 }
 
 .team .team-item .team-title {
@@ -763,8 +815,8 @@
   text-align: center;
 }
 
-.team .team-item .team-title h4,
-.team .team-item .team-title p {
+.team .team-item .team-title h4 {
+  margin-top: 20px;
   transition: 0.5s;
 }
 
@@ -791,6 +843,7 @@
   color: var(--bs-primary);
   background: var(--bs-dark);
 }
+
 /*** Team End ***/
 
 /*** Testimonial Start ***/
@@ -961,6 +1014,109 @@
 }
 
 /*** Testimonial End ***/
+
+/*** Maintenance Start ***/
+
+.maintenance {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+}
+
+.popup-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  animation: appear 0.5s ease-in-out;
+  background: white;
+  border-radius: 25px;
+  padding: 30px;
+  color: black;
+  width: 50%;
+}
+
+.popup-off {
+  animation: disappear 0.2s ease-in-out forwards;
+}
+
+.popup-content .text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.popup-content img {
+  width: 50%;
+}
+
+.popup-content button {
+  color: white;
+  background: var(--bs-primary);
+  padding: 5px 30px;
+  border-radius: 25px;
+  border: none;
+}
+
+@keyframes appear {
+  0% {
+    transform: scale(0);
+  }
+
+  70% {
+    transform: scale(1.04);
+  }
+
+  80% {
+    transform: scale(1);
+  }
+
+  90% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes disappear {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .popup-content {
+    width: 80%;
+  }
+}
+
+@media (max-width: 500px) {
+  .popup-content {
+    width: 90%;
+  }
+
+  .popup-content img {
+    width: 70%;
+  }
+}
+
+/*** Maintenance End ***/
 
 /*** Footer Start ***/
 .footer {
