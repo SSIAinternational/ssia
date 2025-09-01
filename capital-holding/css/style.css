@@ -41,8 +41,13 @@
   color: black;
 }
 
+#global img {
+  height: 170px;
+  width: 175px;
+}
+
 #global p {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 #vault {
@@ -176,6 +181,16 @@
 
 .btn.btn-primary:hover {
   background: var(--bs-dark);
+  color: var(--bs-primary);
+}
+
+.btn.btn-primary2 {
+  color: var(--bs-white);
+  border: none;
+}
+
+.btn.btn-primary2:hover {
+  background: var(--bs-secondary);
   color: var(--bs-primary);
 }
 
@@ -421,7 +436,7 @@
 
 .header-carousel .owl-nav .owl-prev:hover,
 .header-carousel .owl-nav .owl-next:hover {
-  box-shadow: inset 0 0 100px 0 var(--bs-light);
+  background: var(--bs-secondary);
   color: var(--bs-primary);
 }
 
@@ -605,7 +620,7 @@
 
 .offer-section .nav a.accordion-link.active {
   color: var(--bs-white);
-  background: var(--bs-primary);
+  background: var(--bs-secondary);
 }
 
 .offer-section .nav a.accordion-link h5 {
@@ -773,7 +788,7 @@
 
 .team .team-item:hover::after {
   height: 100%;
-  background: var(--bs-primary);
+  background: var(--bs-secondary);
 }
 
 .team .team-item .team-img {
@@ -799,7 +814,7 @@
 .team .team-item .team-img img {
   width: 200px;
   height: 200px;
-  border: 4px solid var(--bs-primary);
+  border: 4px solid var(--bs-secondary);
   border-style: dotted;
   padding: 5px;
   border-radius: 100%;
@@ -900,7 +915,7 @@
   top: 20px;
   left: 25px;
   border-radius: 60px;
-  color: var(--bs-primary);
+  color: var(--bs-secondary);
   background: var(--bs-white);
   display: flex;
   align-items: center;
