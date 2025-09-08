@@ -2340,20 +2340,15 @@ p b {
 /*******************************/
 /********* Marquee CSS **********/
 /*******************************/
-
-.swiper-wrapper {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-}
-
 .swiper-slide {
+  width: max-content;
+  height: max-content;
 }
 
 .swiper-slide img {
-  width: 200px;
-  height: 200px;
-  border: 2px solid var(--color-st);
+  background: #f0ede938;
+  width: 150px;
+  height: 150px;
 }
 
 /*******************************/
@@ -2488,5 +2483,11 @@ p b {
   .footer .copyright .col-md-6:last-child p {
     margin: 5px 0;
     text-align: center;
+  }
+
+  .swiper-slide img {
+    background: #f0ede938;
+    width: 100px;
+    height: 100px;
   }
 }
