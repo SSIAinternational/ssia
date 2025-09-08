@@ -8,3 +8,17 @@ faqItems.forEach((item) => {
     p.classList.toggle("active");
   });
 });
+
+const text = document.getElementById("marquee-text");
+let position = document.getElementById("marquee-container").offsetWidth;
+
+function animateMarquee() {
+  position--;
+  if (position < -text.offsetWidth) {
+    position = document.getElementById("marquee-container").offsetWidth;
+  }
+  text.style.transform = `translateX(${position}px)`;
+  requestAnimationFrame(animateMarquee);
+}
+
+animateMarquee();

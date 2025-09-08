@@ -859,6 +859,25 @@
   background: var(--bs-dark);
 }
 
+.gouv {
+  background: var(--bs-primary);
+  padding: 10px;
+  border-radius: 30px;
+  color: var(--bs-secondary);
+  font-weight: 700;
+  transition: all ease-in-out 0.3s;
+}
+
+.gouv:hover {
+  background: var(--bs-secondary);
+  color: var(--bs-primary);
+  transition: all ease-in-out 0.3s;
+}
+
+.m_b-30 {
+  margin-bottom: 30px;
+}
+
 /*** Team End ***/
 
 /*** Testimonial Start ***/

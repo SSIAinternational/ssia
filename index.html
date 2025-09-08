@@ -48,6 +48,10 @@
     <link href="lib/flaticon/font/flaticon.css" rel="stylesheet" />
     <link href="lib/animate/animate.min.css" rel="stylesheet" />
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet" />
@@ -1027,6 +1031,32 @@
     </div>
     Contact End -->
 
+    <div id="marquee-container">
+      <span id="marquee-text"> </span>
+    </div>
+
+    <!-- HTML -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="/img/logoci.jpg" alt="" srcset="" />
+        </div>
+        <div class="swiper-slide">
+          <img
+            src="/capital-holding/img/young_community.jpg"
+            alt=""
+            srcset=""
+          />
+        </div>
+        <div class="swiper-slide">
+          <img src="/capital-holding/img/brotherhood.jpg" alt="" srcset="" />
+        </div>
+        <div class="swiper-slide">
+          <img src="/capital-holding/img/logo_holding.png" alt="" srcset="" />
+        </div>
+      </div>
+    </div>
+
     <!-- Footer Start -->
     <div class="footer">
       <div class="container">
@@ -1149,6 +1179,7 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/counterup/counterup.min.js"></script>
     <script src="lib/parallax/parallax.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
@@ -1156,5 +1187,15 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- JS -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        loop: true,
+        autoplay: { delay: 2000 },
+        speed: 3000,
+      });
+    </script>
   </body>
 </html>

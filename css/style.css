@@ -2338,8 +2338,28 @@ p b {
 }
 
 /*******************************/
+/********* Marquee CSS **********/
+/*******************************/
+
+.swiper-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.swiper-slide {
+}
+
+.swiper-slide img {
+  width: 200px;
+  height: 200px;
+  border: 2px solid var(--color-st);
+}
+
+/*******************************/
 /********* Footer CSS **********/
 /*******************************/
+
 .footer {
   position: relative;
   margin-top: 45px;
