@@ -2349,6 +2349,17 @@ p b {
   background: #f0ede938;
   width: 150px;
   height: 150px;
+  border-radius: 100%;
+  padding: 5px;
+  border: var(--color-st) solid 4px;
+  border-style: dotted;
+  transition: all ease-in-out 0.2s;
+}
+
+.swiper-slide img:hover {
+  border: var(--color-nd) solid 4px;
+  border-style: dotted;
+  transition: all ease-in-out 0.2s;
 }
 
 /*******************************/
