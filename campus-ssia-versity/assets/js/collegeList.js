@@ -44,7 +44,7 @@ export const collegeList = [
       ambitieux désirant développer une expertise solide dans les domaines techniques, 
       analytiques ou décisionnels.`,
 
-    logo: "assets/college-logo/college valmond.jpeg",
+    logo: "assets/college-logo/college valmont.jpeg",
     rank: 2,
     programs: [
       "Génie Industriel",
@@ -160,7 +160,7 @@ export const collegeList = [
       orienté vers la précision intellectuelle, la rigueur 
       mathématique et la compréhension avancée des marchés.`,
 
-    logo: "assets/college-logo/college rosemond.jpeg",
+    logo: "assets/college-logo/college rosemon.jpeg",
     rank: 5,
     programs: [
       "Finance Quantitative",
