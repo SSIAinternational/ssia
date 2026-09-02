@@ -1,0 +1,249 @@
+nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: max-content;
+  align-items: center;
+  padding: 1rem 0.7rem;
+  background: var(--versity-blue);
+  box-sizing: border-box;
+  border-radius: 0 7px 7px 0;
+  box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+nav .logo-side_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo-side_item img {
+  width: 30px;
+  height: 30px;
+  background: var(--white);
+  border-radius: 3px;
+  padding: 0.2rem;
+}
+
+nav .side_item_group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.side_item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  align-items: center;
+  position: relative;
+}
+
+.side_item i {
+  color: #94bdd8;
+  height: 30px;
+  width: 32px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: ease-in 0.3s;
+  cursor: pointer;
+}
+
+.side_item i:hover {
+  color: var(--white);
+  background: #94bdd83f;
+}
+
+.side_item i.active {
+  color: var(--white);
+  background: #94bdd83f;
+}
+
+.side_item_label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  left: 35px;
+  animation: label_appear 0.5s ease-in-out forwards;
+}
+
+.side_item_label .label_arrow {
+  width: 7px;
+  height: 7px;
+  background: #94bdd8;
+  transform: translateX(50%) rotate(45deg);
+}
+
+.side_item_label span {
+  color: var(--versity-blue);
+  background: #94bdd8;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  width: max-content;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  position: absolute;
+  background: #003a62;
+  left: 45px;
+  padding: 1rem 0.5rem;
+  border-radius: 0 10px 10px 0;
+  animation: dropdown_appear 0.5s ease-in-out forwards;
+}
+
+.side_item .dropdown span:first-of-type {
+  color: var(--versity-blue);
+  background: #94bdd8;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  width: max-content;
+}
+
+.side_item .dropdown span:not(:first-of-type) {
+  font-size: 0.6rem;
+  color: #94bdd8;
+  cursor: pointer;
+  transition: ease-in 0.3s;
+  width: max-content;
+  padding: 0.1rem 0.3rem;
+  border-radius: 2px;
+}
+
+.side_item .dropdown span:not(:first-of-type):hover {
+  color: var(--white);
+  background: #94bdd83f;
+}
+
+@keyframes dropdown_appear {
+  0% {
+    transform: translateX(-100%);
+    z-index: -1;
+  }
+
+  10% {
+    z-index: -1;
+  }
+
+  100% {
+    transform: translateX(0);
+    z-index: 0;
+  }
+}
+
+@keyframes dropdown_disappear {
+  0% {
+    transform: translateX(0);
+    z-index: 0;
+  }
+
+  10% {
+    z-index: -1;
+  }
+
+  100% {
+    transform: translateX(-100%);
+    z-index: -1;
+  }
+}
+
+/*Style pour le boutton Déconnexion*/
+
+.side_item_logout {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  align-items: center;
+  position: relative;
+}
+
+.side_item_logout i {
+  color: var(--white);
+  height: 30px;
+  width: 32px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: ease-in 0.2s;
+  cursor: pointer;
+}
+
+.side_item_logout i:hover {
+  color: var(--white);
+  background: #af0404;
+}
+
+.item_logout_label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  left: 35px;
+  animation: label_appear 0.5s ease-in-out forwards;
+}
+
+.item_logout_label .label_arrow {
+  width: 7px;
+  height: 7px;
+  background: #af0404;
+  transform: translateX(50%) rotate(45deg);
+}
+
+.item_logout_label span {
+  color: var(--white);
+  background: #af0404;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  width: max-content;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes label_appear {
+  0% {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+
+  50% {
+    opacity: 0.2;
+    z-index: 2;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 2;
+  }
+}
+
+@keyframes label_disappear {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+}

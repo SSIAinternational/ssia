@@ -1,0 +1,381 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1.3rem;
+  gap: 1.5rem;
+}
+
+.dash {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+.dash::-webkit-scrollbar {
+  display: none;
+}
+
+.effectifs {
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  column-gap: 0.5rem;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.effectifs_item,
+.event_item {
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  gap: 0.7rem;
+}
+
+.effectifs_item > i,
+.event_item > i {
+  color: var(--white);
+  font-size: 1rem;
+  height: 30px;
+  width: 30px;
+  background: var(--versity-blue);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title_text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.title_text span:first-of-type,
+.event-title > span:first-of-type {
+  color: var(--grey);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.title_text .value {
+  color: black;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.comparatif {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 500;
+  font-size: 0.6rem;
+  color: var(--grey);
+}
+
+.comparatif i {
+  font-weight: 500;
+  font-size: 0.6rem;
+  color: #3ac566;
+}
+
+.comparatif span:first-of-type {
+  font-weight: 500;
+  font-size: 0.6rem;
+  color: var(--up-green);
+}
+
+.comparatif span:nth-of-type(2) {
+  font-weight: 500;
+  font-size: 0.5rem;
+  color: var(--grey);
+}
+
+.event-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.event {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.event > span {
+  font-size: 0.6rem;
+  padding: 0 0.3rem;
+  font-weight: 500;
+  width: max-content;
+  border-radius: 2px;
+  color: white;
+}
+
+.event > span:first-of-type {
+  animation: appear 2s linear infinite;
+  background: #ef4444b3;
+}
+
+.event > span:nth-of-type(2) {
+  background: #22c55eab;
+}
+
+.event > span:nth-of-type(3) {
+  background: #689ec2;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.finance-task-college {
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 0.5rem;
+}
+
+.finance-task-college > div {
+  background: var(--white);
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+}
+
+.finance {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.finance-task-college > div > span {
+  color: var(--black);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.finance_content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.finance_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+  justify-content: space-between;
+  padding-bottom: 0.3rem;
+}
+
+.finance_item:not(:last-of-type) {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+}
+
+.item_title {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.item_title i {
+  height: 25px;
+  width: 25px;
+  border-radius: 3px;
+  background: var(--versity-blue);
+  color: var(--white);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.item_title span {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--grey);
+}
+
+.finance_item span {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--grey);
+}
+
+.finance_item .fa-arrow-down {
+  color: var(--down-red);
+}
+
+.task {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.task_content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.4rem;
+  height: 100px;
+}
+
+.task_content_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--light-blue);
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+  height: max-content;
+  border: solid 1px #5a89a96e;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.task_content_item canvas {
+}
+
+.indicato_up {
+  color: #3ac566;
+  font-size: 0.6rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: 0.2rem;
+}
+
+.indicato_up i {
+  font-size: 0.8rem;
+}
+
+.task_content_item > i {
+  font-size: 0.8rem;
+  color: rgba(168, 2, 2, 0.497);
+  margin-top: 0.2rem;
+}
+
+.task_content_item span:first-of-type {
+  color: var(--black);
+  font-size: 0.6rem;
+}
+
+.task_content_item span:nth-of-type(2) {
+  color: var(--versity-blue);
+  font-size: 2.5rem;
+}
+
+.college {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.college_content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.college_content_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.college_content_item > span {
+  color: var(--versity-blue);
+  font-size: 0.6rem;
+  font-weight: 600;
+  background: var(--light-blue);
+  padding: 0.1rem 0.3rem;
+  border-radius: 10px;
+}
+
+.student_progress {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+  width: 60%;
+  justify-content: space-between;
+}
+
+.student_progress span {
+  color: var(--black);
+  font-size: 0.6rem;
+}
+
+.college_content_item .progress_bar {
+  width: 55%;
+  height: 5px;
+  background: #00000010;
+  border-radius: 10px;
+}
+
+.college_content_item .progress_bar .progress {
+  background: #5a8aa9;
+  border-radius: 10px;
+  width: 80%;
+  height: 100%;
+}
+
+.calendar {
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  column-gap: 0.5rem;
+}
+
+.calendar > div {
+  background: var(--white);
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+}
+
+.calendar > div > span {
+  color: var(--black);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.finance_chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reussite_chart {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reussite_chart canvas {
+}

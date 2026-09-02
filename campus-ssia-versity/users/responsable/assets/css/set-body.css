@@ -1,0 +1,30 @@
+:root {
+  --versity-blue: #003a62;
+  --light-blue: #dbe9f1;
+  --versity-green: #0e795b;
+  --black: #000;
+  --grey: #7a7a7a;
+  --white: #fff;
+  --up-green: #3ac566;
+  --down-red: rgb(220, 1, 1);
+  --shadow: 1px 1px 3px #00000010;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+  width: 100vw;
+  height: min(100vh, 600px);
+  display: flex;
+  flex-direction: row;
+  background: var(--light-blue);
+}
+
+main {
+  width: 100%;
+}

@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard responsable - SSIAVERSITY</title>
+
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="assets/css/set-body.css" />
+    <link rel="stylesheet" href="assets/css/sidebar.css" />
+    <link rel="stylesheet" href="assets/css/dashboard.css" />
+    <link rel="stylesheet" href="assets/css/topbar.css" />
+  </head>
+  <body>
+    <nav></nav>
+    <main>
+      <div class="topbar">
+        <div class="logo_title">
+          <img src="../../img/versity-modify.png" alt="" />
+        </div>
+        <div class="utils">
+          <span>2025 - 2026 <i class="fa-solid fa-angle-down"></i></span>
+          <span>Collèges <i class="fa-solid fa-angle-down"></i></span>
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <div class="line"></div>
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          <i class="fa-regular fa-calendar"></i>
+          <div class="name_img">
+            <div class="name">
+              <span>Djakalet M.</span>
+              <span>Directeur Général SSIAVERSITY</span>
+            </div>
+            <img src="../../../img/marie.JPG" alt="" />
+          </div>
+          <i class="fa-regular fa-bell"></i>
+        </div>
+      </div>
+      <section class="dash">
+        <div class="effectifs">
+          <div class="effectifs_item">
+            <i class="fa-solid fa-users"></i>
+            <div class="title_text">
+              <span>Total étudiants</span>
+              <span class="value">1,237</span>
+              <div class="comparatif">
+                <span>+2,4%</span>
+                <span>de plus que l'annné dernière</span>
+              </div>
+            </div>
+          </div>
+          <div class="effectifs_item">
+            <i class="fa-solid fa-briefcase"></i>
+            <div class="title_text">
+              <span>Total personnels</span>
+              <span class="value">237</span>
+              <div class="comparatif">
+                <span>+2,4%</span>
+                <span>de plus que l'annné dernière</span>
+              </div>
+            </div>
+          </div>
+          <div class="effectifs_item">
+            <i class="fa-solid fa-school"></i>
+            <div class="title_text">
+              <span>Total collèges</span>
+              <span class="value">37</span>
+              <div class="comparatif">
+                <span>+2,4%</span>
+                <span>de plus que l'annné dernière</span>
+              </div>
+            </div>
+          </div>
+          <div class="effectifs_item">
+            <i class="fa-solid fa-user-graduate"></i>
+            <div class="title_text">
+              <span>Total diplomés</span>
+              <span class="value">100</span>
+              <div class="comparatif">
+                <span>+2,4%</span>
+                <span>de plus que l'annné dernière</span>
+              </div>
+            </div>
+          </div>
+          <div class="event_item">
+            <i class="fa-solid fa-clock"></i>
+            <div class="event-title">
+              <span>Evenements à venir</span>
+              <div class="event">
+                <span>Début des cours</span>
+                <span>Journée découvertes</span>
+                <span>Congé de pâques</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="finance-task-college">
+          <div class="finance">
+            <span>Finances</span>
+            <div class="finance_content">
+              <div class="finance_item">
+                <div class="item_title">
+                  <i class="fa-solid fa-money-bill-trend-up"></i
+                  ><span>Total entrées</span>
+                </div>
+                <span style="color: var(--up-green)">+153,749 $</span>
+              </div>
+              <div class="finance_item">
+                <div class="item_title">
+                  <i class="fa-solid fa-money-bill-wave"></i
+                  ><span>Total dépenses</span>
+                </div>
+                <span style="color: rgb(220, 1, 1)">-53,749 $</span>
+              </div>
+              <div class="finance_item">
+                <div class="item_title">
+                  <i class="fa-solid fa-money-bill"></i><span>Solde total</span>
+                </div>
+                <span
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 0.5rem;
+                    color: var(--down-red);
+                  "
+                  >100,000 $ <i class="fa-solid fa-arrow-down"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+          <div class="task">
+            <span>Tâches & Rapports</span>
+            <div class="task_content">
+              <div class="task_content_item">
+                <span>Tâches effectuées</span>
+                <p class="indicato_up">
+                  <i class="fa-solid fa-caret-up"></i> + 15%
+                </p>
+                <span>23</span>
+              </div>
+              <div class="task_content_item">
+                <span>Tâches non traitées</span>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span>7</span>
+              </div>
+              <div class="task_content_item">
+                <span>Rapports déposées</span>
+                <p class="indicato_up">
+                  <i class="fa-solid fa-caret-up"></i> + 15%
+                </p>
+                <span>16</span>
+              </div>
+            </div>
+          </div>
+          <div class="college">
+            <span>Collèges</span>
+            <div class="college_content">
+              <div class="college_content_item">
+                <span>Collège Clermont</span>
+                <div class="student_progress">
+                  <span>340 étudiants</span>
+                  <div class="progress_bar">
+                    <div class="progress"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="college_content_item">
+                <span>Collège Clermont</span>
+                <div class="student_progress">
+                  <span>340 étudiants</span>
+                  <div class="progress_bar">
+                    <div class="progress"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="college_content_item">
+                <span>Collège Clermont</span>
+                <div class="student_progress">
+                  <span>340 étudiants</span>
+                  <div class="progress_bar">
+                    <div class="progress"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="college_content_item">
+                <span>Collège Clermont</span>
+                <div class="student_progress">
+                  <span>340 étudiants</span>
+                  <div class="progress_bar">
+                    <div class="progress"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="calendar">
+          <div class="finance_chart">
+            <span>Finances</span>
+            <canvas height="200px"></canvas>
+          </div>
+          <div class="reussite_chart">
+            <span>Taux de réussite</span>
+            <canvas height="200px"></canvas>
+          </div>
+          <div class="emplois_chart">
+            <span>Taux d'employablitité</span>
+            <canvas height="200px" width="200px"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/dash-charts.js"></script>
+</html>

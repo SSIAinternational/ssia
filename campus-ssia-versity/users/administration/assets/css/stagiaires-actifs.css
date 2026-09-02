@@ -1,0 +1,73 @@
+.stagiaires-actifs {
+  background: #edf7fd;
+  width: 85%;
+  height: 100%;
+  padding: 1rem 0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.titre h6 {
+  font-size: 1rem;
+  color: var(--versity-blue);
+  background: #c8dfed;
+  width: max-content;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+  border: solid 1px #a8cfe7;
+}
+
+.list-stagiaires-table {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.stagiaires-actifs table thead {
+  background: var(--versity-blue);
+}
+
+.stagiaires-actifs table thead tr td {
+  color: white;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.stagiaires-actifs table tbody {
+  transition: all ease 0.3s;
+  height: max-content;
+}
+
+.stagiaires-actifs table tbody tr {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.3);
+  height: max-content;
+}
+
+.stagiaires-actifs table tbody tr:hover {
+  background: #daedf9;
+}
+
+.stagiaires-actifs table tbody tr td {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.7rem;
+  color: black;
+  cursor: pointer;
+  height: max-content;
+}
+
+.actif {
+  background: #2fe67838;
+  font-size: 0.6rem;
+  border: solid 1px #2fe67886;
+  padding: 0 0.2rem;
+  border-radius: 3px;
+}

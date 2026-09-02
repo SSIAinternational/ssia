@@ -1,0 +1,1563 @@
+.colleges {
+  background: #edf7fd;
+  width: 90%;
+  height: 100%;
+  padding: 1rem 0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.colleges h5 {
+  font-size: 1rem;
+  color: var(--versity-blue);
+  margin: 0;
+}
+
+.colleges-list {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--versity-blue);
+  padding: 0.3rem 0.5rem;
+  flex-shrink: 0;
+  flex-grow: 0;
+  overflow-x: auto;
+}
+
+.colleges-list::-webkit-scrollbar {
+  display: none;
+}
+
+.colleges-list__info {
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+  flex: 1;
+  text-wrap: nowrap;
+  animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(-10%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.colleges-list__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.colleges-list__item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+  align-items: center;
+  width: max-content;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: #0e6da8 solid 1px;
+  background: var(--white);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  border-style: dashed;
+  cursor: pointer;
+  transition: 0.3s ease;
+  z-index: 2;
+}
+
+.colleges-list__dropdown {
+  background: var(--white);
+  padding: 0.5rem;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  max-height: 50%;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 3;
+  top: 13%;
+  border: solid 1px var(--versity-blue);
+  box-shadow: 2px 5px 5px #0000002b;
+}
+
+.colleges-list__dropdown::-webkit-scrollbar {
+  display: none;
+}
+
+.colleges-list__dropdown .list-dropdown__item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+  align-items: center;
+  padding: 0.2rem;
+  cursor: pointer;
+}
+
+.colleges-list__dropdown .list-dropdown__item:not(:last-child) {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.221);
+}
+
+.colleges-list__dropdown .list-dropdown__item:hover {
+  background: #dfeaf0;
+}
+
+.list-dropdown__item img {
+  width: 15px;
+  height: 15px;
+}
+
+.list-dropdown__item span {
+  color: black;
+  font-size: 0.7rem;
+}
+
+.colleges-list__item img {
+  height: 15px;
+  width: 15px;
+}
+
+.colleges-list__item span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: black;
+}
+
+.colleges-list__item:hover {
+  background: #e0edf5;
+  border: white solid 1px;
+}
+
+.colleges-list__item:hover span {
+  color: black;
+}
+
+.colleges-list__item.active {
+  background: #3a8bbd60;
+  border: #4f94bf33 solid 1px;
+}
+
+.colleges-programme-dashbooard {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+  height: 85%;
+  justify-content: space-between;
+}
+
+.colleges-programmes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: min(15%, 200px);
+  height: 95%;
+}
+
+.colleges-programmes h6 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--versity-blue);
+  margin: 0;
+}
+
+.programmes-list {
+  width: 100%;
+  height: 100%;
+  background: var(--versity-blue);
+  padding: 0.7rem 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  overflow-y: auto;
+}
+
+.programmes-list__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.2rem;
+}
+
+.programmes-list__item:hover {
+  background: #0a5888;
+  border-radius: 2px;
+}
+
+.programmes-list__item.active {
+  background: #0a5888;
+  border-radius: 2px;
+}
+
+.programmes-list__item:hover > span {
+  color: var(--white);
+}
+
+.programmes-list__item span {
+  color: #94bdd8;
+  font-size: 0.65rem;
+  flex: 1;
+  text-wrap: nowrap;
+  overflow-x: hidden;
+  padding: 0.1rem 0.2rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.programmes-list__item > span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.programmes-list__item span.active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.programmes-list__item-dropdown {
+  display: none;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.programmes-list__item-dropdown span {
+  margin-left: 0.5rem;
+}
+
+.programmes-list__item-dropdown span:hover {
+  background: #0e6da8;
+  color: var(--white);
+}
+
+.programmes-list__item:hover .programmes-list__item-dropdown {
+  display: flex;
+}
+
+/*****************Colleges-dashboard************************************************************************************************/
+
+.colleges-dashboard {
+  width: 85%;
+  height: 100%;
+  background: var(--white);
+  border-radius: 20px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.8rem;
+}
+
+.colleges-dashboard__header {
+  width: 100%;
+}
+
+.dashboard-header__nav {
+  background: var(--versity-blue);
+  padding: 0.3rem 0.5rem;
+  width: max-content;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.dashboard-header__nav span {
+  font-size: 0.65rem;
+  color: var(--white);
+  border: solid 1px #0e6da8;
+  border-style: dashed;
+  padding: 0.1rem 0.3rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.dashboard-header__nav span:hover {
+  background: #0a5888;
+}
+
+.dashboard-header__nav span.active {
+  background: #0a5888;
+}
+
+.colleges-dashboard__body {
+  height: 90%;
+  overflow: hidden;
+}
+
+/*******************Classe****************************************************/
+.classe {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.classe-sidebar {
+  background: var(--versity-blue);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 0.5rem;
+  height: max-content;
+  width: 13%;
+}
+
+.classe-sidebar span {
+  color: #629bbe;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.classe-sidebar span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.classe-sidebar .classe-nav__active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+/*Liste de classe*/
+.classe-list-etudiant {
+  background: #c7e2f5;
+  height: 100%;
+  width: 85%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.classe-etudiant-list__table {
+  width: 100%;
+  max-height: 85%;
+  overflow-y: auto;
+  position: relative;
+}
+
+.classe-list-etudiant table {
+  width: 100%;
+  height: max-content;
+}
+
+.classe-list-etudiant table thead {
+  color: var(--white);
+  font-size: 0.6rem;
+  font-weight: 600;
+  background: var(--versity-blue);
+  position: sticky;
+  top: 0;
+}
+
+.classe-list-etudiant table thead tr {
+}
+
+.classe-list-etudiant table thead tr th {
+  padding: 0.3rem 0.5rem;
+}
+
+.classe-list-etudiant table thead tr .detail-etudiant {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+  align-items: center;
+}
+
+.classe-list-etudiant table tbody {
+}
+
+.classe-list-etudiant table tbody tr .detail-etudiant img {
+  background: var(--versity-blue);
+  height: 15px;
+  width: 15px;
+  border-radius: 100%;
+}
+
+.classe-list-etudiant table tbody tr .detail-etudiant .fa-mars {
+  color: rgb(35, 89, 189);
+}
+
+.classe-list-etudiant table tbody tr .detail-etudiant .fa-venus {
+  color: rgb(189, 35, 166);
+}
+
+.classe-list-etudiant table tbody tr {
+  border-bottom: rgba(0, 0, 0, 0.2) solid 1px;
+  cursor: pointer;
+}
+
+.classe-list-etudiant table tbody tr:hover {
+  background: #b1dbf6;
+}
+
+.classe-list-etudiant table tbody td {
+  font-size: 0.6rem;
+  color: black;
+  padding: 0.3rem 0.5rem;
+}
+
+.total-etudiant {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.total-etudiant span {
+  font-size: 0.6rem;
+  color: black;
+}
+
+.total-etudiant span b {
+  color: var(--versity-blue);
+}
+
+/*Liste des professeurs*/
+.classe-list-professeur {
+  background: #c7e2f5;
+  height: 100%;
+  width: 85%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.classe-professeur-list__table {
+  max-height: 85%;
+  overflow-y: auto;
+  position: relative;
+}
+
+.classe-professeur-list__table table {
+  width: 100%;
+}
+
+.classe-professeur-list__table thead {
+  color: var(--white);
+  font-size: 0.6rem;
+  font-weight: 600;
+  background: var(--versity-blue);
+  position: sticky;
+  top: 0;
+}
+
+.classe-professeur-list__table thead tr th {
+  padding: 0.3rem 0.5rem;
+}
+
+.classe-professeur-list__table table tbody td {
+  font-size: 0.6rem;
+  color: black;
+  padding: 0.3rem 0.5rem;
+}
+
+.classe-professeur-list__table table tbody tr {
+  border-bottom: rgba(0, 0, 0, 0.2) solid 1px;
+  cursor: pointer;
+}
+
+.classe-professeur-list__table table tbody tr:hover {
+  background: #b1dbf6;
+}
+
+.classe-professeur-list__table tbody tr .detail-professeur {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+  align-items: center;
+}
+
+.classe-professeur-list__table table tbody tr .detail-professeur img {
+  background: var(--versity-blue);
+  height: 15px;
+  width: 15px;
+  border-radius: 100%;
+}
+
+.classe-professeur-list__table table tbody tr .detail-professeur .fa-mars {
+  color: rgb(35, 89, 189);
+}
+
+.classe-professeur-list__table table tbody tr .detail-professeur .fa-venus {
+  color: rgb(189, 35, 166);
+}
+
+.statut-professeur {
+  text-align: right;
+}
+
+.statut-professeur span {
+  font-size: 0.5rem;
+  background: #f2c56b;
+  border-radius: 3px;
+  width: max-content;
+  font-weight: 600;
+  padding: 0.1rem 0.2rem;
+}
+
+.total-professeur {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.total-professeur span {
+  font-size: 0.6rem;
+  color: black;
+}
+
+.total-professeur span b {
+  color: var(--versity-blue);
+}
+
+/*Style groupé pour les detail de liste prof et étudiant*/
+/*Modal de plus de détails*/
+
+.modal-more-details {
+  background: var(--white);
+  height: 100%;
+  width: 30%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  box-shadow: 1px 10px 10px rgba(0, 0, 0, 0.136);
+  border-radius: 10px 0 0 10px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  animation: modal-more-details-appear 1s ease-out forwards;
+}
+
+@keyframes modal-more-details-appear {
+  0% {
+    transform: translateX(500px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.modal-more-details .action-modal-etudiant-close,
+.modal-more-details .action-modal-professeur-close {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-more-details .action-modal-etudiant-close .fa-close,
+.modal-more-details .action-modal-professeur-close .fa-close {
+  font-size: 0.6rem;
+  color: var(--white);
+  background: var(--primary);
+  padding: 0.2rem 0.25rem;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.more-details__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.more-details__content img {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  position: relative;
+  border: solid 2px var(--versity-blue);
+  padding: 0.2rem;
+}
+
+.details-text__set {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  height: 70%;
+  overflow-y: auto;
+  padding: 0.5rem;
+  border-bottom: 1px solid #c0dff2;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.details-text__set .doyen-marker {
+  font-size: 0.5rem;
+  color: black;
+  background: #f2c56b;
+  font-weight: 500;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  width: max-content;
+}
+
+.details-text__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-bottom: 0.3rem;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.details-text__item:not(:last-child) {
+  border-bottom: 1px dashed #d2e5f1;
+}
+
+.details-text__item span:first-of-type {
+  font-size: 0.5rem;
+  font-weight: 500;
+  color: var(--versity-blue);
+  background: #edf7fd;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  width: max-content;
+}
+
+.details-text__item span:nth-child(2) {
+  font-size: 0.6rem;
+  color: black;
+  margin-left: 0.3rem;
+}
+
+.details-text__item span:last-of-type {
+  font-size: 0.6rem;
+  color: black;
+  margin-left: 0.3rem;
+}
+
+.details-note {
+  height: 35%;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.details-note__header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.details-note__header span {
+  font-size: 0.6rem;
+  color: black;
+  background: #fdf4ed;
+  border-radius: 5px;
+  padding: 0.1rem 0.3rem;
+  border: solid 1px #f1e4d2;
+}
+
+.details-note__body {
+  width: 100%;
+}
+
+.details-note__body .moyenne {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.3rem;
+  width: 100%;
+  gap: 0.3rem;
+}
+
+.details-note__body .moyenne span {
+  font-size: 0.7rem;
+  color: black;
+}
+
+.details-note__body .moyenne span b {
+  color: #cd8a2c;
+}
+
+.details-note__body .moyenne span:nth-child(2),
+.details-note__body .moyenne span:nth-child(4),
+.details-note__body .moyenne span:nth-child(6) {
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #f1e4d2;
+}
+
+/*Classe matières*/
+
+.classe-matiere {
+  background: #c7e2f5;
+  height: 100%;
+  flex: 1;
+  border-radius: 5px;
+  padding: 1rem 0.5rem;
+  overflow-y: auto;
+}
+
+.classe-matiere__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.3rem 0.5rem;
+  border-bottom: 1px #0000002b solid;
+  background: #0a588827;
+}
+
+.matiere-item__detail {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.matiere-item__detail > span:first-of-type {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--versity-blue);
+}
+
+.matiere-item__detail > span:nth-child(2) {
+  font-size: 0.6rem;
+  color: black;
+}
+
+.matiere-item__action {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.matiere-item__action button {
+  background: green;
+  width: max-content;
+  color: var(--white);
+  font-size: 0.5rem;
+  font-weight: 600;
+  border: none;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+}
+
+.matiere-item__action select {
+  background: #edf7fd;
+  font-size: 0.5rem;
+  color: var(--versity-blue);
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+}
+
+.matiere-item__professeur-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.matiere-item__professeur-details span {
+  font-size: 0.6rem;
+  color: black;
+}
+
+.matiere-item__professeur-details span b {
+  color: var(--versity-blue);
+}
+
+.matiere-item__professeur-details img {
+  height: 15px;
+  width: 15px;
+  background: var(--versity-blue);
+  border-radius: 100%;
+}
+
+/*******************Programmation de cours****************************************************/
+.colleges-dashboard__body .programmation-cours {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0.5rem;
+}
+
+.programmation-cours__form {
+  background: var(--versity-blue);
+  flex: 1;
+  padding: 1rem 1rem;
+  border-radius: 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.logo-college {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.logo-college img {
+  width: 50px;
+  height: 50px;
+  background: white;
+  border-radius: 3px;
+}
+
+.input-group-set {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.input-group label {
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.input-group select,
+.input-group input {
+  background: var(--white);
+  border: none;
+  font-size: 0.6rem;
+  color: var(--versity-blue);
+  border-radius: 3px;
+  padding: 0.1rem 0.3rem;
+}
+
+.programmation-cours__action button {
+  background: var(--primary);
+  border: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 3px;
+  outline: none;
+  color: var(--white);
+  padding: 0.1rem 0.5rem;
+  margin-top: 2rem;
+}
+
+.list-cours {
+  flex: 1;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.list-cours h5 {
+  font-size: 1rem;
+  color: var(--versity-blue);
+}
+
+.list-cours__item-set {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+.list-cours__item {
+  display: flex;
+  flex-direction: column;
+  background: #c7e2f5;
+  border-radius: 3px;
+  padding: 0.3rem;
+  gap: 0.2rem;
+}
+
+.list-cours__item > span:first-of-type {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--versity-blue);
+}
+
+.list-cours__item > span:nth-child(2) {
+  color: black;
+  font-size: 0.6rem;
+}
+
+.professeur-details {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+  align-items: center;
+}
+
+.professeur-details img {
+  background: var(--versity-blue);
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+}
+
+.professeur-details span {
+  color: gray;
+  font-size: 0.6rem;
+}
+
+.professeur-details span .professeur-name {
+  color: var(--versity-blue);
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+/*********Examen attente/accepter/refuser**************************************************************************/
+
+.colleges-dashboard__body .examen {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  max-height: 100%;
+  padding: 0.5rem;
+  overflow-y: auto;
+}
+
+.examen-attente {
+  position: relative;
+  height: 100%;
+}
+
+.examen-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  background: #c7e2f5;
+  border: solid 1px #629bbe;
+  border-radius: 5px;
+  padding: 1rem 0.5rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  height: max-content;
+}
+
+.examen-item:hover {
+  transform: scale(1.02);
+}
+
+.examen-item h5 {
+  font-size: 0.8rem;
+  color: var(--versity-blue);
+}
+
+.examen-item .semestre-statut {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.examen-item .semestre {
+  font-size: 0.65rem;
+  color: black;
+  font-weight: 600;
+}
+
+.examen-item .statut-examen__attente {
+  color: var(--white);
+  font-weight: 900;
+  animation: appear 2s infinite ease-in-out;
+  background: rgb(128, 128, 128);
+  padding: 0 0.3rem;
+  border-radius: 2px;
+  font-size: 0.6rem;
+}
+
+.examen-item .statut-examen__valider {
+  color: var(--white);
+  font-weight: 900;
+  animation: appear 2s infinite ease-in-out;
+  background: #50b150;
+  padding: 0 0.3rem;
+  border-radius: 2px;
+  font-size: 0.6rem;
+}
+
+.examen-item .statut-examen__refuser {
+  color: var(--white);
+  font-weight: 900;
+  animation: appear 2s infinite ease-in-out;
+  background: var(--primary);
+  padding: 0 0.3rem;
+  border-radius: 2px;
+  font-size: 0.6rem;
+}
+
+.sender-detail {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+  align-items: center;
+}
+
+.sender-detail img {
+  height: 20px;
+  width: 20px;
+  background: var(--versity-blue);
+  border-radius: 100%;
+}
+
+.sender-detail span {
+  color: rgb(114, 114, 114);
+  font-size: 0.6rem;
+}
+
+.sender-detail span b {
+  color: black;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/*****Validation examen******/
+
+.examen-validation__modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.examen-validation__modal-content {
+  width: 90%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--white);
+  padding: 1rem 0.5rem;
+  gap: 0.5rem;
+  border-radius: 5px;
+}
+
+.examen-view {
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  position: relative;
+}
+
+.examen-view__close {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+  position: sticky;
+  top: 0;
+}
+
+.examen-view__close i {
+  font-size: 0.6rem;
+  color: var(--white);
+  background: var(--primary);
+  padding: 0.2rem 0.25rem;
+  height: max-content;
+  width: max-content;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.examen-view > span {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--white);
+  background: var(--versity-blue);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  width: max-content;
+}
+
+.examen-view__content {
+  border-top: dashed rgba(0, 0, 0, 0.2) 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+.examen-view__question-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.5rem 0;
+}
+
+.examen-view__question-item:not(:last-child) {
+  border-bottom: dashed rgba(0, 0, 0, 0.2) 1px;
+}
+
+.examen-view__question-item > span:first-of-type {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--versity-blue);
+}
+
+.examen-view__question-item > span:nth-child(2) {
+  font-size: 0.6rem;
+  color: grey;
+}
+
+.examen-view__reponses {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.examen-view__reponses span {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+  width: max-content;
+}
+
+.examen-view__reponses .fa-check {
+  background: #50b150;
+  color: var(--white);
+  padding: 0.15rem;
+  font-size: 0.4rem;
+  height: max-content;
+  width: max-content;
+  border-radius: 100%;
+}
+
+.examen-view__reponses .fa-close {
+  background: var(--primary);
+  color: var(--white);
+  padding: 0.1rem 0.15rem;
+  font-size: 0.5rem;
+  height: max-content;
+  width: max-content;
+  border-radius: 100%;
+}
+
+.validation-modal__form {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  border-top: solid rgba(0, 0, 0, 0.2) 1px;
+  border-top-style: dashed;
+  padding-top: 0.5rem;
+}
+
+.validation-input__group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.validation-input__group label {
+  font-size: 0.6rem;
+  margin: 0;
+}
+
+.validation-input__group input {
+  font-size: 0.5rem;
+  border: none;
+  border-radius: 3px;
+  background: #dfeaf0;
+  color: var(--versity-blue);
+  padding: 0.2rem 0.3rem;
+}
+
+.validation-input__action-group {
+  flex: 0.2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
+  gap: 0.5rem;
+}
+
+.validation-input__action-group button:first-of-type {
+  background: #50b150;
+  color: var(--white);
+  width: max-content;
+  height: max-content;
+  font-size: 0.5rem;
+  font-weight: 600;
+  padding: 0.2rem 0.3rem;
+  border-radius: 3px;
+  border: none;
+}
+
+.validation-input__action-group button:nth-child(2) {
+  background: var(--primary);
+  color: var(--white);
+  width: max-content;
+  height: max-content;
+  font-size: 0.5rem;
+  font-weight: 600;
+  padding: 0.2rem 0.3rem;
+  border-radius: 3px;
+  border: none;
+}
+
+/***********Notes de devoirs**********************************************************************/
+.notes-devoirs {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.notes-devoirs__sidebar {
+  background: var(--versity-blue);
+  width: 13%;
+  height: max-content;
+  padding: 1rem 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.notes-devoirs__sidebar span {
+  color: #629bbe;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.notes-devoirs__sidebar span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.notes-devoirs__sidebar .devoirs-sidebar__active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.notes-devoirs__table-action {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.notes-devoirs__table {
+  width: 100%;
+  height: 85%;
+  overflow-y: auto;
+}
+
+.notes-devoirs__table table {
+  width: 100%;
+  height: max-content;
+}
+
+/*note à moi même le thead dois être dupliqué après 17 items 
+pour palié au sticky qui ne fonctionne pas bien sur les tableau*/
+
+.notes-devoirs__table table thead {
+  background: var(--versity-blue);
+}
+
+.notes-devoirs__table table th {
+  font-weight: 600;
+  color: var(--white);
+  text-align: center;
+  font-size: 0.6rem;
+  border: solid rgba(255, 255, 255, 0.2) 1px;
+}
+
+.notes-devoirs__table table td {
+  text-align: center;
+  font-size: 0.6rem;
+  color: black;
+  border: solid rgba(0, 0, 0, 0.2) 1px;
+  width: max-content;
+}
+
+.notes-devoirs__table table tbody tr > td:first-of-type {
+  text-align: start;
+  padding-left: 0.3rem;
+}
+
+.notes-devoirs__table table tbody tr td select {
+  color: var(--versity-blue);
+  outline: none;
+}
+
+.notes-devoirs__table table tbody tr td input {
+  width: 20%;
+}
+
+.notes-devoirs__action {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 0.5rem;
+}
+
+.notes-devoirs__action button {
+  background: rgb(80, 177, 80);
+  color: var(--white);
+  font-size: 0.55rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 3px;
+  padding: 0.3rem 0.5rem;
+}
+
+/***********Noted d'examens**********************************************************************/
+.notes-examens {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.notes-examens__sidebar {
+  background: var(--versity-blue);
+  width: 13%;
+  height: max-content;
+  padding: 1rem 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.notes-examens__sidebar span {
+  color: #629bbe;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.notes-examens__sidebar span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.notes-examens__sidebar .examens-sidebar__active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.notes-examens__table-set {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.notes-examens__table {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.notes-examens__table table {
+  width: 100%;
+  height: max-content;
+}
+
+/*note à moi même le thead dois être dupliqué après 17 items 
+pour palié au sticky qui ne fonctionne pas bien sur les tableau*/
+
+.notes-examens__table table thead {
+  background: var(--versity-blue);
+}
+
+.notes-examens__table table th {
+  font-weight: 600;
+  color: var(--white);
+  text-align: center;
+  font-size: 0.6rem;
+  border: solid rgba(255, 255, 255, 0.2) 1px;
+}
+
+.notes-examens__table table td {
+  text-align: center;
+  font-size: 0.6rem;
+  color: black;
+  border: solid rgba(0, 0, 0, 0.2) 1px;
+  width: max-content;
+}
+
+.notes-examens__table table tbody tr > td:first-of-type {
+  text-align: start;
+  padding-left: 0.3rem;
+}
+
+.notes-examens__table table tbody tr td select {
+  color: var(--versity-blue);
+  outline: none;
+}
+
+/***********Moyenne**********************************************************************/
+.moyennes {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.moyennes__sidebar {
+  background: var(--versity-blue);
+  width: 13%;
+  height: max-content;
+  padding: 1rem 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.moyennes__sidebar span {
+  color: #629bbe;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.moyennes__sidebar span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.moyennes__sidebar .moyennes-sidebar__active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.moyennes__table-set {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.moyennes__table {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.moyennes__table table {
+  width: 100%;
+  height: max-content;
+}
+
+/*note à moi même le thead dois être dupliqué après 17 items 
+pour palié au sticky qui ne fonctionne pas bien sur les tableau*/
+
+.moyennes__table table thead {
+  background: var(--versity-blue);
+}
+
+.moyennes__table table th {
+  font-weight: 600;
+  color: var(--white);
+  text-align: center;
+  font-size: 0.6rem;
+  border: solid rgba(255, 255, 255, 0.2) 1px;
+}
+
+.moyennes__table table td {
+  text-align: center;
+  font-size: 0.6rem;
+  color: black;
+  border: solid rgba(0, 0, 0, 0.2) 1px;
+  width: max-content;
+}
+
+.moyennes__table table tbody tr > td:first-of-type {
+  text-align: start;
+  padding-left: 0.3rem;
+}
+
+.moyennes__table table tbody tr td select {
+  color: var(--versity-blue);
+  outline: none;
+}
+
+.hide {
+  display: none !important;
+}
+
+.flex {
+  display: flex;
+}

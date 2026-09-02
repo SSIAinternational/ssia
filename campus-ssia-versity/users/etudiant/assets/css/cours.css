@@ -1,0 +1,242 @@
+.nav {
+  box-shadow: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  padding: 10px 60px;
+}
+
+.nav-list {
+  width: 50%;
+}
+
+.les-cours {
+  padding: 50px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+.les-cours .title {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.title h1 {
+}
+
+.title h3 {
+  font-size: 20px;
+}
+
+.les-cours span {
+  font-size: 17px;
+  color: var(--white);
+  background: var(--versity-blue);
+  padding: 3px 15px;
+  border-radius: 5px;
+}
+
+.listes-cours {
+  padding: 0 40px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 95%;
+  height: 35vh;
+  column-gap: 30px;
+  row-gap: 50px;
+}
+
+.cours {
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden; /* important pour que .degrade ne déborde pas */
+  transition: all 0.3s ease-in-out;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.cours:hover {
+  transform: scale(1.03);
+  transition: all 0.3s ease-in-out;
+}
+
+.degrade {
+  position: absolute;
+  top: 0;
+  left: -100%; /* on le place hors du cadre à gauche */
+  opacity: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0) 0% 40%,
+    rgba(255, 255, 255, 0.776) 50% 60%,
+    rgba(0, 0, 0, 0) 70% 100%
+  );
+  transition: all 0.3s ease-in-out; /* transition fluide */
+}
+
+.cours:hover .degrade {
+  transition: all 0.3s ease-in-out;
+  left: 0; /* il vient recouvrir */
+  opacity: 1; /* on le rend visible */
+}
+
+.cours img {
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  height: 80%;
+}
+
+.cours .disabled {
+  pointer-events: none;
+  user-select: none;
+}
+
+.disabled img {
+  filter: grayscale(100%);
+}
+
+.cours-text {
+  background: var(--primary);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 20px 20px;
+  padding: 10px 20px;
+  text-align: center;
+  height: 20%;
+}
+
+.program {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  align-items: center;
+}
+
+.program h1 {
+  margin: 100px 0 0 30px;
+}
+
+.program-content {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: space-between;
+  padding: 50px 80px;
+  width: 80%;
+}
+
+#calendar {
+  width: 50%;
+}
+
+.agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 45%;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.agenda-item {
+  background: #fef7f2;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  border-left: solid 15px var(--primary);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.event-title {
+  background: #ffad76;
+  color: var(--white);
+  width: fit-content;
+  border-radius: 3px;
+  padding: 0 10px;
+}
+
+.date-time {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-size: 12px;
+  color: rgb(174, 174, 174);
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: flex;
+}
+
+.cours-modal {
+  background: #00000030;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  z-index: 5;
+}
+
+.watch-cours {
+  background: var(--white);
+  padding: 30px 50px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  height: 50%;
+  align-items: center;
+}
+
+.watch-cours p:first-child {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  color: black;
+}
+
+.watch-cours p {
+  font-size: 18px;
+  text-align: center;
+}
+
+.watch-cours button {
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 5px 20px;
+  border-radius: 5px;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: flex;
+}

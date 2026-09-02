@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Liquid Glass — iOS 26 Effect</title>
+    <style>
+      :root {
+        --mx: 50%;
+        --my: 50%;
+        --tiltX: 0deg;
+        --tiltY: 0deg;
+        --distortion: 55;
+        --blur: 3px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family:
+          -apple-system, "SF Pro Display", "Inter", Helvetica, Arial, sans-serif;
+        background: #0b1216;
+      }
+      .stage {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        background-image: url(../../img/carousel-2.jpg);
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .stage::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(6, 14, 18, 0.15),
+          rgba(6, 14, 18, 0.45)
+        );
+        pointer-events: none;
+      }
+
+      /* ---------- SVG filter (hidden) ---------- */
+      svg.defs {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+      }
+
+      /* ---------- Glass panel ---------- */
+      .glass-wrap {
+        position: absolute;
+        top: 40%;
+        left: 54%;
+        transform: translate(-50%, -50%);
+        width: clamp(280px, 42vw, 400px);
+        height: clamp(170px, 24vw, 215px);
+        perspective: 900px;
+        z-index: 5;
+        touch-action: none;
+      }
+      .glass-panel {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 34px;
+        cursor: grab;
+        transform: rotateX(var(--tiltY)) rotateY(var(--tiltX));
+        transform-style: preserve-3d;
+        transition:
+          transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+          border-radius 0.6s ease;
+        animation: breathe 7s ease-in-out infinite;
+        will-change: transform;
+      }
+      .glass-panel.grabbing {
+        cursor: grabbing;
+        transition: border-radius 0.3s ease;
+      }
+      @keyframes breathe {
+        0%,
+        100% {
+          border-radius: 34px;
+        }
+        50% {
+          border-radius: 40px 30px 40px 30px;
+        }
+      }
+
+      /* base glass body: plain blur, works everywhere as the fallback layer */
+      .glass-body {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        backdrop-filter: blur(var(--blur)) saturate(1.4) brightness(1.05);
+        -webkit-backdrop-filter: blur(var(--blur)) saturate(1.4)
+          brightness(1.05);
+        overflow: hidden;
+      }
+
+      /* the mirror trick: a full-viewport clone of the background, shifted to align
+     pixel-perfect behind the panel, then run through a REGULAR (non-backdrop)
+     CSS filter — this is supported everywhere, unlike backdrop-filter:url() */
+      .glass-mirrors {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        overflow: hidden;
+      }
+      .mirror-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: var(--bg-url);
+        background-size: cover;
+        background-position: center;
+        will-change: left, top, width, height;
+      }
+      .mirror-warp {
+        filter: url(#liquid-distortion) saturate(1.35) brightness(1.06)
+          contrast(1.05);
+      }
+      .mirror-chroma {
+        filter: url(#liquid-distortion-chroma);
+        mix-blend-mode: screen;
+        opacity: 0.85;
+        -webkit-mask-image: radial-gradient(
+          circle at center,
+          transparent 45%,
+          black 100%
+        );
+        mask-image: radial-gradient(
+          circle at center,
+          transparent 45%,
+          black 100%
+        );
+      }
+      .glass-tint {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(
+          160deg,
+          rgba(10, 18, 22, 0.05),
+          rgba(8, 14, 18, 0.32)
+        );
+      }
+
+      /* thin bright rim + inner shadow for glass depth */
+      .glass-rim {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+          inset 0 1px 1px rgba(255, 255, 255, 0.7),
+          inset 0 -8px 20px rgba(0, 0, 0, 0.25),
+          inset 0 8px 24px rgba(255, 255, 255, 0.12),
+          0 20px 40px rgba(0, 0, 0, 0.35),
+          0 2px 8px rgba(0, 0, 0, 0.25);
+      }
+      .glass-rim::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1.5px;
+        background: conic-gradient(
+          from calc(var(--mx) * 3.6deg) at var(--mx) var(--my),
+          rgba(255, 255, 255, 0) 0deg,
+          rgba(255, 255, 255, 0.9) 40deg,
+          rgba(255, 255, 255, 0) 110deg,
+          rgba(255, 255, 255, 0) 250deg,
+          rgba(255, 255, 255, 0.5) 320deg,
+          rgba(255, 255, 255, 0) 360deg
+        );
+        -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
+
+      /* rainbow iridescence — thin prism-like spectrum riding the rim, like light splitting through glass */
+      .glass-iridescent {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        mix-blend-mode: color-dodge;
+        opacity: 0.5;
+        background: conic-gradient(
+          from calc(var(--mx) * 3.6deg) at var(--mx) var(--my),
+          #ff3b6b,
+          #ffb03b,
+          #fff23b,
+          #4bff8f,
+          #3bd0ff,
+          #6a5bff,
+          #ff3bd0,
+          #ff3b6b
+        );
+        -webkit-mask: radial-gradient(
+          circle at center,
+          transparent 58%,
+          black 100%
+        );
+        mask: radial-gradient(circle at center, transparent 58%, black 100%);
+        filter: blur(2px) saturate(1.6);
+        animation: spin 14s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          filter: blur(2px) saturate(1.6) hue-rotate(360deg);
+        }
+      }
+
+      /* specular highlight that follows the light / mouse */
+      .glass-specular {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: radial-gradient(
+          circle at var(--mx) var(--my),
+          rgba(255, 255, 255, 0.55),
+          rgba(255, 255, 255, 0) 45%
+        );
+        mix-blend-mode: overlay;
+      }
+
+      .glass-content {
+        position: relative;
+        z-index: 3;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 0 34px;
+        color: #fff;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+      }
+      .glass-content h1 {
+        margin: 0 0 6px;
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+      }
+      .glass-content p {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 500;
+        opacity: 0.92;
+        line-height: 1.35;
+      }
+
+      /* ---------- UI controls ---------- */
+      .hud {
+        position: absolute;
+        bottom: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        background: rgba(10, 16, 20, 0.55);
+        backdrop-filter: blur(18px);
+        padding: 10px 16px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #e8f0f2;
+        font-size: 12px;
+        z-index: 20;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      }
+      .hud label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .hud input[type="range"] {
+        width: 110px;
+      }
+      .toggle {
+        position: relative;
+        width: 40px;
+        height: 22px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+        border: none;
+      }
+      .toggle::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 0.25s ease;
+      }
+      .toggle.on {
+        background: #5ec8ff;
+      }
+      .toggle.on::after {
+        transform: translateX(18px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage" id="stage">
+      <svg class="defs">
+        <defs>
+          <!-- Strong lens-like warp: big low-frequency swirl (bulge) + fine ripple layered together -->
+          <filter
+            id="liquid-distortion"
+            x="-40%"
+            y="-40%"
+            width="180%"
+            height="180%"
+            color-interpolation-filters="sRGB"
+          >
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.004 0.006"
+              numOctaves="2"
+              seed="12"
+              result="bigWarp"
+            />
+            <feGaussianBlur
+              in="bigWarp"
+              stdDeviation="6"
+              result="bigWarpSoft"
+            />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.03 0.035"
+              numOctaves="2"
+              seed="7"
+              result="fineRipple"
+            />
+            <feGaussianBlur
+              in="fineRipple"
+              stdDeviation="1.5"
+              result="fineRippleSoft"
+            />
+            <feComposite
+              in="bigWarpSoft"
+              in2="fineRippleSoft"
+              operator="arithmetic"
+              k1="0"
+              k2="0.7"
+              k3="0.3"
+              k4="0"
+              result="combinedMap"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="combinedMap"
+              scale="95"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="liquidBase"
+            />
+          </filter>
+
+          <!-- Prism dispersion: R / G / B displaced with different scale+direction so edges split into a rainbow fringe -->
+          <filter
+            id="liquid-distortion-chroma"
+            x="-40%"
+            y="-40%"
+            width="180%"
+            height="180%"
+            color-interpolation-filters="sRGB"
+          >
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.004 0.006"
+              numOctaves="2"
+              seed="12"
+              result="n"
+            />
+            <feGaussianBlur in="n" stdDeviation="6" result="ns" />
+
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="ns"
+              scale="130"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="dR"
+            />
+            <feColorMatrix
+              in="dR"
+              type="matrix"
+              values="1 0 0 0 0
+                    0 0 0 0 0
+                    0 0 0 0 0
+                    0 0 0 1 0"
+              result="redCh"
+            />
+
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="ns"
+              scale="100"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="dG"
+            />
+            <feColorMatrix
+              in="dG"
+              type="matrix"
+              values="0 0 0 0 0
+                    0 1 0 0 0
+                    0 0 0 0 0
+                    0 0 0 1 0"
+              result="greenCh"
+            />
+
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="ns"
+              scale="70"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="dB"
+            />
+            <feColorMatrix
+              in="dB"
+              type="matrix"
+              values="0 0 0 0 0
+                    0 0 0 0 0
+                    0 0 1 0 0
+                    0 0 0 1 0"
+              result="blueCh"
+            />
+
+            <feOffset in="redCh" dx="-6" dy="-2" result="redChOff" />
+            <feOffset in="greenCh" dx="0" dy="3" result="greenChOff" />
+            <feOffset in="blueCh" dx="6" dy="-2" result="blueChOff" />
+
+            <feBlend in="redChOff" in2="greenChOff" mode="screen" result="rg" />
+            <feBlend in="rg" in2="blueChOff" mode="screen" />
+          </filter>
+        </defs>
+      </svg>
+
+      <div class="glass-wrap" id="glassWrap">
+        <div class="glass-panel" id="glassPanel">
+          <div class="glass-body"></div>
+          <div class="glass-mirrors" id="glassMirrors">
+            <div class="mirror-img mirror-warp" id="mirrorWarp"></div>
+            <div class="mirror-img mirror-chroma" id="mirrorChroma"></div>
+          </div>
+          <div class="glass-tint"></div>
+          <div class="glass-iridescent" id="glassIrid"></div>
+          <div class="glass-specular"></div>
+          <div class="glass-rim"></div>
+          <div class="glass-content">
+            <h1>Liquid Glass</h1>
+            <p>iOS Effect Explanation<br />by Aghajari</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hud">
+        <label>
+          <span>Distortion</span>
+          <input
+            type="range"
+            id="distortionSlider"
+            min="0"
+            max="180"
+            value="95"
+          />
+        </label>
+        <label>
+          <span>Liquid Glass</span>
+          <button class="toggle on" id="modeToggle"></button>
+        </label>
+      </div>
+    </div>
+
+    <script>
+      const wrap = document.getElementById("glassWrap");
+      const panel = document.getElementById("glassPanel");
+      const stage = document.getElementById("stage");
+      const root = document.documentElement;
+      const slider = document.getElementById("distortionSlider");
+      const filterEl = document.querySelector(
+        "#liquid-distortion feDisplacementMap",
+      );
+      const toggle = document.getElementById("modeToggle");
+      const glassBody = document.querySelector(".glass-body");
+      const mirrorWarp = document.getElementById("mirrorWarp");
+      const mirrorChroma = document.getElementById("mirrorChroma");
+      const glassIrid = document.getElementById("glassIrid");
+      const glassMirrors = document.getElementById("glassMirrors");
+
+      // Keep the mirror clones pixel-aligned with the real background behind the panel.
+      // Each mirror is sized to the full viewport and shifted by the panel's own
+      // on-screen offset, so visually it lines up exactly — then a normal CSS
+      // `filter` (not backdrop-filter) is applied to it, which is reliably
+      // supported across Chrome/Safari/Firefox, unlike backdrop-filter: url().
+      function syncMirrors() {
+        const r = wrap.getBoundingClientRect();
+        const vw = window.innerWidth,
+          vh = window.innerHeight;
+        [mirrorWarp, mirrorChroma].forEach((m) => {
+          m.style.width = vw + "px";
+          m.style.height = vh + "px";
+          m.style.left = -r.left + "px";
+          m.style.top = -r.top + "px";
+        });
+      }
+      window.addEventListener("resize", syncMirrors);
+      window.addEventListener("load", syncMirrors);
+      syncMirrors();
+
+      // distortion slider -> update the actual SVG filter attribute (scales both warp and dispersion together)
+      function setDistortion(v) {
+        filterEl.setAttribute("scale", v);
+        root.style.setProperty("--distortion", v);
+      }
+      setDistortion(95);
+      slider.addEventListener("input", (e) => setDistortion(e.target.value));
+
+      // toggle liquid glass vs plain blur
+      let liquidOn = true;
+      toggle.addEventListener("click", () => {
+        liquidOn = !liquidOn;
+        toggle.classList.toggle("on", liquidOn);
+        glassMirrors.style.opacity = liquidOn ? 1 : 0;
+        glassIrid.style.opacity = liquidOn ? 0.5 : 0;
+        root.style.setProperty("--blur", liquidOn ? "3px" : "16px");
+      });
+
+      // mouse-follow specular highlight + subtle 3D tilt
+      function updatePointer(clientX, clientY) {
+        const rect = panel.getBoundingClientRect();
+        const px = (clientX - rect.left) / rect.width;
+        const py = (clientY - rect.top) / rect.height;
+        root.style.setProperty("--mx", px * 100 + "%");
+        root.style.setProperty("--my", py * 100 + "%");
+        root.style.setProperty("--tiltX", (px - 0.5) * 10 + "deg");
+        root.style.setProperty("--tiltY", (py - 0.5) * -10 + "deg");
+      }
+      stage.addEventListener("mousemove", (e) => {
+        updatePointer(e.clientX, e.clientY);
+      });
+
+      // drag to move the glass panel around the scene
+      let dragging = false,
+        offX = 0,
+        offY = 0;
+      function startDrag(x, y) {
+        dragging = true;
+        const r = wrap.getBoundingClientRect();
+        offX = x - r.left;
+        offY = y - r.top;
+        panel.classList.add("grabbing");
+      }
+      function moveDrag(x, y) {
+        if (!dragging) return;
+        wrap.style.left = x - offX + "px";
+        wrap.style.top = y - offY + "px";
+        syncMirrors();
+      }
+      function endDrag() {
+        dragging = false;
+        panel.classList.remove("grabbing");
+      }
+      wrap.addEventListener("mousedown", (e) =>
+        startDrag(e.clientX, e.clientY),
+      );
+      window.addEventListener("mousemove", (e) =>
+        moveDrag(e.clientX, e.clientY),
+      );
+      window.addEventListener("mouseup", endDrag);
+
+      wrap.addEventListener(
+        "touchstart",
+        (e) => {
+          const t = e.touches[0];
+          startDrag(t.clientX, t.clientY);
+        },
+        { passive: true },
+      );
+      window.addEventListener(
+        "touchmove",
+        (e) => {
+          const t = e.touches[0];
+          moveDrag(t.clientX, t.clientY);
+          updatePointer(t.clientX, t.clientY);
+        },
+        { passive: true },
+      );
+      window.addEventListener("touchend", endDrag);
+    </script>
+  </body>
+</html>

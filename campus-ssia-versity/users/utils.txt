@@ -1,0 +1,9 @@
+#ff6600
+#bd2325
+#003a62
+#0e795b
+
+Souhaites-tu que je t’ajoute aussi un effet de superposition blanche semi-transparente 
+(comme un voile de désactivation) 
+par-dessus l’image ? ok vas y mais rend montre moi la commande css pour rendre une div 
+non manipulable

@@ -1,0 +1,127 @@
+.mentorat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.8rem;
+  height: min(75vh, 500px);
+  padding: 0.5rem;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin: 0 0.5rem;
+  background: #b5dbf4;
+}
+
+.mentorat-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--versity-blue);
+  border-radius: 8px;
+  width: 30%;
+  padding: 0.8rem;
+}
+
+.mentorat-form h1 {
+  font-size: 1.8rem;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.mentorat-form__item {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mentorat-form__input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mentorat-form__input-group p {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--white);
+  margin: 0 0 0.3rem 0;
+}
+
+.mentorat-form__input-group select {
+  background: var(--white);
+  color: var(--versity-blue);
+  font-size: 0.7rem;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+}
+
+.mentorat-form__action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mentorat-form__action button {
+  width: max-content;
+  border: none;
+  outline: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--white);
+  background: var(--primary);
+  border-radius: 3px;
+  padding: 0rem 0.5rem;
+  cursor: pointer;
+}
+
+.mentorat-godson {
+  width: 70%;
+  height: 100%;
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mentorat-godson h1 {
+  font-size: 1.8rem;
+  color: var(--versity-blue);
+  margin-bottom: 1rem;
+}
+
+.mentorat-godson__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  height: 100%;
+  overflow-y: auto;
+  border-radius: 5px;
+}
+
+.mentorat-godson__list::-webkit-scrollbar {
+  display: none;
+}
+
+.mentorat-godson__list-item {
+  background: var(--versity-blue);
+  padding: 0.4rem 1rem;
+  border-radius: 5px;
+  width: 100%;
+  height: max-content;
+}
+
+.mentorat-godson__details {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+}
+
+.mentorat-godson__details p {
+  margin: 0;
+  font-size: 0.6rem;
+  font-weight: 500;
+  padding: 0.1rem 0.3rem;
+  color: var(--versity-blue);
+  background: var(--white);
+  border-radius: 3px;
+}

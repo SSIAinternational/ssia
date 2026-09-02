@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pédagogie - SSIAVERSITY | Analyse des demandes d'admission</title>
+    <link rel="icon" href="../../../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="assets/css/navbar.css" />
+    <link rel="stylesheet" href="assets/css/demandes-admission.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+
+    <section class="demandes-admission">
+      <div class="demandes-admission__sidebar">
+        <span>Demandes déposés</span>
+        <span>Demandes traités</span>
+        <span>Décision & synthèse</span>
+        <span>Demandes acceptées</span>
+        <span>Demandes rejétées</span>
+      </div>
+      <div class="demandes-admission__set">
+        <div class="demandes-admission__filed">
+          <div class="demandes-admission__table">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nom et prénoms</th>
+                  <th>Genre</th>
+                  <th>Membre SSIA</th>
+                  <th>E-mail</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-status="filed">
+                  <td>1</td>
+                  <td>
+                    <img src="../../../../../img/marie.JPG" alt="" srcset="" />
+                    Djakalet Marie de Dieu Christobelle Sekohonon
+                  </td>
+                  <td>Femme</td>
+                  <td><span class="member">Oui</span></td>
+                  <td>christobelledjakalet12@gmail.com</td>
+                  <td><i class="fa-solid fa-lock"></i></td>
+                </tr>
+                <tr data-status="filed">
+                  <td>2</td>
+                  <td>
+                    <img src="../../../../../img/marie.JPG" alt="" srcset="" />
+                    Djakalet Marie de Dieu Christobelle Sekohonon
+                  </td>
+                  <td>Femme</td>
+                  <td>Non</td>
+                  <td>christobelledjakalet12@gmail.com</td>
+                  <td><i class="fa-solid fa-lock"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="demandes-admission__processed">
+          <div class="demandes-admission__table">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nom et prénoms</th>
+                  <th>Genre</th>
+                  <th>Membre SSIA</th>
+                  <th>E-mail</th>
+                  <th>Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-status="processed">
+                  <td>1</td>
+                  <td>
+                    <img src="../../../../../img/marie.JPG" alt="" srcset="" />
+                    Djakalet Marie de Dieu Christobelle Sekohonon
+                  </td>
+                  <td>Femme</td>
+                  <td><span class="member">Oui</span></td>
+                  <td>christobelledjakalet12@gmail</td>
+                  <td><span class="processed">Traité</span></td>
+                </tr>
+                <tr data-status="processed">
+                  <td>1</td>
+                  <td>
+                    <img src="../../../../../img/marie.JPG" alt="" srcset="" />
+                    Djakalet Marie de Dieu Christobelle Sekohonon
+                  </td>
+                  <td>Femme</td>
+                  <td><span class="member">Oui</span></td>
+                  <td>christobelledjakalet12@gmail</td>
+                  <td><span class="on-hold">En cours</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="demandes-admission__final-decision">
+          <div class="demandes-admission__table">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nom et prénoms</th>
+                  <th>Genre</th>
+                  <th>Membre SSIA</th>
+                  <th>E-mail</th>
+                  <th>Note d'entretien</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-status="decision">
+                  <td>1</td>
+                  <td>
+                    <img src="../../../../../img/marie.JPG" alt="" srcset="" />
+                    Djakalet Marie de Dieu Christobelle Sekohonon
+                  </td>
+                  <td>Femme</td>
+                  <td><span class="member">Oui</span></td>
+                  <td>christobelledjakalet12@gmail</td>
+                  <td>__/20</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="demandes-admission__accepted">
+          <div class="demandes-admission__table">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nom et prénoms</th>
+                  <th>Genre</th>
+                  <th>Membre SSIA</th>
+                  <th>E-mail</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-status="accepted">
+                  <td>1</td>
+                  <td>
+                    <img src="../../../../../img/marie.JPG" alt="" srcset="" />
+                    Djakalet Marie de Dieu Christobelle Sekohonon
+                  </td>
+                  <td>Femme</td>
+                  <td><span class="member">Oui</span></td>
+                  <td>christobelledjakalet12@gmail</td>
+                  <td><span>Accepter</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="demandes-admission__refused">
+          <div class="demandes-admission__table">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nom et prénoms</th>
+                  <th>Genre</th>
+                  <th>Membre SSIA</th>
+                  <th>E-mail</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-status="refused">
+                  <td>1</td>
+                  <td>
+                    <img src="../../../../../img/marie.JPG" alt="" srcset="" />
+                    Djakalet Marie de Dieu Christobelle Sekohonon
+                  </td>
+                  <td>Femme</td>
+                  <td><span class="member">Oui</span></td>
+                  <td>christobelledjakalet12@gmail</td>
+                  <td><span>Refuser</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="demandes-admission__modal-details hide" data-state="">
+        <div class="details-content">
+          <!-- fermeture -->
+          <div class="action-close">
+            <i class="fa-solid fa-close"></i>
+          </div>
+
+          <!-- référence -->
+          <div class="demande-refence">
+            <span>
+              <u>N° de référence de la demande :</u> #ADMI-2025-1212-9028
+            </span>
+          </div>
+
+          <!-- ========================= -->
+          <!-- RUBRIQUES COMMUNES -->
+          <!-- ========================= -->
+
+          <!-- Informations personnelles -->
+          <div class="rubrique information-personnelle">
+            <div class="title-angle-actions">
+              <div class="title-angle">
+                <h5>Informations personnelles</h5>
+                <i class="fa-solid fa-angle-down"></i>
+              </div>
+              <div class="actions">
+                <span class="complet"
+                  >Complet <i class="fa-solid fa-lock"></i
+                ></span>
+                <span class="imcomplet none">Imcomplet</span>
+              </div>
+            </div>
+            <div class="content">
+              <div class="information-personnelle__header">
+                <img src="../../../../../img/marie.JPG" alt="" srcset="" />
+                <div class="information-personnelle__header__detail-text">
+                  <div class="span-group">
+                    <span>Nom</span>
+                    <span>Djakalet</span>
+                  </div>
+                  <div class="span-group">
+                    <span>Prénoms</span>
+                    <span>Marie De Dieu Christobelle Sekohonon</span>
+                  </div>
+                </div>
+              </div>
+              <div class="body">
+                <div class="span-group">
+                  <span>Genre</span>
+                  <span>Femme</span>
+                </div>
+                <div class="span-group">
+                  <span>Date de naissance</span>
+                  <span>10/12/2025</span>
+                </div>
+                <div class="span-group">
+                  <span>Lieu de naissance</span>
+                  <span>Abidjan</span>
+                </div>
+                <div class="span-group">
+                  <span>Numéro de piece d'identité / passeport </span>
+                  <span>CNI-425254626</span>
+                </div>
+                <div class="pdf-doc">
+                  <span>Pièce d'identité</span>
+                  <div class="pdf-item__set">
+                    <div class="pdf-item"></div>
+                  </div>
+                </div>
+                <div class="span-group">
+                  <span>Nationalité</span>
+                  <span>Ivoirienne</span>
+                </div>
+                <div class="span-group">
+                  <span>Numéro de téléphone</span>
+                  <span>+225 0585235443</span>
+                </div>
+                <div class="span-group">
+                  <span>Adresse E-mail</span>
+                  <span>christobelledjakalet12@gmail.com</span>
+                </div>
+                <div class="span-group">
+                  <span>Pôle SSIA</span>
+                  <span>Côte d'Ivoire</span>
+                </div>
+                <div class="span-group">
+                  <span>Matricule SSIA</span>
+                  <span>N/A</span>
+                </div>
+                <div class="pdf-doc">
+                  <span>Lettre de recommendation</span>
+                  <div class="pdf-item__set">
+                    <div class="pdf-item"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Informations académiques -->
+          <div class="rubrique information-académique">
+            <div class="title-angle-actions">
+              <div class="title-angle">
+                <h5>Informations académiques</h5>
+                <i class="fa-solid fa-angle-down"></i>
+              </div>
+              <div class="actions">
+                <span>Complet</span>
+                <span>Imcomplet</span>
+              </div>
+            </div>
+            <div class="content">
+              <div class="body">
+                <span>-- Information 1</span>
+                <div class="span-group">
+                  <span>Année</span>
+                  <span>2021</span>
+                </div>
+                <div class="span-group">
+                  <span>Formation</span>
+                  <span>Bac +1</span>
+                </div>
+                <div class="span-group">
+                  <span>Etablissement fréquenté ou institution</span>
+                  <span>Université Virtuelle de Côte d'Ivoire</span>
+                </div>
+                <div class="span-group">
+                  <span>Commentaire</span>
+                  <span
+                    >Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book. It has survived not only five centuries,
+                    but also the leap into electronic typesetting, remaining
+                    essentially unchanged.</span
+                  >
+                </div>
+                <div class="span-group">
+                  <span>Moyenne</span>
+                  <span>13/20</span>
+                </div>
+                <div class="span-group">
+                  <span>Mention</span>
+                  <span>Assez bien</span>
+                </div>
+                <div class="pdf-doc">
+                  <span>Justificatifs</span>
+                  <div class="pdf-item__set">
+                    <div class="pdf-item"></div>
+                    <div class="pdf-item"></div>
+                    <div class="pdf-item"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Choix de formation -->
+          <div class="rubrique choix-formation">
+            <div class="title-angle-actions">
+              <div class="title-angle">
+                <h5>Choix de formation</h5>
+                <i class="fa-solid fa-angle-down"></i>
+              </div>
+              <div class="actions">
+                <span>Complet</span>
+                <span class="imcomplet">Imcomplet</span>
+              </div>
+            </div>
+            <div class="content">
+              <div class="body">
+                <span>-- Choix 1</span>
+                <div class="span-group">
+                  <span>Collège</span>
+                  <span>Collège Clermont</span>
+                </div>
+                <div class="span-group">
+                  <span>Programme d'étude</span>
+                  <span>Administration des affaires</span>
+                </div>
+                <div class="span-group">
+                  <span>Année d'entrée</span>
+                  <span>2025 - 2026</span>
+                </div>
+                <div class="span-group">
+                  <span>Niveau demandé</span>
+                  <span>Premier cycle - Bac +3</span>
+                </div>
+                <div class="span-group">
+                  <span>Lettre de motivation addressée au collège</span>
+                  <span
+                    >Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book. It has survived not only five centuries,
+                    but also the leap into electronic typesetting, remaining
+                    essentially unchanged.</span
+                  >
+                </div>
+                <div class="span-group">
+                  <span>Résultat du test d'aptitude</span>
+                  <span>75%</span>
+                </div>
+                <div class="pdf-doc">
+                  <span>Justificatif du test </span>
+                  <div class="pdf-item__set">
+                    <div class="pdf-item"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Informations complémentaires -->
+          <div class="rubrique information-complementaires">
+            <div class="title-angle-actions">
+              <div class="title-angle">
+                <h5>Informations complémentaires</h5>
+                <i class="fa-solid fa-angle-down"></i>
+              </div>
+              <div class="actions">
+                <span class="complet"
+                  >Complet <i class="fa-solid fa-lock"></i
+                ></span>
+                <span class="imcomplet none">Imcomplet</span>
+              </div>
+            </div>
+            <div class="content">
+              <div class="body">
+                <div class="span-group">
+                  <span>Année d'obtention du visa SSIA</span>
+                  <span>2020</span>
+                </div>
+                <div class="span-group">
+                  <span>Visa d'entrée SSIA</span>
+                  <span>Visa étudiant</span>
+                </div>
+                <div class="span-group">
+                  <span>Titre de séjour SSIA</span>
+                  <span>Court séjour</span>
+                </div>
+                <div class="span-group">
+                  <span>Carte de séjour visa SSIA</span>
+                  <span>N/A</span>
+                </div>
+                <div class="span-group">
+                  <span>Passeport SSIA</span>
+                  <span>637768920-PASS-982</span>
+                </div>
+                <div class="pdf-doc">
+                  <span>Justificatif du séjour</span>
+                  <div class="pdf-item__set">
+                    <div class="pdf-item"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========================= -->
+          <!-- ACTIONS SELON L'ÉTAT -->
+          <!-- ========================= -->
+
+          <!-- 🟡 FILED / PROCESSED -->
+          <div class="details-content__action filed-only">
+            <div class="inputs">
+              <textarea rows="1" placeholder="Commentaire"></textarea>
+              <select name="" id="">
+                <option value="">-- Recommandation --</option>
+                <option value="">Approuvée</option>
+                <option value="">Non approuvé</option>
+                <option value="">Peux étudier</option>
+              </select>
+            </div>
+            <div class="buttons">
+              <button class="btn-valider">Valider</button>
+              <button class="btn-unlock">Déverrouiller la soumission</button>
+            </div>
+          </div>
+
+          <!-- 🔵 DÉCISION FINALE -->
+          <div class="details-content__final-action decision-only">
+            <div class="final-action__comment">
+              <span><b>Commentaire analyse :</b><br />Lorem</span>
+              <span><b>Commentaire entretien :</b><br />Lorem</span>
+              <textarea rows="1" placeholder="Faire la synthèse"></textarea>
+            </div>
+            <div class="final-action__button">
+              <button class="valider">Envoyer la synthèse</button>
+            </div>
+          </div>
+
+          <!-- 🟢 ACCEPTÉE -->
+          <div class="details-content__final-action accepted-only">
+            <div class="final-action__comment">
+              <span><b>Commentaire analyse :</b><br />Lorem</span>
+              <span><b>Commentaire entretien :</b><br />Lorem</span>
+              <span><b>Synthèse :</b><br />Lorem</span>
+            </div>
+            <div class="final-action__college">
+              <h6>Collèges demandé</h6>
+              <span>Collège Clermont <i class="fa-solid fa-check"></i></span>
+              <span>Collège Fermont <i class="fa-solid fa-check"></i></span>
+              <span>Collège Montcler <i class="fa-solid fa-close"></i></span>
+            </div>
+
+            <div class="final-action__button">
+              <button class="valider">Demande validée</button>
+            </div>
+          </div>
+
+          <!-- 🔴 REFUSÉE -->
+          <div class="details-content__final-action refused-only">
+            <div class="final-action__comment">
+              <span><b>Commentaire analyse :</b><br />Lorem</span>
+              <span><b>Commentaire entretien :</b><br />Lorem</span>
+              <span><b>Synthèse :</b><br />Lorem</span>
+            </div>
+            <div class="final-action__college">
+              <h6>Collèges demandé</h6>
+              <span>Collège Clermont <i class="fa-solid fa-close"></i></span>
+              <span>Collège Fermont <i class="fa-solid fa-close"></i></span>
+              <span>Collège Montcler <i class="fa-solid fa-close"></i></span>
+            </div>
+            <div class="final-action__button">
+              <button class="refuser">Demande rejetée</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- aperçu document -->
+        <div class="document-preview hide">
+          <div class="document-preview__action-close">
+            <i class="fa-solid fa-close"></i>
+          </div>
+          <div class="document-item"></div>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script src="assets/js/render-sidebar.js"></script>
+  <script src="assets/js/demandes-admission-details.js"></script>
+  <script src="assets/js/demandes-admission-section.js"></script>
+</html>

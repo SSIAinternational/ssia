@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rapport Financier — SSIAVERSITY</title>
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/etat-financier.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="etat-set">
+      <div class="print-btn">
+        <button onclick="window.print()">⎙ Imprimer / Exporter PDF</button>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+     PAGE 1 — BILAN
+═══════════════════════════════════════════ -->
+      <div class="page">
+        <div class="doc-header">
+          <div>
+            <div class="entity-name"><img src="" alt="" srcset="" /> SSIA</div>
+            <div class="entity-sub">
+              Monnaie &amp; Ivoire · Entité Consolidée
+            </div>
+          </div>
+          <div class="doc-meta">
+            <div class="doc-year">2026</div>
+            <div class="doc-currency">En milliers de SSIA (000' SSIA)</div>
+          </div>
+        </div>
+
+        <div class="section-title">Bilan</div>
+        <div class="section-divider"></div>
+
+        <div class="two-col">
+          <!-- ACTIF -->
+          <div>
+            <div class="sub-title">Actif</div>
+            <table>
+              <tr>
+                <td class="t-code">100</td>
+                <td class="t-label">Portefeuille clients</td>
+                <td class="t-amt"><input type="text" /></td>
+              </tr>
+              <tr>
+                <td class="t-code">110</td>
+                <td class="t-label">Banque entité</td>
+                <td class="t-amt">15 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">120</td>
+                <td class="t-label">Trésorerie</td>
+                <td class="t-amt">3 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">130</td>
+                <td class="t-label">Placements court terme</td>
+                <td class="t-amt">4 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">140</td>
+                <td class="t-label">Créances inter-entités</td>
+                <td class="t-amt">2 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">150</td>
+                <td class="t-label">Intérêts à recevoir</td>
+                <td class="t-amt">500</td>
+              </tr>
+              <tr>
+                <td class="t-code">160</td>
+                <td class="t-label">Investissements marché</td>
+                <td class="t-amt">7 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">170</td>
+                <td class="t-label">Actions détenues</td>
+                <td class="t-amt">6 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">180</td>
+                <td class="t-label">Participations filiales</td>
+                <td class="t-amt">12 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">190</td>
+                <td class="t-label">Immobilisations</td>
+                <td class="t-amt">20 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">195</td>
+                <td class="t-label">Goodwill acquisition</td>
+                <td class="t-amt">5 000</td>
+              </tr>
+              <tr class="t-total">
+                <td class="t-code"></td>
+                <td class="t-label">Total Actif</td>
+                <td class="t-amt">79 500</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- PASSIF + CP -->
+          <div class="col-divider">
+            <div class="sub-title">Passif</div>
+            <table>
+              <tr>
+                <td class="t-code">200</td>
+                <td class="t-label">Réserve fédérale</td>
+                <td class="t-amt">10 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">210</td>
+                <td class="t-label">Dettes inter-entités</td>
+                <td class="t-amt">3 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">220</td>
+                <td class="t-label">Crédits réserve fédérale</td>
+                <td class="t-amt">12 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">230</td>
+                <td class="t-label">Intérêts à payer</td>
+                <td class="t-amt">1 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">240</td>
+                <td class="t-label">Impôts à payer</td>
+                <td class="t-amt">2 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">250</td>
+                <td class="t-label">Taxes transactions</td>
+                <td class="t-amt">500</td>
+              </tr>
+              <tr>
+                <td class="t-code">260</td>
+                <td class="t-label">Dividendes à payer</td>
+                <td class="t-amt">1 500</td>
+              </tr>
+              <tr>
+                <td class="t-code">270</td>
+                <td class="t-label">Fournisseurs</td>
+                <td class="t-amt">2 500</td>
+              </tr>
+              <tr>
+                <td class="t-code">280</td>
+                <td class="t-label">Salaires à payer</td>
+                <td class="t-amt">1 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">290</td>
+                <td class="t-label">Provisions risques</td>
+                <td class="t-amt">2 000</td>
+              </tr>
+              <tr class="t-total">
+                <td class="t-code"></td>
+                <td class="t-label">Total Passif</td>
+                <td class="t-amt">35 500</td>
+              </tr>
+            </table>
+
+            <div class="sub-title mt8">Capitaux Propres</div>
+            <table>
+              <tr>
+                <td class="t-code">300</td>
+                <td class="t-label">Capital social</td>
+                <td class="t-amt">20 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">310</td>
+                <td class="t-label">Actions émises</td>
+                <td class="t-amt">10 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">320</td>
+                <td class="t-label">Primes actions</td>
+                <td class="t-amt">3 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">330</td>
+                <td class="t-label">Réserves internes</td>
+                <td class="t-amt">4 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">340</td>
+                <td class="t-label">Résultat reporté</td>
+                <td class="t-amt">2 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">350</td>
+                <td class="t-label">Résultat net</td>
+                <td class="t-amt pos">5 000</td>
+              </tr>
+              <tr class="t-total">
+                <td class="t-code"></td>
+                <td class="t-label">Total Capitaux Propres</td>
+                <td class="t-amt">44 000</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="balance-check">
+          <span class="bc-label">Équilibre du Bilan</span>
+          <span class="bc-eq">79 500 ACTIF = 35 500 PASSIF + 44 000 CP</span>
+          <span class="bc-ok">✓ ÉQUILIBRÉ</span>
+        </div>
+
+        <div class="doc-footer">
+          <span
+            >SSIA · Monnaie &amp; Ivoire · Exercice clos le 31 décembre
+            2026</span
+          >
+          <span class="page-num">1 / 3</span>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+     PAGE 2 — COMPTE DE RÉSULTAT + FLUX
+═══════════════════════════════════════════ -->
+      <div class="page">
+        <div class="doc-header">
+          <div>
+            <div class="entity-name">SSIA</div>
+            <div class="entity-sub">
+              Compte de Résultat &amp; Flux de Trésorerie
+            </div>
+          </div>
+          <div class="doc-meta">
+            <div class="doc-year">2026</div>
+            <div class="doc-currency">En milliers de SSIA (000' SSIA)</div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <!-- COMPTE DE RÉSULTAT -->
+          <div>
+            <div class="section-title">Compte de Résultat</div>
+            <div class="section-divider"></div>
+
+            <div class="sub-title">Produits</div>
+            <table>
+              <tr>
+                <td class="t-code">400</td>
+                <td class="t-label">Revenus inscriptions</td>
+                <td class="t-amt">10 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">410</td>
+                <td class="t-label">Revenus services</td>
+                <td class="t-amt">8 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">420</td>
+                <td class="t-label">Revenus commissions</td>
+                <td class="t-amt">3 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">430</td>
+                <td class="t-label">Revenus transactions</td>
+                <td class="t-amt">2 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">440</td>
+                <td class="t-label">Gains trading</td>
+                <td class="t-amt">5 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">450</td>
+                <td class="t-label">Dividendes reçus</td>
+                <td class="t-amt">1 500</td>
+              </tr>
+              <tr>
+                <td class="t-code">460</td>
+                <td class="t-label">Plus-values investissements</td>
+                <td class="t-amt">2 500</td>
+              </tr>
+              <tr>
+                <td class="t-code">470</td>
+                <td class="t-label">Revenus financiers</td>
+                <td class="t-amt">1 000</td>
+              </tr>
+              <tr>
+                <td class="t-code">480</td>
+                <td class="t-label">Revenus locations</td>
+                <td class="t-amt">500</td>
+              </tr>
+              <tr>
+                <td class="t-code">490</td>
+                <td class="t-label">Autres produits</td>
+                <td class="t-amt">500</td>
+              </tr>
+              <tr class="t-total">
+                <td class="t-code"></td>
+                <td class="t-label">Total Produits</td>
+                <td class="t-amt">34 000</td>
+              </tr>
+            </table>
+
+            <div class="sub-title mt8">Charges</div>
+            <table>
+              <tr>
+                <td class="t-code">500</td>
+                <td class="t-label">Salaires</td>
+                <td class="t-amt neg">(7 000)</td>
+              </tr>
+              <tr>
+                <td class="t-code">510</td>
+                <td class="t-label">Charges opérationnelles</td>
+                <td class="t-amt neg">(4 000)</td>
+              </tr>
+              <tr>
+                <td class="t-code">520</td>
+                <td class="t-label">Marketing</td>
+                <td class="t-amt neg">(1 500)</td>
+              </tr>
+              <tr>
+                <td class="t-code">530</td>
+                <td class="t-label">Frais système</td>
+                <td class="t-amt neg">(1 000)</td>
+              </tr>
+              <tr>
+                <td class="t-code">540</td>
+                <td class="t-label">Pertes trading</td>
+                <td class="t-amt neg">(800)</td>
+              </tr>
+              <tr>
+                <td class="t-code">550</td>
+                <td class="t-label">Intérêts crédit réserve</td>
+                <td class="t-amt neg">(700)</td>
+              </tr>
+              <tr>
+                <td class="t-code">560</td>
+                <td class="t-label">Impôts</td>
+                <td class="t-amt neg">(2 000)</td>
+              </tr>
+              <tr>
+                <td class="t-code">570</td>
+                <td class="t-label">Taxes transactions</td>
+                <td class="t-amt neg">(500)</td>
+              </tr>
+              <tr>
+                <td class="t-code">580</td>
+                <td class="t-label">Amortissements</td>
+                <td class="t-amt neg">(1 200)</td>
+              </tr>
+              <tr>
+                <td class="t-code">590</td>
+                <td class="t-label">Pertes exceptionnelles</td>
+                <td class="t-amt neg">(300)</td>
+              </tr>
+              <tr class="t-total">
+                <td class="t-code"></td>
+                <td class="t-label">Total Charges</td>
+                <td class="t-amt neg">(19 000)</td>
+              </tr>
+            </table>
+            <div class="t-result">
+              <span class="t-label">Résultat Net</span>
+              <span class="t-amt">15 000</span>
+            </div>
+            <p class="note">
+              Marge nette : 44,1% · Ratio charges/produits : 55,9%
+            </p>
+          </div>
+
+          <!-- FLUX DE TRÉSORERIE -->
+          <div class="col-divider">
+            <div class="section-title">Flux de Trésorerie</div>
+            <div class="section-divider"></div>
+
+            <div class="sub-title">Entrées</div>
+            <table>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Entrées clients</td>
+                <td class="t-amt">18 000</td>
+              </tr>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Entrées services</td>
+                <td class="t-amt">8 000</td>
+              </tr>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Gains trading</td>
+                <td class="t-amt">5 000</td>
+              </tr>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Dividendes reçus</td>
+                <td class="t-amt">1 500</td>
+              </tr>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Ventes actifs</td>
+                <td class="t-amt">3 000</td>
+              </tr>
+              <tr class="t-total">
+                <td class="t-code"></td>
+                <td class="t-label">Total Entrées</td>
+                <td class="t-amt">35 500</td>
+              </tr>
+            </table>
+
+            <div class="sub-title mt8">Sorties</div>
+            <table>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Salaires</td>
+                <td class="t-amt neg">(7 000)</td>
+              </tr>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Charges opérationnelles</td>
+                <td class="t-amt neg">(4 000)</td>
+              </tr>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Impôts</td>
+                <td class="t-amt neg">(2 000)</td>
+              </tr>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Intérêts</td>
+                <td class="t-amt neg">(700)</td>
+              </tr>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Investissements</td>
+                <td class="t-amt neg">(5 000)</td>
+              </tr>
+              <tr>
+                <td class="t-code"></td>
+                <td class="t-label">Dividendes versés</td>
+                <td class="t-amt neg">(2 000)</td>
+              </tr>
+              <tr class="t-total">
+                <td class="t-code"></td>
+                <td class="t-label">Total Sorties</td>
+                <td class="t-amt neg">(20 700)</td>
+              </tr>
+            </table>
+
+            <div class="t-result">
+              <span class="t-label">Trésorerie Nette</span>
+              <span class="t-amt">14 800</span>
+            </div>
+
+            <!-- Waterfall mini-visual -->
+            <div class="mt16 mini-visual">
+              <div class="sub-title">Structure des Sorties</div>
+              <table>
+                <tr>
+                  <td class="label" style="">Salaires</td>
+                  <td>
+                    <div class="progress-bar" style=""></div>
+                  </td>
+                  <td class="pourcent" style="">33,8%</td>
+                </tr>
+                <tr>
+                  <td
+                    style="
+                      font-size: 7.5pt;
+                      color: var(--ink-soft);
+                      padding-top: 3px;
+                    "
+                  >
+                    Charges opérat.
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        height: 10px;
+                        width: calc(4000 / 20700 * 100% * 0.7);
+                        background: var(--gold);
+                        display: inline-block;
+                        margin-top: 3px;
+                      "
+                    ></div>
+                  </td>
+                  <td
+                    style="
+                      text-align: right;
+                      font-size: 7.5pt;
+                      color: var(--ink-mid);
+                    "
+                  >
+                    19,3%
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style="
+                      font-size: 7.5pt;
+                      color: var(--ink-soft);
+                      padding-top: 3px;
+                    "
+                  >
+                    Investissements
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        height: 10px;
+                        width: calc(5000 / 20700 * 100% * 0.7);
+                        background: var(--green);
+                        display: inline-block;
+                        margin-top: 3px;
+                      "
+                    ></div>
+                  </td>
+                  <td
+                    style="
+                      text-align: right;
+                      font-size: 7.5pt;
+                      color: var(--ink-mid);
+                    "
+                  >
+                    24,2%
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style="
+                      font-size: 7.5pt;
+                      color: var(--ink-soft);
+                      padding-top: 3px;
+                    "
+                  >
+                    Dividendes
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        height: 10px;
+                        width: calc(2000 / 20700 * 100% * 0.7);
+                        background: var(--gold-dark);
+                        display: inline-block;
+                        margin-top: 3px;
+                      "
+                    ></div>
+                  </td>
+                  <td
+                    style="
+                      text-align: right;
+                      font-size: 7.5pt;
+                      color: var(--ink-mid);
+                    "
+                  >
+                    9,7%
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style="
+                      font-size: 7.5pt;
+                      color: var(--ink-soft);
+                      padding-top: 3px;
+                    "
+                  >
+                    Autres
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        height: 10px;
+                        width: calc(2700 / 20700 * 100% * 0.7);
+                        background: rgba(107, 95, 78, 0.5);
+                        display: inline-block;
+                        margin-top: 3px;
+                      "
+                    ></div>
+                  </td>
+                  <td
+                    style="
+                      text-align: right;
+                      font-size: 7.5pt;
+                      color: var(--ink-mid);
+                    "
+                  >
+                    13,0%
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="doc-footer">
+          <span
+            >SSIA · Monnaie &amp; Ivoire · Exercice clos le 31 décembre
+            2026</span
+          >
+          <span class="page-num">2 / 3</span>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+     PAGE 3 — INDICATEURS + ANNEXE
+═══════════════════════════════════════════ -->
+      <div class="page">
+        <div class="doc-header">
+          <div>
+            <div class="entity-name">SSIA</div>
+            <div class="entity-sub">
+              Indicateurs Investisseurs &amp; Annexe Stratégique
+            </div>
+          </div>
+          <div class="doc-meta">
+            <div class="doc-year">2026</div>
+            <div class="doc-currency">En milliers de SSIA (000' SSIA)</div>
+          </div>
+        </div>
+
+        <div class="section-title">Indicateurs Investisseurs</div>
+        <div class="section-divider"></div>
+
+        <!-- Market band -->
+        <div class="market-band">
+          <div class="mb-item">
+            <div class="mb-label">Ticker</div>
+            <div class="mb-val">SSIA</div>
+          </div>
+          <div class="mb-item">
+            <div class="mb-label">Prix Action</div>
+            <div class=""><input type="text" value="dfgh" /></div>
+          </div>
+          <div class="mb-item">
+            <div class="mb-label">Nb Actions</div>
+            <div class="mb-val">10 000</div>
+          </div>
+          <div class="mb-item">
+            <div class="mb-label">Capitalisation</div>
+            <div class="mb-val">50 000</div>
+          </div>
+          <div class="mb-item">
+            <div class="mb-label">BPA</div>
+            <div class="mb-val">1,50</div>
+          </div>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="kpi-grid mt16">
+          <div class="kpi-card">
+            <div class="kpi-label">ROE — Rentabilité Fonds Propres</div>
+            <div class="kpi-value positive">34,09%</div>
+            <div class="kpi-sub">Résultat net / Capitaux propres</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">ROA — Rentabilité des Actifs</div>
+            <div class="kpi-value positive">18,87%</div>
+            <div class="kpi-sub">Résultat net / Total actif</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Ratio Dette / Capitaux Propres</div>
+            <div class="kpi-value warning">0,81×</div>
+            <div class="kpi-sub">35 500 / 44 000</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Valeur Comptable / Action</div>
+            <div class="kpi-value">4,40</div>
+            <div class="kpi-sub">CP / Nb actions émises</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Bénéfice / Action (BPA)</div>
+            <div class="kpi-value positive">1,50</div>
+            <div class="kpi-sub">Résultat net / Nb actions</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Price / Book (P/B)</div>
+            <div class="kpi-value">1,14×</div>
+            <div class="kpi-sub">Prix action / VCA = 5,00 / 4,40</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Trésorerie Nette</div>
+            <div class="kpi-value positive">14 800</div>
+            <div class="kpi-sub">Flux net opérationnel</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Total Actif</div>
+            <div class="kpi-value">79 500</div>
+            <div class="kpi-sub">Base bilancielle</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Marge Nette</div>
+            <div class="kpi-value positive">44,1%</div>
+            <div class="kpi-sub">RN 15 000 / Produits 34 000</div>
+          </div>
+        </div>
+
+        <!-- Annexe -->
+        <div class="section-title mt16">
+          Annexe — Opérations Entité
+          <span class="annexe-badge">Compte 7xx</span>
+        </div>
+        <div class="section-divider"></div>
+
+        <table class="annexe-table">
+          <thead>
+            <tr>
+              <td class="t-code" style="">Code</td>
+              <td
+                class="t-label"
+                style="
+                  font-size: 7pt;
+                  letter-spacing: 0.1em;
+                  text-transform: uppercase;
+                  color: var(--ink-soft);
+                  padding-bottom: 6px;
+                "
+              >
+                Opération
+              </td>
+              <td
+                style="
+                  font-size: 7pt;
+                  letter-spacing: 0.1em;
+                  text-transform: uppercase;
+                  color: var(--ink-soft);
+                  padding-bottom: 6px;
+                "
+              >
+                Catégorie
+              </td>
+              <td
+                class="t-amt"
+                style="
+                  font-size: 7pt;
+                  letter-spacing: 0.1em;
+                  text-transform: uppercase;
+                  color: var(--ink-soft);
+                  padding-bottom: 6px;
+                "
+              >
+                Montant
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="t-code">700</td>
+              <td class="t-label">Achat filiales</td>
+              <td style="padding: 3px 6px">
+                <span class="tag-pill tag-invest">Investissement</span>
+              </td>
+              <td class="t-amt neg">(15 000)</td>
+            </tr>
+            <tr>
+              <td class="t-code">710</td>
+              <td class="t-label">Vente filiales</td>
+              <td style="padding: 3px 6px">
+                <span class="tag-pill tag-invest">Désinvestissement</span>
+              </td>
+              <td class="t-amt pos">5 000</td>
+            </tr>
+            <tr>
+              <td class="t-code">720</td>
+              <td class="t-label">Fusions &amp; Acquisitions</td>
+              <td style="padding: 3px 6px">
+                <span class="tag-pill tag-strat">Stratégique</span>
+              </td>
+              <td class="t-amt neg">(10 000)</td>
+            </tr>
+            <tr>
+              <td class="t-code">730</td>
+              <td class="t-label">Émission d'actions</td>
+              <td style="padding: 3px 6px">
+                <span class="tag-pill tag-finance">Financement</span>
+              </td>
+              <td class="t-amt pos">12 000</td>
+            </tr>
+            <tr>
+              <td class="t-code">740</td>
+              <td class="t-label">Rachat d'actions</td>
+              <td style="padding: 3px 6px">
+                <span class="tag-pill tag-finance">Gestion capital</span>
+              </td>
+              <td class="t-amt neg">(3 000)</td>
+            </tr>
+            <tr>
+              <td class="t-code">750</td>
+              <td class="t-label">Distribution dividendes</td>
+              <td style="padding: 3px 6px">
+                <span class="tag-pill tag-distrib">Distribution</span>
+              </td>
+              <td class="t-amt neg">(2 000)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Summary note -->
+        <div class="summary" style="">
+          <div class="summary-item">
+            <div class="item-title" style="">Flux nets M&A</div>
+            <div class="item-value" style="">−20 000</div>
+            <div class="item-footer" style="">Achats + F&A</div>
+          </div>
+          <div class="">
+            <div
+              style="
+                font-size: 6.5pt;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+                margin-bottom: 3px;
+              "
+            >
+              Flux nets Financement
+            </div>
+            <div
+              style="
+                font-family: &quot;Playfair Display&quot;, serif;
+                font-size: 12pt;
+                font-weight: 700;
+                color: var(--green);
+              "
+            >
+              +9 000
+            </div>
+            <div style="font-size: 7pt; color: var(--ink-soft)">
+              Émissions − Rachats
+            </div>
+          </div>
+          <div class="">
+            <div
+              style="
+                font-size: 6.5pt;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+                margin-bottom: 3px;
+              "
+            >
+              Distribution totale
+            </div>
+            <div
+              style="
+                font-family: &quot;Playfair Display&quot;, serif;
+                font-size: 12pt;
+                font-weight: 700;
+                color: var(--gold-dark);
+              "
+            >
+              −2 000
+            </div>
+            <div style="font-size: 7pt; color: var(--ink-soft)">
+              Dividendes versés
+            </div>
+          </div>
+        </div>
+
+        <div class="doc-footer">
+          <span
+            >SSIA · Monnaie &amp; Ivoire · Exercice clos le 31 décembre 2026 —
+            Document à usage interne et investisseurs</span
+          >
+          <span class="page-num">3 / 3</span>
+        </div>
+      </div>
+
+      <div class="cloture-btn">
+        <button>Clôturer</button>
+      </div>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+  <script src="../../assets/js/etat-financier.js"></script>
+</html>

@@ -1,0 +1,246 @@
+.nav {
+  box-shadow: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  padding: 10px 60px;
+}
+
+.nav-list {
+  width: 50%;
+}
+
+.crenaux-content {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 20px;
+  justify-content: center;
+}
+
+.title-img {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.crenaux-content h1 {
+  width: 100%;
+  padding-top: 20px;
+  font-size: 50px;
+  margin: 0;
+}
+
+.title-img img {
+  width: 100%;
+  animation: appear 2s infinite ease-in-out;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.crenaux {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 50%;
+  height: 88vh;
+  padding: 10px;
+}
+
+.crenaux i {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  background: var(--versity-blue);
+  border-radius: 100%;
+  padding: 10px 11px;
+  cursor: pointer;
+}
+
+.choix-crenaux {
+  display: flex;
+  flex-direction: column;
+  background: var(--versity-blue);
+  height: 100%;
+  width: 80%;
+  overflow-y: scroll;
+  border-radius: 10px;
+  padding: 0 20px 20px 20px;
+
+  /* cache la scrollbar mais garde le scroll actif */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge ancien */
+}
+
+.choix-crenaux::-webkit-scrollbar {
+  display: none;
+}
+
+.jour-crenaux {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+}
+
+.jour-crenaux h4 {
+  color: var(--white);
+  font-size: 18px;
+  position: sticky;
+  top: 0;
+  background: var(--versity-blue);
+  z-index: 2;
+  padding: 20px 0;
+  margin: 0;
+}
+
+.crenaux-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.crenaux-item p {
+  margin: 0;
+}
+
+.libre {
+  background: var(--white);
+}
+
+.libre span {
+  background: #1cd68f;
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: var(--white);
+  font-size: 10px;
+  animation: appear 1s infinite;
+}
+
+.statut-check {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.crenaux-check {
+  border: var(--versity-blue) 2px solid;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.pris {
+  background: rgba(255, 255, 255, 0.319);
+  color: var(--white);
+  border: red solid 1px;
+}
+
+.pris span {
+  background: var(--primary);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 10px;
+}
+
+.pris .crenaux-check {
+  display: none;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.crenaux-modal {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.535);
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  z-index: 3;
+}
+
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--white);
+  width: 30%;
+  padding: 40px 20px;
+  border-radius: 10px;
+}
+
+.confirmation p:first-of-type {
+  color: red;
+  font-style: italic;
+  font-size: 13px;
+}
+
+.confirmation p {
+  text-align: center;
+}
+
+.crenaux-btn {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.crenaux-btn button {
+  border: none;
+  font-size: 13px;
+  border-radius: 3px;
+  padding: 0 10px;
+}
+
+.crenaux-btn .oui {
+  background: var(--versity-blue);
+  color: var(--white);
+}
+
+.crenaux-btn .non {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: flex;
+}

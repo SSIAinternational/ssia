@@ -1,0 +1,902 @@
+body {
+  position: relative;
+}
+
+.nav {
+  box-shadow: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  padding: 10px 60px;
+}
+
+.nav-list {
+  width: 50%;
+}
+
+.admission-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px 10px 20px;
+  position: relative;
+  height: min(88vh, 550px);
+}
+
+.title-form {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  height: 100%;
+  gap: 30px;
+}
+
+.title-form .text-img {
+  background: var(--white);
+  width: 50%;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.title-form .text-img h1 {
+  font-size: 50px;
+}
+
+.title-form .text-img img {
+  width: 100%;
+  animation: appear 2s infinite ease-in-out;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+form {
+  background: var(--versity-blue);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 50%;
+  padding: 0.8rem;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.form-section__set {
+  width: 100%;
+  height: 90%;
+  flex-direction: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  overflow-y: auto;
+  padding: 0 0.3rem;
+}
+
+.form-section__set::-webkit-scrollbar {
+  width: 8px;
+}
+
+.form-section__set::-webkit-scrollbar-thumb {
+  background: #ffffff34;
+  border-radius: 30px;
+}
+
+.form-section__set::-webkit-scrollbar-thumb:hover {
+  background: #ffffffe9;
+}
+
+.form-section__set::-webkit-scrollbar-track {
+  background: #ffffff21;
+  border-radius: 30px;
+}
+
+.form-section {
+  max-height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.form-section__title {
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  background: #ffffff17;
+  width: max-content;
+  cursor: pointer;
+}
+
+.form-section__title:hover {
+  background: #ffffff3c;
+}
+
+.form-section__content {
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  height: 100%;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.form-section__content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.form-section__content::-webkit-scrollbar-thumb {
+  background: #ffffff34;
+  border-radius: 30px;
+}
+
+.form-section__content::-webkit-scrollbar-thumb:hover {
+  background: #ffffffe9;
+}
+
+.form-section__content::-webkit-scrollbar-track {
+  background: #ffffff21;
+  border-radius: 30px;
+}
+
+.form-content__header {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+}
+
+.image-upload {
+  height: min(150px, 160px);
+  width: min(150px, 160px);
+  border: solid var(--white) 1px;
+  border-style: dashed;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, #ffffff00, #ffffff26);
+  cursor: pointer;
+}
+
+.image-upload i {
+  font-size: 1.2rem;
+  color: var(--white);
+  padding: 1.2rem;
+  border-radius: 100%;
+  border: solid 1px var(--white);
+}
+
+.image-upload img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.header-input-field {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+
+.header-input-field .label-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.header-input-field .label-input label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.7rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.header-input-field .label-input label span {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.header-input-field .label-input input,
+.header-input-field .label-input select {
+  color: var(--versity-blue);
+  font-size: 0.7rem;
+  background: var(--white);
+  border-radius: 3px;
+}
+
+.form-content__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.label-input__group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 0.5rem;
+  column-gap: 1rem;
+}
+
+.form-content__body .label-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.form-content__body .label-input label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.7rem;
+  font-weight: 500;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+
+.form-content__body .label-input label span {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.form-content__body .label-input input,
+.form-content__body .label-input select,
+.form-content__body .label-input textarea {
+  color: var(--versity-blue);
+  font-size: 0.7rem;
+  background: var(--white);
+  border-radius: 3px;
+}
+
+/*Style pour les dropdown de information académique*/
+
+.label-input__group-no_grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.information-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.information-list .information-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.information-list .information-item .information-title {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.information-list .information-item .information-title span {
+  font-size: 0.8rem;
+  color: var(--white);
+  font-weight: 500;
+  border: solid 1px #ffffff6c;
+  border-radius: 3px;
+  padding: 0.1rem 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+
+.information-list .information-item .information-title .fa-minus {
+  color: var(--white);
+  background: var(--primary);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.information-list .information-item .information_form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 0.5rem;
+  column-gap: 1rem;
+}
+
+.information-list .information-item .information_form .label-input {
+  width: 100%;
+}
+
+/*Le add-file est utilisé dans plusieur endroit dans le formulaire 
+donc on ne le ciblera pas en fontion d'une position unique mais on fera un style globale.*/
+
+.add-file {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--white);
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+}
+
+.add-file .add-file__text {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.add-file .add-file__text i {
+  border: solid 1px var(--versity-blue);
+  color: var(--versity-blue);
+  border-radius: 100%;
+  padding: 0.3rem 0.35rem;
+}
+
+.add-file .add-file__apercu {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  width: 100%;
+  padding: 0.2rem;
+  overflow-x: auto;
+}
+
+.add-file__apercu .add-file__apercu-item {
+  height: min(45px, 50px);
+  width: min(25px, 30px);
+  background: #e5e5e5;
+  border: solid 1px var(--versity-blue);
+  border-radius: 2px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-file__apercu-item canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.add-file .add-file__text span {
+  color: var(--versity-blue);
+  font-size: 0.7rem;
+}
+
+/*Fin add-file*/
+
+.information-list .add_information {
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+  background: #499a46;
+  color: var(--white);
+  border-radius: 3px;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+/*Fin de information académique*/
+
+/*Programmes choisis*/
+.programme-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.programme-list .dropdown-choix-programme {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dropdown-choix-programme .choix-programme__title {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.dropdown-choix-programme .choix-programme__title span {
+  width: max-content;
+  font-size: 0.8rem;
+  color: var(--white);
+  font-weight: 500;
+  border: solid 1px #ffffff6c;
+  border-radius: 3px;
+  padding: 0.1rem 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+
+.dropdown-choix-programme .choix-programme__title .fa-minus {
+  color: var(--white);
+  background: var(--primary);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.dropdown-choix-programme .choix-programme__form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.dropdown-choix-programme .hide {
+  display: none;
+}
+
+.college-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(50px, 55px);
+  height: min(50px, 55px);
+  background: var(--white);
+  border-radius: 3px;
+  padding: 0.1rem;
+}
+
+.college-logo img {
+  height: 100%;
+  width: 100%;
+}
+
+.programme-list .add_programme {
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+  background: #499a46;
+  color: var(--white);
+  border-radius: 3px;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+/*Fin programmes choisis*/
+
+.instruction {
+  font-size: 0.8rem;
+  color: var(--white);
+  border: solid 1px var(--white);
+  padding: 0.5rem;
+  font-style: italic;
+}
+
+.submit-btn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-btn button {
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 3px;
+}
+
+.type-form {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+}
+
+.type-form #span1,
+.type-form #span3 {
+  color: var(--white);
+  font-size: 14px;
+  margin-top: 50px;
+  text-align: center;
+  font-style: italic;
+  border: solid 1px var(--white);
+}
+
+.type-form #span2 {
+  color: var(--white);
+  font-size: 14px;
+  margin-top: 30px;
+  text-align: center;
+  font-style: italic;
+  border: solid 1px var(--white);
+}
+
+.type-form h6 {
+  color: var(--white);
+  font-size: 15px;
+  margin: 0 0 10px 0;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+
+#premier,
+#deuxieme,
+#troisieme {
+  margin-bottom: 20px;
+}
+
+.rotate {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.type-form p {
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.input_group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 10px;
+  column-gap: 20px;
+  align-items: start;
+  width: 100%;
+  height: 80%;
+}
+
+.label-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label-input label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.label-input span {
+  color: var(--primary);
+}
+
+.label-input input,
+.label-input select,
+.label-input textarea {
+  width: 100%;
+  padding: 2px 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  color: var(--dark);
+  display: grid;
+}
+
+#photo,
+#diplome,
+#carte-identite,
+#cv,
+#lettre-motivation,
+#lettre-recommendation,
+#visa {
+  background: var(--white);
+}
+
+.label-input #checkbox {
+  border: solid 2px red;
+  width: 5%;
+}
+
+.preview {
+  width: 80px;
+  height: 80px;
+  border: 1px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 8px; /* tu peux mettre 50% pour rond */
+}
+
+.preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* garde l’image carrée et bien remplie */
+}
+
+.label-input input:focus,
+.label-input select:focus,
+.label-input textarea:focus {
+  outline: none;
+}
+
+.success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: 8%;
+  top: 33%;
+  background-color: var(--white);
+  width: 35%;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 5;
+}
+
+.success p {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.success i {
+  font-size: 30px;
+  color: #499a46;
+  background: #94f591;
+  padding: 22px 25px;
+  width: max-content;
+  border-radius: 100%;
+}
+
+@keyframes success {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.btn-swipe {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: end;
+}
+
+.swipe_btn {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.swipe_btn i {
+  padding: 10px 11px;
+  background: var(--white);
+  cursor: pointer;
+  border-radius: 100%;
+  color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-swipe button {
+  border: none;
+  background: var(--primary);
+  padding: 0 20px;
+  border-radius: 10px;
+  color: var(--white);
+}
+
+.btn-statut {
+  background: var(--primary);
+  color: var(--white);
+  padding: 7px;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: 700;
+  position: fixed;
+  right: 2%;
+  bottom: 6%;
+  animation: btn-move 1.8s infinite ease-out;
+  cursor: pointer;
+}
+
+@keyframes btn-move {
+  0% {
+    transform: translateY(10px);
+  }
+
+  45% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(10px);
+  }
+}
+
+.admission-statut {
+  position: relative;
+  border: 2px solid;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  height: 100vh;
+  background: var(--white);
+  position: fixed;
+  z-index: 999;
+  top: 0;
+}
+
+.admission-statut .fa-arrow-left {
+  background: var(--primary);
+  padding: 10px 11px;
+  border-radius: 100%;
+  width: max-content;
+  margin-top: 30px;
+  margin-left: 20px;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.admission-statut h1 {
+  margin: 0;
+  padding: 0;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.prog-def {
+  color: var(--white);
+  background: var(--primary);
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 4px;
+  width: max-content;
+  position: absolute;
+  bottom: 10%;
+  left: 2%;
+  animation: btn-move 1.8s infinite ease-out;
+  cursor: pointer;
+}
+
+.modal-choix-def {
+  background: rgba(0, 0, 0, 0.52);
+  height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+}
+
+.modal-choix-def__content {
+  background: var(--versity-blue);
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal-choix-def__content .close-action {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-choix-def__content .close-action .fa-close {
+  background: var(--white);
+  color: var(--primary);
+  font-size: 0.7rem;
+  border-radius: 100%;
+  padding: 0.3rem 0.4rem;
+  cursor: pointer;
+  margin: 0;
+}
+
+.modal-choix-def__content img {
+  background: var(--white);
+  width: 100px;
+  height: 100px;
+  padding: 0.2rem;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+}
+
+.modal-choix-def__content form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  width: 100%;
+  background: none;
+  height: max-content;
+  padding: 0;
+  border-radius: 0;
+}
+
+.modal-choix-def__content form textarea,
+.modal-choix-def__content form select {
+  padding: 0.1rem 0.3rem;
+  font-size: 0.6rem;
+  border-radius: 5px;
+  background: var(--white);
+  border: none;
+  outline: none;
+  width: 100%;
+  height: max-content;
+}
+
+.modal-choix-def form select:focus,
+.modal-choix-def form textarea:focus {
+  outline: none;
+}
+
+.modal-choix-def__content .submit-action {
+  width: 100%;
+}
+
+.submit-action button {
+  background: var(--primary);
+  border-radius: 3px;
+  padding: 0.2rem 0.3rem;
+  color: var(--white);
+  border: none;
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+.submit-action button:focus {
+  outline: none;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: flex;
+}

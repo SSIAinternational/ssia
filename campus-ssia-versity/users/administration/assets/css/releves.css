@@ -1,0 +1,297 @@
+.finance-set {
+  background: #edf7fd;
+  width: 85%;
+  height: 100%;
+  padding: 1rem 0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.finance-set__top-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 0.5rem;
+  gap: 0.7rem;
+  width: 100%;
+}
+
+.top-bar-detail {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+  border: solid 1px #406e8a;
+  padding: 0.3rem;
+  border-radius: 5px;
+}
+
+.top-bar-detail i {
+  font-size: 0.8rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  background: var(--versity-blue);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-bar-detail span {
+  font-size: 0.8rem;
+  color: black;
+}
+
+.filter__download {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.filter-content {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.filter-content > i {
+  background: var(--versity-blue);
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: white;
+}
+
+.filter-content > select {
+  border: none;
+  background: none;
+  font-size: 0.7rem;
+  color: black;
+  width: max-content;
+  border: solid 1px var(--versity-blue);
+  border-radius: 3px;
+  padding: 0 0.3rem;
+  outline: none;
+}
+
+.download-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.download-content .download-form {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px var(--versity-blue);
+  background: var(--white);
+  border-radius: 5px;
+  gap: 0.5rem;
+  padding: 1rem;
+  position: absolute;
+  top: 30px;
+  right: 100%;
+  box-shadow: var();
+}
+
+.download-content .download-form span {
+  font-size: 0.8rem;
+  color: black;
+  text-align: center;
+  font-weight: 500;
+}
+
+.download-content .download-form .input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.download-content .download-form .input-group label {
+  font-size: 0.7rem;
+  color: black;
+  margin: 0;
+}
+
+.download-content .download-form .input-group input {
+  font-size: 0.7rem;
+  border: solid 1px var(--versity-blue);
+  color: #406e8a;
+  border-radius: 3px;
+}
+
+.download-content button {
+  font-size: 0.7rem;
+  background: var(--versity-blue);
+  padding: 0.3rem 0.5rem;
+  border: none;
+  border-radius: 3px;
+  color: var(--white);
+  outline: none;
+}
+
+.download-content button.disabled {
+  background: #b4b4b4 !important;
+}
+
+.new-transaction-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: var(--white);
+  border-radius: 5px;
+  padding: 20px 10px;
+  border: solid 1px var(--versity-blue);
+  display: none;
+}
+
+.new-transaction-form .input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.new-transaction-form .input-group label {
+  font-size: 0.7rem;
+  color: black;
+  margin: 0;
+}
+
+.new-transaction-form .input-group input,
+.new-transaction-form .input-group select {
+  font-size: 0.7rem;
+  border: solid 1px var(--versity-blue);
+  color: #406e8a;
+  border-radius: 3px;
+  outline: none;
+}
+
+.finance-set__top-bar button.new-transaction-btn {
+  font-size: 0.7rem;
+  background: var(--versity-blue);
+  padding: 0.3rem 0.5rem;
+  border: none;
+  border-radius: 3px;
+  color: white;
+}
+
+.transaction-table {
+  height: 100%;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+.transaction-table::-webkit-scrollbar {
+  display: none;
+}
+
+.transaction-table table {
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+}
+
+.transaction-table table thead {
+  background: var(--versity-blue);
+}
+
+.transaction-table table thead tr th {
+  padding: 0.3rem;
+  font-size: 0.7rem;
+  color: white;
+}
+
+.transaction-table table tbody tr td {
+  font-size: 0.7rem;
+  color: rgb(82, 82, 82);
+  padding: 0.3rem;
+}
+
+.transaction-table table tbody tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+td > span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+  color: black;
+}
+
+td > span img {
+  background: var(--versity-blue);
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+}
+
+.credit {
+  color: rgb(13, 138, 61);
+  font-weight: 500;
+}
+
+.debit {
+  color: rgb(205, 5, 5);
+  font-weight: 500;
+}
+
+.on-hold {
+  background: rgb(165, 165, 165);
+  padding: 0 0.3rem;
+  border-radius: 3px;
+  font-size: 0.6rem;
+  color: white;
+  width: max-content;
+}
+
+.filter-content .download {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.filter-content .download i {
+  background: var(--versity-blue);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  padding: 0.2rem;
+  color: var(--white);
+  cursor: pointer;
+  transition: ease 0.2s;
+  width: max-content;
+  margin-left: 0.2rem;
+}
+
+.filter-content .download select {
+  border-radius: 3px;
+  font-size: 0.7rem;
+  padding: 0.1rem;
+  color: black;
+  border: solid 1px var(--versity-blue);
+}
+
+.show {
+  display: flex !important;
+}
+
+.hide {
+  display: none !important ;
+}

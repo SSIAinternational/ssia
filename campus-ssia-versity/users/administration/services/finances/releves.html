@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pédagogie - SSIAVERSITY | Analyse des demandes d'admission</title>
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/releves.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="finance-set">
+      <div class="finance-set__top-bar">
+        <div class="top-bar-detail">
+          <i class="fa-solid fa-money-bill-transfer"></i>
+          <span>Ecriture du journal</span>
+        </div>
+        <div class="filter__download">
+          <div class="filter-content">
+            <i class="fa-solid fa-filter"></i>
+            <select name="" id="">
+              <option value="" disabled>-- Filtre --</option>
+              <option value="">Toutes les écritures</option>
+              <option value="">Ce mois-ci</option>
+              <option value="">Le mois passé</option>
+              <option value="">Mars - 2026</option>
+              <option value="">Février - 2026</option>
+              <option value="">Janvier - 2026</option>
+            </select>
+            <!--<div class="download">
+              <i class="fa-solid fa-download"></i><span>Télécharger</span>
+            </div>-->
+          </div>
+        </div>
+
+        <div class="download-content">
+          <div class="download-form hide">
+            <span>Sélectionnez un intervalle</span>
+            <div class="input-group">
+              <label for="">Début</label>
+              <input type="date" />
+            </div>
+            <div class="input-group">
+              <label for="">Fin</label>
+              <input type="date" />
+            </div>
+          </div>
+          <button class="disabled"><i class="fa-solid fa-download"></i></button>
+        </div>
+        <div class="new-transaction-content">
+          <button class="new-transaction-btn">Nouvelle transaction</button>
+          <div class="new-transaction-form">
+            <div class="input-group">
+              <label for="">Code</label>
+              <input type="text" />
+            </div>
+            <div class="input-group">
+              <label for="">Libéllé</label>
+              <input type="text" />
+            </div>
+            <div class="input-group">
+              <label for="">Nature de la transaction</label>
+              <select name="" id="">
+                <option value="">Débit</option>
+                <option value="">Crédit</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="">Montant</label>
+              <input type="text" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="transaction-table">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Reférence</th>
+              <th>Date & Heure</th>
+              <th>Code</th>
+              <th>Compte</th>
+              <th>Libéllé</th>
+              <th>Débit</th>
+              <th>Crédit</th>
+              <th>Balance SSIA</th>
+              <th>Solde</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>#KN3J1D</td>
+              <td>02-05-2026 16:38</td>
+              <td>100</td>
+              <td>Portefeuille client</td>
+              <td>Inscription S1 PRO2384VER VER-14096917Z</td>
+              <td>100</td>
+              <td>-</td>
+              <td>100 Portefeuille client</td>
+              <td>
+                <span class="debit">100 <img src="" alt="" srcset="" /></span>
+              </td>
+              <td><span class="on-hold">En cours</span></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>#HD872C</td>
+              <td>02-05-2026 16:38</td>
+              <td>110</td>
+              <td>Banque entité</td>
+              <td>Inscription - CAMPUS SSIAVERSITY</td>
+              <td>-</td>
+              <td>100</td>
+              <td>110 Banque entité</td>
+              <td>
+                <span class="credit">100 <img src="" alt="" srcset="" /></span>
+              </td>
+              <td><span class="on-hold">En cours</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+  <script src="../../assets/js/download-ecriture.js"></script>
+</html>

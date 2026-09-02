@@ -1,0 +1,2186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSIAVERSITY · ERP Vie Étudiante</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/vie-etudiante.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="vie-etudiante-set">
+      <div class="app">
+        <aside class="sidebar">
+          <div class="brand">
+            <div class="logo">
+              <img src="../../../../../img/logoci.jpg" alt="" srcset="" />
+            </div>
+            <div class="name">
+              SSIAVERSITY<small>Vie Étudiante · ERP</small>
+            </div>
+          </div>
+          <nav class="nav" id="nav"></nav>
+        </aside>
+        <div class="app-body">
+          <header class="topbar">
+            <div class="crumbs" id="crumbs">Tableau de bord</div>
+            <div class="spacer"></div>
+            <div class="search">
+              <input
+                id="globalSearch"
+                placeholder="Rechercher étudiants, tickets, événements…"
+              />
+            </div>
+            <button class="btn secondary sm" onclick="exportAll()">
+              Exporter
+            </button>
+            <button class="btn secondary sm" onclick="importAllPrompt()">
+              Importer
+            </button>
+            <div class="user">
+              <div class="avatar" id="userAvatar">DV</div>
+              <div>
+                <b>Direction VE</b>
+                <div style="font-size: 11px; color: var(--muted)">
+                  Administrateur
+                </div>
+              </div>
+            </div>
+          </header>
+          <main class="main" id="main"></main>
+        </div>
+      </div>
+      <div class="modal-bg" id="modal">
+        <div class="modal">
+          <div class="m-h">
+            <h3 id="mTitle"></h3>
+            <button class="close-x" onclick="closeModal()">×</button>
+          </div>
+          <div class="m-b" id="mBody"></div>
+          <div class="m-f" id="mFoot"></div>
+        </div>
+      </div>
+      <div class="toasts" id="toasts"></div>
+
+      <script>
+        /* ============================================================
+   SSIAVERSITY · ERP Vie Étudiante — single-file app
+   Persistance: localStorage. Base vide par défaut.
+   ============================================================ */
+
+        const STORE_KEY = "ssiav_erp_v1";
+        const DEFAULT_STATE = {
+          colleges: [],
+          students: [],
+          tickets: [],
+          events: [],
+          clubs: [],
+          mentorships: [],
+          surveys: [],
+          surveyResponses: [],
+          budgetItems: [],
+          communications: [],
+          documents: [],
+          settings: {
+            orgName: "SSIAVERSITY · Direction de la Vie Étudiante",
+            currency: "EUR",
+            fiscalYear: String(new Date().getFullYear()),
+          },
+        };
+        let STATE = load();
+        function load() {
+          try {
+            const r = JSON.parse(localStorage.getItem(STORE_KEY));
+            return r
+              ? { ...DEFAULT_STATE, ...r }
+              : structuredClone(DEFAULT_STATE);
+          } catch (e) {
+            return structuredClone(DEFAULT_STATE);
+          }
+        }
+        function save() {
+          localStorage.setItem(STORE_KEY, JSON.stringify(STATE));
+        }
+        function uid() {
+          return (
+            "id_" +
+            Math.random().toString(36).slice(2, 10) +
+            Date.now().toString(36).slice(-4)
+          );
+        }
+        function fmtDate(d) {
+          if (!d) return "—";
+          const x = new Date(d);
+          if (isNaN(x)) return d;
+          return x.toLocaleDateString("fr-FR");
+        }
+        function fmtMoney(n) {
+          return new Intl.NumberFormat("fr-FR", {
+            style: "currency",
+            currency: STATE.settings.currency || "EUR",
+          }).format(Number(n || 0));
+        }
+        function esc(s) {
+          return String(s ?? "").replace(
+            /[&<>"']/g,
+            (c) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              })[c],
+          );
+        }
+
+        /* ---------- modules registry ---------- */
+        const MODULES = [
+          {
+            id: "dashboard",
+            name: "Tableau de bord",
+            group: "Pilotage",
+            icon: "fa-solid fa-chalkboard",
+            render: renderDashboard,
+          },
+          {
+            id: "students",
+            name: "CRM Étudiant",
+            group: "Communauté",
+            icon: "fa-solid fa-users",
+            render: renderStudents,
+          },
+          {
+            id: "colleges",
+            name: "Collèges (21)",
+            group: "Communauté",
+            icon: "fa-solid fa-school",
+            render: renderColleges,
+          },
+          {
+            id: "tickets",
+            name: "Tickets & Support",
+            group: "Opérations",
+            icon: "fa-solid fa-envelope",
+            render: renderTickets,
+          },
+          {
+            id: "events",
+            name: "Événements",
+            group: "Opérations",
+            icon: "fa-solid fa-star",
+            render: renderEvents,
+          },
+          {
+            id: "clubs",
+            name: "Clubs & Assos",
+            group: "Opérations",
+            icon: "fa-solid fa-users",
+            render: renderClubs,
+          },
+          {
+            id: "mentorship",
+            name: "Mentorat",
+            group: "Accompagnement",
+            icon: "fa-solid fa-arrow-right-arrow-left",
+            render: renderMentorship,
+          },
+          {
+            id: "surveys",
+            name: "Satisfaction",
+            group: "Accompagnement",
+            icon: "fa-regular fa-star",
+            render: renderSurveys,
+          },
+          {
+            id: "budget",
+            name: "Budget",
+            group: "Finance",
+            icon: "fa-solid fa-money-bill-wave",
+            render: renderBudget,
+          },
+          {
+            id: "comms",
+            name: "Communications",
+            group: "Finance",
+            icon: "fa-solid fa-bullhorn",
+            render: renderComms,
+          },
+          {
+            id: "analytics",
+            name: "Analytics",
+            group: "Analyse",
+            icon: "fa-solid fa-money-bill-trend-up",
+            render: renderAnalytics,
+          },
+          {
+            id: "settings",
+            name: "Paramètres",
+            group: "Analyse",
+            icon: "fa-solid fa-gear",
+            render: renderSettings,
+          },
+        ];
+
+        /* ---------- routing / nav ---------- */
+        function buildNav() {
+          const nav = document.getElementById("nav");
+          const groups = {};
+          MODULES.forEach((m) => {
+            (groups[m.group] = groups[m.group] || []).push(m);
+          });
+          let html = "";
+          Object.keys(groups).forEach((g) => {
+            html += `<div class="nav-section">${g}</div>`;
+            groups[g].forEach((m) => {
+              html += `<a href="#${m.id}" data-id="${m.id}"><i class="ico ${m.icon}"></i><span>${m.name}</span></a>`;
+            });
+          });
+          nav.innerHTML = html;
+          nav.querySelectorAll("a").forEach((a) =>
+            a.addEventListener("click", (e) => {
+              e.preventDefault();
+              go(a.dataset.id);
+            }),
+          );
+        }
+        function go(id) {
+          const m = MODULES.find((x) => x.id === id) || MODULES[0];
+          document
+            .querySelectorAll("#nav a")
+            .forEach((a) =>
+              a.classList.toggle("active", a.dataset.id === m.id),
+            );
+          document.getElementById("crumbs").innerHTML =
+            `Vie Étudiante <span>›</span> ${m.name}`;
+          location.hash = m.id;
+          document.getElementById("main").innerHTML = "";
+          m.render();
+        }
+        window.addEventListener("hashchange", () =>
+          go(location.hash.replace("#", "") || "dashboard"),
+        );
+
+        /* ---------- toasts / modal ---------- */
+        function toast(msg, type = "info") {
+          const el = document.createElement("div");
+          el.className = "toast " + type;
+          el.textContent = msg;
+          document.getElementById("toasts").appendChild(el);
+          setTimeout(() => el.remove(), 3200);
+        }
+        function openModal(title, bodyHTML, footHTML = "") {
+          document.getElementById("mTitle").textContent = title;
+          document.getElementById("mBody").innerHTML = bodyHTML;
+          document.getElementById("mFoot").innerHTML = footHTML;
+          document.getElementById("modal").classList.add("show");
+        }
+        function closeModal() {
+          document.getElementById("modal").classList.remove("show");
+        }
+        document.getElementById("modal").addEventListener("click", (e) => {
+          if (e.target.id === "modal") closeModal();
+        });
+
+        /* ---------- helpers UI ---------- */
+        function pageHead(title, subtitle, actions = "") {
+          return `<div class="page-head"><div><h1>${title}</h1><p>${subtitle}</p></div><div class="actions">${actions}</div></div>`;
+        }
+        function emptyState(title, sub, btn) {
+          return `<div class="empty"><div class="ico">∅</div><div class="t">${title}</div><div>${sub}</div>${btn ? `<div style="margin-top:12px">${btn}</div>` : ""}</div>`;
+        }
+        function confirmDelete(label, onYes) {
+          openModal(
+            "Confirmer la suppression",
+            `<p>Voulez-vous vraiment supprimer <b>${esc(label)}</b> ? Cette action est définitive.</p>`,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button>
+     <button class="btn danger" id="cYes">Supprimer</button>`,
+          );
+          document.getElementById("cYes").onclick = () => {
+            onYes();
+            closeModal();
+          };
+        }
+
+        /* ============================================================
+   1. DASHBOARD
+   ============================================================ */
+        function renderDashboard() {
+          const m = document.getElementById("main");
+          const s = STATE;
+          const open = s.tickets.filter(
+            (t) => t.status !== "Résolu" && t.status !== "Fermé",
+          ).length;
+          const upcoming = s.events.filter(
+            (e) => new Date(e.date) >= new Date(new Date().toDateString()),
+          ).length;
+          const activeMentor = s.mentorships.filter(
+            (x) => x.status === "Actif",
+          ).length;
+          const respCount = s.surveyResponses.length;
+          const avgSat = respCount
+            ? (
+                s.surveyResponses.reduce(
+                  (a, r) => a + Number(r.rating || 0),
+                  0,
+                ) / respCount
+              ).toFixed(2)
+            : "—";
+          const spent = s.budgetItems
+            .filter((b) => b.type === "Dépense")
+            .reduce((a, b) => a + Number(b.amount || 0), 0);
+          const incomes = s.budgetItems
+            .filter((b) => b.type === "Recette")
+            .reduce((a, b) => a + Number(b.amount || 0), 0);
+
+          m.innerHTML =
+            pageHead(
+              "Tableau de bord exécutif",
+              "Vue consolidée — " + s.settings.orgName,
+              `<button class="btn secondary" onclick="go('analytics')">Voir Analytics</button>
+     <button class="btn" onclick="go('students')">+ Nouvel étudiant</button>`,
+            ) +
+            `<div class="grid cols-4" style="margin-bottom:16px">
+      ${kpi("Étudiants", s.students.length, "Population suivie")}
+      ${kpi("Collèges", s.colleges.length + " / 21", "Couverture campus")}
+      ${kpi("Tickets ouverts", open, "Demandes en cours")}
+      ${kpi("Événements à venir", upcoming, "Programmés")}
+      ${kpi("Mentorats actifs", activeMentor, "Binômes")}
+      ${kpi("Satisfaction moy.", avgSat + " / 5", respCount + " réponses")}
+      ${kpi("Recettes", fmtMoney(incomes), "Cumul")}
+      ${kpi("Dépenses", fmtMoney(spent), "Cumul")}
+    </div>
+    <div class="grid cols-2">
+      <div class="card"><div class="card-h"><h3>Tickets par statut</h3></div><div class="card-b"><canvas id="chTickets" height="180"></canvas></div></div>
+      <div class="card"><div class="card-h"><h3>Étudiants par collège</h3></div><div class="card-b"><canvas id="chColleges" height="180"></canvas></div></div>
+      <div class="card"><div class="card-h"><h3>Budget — Recettes vs Dépenses (mensuel)</h3></div><div class="card-b"><canvas id="chBudget" height="180"></canvas></div></div>
+      <div class="card"><div class="card-h"><h3>Satisfaction par catégorie</h3></div><div class="card-b"><canvas id="chSat" height="180"></canvas></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="card-h"><h3>Modules</h3><span class="sub">Accès rapide aux 12 modules</span></div>
+      <div class="card-b">
+        <div class="grid-modules">
+          ${MODULES.filter((x) => x.id !== "dashboard")
+            .map(
+              (x) =>
+                `<div class="mod-card" onclick="go('${x.id}')"><div class="mi">${x.icon}</div><div><h4>${x.name}</h4><p>${x.group}</p></div></div>`,
+            )
+            .join("")}
+        </div>
+      </div>
+    </div>`;
+
+          drawDashboardCharts();
+        }
+        function kpi(label, value, delta) {
+          return `<div class="card kpi"><span class="label">${label}</span><span class="value">${value}</span><span class="delta">${delta || ""}</span></div>`;
+        }
+
+        function drawDashboardCharts() {
+          // tickets
+          const statuses = [
+            "Nouveau",
+            "En cours",
+            "En attente",
+            "Résolu",
+            "Fermé",
+          ];
+          const tCounts = statuses.map(
+            (s) => STATE.tickets.filter((t) => t.status === s).length,
+          );
+          newChart("chTickets", "doughnut", {
+            labels: statuses,
+            datasets: [
+              {
+                data: tCounts,
+                backgroundColor: [
+                  "#0b5cff",
+                  "#00b39f",
+                  "#f5a524",
+                  "#16a34a",
+                  "#94a3b8",
+                ],
+                borderWidth: 0,
+              },
+            ],
+          });
+          // colleges
+          const cl = STATE.colleges.map((c) => c.name);
+          const cCounts = STATE.colleges.map(
+            (c) => STATE.students.filter((s) => s.collegeId === c.id).length,
+          );
+          newChart(
+            "chColleges",
+            "bar",
+            {
+              labels: cl.length ? cl : ["—"],
+              datasets: [
+                {
+                  label: "Étudiants",
+                  data: cCounts.length ? cCounts : [0],
+                  backgroundColor: "#0b5cff",
+                  borderRadius: 6,
+                },
+              ],
+            },
+            { plugins: { legend: { display: false } } },
+          );
+          // budget by month
+          const months = [
+            "Jan",
+            "Fév",
+            "Mar",
+            "Avr",
+            "Mai",
+            "Jun",
+            "Jui",
+            "Aoû",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Déc",
+          ];
+          const inc = Array(12).fill(0),
+            dep = Array(12).fill(0);
+          STATE.budgetItems.forEach((b) => {
+            const d = b.date ? new Date(b.date) : null;
+            if (!d || isNaN(d)) return;
+            const mo = d.getMonth();
+            if (b.type === "Recette") inc[mo] += Number(b.amount || 0);
+            else dep[mo] += Number(b.amount || 0);
+          });
+          newChart("chBudget", "line", {
+            labels: months,
+            datasets: [
+              {
+                label: "Recettes",
+                data: inc,
+                borderColor: "#16a34a",
+                backgroundColor: "rgba(22,163,74,.15)",
+                tension: 0.35,
+                fill: true,
+              },
+              {
+                label: "Dépenses",
+                data: dep,
+                borderColor: "#e5484d",
+                backgroundColor: "rgba(229,72,77,.15)",
+                tension: 0.35,
+                fill: true,
+              },
+            ],
+          });
+          // satisfaction by category
+          const cats = {};
+          STATE.surveyResponses.forEach((r) => {
+            const s = STATE.surveys.find((x) => x.id === r.surveyId);
+            const cat = s?.category || "Autre";
+            if (!cats[cat]) cats[cat] = { s: 0, n: 0 };
+            cats[cat].s += Number(r.rating || 0);
+            cats[cat].n++;
+          });
+          const labels = Object.keys(cats);
+          const data = labels.map((k) => +(cats[k].s / cats[k].n).toFixed(2));
+          newChart(
+            "chSat",
+            "radar",
+            {
+              labels: labels.length ? labels : ["—"],
+              datasets: [
+                {
+                  label: "Note moyenne",
+                  data: data.length ? data : [0],
+                  borderColor: "#0b5cff",
+                  backgroundColor: "rgba(11,92,255,.18)",
+                },
+              ],
+            },
+            { scales: { r: { min: 0, max: 5 } } },
+          );
+        }
+        const _charts = {};
+        function newChart(id, type, data, opts = {}) {
+          const el = document.getElementById(id);
+          if (!el) return;
+          if (_charts[id]) _charts[id].destroy();
+          _charts[id] = new Chart(el, {
+            type,
+            data,
+            options: { responsive: true, maintainAspectRatio: false, ...opts },
+          });
+        }
+
+        /* ============================================================
+   2. CRM ÉTUDIANT
+   ============================================================ */
+        function renderStudents() {
+          const m = document.getElementById("main");
+          m.innerHTML =
+            pageHead(
+              "CRM Étudiant",
+              "Fiche unique étudiant, suivi & interactions",
+              `<button class="btn" onclick="editStudent()">+ Nouvel étudiant</button>`,
+            ) +
+            `<div class="card">
+      <div class="toolbar">
+        <input type="text" id="stuSearch" placeholder="Rechercher (nom, email, n° étudiant)…" oninput="renderStudentTable()"/>
+        <select id="stuCollege" onchange="renderStudentTable()"><option value="">Tous les collèges</option>${STATE.colleges.map((c) => `<option value="${c.id}">${esc(c.name)}</option>`).join("")}</select>
+        <select id="stuStatus" onchange="renderStudentTable()"><option value="">Tous statuts</option><option>Actif</option><option>En pause</option><option>Diplômé</option><option>Suspendu</option></select>
+        <div class="spacer"></div>
+        <span class="chip gray" id="stuCount">0</span>
+      </div>
+      <div id="stuTable"></div>
+    </div>`;
+          renderStudentTable();
+        }
+        function renderStudentTable() {
+          const q = (
+            document.getElementById("stuSearch")?.value || ""
+          ).toLowerCase();
+          const col = document.getElementById("stuCollege")?.value || "";
+          const st = document.getElementById("stuStatus")?.value || "";
+          let rows = STATE.students.filter(
+            (s) =>
+              (!q ||
+                [s.firstName, s.lastName, s.email, s.studentId].some((v) =>
+                  String(v || "")
+                    .toLowerCase()
+                    .includes(q),
+                )) &&
+              (!col || s.collegeId === col) &&
+              (!st || s.status === st),
+          );
+          document.getElementById("stuCount").textContent =
+            rows.length + " étudiant(s)";
+          const wrap = document.getElementById("stuTable");
+          if (!rows.length) {
+            wrap.innerHTML = emptyState(
+              "Aucun étudiant",
+              "Créez votre premier étudiant ou importez une liste.",
+              `<button class="btn" onclick="editStudent()">+ Nouvel étudiant</button>`,
+            );
+            return;
+          }
+          wrap.innerHTML = `<table class="tbl"><thead><tr>
+    <th>N° étudiant</th><th>Nom</th><th>Email</th><th>Collège</th><th>Promo</th><th>Statut</th><th>Inscription</th><th></th>
+  </tr></thead><tbody>${rows
+    .map((s) => {
+      const c = STATE.colleges.find((x) => x.id === s.collegeId);
+      return `<tr>
+      <td><b>${esc(s.studentId || "—")}</b></td>
+      <td>${esc(s.firstName || "")} ${esc(s.lastName || "")}</td>
+      <td>${esc(s.email || "")}</td>
+      <td>${esc(c?.name || "—")}</td>
+      <td>${esc(s.promo || "")}</td>
+      <td><span class="chip ${s.status === "Actif" ? "green" : s.status === "Suspendu" ? "red" : s.status === "Diplômé" ? "blue" : "amber"}">${esc(s.status || "—")}</span></td>
+      <td>${fmtDate(s.enrolledAt)}</td>
+      <td class="col-actions">
+        <button class="btn ghost sm" onclick="viewStudent('${s.id}')">Fiche</button>
+        <button class="btn secondary sm" onclick="editStudent('${s.id}')">Modifier</button>
+        <button class="btn danger sm" onclick="delStudent('${s.id}')">×</button>
+      </td></tr>`;
+    })
+    .join("")}</tbody></table>`;
+        }
+        function editStudent(id) {
+          const s = id ? STATE.students.find((x) => x.id === id) : {};
+          const opts = STATE.colleges
+            .map(
+              (c) =>
+                `<option value="${c.id}" ${s?.collegeId === c.id ? "selected" : ""}>${esc(c.name)}</option>`,
+            )
+            .join("");
+          openModal(
+            id ? "Modifier étudiant" : "Nouvel étudiant",
+            `
+    <div class="row2">
+      <div class="field"><label>Prénom *</label><input id="f_firstName" value="${esc(s?.firstName || "")}"></div>
+      <div class="field"><label>Nom *</label><input id="f_lastName" value="${esc(s?.lastName || "")}"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>N° étudiant</label><input id="f_studentId" value="${esc(s?.studentId || "")}"></div>
+      <div class="field"><label>Email *</label><input id="f_email" type="email" value="${esc(s?.email || "")}"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Téléphone</label><input id="f_phone" value="${esc(s?.phone || "")}"></div>
+      <div class="field"><label>Date de naissance</label><input id="f_dob" type="date" value="${esc(s?.dob || "")}"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Collège</label><select id="f_collegeId"><option value="">—</option>${opts}</select></div>
+      <div class="field"><label>Promotion</label><input id="f_promo" value="${esc(s?.promo || "")}" placeholder="ex. 2027"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Statut</label><select id="f_status">${["Actif", "En pause", "Diplômé", "Suspendu"].map((x) => `<option ${s?.status === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+      <div class="field"><label>Date d'inscription</label><input id="f_enrolledAt" type="date" value="${esc(s?.enrolledAt || "")}"></div>
+    </div>
+    <div class="field"><label>Notes</label><textarea id="f_notes" rows="3">${esc(s?.notes || "")}</textarea></div>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveStudent('${id || ""}')">Enregistrer</button>`,
+          );
+        }
+        function saveStudent(id) {
+          const get = (k) => document.getElementById("f_" + k).value.trim();
+          const o = {
+            firstName: get("firstName"),
+            lastName: get("lastName"),
+            studentId: get("studentId"),
+            email: get("email"),
+            phone: get("phone"),
+            dob: get("dob"),
+            collegeId: get("collegeId"),
+            promo: get("promo"),
+            status: get("status"),
+            enrolledAt: get("enrolledAt"),
+            notes: get("notes"),
+          };
+          if (!o.firstName || !o.lastName || !o.email) {
+            toast("Prénom, nom et email obligatoires", "error");
+            return;
+          }
+          if (id) {
+            Object.assign(
+              STATE.students.find((x) => x.id === id),
+              o,
+            );
+          } else {
+            o.id = uid();
+            o.createdAt = new Date().toISOString();
+            STATE.students.push(o);
+          }
+          save();
+          closeModal();
+          toast("Étudiant enregistré", "success");
+          renderStudentTable();
+        }
+        function delStudent(id) {
+          const s = STATE.students.find((x) => x.id === id);
+          confirmDelete(`${s.firstName} ${s.lastName}`, () => {
+            STATE.students = STATE.students.filter((x) => x.id !== id);
+            save();
+            renderStudentTable();
+            toast("Supprimé", "success");
+          });
+        }
+        function viewStudent(id) {
+          const s = STATE.students.find((x) => x.id === id);
+          if (!s) return;
+          const c = STATE.colleges.find((x) => x.id === s.collegeId);
+          const myTickets = STATE.tickets.filter((t) => t.studentId === id);
+          const myEvents = STATE.events.filter((e) =>
+            (e.attendees || []).includes(id),
+          );
+          const myMentor = STATE.mentorships.filter(
+            (x) => x.menteeId === id || x.mentorId === id,
+          );
+          openModal(
+            `Fiche · ${s.firstName} ${s.lastName}`,
+            `
+    <div class="row2">
+      <div><div style="color:var(--muted);font-size:11px;text-transform:uppercase">N° étudiant</div><b>${esc(s.studentId || "—")}</b></div>
+      <div><div style="color:var(--muted);font-size:11px;text-transform:uppercase">Statut</div><span class="chip ${s.status === "Actif" ? "green" : "gray"}">${esc(s.status || "—")}</span></div>
+      <div><div style="color:var(--muted);font-size:11px;text-transform:uppercase">Email</div>${esc(s.email || "—")}</div>
+      <div><div style="color:var(--muted);font-size:11px;text-transform:uppercase">Téléphone</div>${esc(s.phone || "—")}</div>
+      <div><div style="color:var(--muted);font-size:11px;text-transform:uppercase">Collège</div>${esc(c?.name || "—")}</div>
+      <div><div style="color:var(--muted);font-size:11px;text-transform:uppercase">Promotion</div>${esc(s.promo || "—")}</div>
+    </div>
+    <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+    <h4 style="margin:0 0 6px">Tickets (${myTickets.length})</h4>
+    ${myTickets.length ? `<ul>${myTickets.map((t) => `<li>${esc(t.subject)} — <span class="chip gray">${esc(t.status)}</span></li>`).join("")}</ul>` : '<p style="color:var(--muted)">Aucun ticket.</p>'}
+    <h4 style="margin:10px 0 6px">Événements (${myEvents.length})</h4>
+    ${myEvents.length ? `<ul>${myEvents.map((e) => `<li>${esc(e.title)} — ${fmtDate(e.date)}</li>`).join("")}</ul>` : '<p style="color:var(--muted)">Aucun événement.</p>'}
+    <h4 style="margin:10px 0 6px">Mentorat (${myMentor.length})</h4>
+    ${myMentor.length ? `<ul>${myMentor.map((x) => `<li>${x.menteeId === id ? "Mentoré par" : "Mentor de"} ${esc(personName(x.menteeId === id ? x.mentorId : x.menteeId))} — <span class="chip gray">${esc(x.status)}</span></li>`).join("")}</ul>` : '<p style="color:var(--muted)">Aucun binôme.</p>'}
+    <h4 style="margin:10px 0 6px">Notes</h4><p>${esc(s.notes || "—")}</p>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Fermer</button><button class="btn" onclick="editStudent('${id}')">Modifier</button>`,
+          );
+        }
+        function personName(id) {
+          const s = STATE.students.find((x) => x.id === id);
+          return s ? `${s.firstName} ${s.lastName}` : "—";
+        }
+
+        /* ============================================================
+   3. COLLÈGES
+   ============================================================ */
+        function renderColleges() {
+          const m = document.getElementById("main");
+          m.innerHTML =
+            pageHead(
+              "Collèges du campus",
+              `${STATE.colleges.length}/21 collèges enregistrés`,
+              `<button class="btn" onclick="editCollege()">+ Nouveau collège</button>`,
+            ) +
+            `<div class="card">
+      <div class="toolbar">
+        <input type="text" id="colSearch" placeholder="Rechercher un collège…" oninput="renderCollegeTable()"/>
+        <div class="spacer"></div>
+        <span class="chip gray">${STATE.colleges.length} collège(s)</span>
+      </div>
+      <div id="colTable"></div>
+    </div>`;
+          renderCollegeTable();
+        }
+        function renderCollegeTable() {
+          const q = (
+            document.getElementById("colSearch")?.value || ""
+          ).toLowerCase();
+          const rows = STATE.colleges.filter(
+            (c) =>
+              !q ||
+              [c.name, c.code, c.dean].some((v) =>
+                String(v || "")
+                  .toLowerCase()
+                  .includes(q),
+              ),
+          );
+          const wrap = document.getElementById("colTable");
+          if (!rows.length) {
+            wrap.innerHTML = emptyState(
+              "Aucun collège",
+              "Ajoutez vos 21 collèges pour structurer le campus.",
+              `<button class="btn" onclick="editCollege()">+ Nouveau collège</button>`,
+            );
+            return;
+          }
+          wrap.innerHTML = `<table class="tbl"><thead><tr><th>Code</th><th>Nom</th><th>Responsable</th><th>Email</th><th>Étudiants</th><th>Capacité</th><th>Occupation</th><th></th></tr></thead><tbody>${rows
+            .map((c) => {
+              const n = STATE.students.filter(
+                (s) => s.collegeId === c.id,
+              ).length;
+              const cap = Number(c.capacity || 0);
+              const pct = cap ? Math.min(100, Math.round((n / cap) * 100)) : 0;
+              return `<tr>
+      <td><b>${esc(c.code || "")}</b></td><td>${esc(c.name)}</td><td>${esc(c.dean || "—")}</td><td>${esc(c.email || "—")}</td>
+      <td>${n}</td><td>${cap || "—"}</td>
+      <td><div class="bar" style="width:120px"><i style="width:${pct}%"></i></div><small style="color:var(--muted)">${pct}%</small></td>
+      <td class="col-actions"><button class="btn secondary sm" onclick="editCollege('${c.id}')">Modifier</button><button class="btn danger sm" onclick="delCollege('${c.id}')">×</button></td>
+    </tr>`;
+            })
+            .join("")}</tbody></table>`;
+        }
+        function editCollege(id) {
+          const c = id ? STATE.colleges.find((x) => x.id === id) : {};
+          openModal(
+            id ? "Modifier collège" : "Nouveau collège",
+            `
+    <div class="row2">
+      <div class="field"><label>Code *</label><input id="f_code" value="${esc(c?.code || "")}" placeholder="ex. C01"></div>
+      <div class="field"><label>Nom *</label><input id="f_name" value="${esc(c?.name || "")}"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Responsable</label><input id="f_dean" value="${esc(c?.dean || "")}"></div>
+      <div class="field"><label>Email</label><input id="f_email" type="email" value="${esc(c?.email || "")}"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Capacité</label><input id="f_capacity" type="number" min="0" value="${esc(c?.capacity || "")}"></div>
+      <div class="field"><label>Localisation</label><input id="f_location" value="${esc(c?.location || "")}"></div>
+    </div>
+    <div class="field"><label>Description</label><textarea id="f_desc" rows="3">${esc(c?.desc || "")}</textarea></div>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveCollege('${id || ""}')">Enregistrer</button>`,
+          );
+        }
+        function saveCollege(id) {
+          const get = (k) => document.getElementById("f_" + k).value.trim();
+          const o = {
+            code: get("code"),
+            name: get("name"),
+            dean: get("dean"),
+            email: get("email"),
+            capacity: get("capacity"),
+            location: get("location"),
+            desc: get("desc"),
+          };
+          if (!o.code || !o.name) {
+            toast("Code et nom obligatoires", "error");
+            return;
+          }
+          if (STATE.colleges.length >= 21 && !id) {
+            toast("Limite de 21 collèges atteinte", "error");
+            return;
+          }
+          if (id) {
+            Object.assign(
+              STATE.colleges.find((x) => x.id === id),
+              o,
+            );
+          } else {
+            o.id = uid();
+            STATE.colleges.push(o);
+          }
+          save();
+          closeModal();
+          toast("Collège enregistré", "success");
+          renderCollegeTable();
+        }
+        function delCollege(id) {
+          const c = STATE.colleges.find((x) => x.id === id);
+          confirmDelete(c.name, () => {
+            STATE.colleges = STATE.colleges.filter((x) => x.id !== id);
+            save();
+            renderCollegeTable();
+          });
+        }
+
+        /* ============================================================
+   4. TICKETS
+   ============================================================ */
+        function renderTickets() {
+          const m = document.getElementById("main");
+          m.innerHTML =
+            pageHead(
+              "Tickets & Support",
+              `File de demandes et incidents`,
+              `<button class="btn" onclick="editTicket()">+ Nouveau ticket</button>`,
+            ) +
+            `<div class="card">
+      <div class="toolbar">
+        <input type="text" id="tkSearch" placeholder="Rechercher (objet, étudiant)…" oninput="renderTicketTable()"/>
+        <select id="tkStatus" onchange="renderTicketTable()"><option value="">Tous statuts</option>${["Nouveau", "En cours", "En attente", "Résolu", "Fermé"].map((s) => `<option>${s}</option>`).join("")}</select>
+        <select id="tkPrio" onchange="renderTicketTable()"><option value="">Toutes priorités</option>${["Basse", "Normale", "Haute", "Critique"].map((s) => `<option>${s}</option>`).join("")}</select>
+        <div class="spacer"></div>
+        <span class="chip gray" id="tkCount">0</span>
+      </div>
+      <div id="tkTable"></div>
+    </div>`;
+          renderTicketTable();
+        }
+        function renderTicketTable() {
+          const q = (
+            document.getElementById("tkSearch")?.value || ""
+          ).toLowerCase();
+          const st = document.getElementById("tkStatus")?.value || "";
+          const pr = document.getElementById("tkPrio")?.value || "";
+          let rows = STATE.tickets.filter(
+            (t) =>
+              (!q ||
+                [t.subject, personName(t.studentId)].some((v) =>
+                  String(v).toLowerCase().includes(q),
+                )) &&
+              (!st || t.status === st) &&
+              (!pr || t.priority === pr),
+          );
+          rows.sort((a, b) =>
+            (b.createdAt || "").localeCompare(a.createdAt || ""),
+          );
+          document.getElementById("tkCount").textContent =
+            rows.length + " ticket(s)";
+          const wrap = document.getElementById("tkTable");
+          if (!rows.length) {
+            wrap.innerHTML = emptyState(
+              "Aucun ticket",
+              "Créez un premier ticket d'assistance.",
+              `<button class="btn" onclick="editTicket()">+ Nouveau ticket</button>`,
+            );
+            return;
+          }
+          wrap.innerHTML = `<table class="tbl"><thead><tr><th>#</th><th>Objet</th><th>Étudiant</th><th>Catégorie</th><th>Priorité</th><th>Statut</th><th>Créé</th><th></th></tr></thead><tbody>${rows
+            .map(
+              (t) => `
+    <tr>
+      <td><b>${esc((t.id || "").slice(-5).toUpperCase())}</b></td>
+      <td>${esc(t.subject)}</td>
+      <td>${esc(personName(t.studentId))}</td>
+      <td>${esc(t.category || "—")}</td>
+      <td><span class="chip ${t.priority === "Critique" ? "red" : t.priority === "Haute" ? "amber" : "gray"}">${esc(t.priority || "—")}</span></td>
+      <td><span class="chip ${t.status === "Résolu" || t.status === "Fermé" ? "green" : t.status === "En cours" ? "blue" : "amber"}">${esc(t.status)}</span></td>
+      <td>${fmtDate(t.createdAt)}</td>
+      <td class="col-actions">
+        <button class="btn secondary sm" onclick="editTicket('${t.id}')">Ouvrir</button>
+        <button class="btn danger sm" onclick="delTicket('${t.id}')">×</button>
+      </td>
+    </tr>`,
+            )
+            .join("")}</tbody></table>`;
+        }
+        function editTicket(id) {
+          const t = id ? STATE.tickets.find((x) => x.id === id) : {};
+          const stuOpts = STATE.students
+            .map(
+              (s) =>
+                `<option value="${s.id}" ${t?.studentId === s.id ? "selected" : ""}>${esc(s.firstName + " " + s.lastName)}</option>`,
+            )
+            .join("");
+          openModal(
+            id ? "Ticket" : "Nouveau ticket",
+            `
+    <div class="field"><label>Objet *</label><input id="f_subject" value="${esc(t?.subject || "")}"></div>
+    <div class="row2">
+      <div class="field"><label>Étudiant</label><select id="f_studentId"><option value="">—</option>${stuOpts}</select></div>
+      <div class="field"><label>Catégorie</label><select id="f_category">${["Logement", "Bourse", "Santé", "Inscription", "Pédagogie", "Vie associative", "Autre"].map((c) => `<option ${t?.category === c ? "selected" : ""}>${c}</option>`).join("")}</select></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Priorité</label><select id="f_priority">${["Basse", "Normale", "Haute", "Critique"].map((c) => `<option ${t?.priority === c ? "selected" : ""}>${c}</option>`).join("")}</select></div>
+      <div class="field"><label>Statut</label><select id="f_status">${["Nouveau", "En cours", "En attente", "Résolu", "Fermé"].map((c) => `<option ${t?.status === c ? "selected" : ""}>${c}</option>`).join("")}</select></div>
+    </div>
+    <div class="field"><label>Assigné à</label><input id="f_assignee" value="${esc(t?.assignee || "")}" placeholder="Conseiller VE"></div>
+    <div class="field"><label>Description</label><textarea id="f_body" rows="4">${esc(t?.body || "")}</textarea></div>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveTicket('${id || ""}')">Enregistrer</button>`,
+          );
+        }
+        function saveTicket(id) {
+          const get = (k) => document.getElementById("f_" + k).value.trim();
+          const o = {
+            subject: get("subject"),
+            studentId: get("studentId"),
+            category: get("category"),
+            priority: get("priority") || "Normale",
+            status: get("status") || "Nouveau",
+            assignee: get("assignee"),
+            body: get("body"),
+          };
+          if (!o.subject) {
+            toast("Objet requis", "error");
+            return;
+          }
+          if (id) {
+            Object.assign(
+              STATE.tickets.find((x) => x.id === id),
+              o,
+              { updatedAt: new Date().toISOString() },
+            );
+          } else {
+            o.id = uid();
+            o.createdAt = new Date().toISOString();
+            STATE.tickets.push(o);
+          }
+          save();
+          closeModal();
+          toast("Ticket enregistré", "success");
+          renderTicketTable();
+        }
+        function delTicket(id) {
+          const t = STATE.tickets.find((x) => x.id === id);
+          confirmDelete(t.subject, () => {
+            STATE.tickets = STATE.tickets.filter((x) => x.id !== id);
+            save();
+            renderTicketTable();
+          });
+        }
+
+        /* ============================================================
+   5. ÉVÉNEMENTS
+   ============================================================ */
+        function renderEvents() {
+          const m = document.getElementById("main");
+          m.innerHTML =
+            pageHead(
+              "Événements",
+              "Programmation, inscriptions & présences",
+              `<button class="btn" onclick="editEvent()">+ Nouvel événement</button>`,
+            ) +
+            `<div class="card">
+      <div class="toolbar">
+        <input type="text" id="evSearch" placeholder="Rechercher…" oninput="renderEventTable()"/>
+        <select id="evStatus" onchange="renderEventTable()"><option value="">Tous statuts</option>${["Brouillon", "Planifié", "En cours", "Terminé", "Annulé"].map((s) => `<option>${s}</option>`).join("")}</select>
+        <div class="spacer"></div>
+        <span class="chip gray" id="evCount">0</span>
+      </div>
+      <div id="evTable"></div>
+    </div>`;
+          renderEventTable();
+        }
+        function renderEventTable() {
+          const q = (
+            document.getElementById("evSearch")?.value || ""
+          ).toLowerCase();
+          const st = document.getElementById("evStatus")?.value || "";
+          let rows = STATE.events.filter(
+            (e) =>
+              (!q ||
+                [e.title, e.location].some((v) =>
+                  String(v || "")
+                    .toLowerCase()
+                    .includes(q),
+                )) &&
+              (!st || e.status === st),
+          );
+          rows.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+          document.getElementById("evCount").textContent =
+            rows.length + " événement(s)";
+          const wrap = document.getElementById("evTable");
+          if (!rows.length) {
+            wrap.innerHTML = emptyState(
+              "Aucun événement",
+              "Planifiez votre prochain événement.",
+              `<button class="btn" onclick="editEvent()">+ Nouvel événement</button>`,
+            );
+            return;
+          }
+          wrap.innerHTML = `<table class="tbl"><thead><tr><th>Titre</th><th>Date</th><th>Lieu</th><th>Capacité</th><th>Inscrits</th><th>Statut</th><th></th></tr></thead><tbody>${rows
+            .map((e) => {
+              const att = (e.attendees || []).length;
+              const cap = Number(e.capacity || 0);
+              const pct = cap
+                ? Math.min(100, Math.round((att / cap) * 100))
+                : 0;
+              return `<tr>
+      <td><b>${esc(e.title)}</b></td>
+      <td>${fmtDate(e.date)} ${esc(e.time || "")}</td>
+      <td>${esc(e.location || "—")}</td>
+      <td>${cap || "—"}</td>
+      <td><div class="bar" style="width:100px"><i style="width:${pct}%"></i></div><small>${att}${cap ? ` / ${cap}` : ""}</small></td>
+      <td><span class="chip ${e.status === "Terminé" ? "green" : e.status === "Annulé" ? "red" : "blue"}">${esc(e.status || "—")}</span></td>
+      <td class="col-actions">
+        <button class="btn secondary sm" onclick="manageAttendees('${e.id}')">Inscriptions</button>
+        <button class="btn secondary sm" onclick="editEvent('${e.id}')">Modifier</button>
+        <button class="btn danger sm" onclick="delEvent('${e.id}')">×</button>
+      </td>
+    </tr>`;
+            })
+            .join("")}</tbody></table>`;
+        }
+        function editEvent(id) {
+          const e = id ? STATE.events.find((x) => x.id === id) : {};
+          openModal(
+            id ? "Modifier événement" : "Nouvel événement",
+            `
+    <div class="field"><label>Titre *</label><input id="f_title" value="${esc(e?.title || "")}"></div>
+    <div class="row2">
+      <div class="field"><label>Date *</label><input id="f_date" type="date" value="${esc(e?.date || "")}"></div>
+      <div class="field"><label>Heure</label><input id="f_time" type="time" value="${esc(e?.time || "")}"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Lieu</label><input id="f_location" value="${esc(e?.location || "")}"></div>
+      <div class="field"><label>Capacité</label><input id="f_capacity" type="number" min="0" value="${esc(e?.capacity || "")}"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Type</label><select id="f_type">${["Conférence", "Atelier", "Soirée", "Sport", "Culture", "Bien-être", "Intégration", "Autre"].map((c) => `<option ${e?.type === c ? "selected" : ""}>${c}</option>`).join("")}</select></div>
+      <div class="field"><label>Statut</label><select id="f_status">${["Brouillon", "Planifié", "En cours", "Terminé", "Annulé"].map((c) => `<option ${e?.status === c ? "selected" : ""}>${c}</option>`).join("")}</select></div>
+    </div>
+    <div class="field"><label>Budget alloué</label><input id="f_budget" type="number" min="0" step="0.01" value="${esc(e?.budget || "")}"></div>
+    <div class="field"><label>Description</label><textarea id="f_desc" rows="3">${esc(e?.desc || "")}</textarea></div>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveEvent('${id || ""}')">Enregistrer</button>`,
+          );
+        }
+        function saveEvent(id) {
+          const get = (k) => document.getElementById("f_" + k).value.trim();
+          const o = {
+            title: get("title"),
+            date: get("date"),
+            time: get("time"),
+            location: get("location"),
+            capacity: get("capacity"),
+            type: get("type"),
+            status: get("status") || "Planifié",
+            budget: get("budget"),
+            desc: get("desc"),
+          };
+          if (!o.title || !o.date) {
+            toast("Titre et date obligatoires", "error");
+            return;
+          }
+          if (id) {
+            Object.assign(
+              STATE.events.find((x) => x.id === id),
+              o,
+            );
+          } else {
+            o.id = uid();
+            o.attendees = [];
+            STATE.events.push(o);
+          }
+          save();
+          closeModal();
+          toast("Événement enregistré", "success");
+          renderEventTable();
+        }
+        function delEvent(id) {
+          const e = STATE.events.find((x) => x.id === id);
+          confirmDelete(e.title, () => {
+            STATE.events = STATE.events.filter((x) => x.id !== id);
+            save();
+            renderEventTable();
+          });
+        }
+        function manageAttendees(id) {
+          const e = STATE.events.find((x) => x.id === id);
+          const list =
+            STATE.students
+              .map(
+                (s) =>
+                  `<label style="display:flex;gap:8px;align-items:center;padding:6px;border-bottom:1px solid var(--border)"><input type="checkbox" value="${s.id}" ${(e.attendees || []).includes(s.id) ? "checked" : ""}> ${esc(s.firstName + " " + s.lastName)} <span style="color:var(--muted);font-size:11px;margin-left:auto">${esc(s.email || "")}</span></label>`,
+              )
+              .join("") ||
+            '<div class="empty">Aucun étudiant disponible.</div>';
+          openModal(
+            `Inscriptions · ${e.title}`,
+            `<div id="attList" style="max-height:50vh;overflow:auto">${list}</div>`,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveAttendees('${id}')">Enregistrer</button>`,
+          );
+        }
+        function saveAttendees(id) {
+          const e = STATE.events.find((x) => x.id === id);
+          e.attendees = [
+            ...document.querySelectorAll("#attList input:checked"),
+          ].map((i) => i.value);
+          save();
+          closeModal();
+          toast("Inscriptions mises à jour", "success");
+          renderEventTable();
+        }
+
+        /* ============================================================
+   6. CLUBS
+   ============================================================ */
+        function renderClubs() {
+          const m = document.getElementById("main");
+          m.innerHTML =
+            pageHead(
+              "Clubs & Associations",
+              "Reconnaissance, présidence, membres",
+              `<button class="btn" onclick="editClub()">+ Nouveau club</button>`,
+            ) +
+            `<div class="card"><div class="toolbar"><input id="clSearch" placeholder="Rechercher…" oninput="renderClubTable()"/><div class="spacer"></div><span class="chip gray" id="clCount">0</span></div><div id="clTable"></div></div>`;
+          renderClubTable();
+        }
+        function renderClubTable() {
+          const q = (
+            document.getElementById("clSearch")?.value || ""
+          ).toLowerCase();
+          const rows = STATE.clubs.filter(
+            (c) =>
+              !q ||
+              [c.name, c.category, c.president].some((v) =>
+                String(v || "")
+                  .toLowerCase()
+                  .includes(q),
+              ),
+          );
+          document.getElementById("clCount").textContent =
+            rows.length + " club(s)";
+          const wrap = document.getElementById("clTable");
+          if (!rows.length) {
+            wrap.innerHTML = emptyState(
+              "Aucun club",
+              "Enregistrez les associations étudiantes.",
+              `<button class="btn" onclick="editClub()">+ Nouveau club</button>`,
+            );
+            return;
+          }
+          wrap.innerHTML = `<table class="tbl"><thead><tr><th>Nom</th><th>Catégorie</th><th>Président</th><th>Membres</th><th>Budget</th><th>Statut</th><th></th></tr></thead><tbody>${rows
+            .map(
+              (c) => `
+    <tr><td><b>${esc(c.name)}</b></td><td>${esc(c.category || "—")}</td><td>${esc(c.president || "—")}</td><td>${(c.members || []).length}</td><td>${fmtMoney(c.budget || 0)}</td><td><span class="chip ${c.status === "Actif" ? "green" : "gray"}">${esc(c.status || "—")}</span></td>
+    <td class="col-actions"><button class="btn secondary sm" onclick="manageClubMembers('${c.id}')">Membres</button><button class="btn secondary sm" onclick="editClub('${c.id}')">Modifier</button><button class="btn danger sm" onclick="delClub('${c.id}')">×</button></td></tr>`,
+            )
+            .join("")}</tbody></table>`;
+        }
+        function editClub(id) {
+          const c = id ? STATE.clubs.find((x) => x.id === id) : {};
+          openModal(
+            id ? "Modifier club" : "Nouveau club",
+            `
+    <div class="field"><label>Nom *</label><input id="f_name" value="${esc(c?.name || "")}"></div>
+    <div class="row2">
+      <div class="field"><label>Catégorie</label><select id="f_category">${["Sport", "Culture", "Sciences", "Engagement", "Entrepreneuriat", "Arts", "International", "Autre"].map((x) => `<option ${c?.category === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+      <div class="field"><label>Statut</label><select id="f_status">${["En attente", "Actif", "Suspendu", "Dissous"].map((x) => `<option ${c?.status === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Président</label><input id="f_president" value="${esc(c?.president || "")}"></div>
+      <div class="field"><label>Email contact</label><input id="f_email" type="email" value="${esc(c?.email || "")}"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Date de création</label><input id="f_founded" type="date" value="${esc(c?.founded || "")}"></div>
+      <div class="field"><label>Budget annuel</label><input id="f_budget" type="number" min="0" step="0.01" value="${esc(c?.budget || "")}"></div>
+    </div>
+    <div class="field"><label>Description</label><textarea id="f_desc" rows="3">${esc(c?.desc || "")}</textarea></div>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveClub('${id || ""}')">Enregistrer</button>`,
+          );
+        }
+        function saveClub(id) {
+          const get = (k) => document.getElementById("f_" + k).value.trim();
+          const o = {
+            name: get("name"),
+            category: get("category"),
+            status: get("status") || "En attente",
+            president: get("president"),
+            email: get("email"),
+            founded: get("founded"),
+            budget: get("budget"),
+            desc: get("desc"),
+          };
+          if (!o.name) {
+            toast("Nom requis", "error");
+            return;
+          }
+          if (id) {
+            Object.assign(
+              STATE.clubs.find((x) => x.id === id),
+              o,
+            );
+          } else {
+            o.id = uid();
+            o.members = [];
+            STATE.clubs.push(o);
+          }
+          save();
+          closeModal();
+          toast("Club enregistré", "success");
+          renderClubTable();
+        }
+        function delClub(id) {
+          const c = STATE.clubs.find((x) => x.id === id);
+          confirmDelete(c.name, () => {
+            STATE.clubs = STATE.clubs.filter((x) => x.id !== id);
+            save();
+            renderClubTable();
+          });
+        }
+        function manageClubMembers(id) {
+          const c = STATE.clubs.find((x) => x.id === id);
+          const list =
+            STATE.students
+              .map(
+                (s) =>
+                  `<label style="display:flex;gap:8px;align-items:center;padding:6px;border-bottom:1px solid var(--border)"><input type="checkbox" value="${s.id}" ${(c.members || []).includes(s.id) ? "checked" : ""}> ${esc(s.firstName + " " + s.lastName)}</label>`,
+              )
+              .join("") || '<div class="empty">Aucun étudiant.</div>';
+          openModal(
+            `Membres · ${c.name}`,
+            `<div id="memList" style="max-height:50vh;overflow:auto">${list}</div>`,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveClubMembers('${id}')">Enregistrer</button>`,
+          );
+        }
+        function saveClubMembers(id) {
+          const c = STATE.clubs.find((x) => x.id === id);
+          c.members = [
+            ...document.querySelectorAll("#memList input:checked"),
+          ].map((i) => i.value);
+          save();
+          closeModal();
+          toast("Membres mis à jour", "success");
+          renderClubTable();
+        }
+
+        /* ============================================================
+   7. MENTORAT
+   ============================================================ */
+        function renderMentorship() {
+          const m = document.getElementById("main");
+          m.innerHTML =
+            pageHead(
+              "Mentorat",
+              "Binômes mentor / mentoré et suivi",
+              `<button class="btn" onclick="editMentor()">+ Nouveau binôme</button>`,
+            ) +
+            `<div class="card"><div class="toolbar"><input id="meSearch" placeholder="Rechercher…" oninput="renderMentorTable()"/><select id="meStatus" onchange="renderMentorTable()"><option value="">Tous</option>${["Actif", "En pause", "Clôturé"].map((x) => `<option>${x}</option>`).join("")}</select><div class="spacer"></div><span class="chip gray" id="meCount">0</span></div><div id="meTable"></div></div>`;
+          renderMentorTable();
+        }
+        function renderMentorTable() {
+          const q = (
+            document.getElementById("meSearch")?.value || ""
+          ).toLowerCase();
+          const st = document.getElementById("meStatus")?.value || "";
+          const rows = STATE.mentorships.filter((x) => {
+            const txt = (
+              personName(x.mentorId) +
+              " " +
+              personName(x.menteeId) +
+              " " +
+              (x.program || "")
+            ).toLowerCase();
+            return (!q || txt.includes(q)) && (!st || x.status === st);
+          });
+          document.getElementById("meCount").textContent =
+            rows.length + " binôme(s)";
+          const wrap = document.getElementById("meTable");
+          if (!rows.length) {
+            wrap.innerHTML = emptyState(
+              "Aucun binôme",
+              "Créez un premier binôme mentor/mentoré.",
+              `<button class="btn" onclick="editMentor()">+ Nouveau binôme</button>`,
+            );
+            return;
+          }
+          wrap.innerHTML = `<table class="tbl"><thead><tr><th>Mentor</th><th>Mentoré</th><th>Programme</th><th>Début</th><th>Statut</th><th>Sessions</th><th></th></tr></thead><tbody>${rows
+            .map(
+              (x) => `
+    <tr><td>${esc(personName(x.mentorId))}</td><td>${esc(personName(x.menteeId))}</td><td>${esc(x.program || "—")}</td><td>${fmtDate(x.startedAt)}</td>
+    <td><span class="chip ${x.status === "Actif" ? "green" : x.status === "Clôturé" ? "gray" : "amber"}">${esc(x.status)}</span></td>
+    <td>${Number(x.sessions || 0)}</td>
+    <td class="col-actions"><button class="btn secondary sm" onclick="editMentor('${x.id}')">Modifier</button><button class="btn danger sm" onclick="delMentor('${x.id}')">×</button></td></tr>`,
+            )
+            .join("")}</tbody></table>`;
+        }
+        function editMentor(id) {
+          const m = id ? STATE.mentorships.find((x) => x.id === id) : {};
+          const opts = STATE.students
+            .map(
+              (s) =>
+                `<option value="${s.id}">${esc(s.firstName + " " + s.lastName)}</option>`,
+            )
+            .join("");
+          openModal(
+            id ? "Modifier binôme" : "Nouveau binôme",
+            `
+    <div class="row2">
+      <div class="field"><label>Mentor *</label><select id="f_mentorId"><option value="">—</option>${opts}</select></div>
+      <div class="field"><label>Mentoré *</label><select id="f_menteeId"><option value="">—</option>${opts}</select></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Programme</label><input id="f_program" value="${esc(m?.program || "")}" placeholder="Pair-tutorat, Onboarding, etc."></div>
+      <div class="field"><label>Statut</label><select id="f_status">${["Actif", "En pause", "Clôturé"].map((x) => `<option ${m?.status === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Début</label><input id="f_startedAt" type="date" value="${esc(m?.startedAt || "")}"></div>
+      <div class="field"><label>Sessions tenues</label><input id="f_sessions" type="number" min="0" value="${esc(m?.sessions || 0)}"></div>
+    </div>
+    <div class="field"><label>Notes</label><textarea id="f_notes" rows="3">${esc(m?.notes || "")}</textarea></div>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveMentor('${id || ""}')">Enregistrer</button>`,
+          );
+          if (id) {
+            document.getElementById("f_mentorId").value = m.mentorId || "";
+            document.getElementById("f_menteeId").value = m.menteeId || "";
+          }
+        }
+        function saveMentor(id) {
+          const get = (k) => document.getElementById("f_" + k).value.trim();
+          const o = {
+            mentorId: get("mentorId"),
+            menteeId: get("menteeId"),
+            program: get("program"),
+            status: get("status") || "Actif",
+            startedAt: get("startedAt"),
+            sessions: Number(get("sessions") || 0),
+            notes: get("notes"),
+          };
+          if (!o.mentorId || !o.menteeId) {
+            toast("Mentor et mentoré requis", "error");
+            return;
+          }
+          if (o.mentorId === o.menteeId) {
+            toast("Mentor et mentoré doivent différer", "error");
+            return;
+          }
+          if (id) {
+            Object.assign(
+              STATE.mentorships.find((x) => x.id === id),
+              o,
+            );
+          } else {
+            o.id = uid();
+            STATE.mentorships.push(o);
+          }
+          save();
+          closeModal();
+          toast("Binôme enregistré", "success");
+          renderMentorTable();
+        }
+        function delMentor(id) {
+          confirmDelete("ce binôme", () => {
+            STATE.mentorships = STATE.mentorships.filter((x) => x.id !== id);
+            save();
+            renderMentorTable();
+          });
+        }
+
+        /* ============================================================
+   8. SATISFACTION (sondages)
+   ============================================================ */
+        function renderSurveys() {
+          const m = document.getElementById("main");
+          const avg = STATE.surveyResponses.length
+            ? (
+                STATE.surveyResponses.reduce(
+                  (a, r) => a + Number(r.rating || 0),
+                  0,
+                ) / STATE.surveyResponses.length
+              ).toFixed(2)
+            : "—";
+          m.innerHTML =
+            pageHead(
+              "Satisfaction & Sondages",
+              `Note moyenne globale : <b>${avg}</b> / 5 — ${STATE.surveyResponses.length} réponses`,
+              `<button class="btn secondary" onclick="addResponse()">+ Réponse</button><button class="btn" onclick="editSurvey()">+ Sondage</button>`,
+            ) +
+            `<div class="grid cols-2">
+      <div class="card"><div class="card-h"><h3>Sondages</h3></div><div id="svTable"></div></div>
+      <div class="card"><div class="card-h"><h3>Réponses récentes</h3></div><div id="rsTable"></div></div>
+    </div>`;
+          renderSurveyTable();
+          renderResponseTable();
+        }
+        function renderSurveyTable() {
+          const wrap = document.getElementById("svTable");
+          if (!STATE.surveys.length) {
+            wrap.innerHTML = emptyState(
+              "Aucun sondage",
+              "Créez votre premier questionnaire.",
+              `<button class="btn" onclick="editSurvey()">+ Sondage</button>`,
+            );
+            return;
+          }
+          wrap.innerHTML = `<table class="tbl"><thead><tr><th>Titre</th><th>Catégorie</th><th>Statut</th><th>Réponses</th><th></th></tr></thead><tbody>${STATE.surveys
+            .map((s) => {
+              const n = STATE.surveyResponses.filter(
+                (r) => r.surveyId === s.id,
+              ).length;
+              return `<tr><td><b>${esc(s.title)}</b></td><td>${esc(s.category || "—")}</td><td><span class="chip ${s.status === "Ouvert" ? "green" : "gray"}">${esc(s.status || "—")}</span></td><td>${n}</td>
+    <td class="col-actions"><button class="btn secondary sm" onclick="editSurvey('${s.id}')">Modifier</button><button class="btn danger sm" onclick="delSurvey('${s.id}')">×</button></td></tr>`;
+            })
+            .join("")}</tbody></table>`;
+        }
+        function renderResponseTable() {
+          const wrap = document.getElementById("rsTable");
+          if (!STATE.surveyResponses.length) {
+            wrap.innerHTML = emptyState(
+              "Aucune réponse",
+              "Aucune participation enregistrée.",
+              "",
+            );
+            return;
+          }
+          const rows = [...STATE.surveyResponses].sort((a, b) =>
+            (b.createdAt || "").localeCompare(a.createdAt || ""),
+          );
+          wrap.innerHTML = `<table class="tbl"><thead><tr><th>Sondage</th><th>Étudiant</th><th>Note</th><th>Date</th><th></th></tr></thead><tbody>${rows
+            .map((r) => {
+              const s = STATE.surveys.find((x) => x.id === r.surveyId);
+              return `<tr><td>${esc(s?.title || "—")}</td><td>${esc(personName(r.studentId) || "Anonyme")}</td><td><b>${esc(r.rating)}</b>/5</td><td>${fmtDate(r.createdAt)}</td>
+    <td class="col-actions"><button class="btn danger sm" onclick="delResponse('${r.id}')">×</button></td></tr>`;
+            })
+            .join("")}</tbody></table>`;
+        }
+        function editSurvey(id) {
+          const s = id ? STATE.surveys.find((x) => x.id === id) : {};
+          openModal(
+            id ? "Modifier sondage" : "Nouveau sondage",
+            `
+    <div class="field"><label>Titre *</label><input id="f_title" value="${esc(s?.title || "")}"></div>
+    <div class="row2">
+      <div class="field"><label>Catégorie</label><select id="f_category">${["Logement", "Restauration", "Pédagogie", "Vie étudiante", "Sport", "Bien-être", "Autre"].map((x) => `<option ${s?.category === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+      <div class="field"><label>Statut</label><select id="f_status">${["Brouillon", "Ouvert", "Clôturé"].map((x) => `<option ${s?.status === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+    </div>
+    <div class="field"><label>Question / Description</label><textarea id="f_question" rows="3">${esc(s?.question || "")}</textarea></div>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveSurvey('${id || ""}')">Enregistrer</button>`,
+          );
+        }
+        function saveSurvey(id) {
+          const get = (k) => document.getElementById("f_" + k).value.trim();
+          const o = {
+            title: get("title"),
+            category: get("category"),
+            status: get("status") || "Brouillon",
+            question: get("question"),
+          };
+          if (!o.title) {
+            toast("Titre requis", "error");
+            return;
+          }
+          if (id) {
+            Object.assign(
+              STATE.surveys.find((x) => x.id === id),
+              o,
+            );
+          } else {
+            o.id = uid();
+            STATE.surveys.push(o);
+          }
+          save();
+          closeModal();
+          toast("Sondage enregistré", "success");
+          renderSurveys();
+        }
+        function delSurvey(id) {
+          const s = STATE.surveys.find((x) => x.id === id);
+          confirmDelete(s.title, () => {
+            STATE.surveys = STATE.surveys.filter((x) => x.id !== id);
+            STATE.surveyResponses = STATE.surveyResponses.filter(
+              (r) => r.surveyId !== id,
+            );
+            save();
+            renderSurveys();
+          });
+        }
+        function addResponse() {
+          if (!STATE.surveys.length) {
+            toast("Créez d’abord un sondage", "error");
+            return;
+          }
+          const sOpts = STATE.surveys
+            .map((s) => `<option value="${s.id}">${esc(s.title)}</option>`)
+            .join("");
+          const stOpts = STATE.students
+            .map(
+              (s) =>
+                `<option value="${s.id}">${esc(s.firstName + " " + s.lastName)}</option>`,
+            )
+            .join("");
+          openModal(
+            "Nouvelle réponse",
+            `
+    <div class="field"><label>Sondage *</label><select id="f_surveyId">${sOpts}</select></div>
+    <div class="field"><label>Étudiant</label><select id="f_studentId"><option value="">Anonyme</option>${stOpts}</select></div>
+    <div class="field"><label>Note (1-5) *</label><input id="f_rating" type="number" min="1" max="5" value="5"></div>
+    <div class="field"><label>Commentaire</label><textarea id="f_comment" rows="3"></textarea></div>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveResponse()">Enregistrer</button>`,
+          );
+        }
+        function saveResponse() {
+          const get = (k) => document.getElementById("f_" + k).value.trim();
+          const o = {
+            id: uid(),
+            surveyId: get("surveyId"),
+            studentId: get("studentId"),
+            rating: Number(get("rating") || 0),
+            comment: get("comment"),
+            createdAt: new Date().toISOString(),
+          };
+          if (!o.surveyId || !o.rating) {
+            toast("Sondage et note requis", "error");
+            return;
+          }
+          STATE.surveyResponses.push(o);
+          save();
+          closeModal();
+          toast("Réponse enregistrée", "success");
+          renderSurveys();
+        }
+        function delResponse(id) {
+          confirmDelete("cette réponse", () => {
+            STATE.surveyResponses = STATE.surveyResponses.filter(
+              (x) => x.id !== id,
+            );
+            save();
+            renderSurveys();
+          });
+        }
+
+        /* ============================================================
+   9. BUDGET
+   ============================================================ */
+        function renderBudget() {
+          const m = document.getElementById("main");
+          const inc = STATE.budgetItems
+            .filter((b) => b.type === "Recette")
+            .reduce((a, b) => a + Number(b.amount || 0), 0);
+          const dep = STATE.budgetItems
+            .filter((b) => b.type === "Dépense")
+            .reduce((a, b) => a + Number(b.amount || 0), 0);
+          const bal = inc - dep;
+          m.innerHTML =
+            pageHead(
+              "Budget · Exercice " + esc(STATE.settings.fiscalYear || ""),
+              "Recettes, dépenses et engagements",
+              `<button class="btn" onclick="editBudget()">+ Nouvelle ligne</button>`,
+            ) +
+            `<div class="grid cols-3" style="margin-bottom:14px">
+      ${kpi("Recettes", fmtMoney(inc), "Cumul")}
+      ${kpi("Dépenses", fmtMoney(dep), "Cumul")}
+      ${kpi("Solde", fmtMoney(bal), bal >= 0 ? "Excédent" : "Déficit")}
+    </div>
+    <div class="grid cols-2">
+      <div class="card"><div class="card-h"><h3>Répartition des dépenses</h3></div><div class="card-b"><canvas id="chBudgetCat" height="200"></canvas></div></div>
+      <div class="card"><div class="card-h"><h3>Évolution mensuelle</h3></div><div class="card-b"><canvas id="chBudgetMonth" height="200"></canvas></div></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="toolbar">
+        <input id="bgSearch" placeholder="Rechercher…" oninput="renderBudgetTable()"/>
+        <select id="bgType" onchange="renderBudgetTable()"><option value="">Tous types</option><option>Recette</option><option>Dépense</option></select>
+        <div class="spacer"></div><span class="chip gray" id="bgCount">0</span>
+      </div>
+      <div id="bgTable"></div>
+    </div>`;
+          renderBudgetTable();
+          drawBudgetCharts();
+        }
+        function drawBudgetCharts() {
+          const cats = {};
+          STATE.budgetItems
+            .filter((b) => b.type === "Dépense")
+            .forEach((b) => {
+              cats[b.category || "Autre"] =
+                (cats[b.category || "Autre"] || 0) + Number(b.amount || 0);
+            });
+          newChart("chBudgetCat", "pie", {
+            labels: Object.keys(cats).length ? Object.keys(cats) : ["—"],
+            datasets: [
+              {
+                data: Object.values(cats).length ? Object.values(cats) : [1],
+                backgroundColor: [
+                  "#0b5cff",
+                  "#00b39f",
+                  "#f5a524",
+                  "#e5484d",
+                  "#8b5cf6",
+                  "#16a34a",
+                  "#64708a",
+                ],
+              },
+            ],
+          });
+          const months = [
+            "Jan",
+            "Fév",
+            "Mar",
+            "Avr",
+            "Mai",
+            "Jun",
+            "Jui",
+            "Aoû",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Déc",
+          ];
+          const inc = Array(12).fill(0),
+            dep = Array(12).fill(0);
+          STATE.budgetItems.forEach((b) => {
+            const d = b.date ? new Date(b.date) : null;
+            if (!d || isNaN(d)) return;
+            const mo = d.getMonth();
+            if (b.type === "Recette") inc[mo] += Number(b.amount || 0);
+            else dep[mo] += Number(b.amount || 0);
+          });
+          newChart("chBudgetMonth", "bar", {
+            labels: months,
+            datasets: [
+              { label: "Recettes", data: inc, backgroundColor: "#16a34a" },
+              { label: "Dépenses", data: dep, backgroundColor: "#e5484d" },
+            ],
+          });
+        }
+        function renderBudgetTable() {
+          const q = (
+            document.getElementById("bgSearch")?.value || ""
+          ).toLowerCase();
+          const tp = document.getElementById("bgType")?.value || "";
+          let rows = STATE.budgetItems.filter(
+            (b) =>
+              (!q ||
+                [b.label, b.category].some((v) =>
+                  String(v || "")
+                    .toLowerCase()
+                    .includes(q),
+                )) &&
+              (!tp || b.type === tp),
+          );
+          rows.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+          document.getElementById("bgCount").textContent =
+            rows.length + " ligne(s)";
+          const wrap = document.getElementById("bgTable");
+          if (!rows.length) {
+            wrap.innerHTML = emptyState(
+              "Aucune ligne budgétaire",
+              "Ajoutez vos premières lignes.",
+              `<button class="btn" onclick="editBudget()">+ Nouvelle ligne</button>`,
+            );
+            return;
+          }
+          wrap.innerHTML = `<table class="tbl"><thead><tr><th>Date</th><th>Libellé</th><th>Catégorie</th><th>Type</th><th style="text-align:right">Montant</th><th></th></tr></thead><tbody>${rows
+            .map(
+              (b) => `
+    <tr><td>${fmtDate(b.date)}</td><td><b>${esc(b.label)}</b></td><td>${esc(b.category || "—")}</td>
+    <td><span class="chip ${b.type === "Recette" ? "green" : "red"}">${esc(b.type)}</span></td>
+    <td style="text-align:right"><b>${fmtMoney(b.amount)}</b></td>
+    <td class="col-actions"><button class="btn secondary sm" onclick="editBudget('${b.id}')">Modifier</button><button class="btn danger sm" onclick="delBudget('${b.id}')">×</button></td></tr>`,
+            )
+            .join("")}</tbody></table>`;
+        }
+        function editBudget(id) {
+          const b = id ? STATE.budgetItems.find((x) => x.id === id) : {};
+          openModal(
+            id ? "Modifier ligne" : "Nouvelle ligne",
+            `
+    <div class="row2">
+      <div class="field"><label>Date *</label><input id="f_date" type="date" value="${esc(b?.date || new Date().toISOString().slice(0, 10))}"></div>
+      <div class="field"><label>Type *</label><select id="f_type"><option>Dépense</option><option ${b?.type === "Recette" ? "selected" : ""}>Recette</option></select></div>
+    </div>
+    <div class="field"><label>Libellé *</label><input id="f_label" value="${esc(b?.label || "")}"></div>
+    <div class="row2">
+      <div class="field"><label>Catégorie</label><select id="f_category">${["Événementiel", "Clubs", "Mentorat", "Communication", "Logistique", "Subventions", "Bourses", "Autre"].map((x) => `<option ${b?.category === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+      <div class="field"><label>Montant *</label><input id="f_amount" type="number" min="0" step="0.01" value="${esc(b?.amount || "")}"></div>
+    </div>
+    <div class="field"><label>Note</label><textarea id="f_note" rows="2">${esc(b?.note || "")}</textarea></div>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveBudget('${id || ""}')">Enregistrer</button>`,
+          );
+        }
+        function saveBudget(id) {
+          const get = (k) => document.getElementById("f_" + k).value.trim();
+          const o = {
+            date: get("date"),
+            type: get("type"),
+            label: get("label"),
+            category: get("category"),
+            amount: Number(get("amount") || 0),
+            note: get("note"),
+          };
+          if (!o.label || !o.amount) {
+            toast("Libellé et montant requis", "error");
+            return;
+          }
+          if (id) {
+            Object.assign(
+              STATE.budgetItems.find((x) => x.id === id),
+              o,
+            );
+          } else {
+            o.id = uid();
+            STATE.budgetItems.push(o);
+          }
+          save();
+          closeModal();
+          toast("Ligne enregistrée", "success");
+          renderBudget();
+        }
+        function delBudget(id) {
+          const b = STATE.budgetItems.find((x) => x.id === id);
+          confirmDelete(b.label, () => {
+            STATE.budgetItems = STATE.budgetItems.filter((x) => x.id !== id);
+            save();
+            renderBudget();
+          });
+        }
+
+        /* ============================================================
+   10. COMMUNICATIONS
+   ============================================================ */
+        function renderComms() {
+          const m = document.getElementById("main");
+          m.innerHTML =
+            pageHead(
+              "Communications",
+              "Annonces, campagnes & notifications",
+              `<button class="btn" onclick="editComm()">+ Nouvelle communication</button>`,
+            ) +
+            `<div class="card"><div class="toolbar"><input id="coSearch" placeholder="Rechercher…" oninput="renderCommTable()"/><select id="coCh" onchange="renderCommTable()"><option value="">Tous canaux</option>${["Email", "SMS", "Push", "Affichage", "Réseaux sociaux"].map((x) => `<option>${x}</option>`).join("")}</select><div class="spacer"></div><span class="chip gray" id="coCount">0</span></div><div id="coTable"></div></div>`;
+          renderCommTable();
+        }
+        function renderCommTable() {
+          const q = (
+            document.getElementById("coSearch")?.value || ""
+          ).toLowerCase();
+          const ch = document.getElementById("coCh")?.value || "";
+          let rows = STATE.communications.filter(
+            (c) =>
+              (!q ||
+                [c.title, c.audience].some((v) =>
+                  String(v || "")
+                    .toLowerCase()
+                    .includes(q),
+                )) &&
+              (!ch || c.channel === ch),
+          );
+          rows.sort((a, b) =>
+            (b.scheduledAt || "").localeCompare(a.scheduledAt || ""),
+          );
+          document.getElementById("coCount").textContent =
+            rows.length + " message(s)";
+          const wrap = document.getElementById("coTable");
+          if (!rows.length) {
+            wrap.innerHTML = emptyState(
+              "Aucune communication",
+              "Planifiez une campagne ou un message.",
+              `<button class="btn" onclick="editComm()">+ Nouvelle communication</button>`,
+            );
+            return;
+          }
+          wrap.innerHTML = `<table class="tbl"><thead><tr><th>Titre</th><th>Canal</th><th>Audience</th><th>Date</th><th>Statut</th><th></th></tr></thead><tbody>${rows
+            .map(
+              (c) => `
+    <tr><td><b>${esc(c.title)}</b></td><td>${esc(c.channel)}</td><td>${esc(c.audience || "—")}</td><td>${fmtDate(c.scheduledAt)}</td>
+    <td><span class="chip ${c.status === "Envoyée" ? "green" : c.status === "Brouillon" ? "gray" : "blue"}">${esc(c.status || "—")}</span></td>
+    <td class="col-actions"><button class="btn secondary sm" onclick="editComm('${c.id}')">Modifier</button><button class="btn danger sm" onclick="delComm('${c.id}')">×</button></td></tr>`,
+            )
+            .join("")}</tbody></table>`;
+        }
+        function editComm(id) {
+          const c = id ? STATE.communications.find((x) => x.id === id) : {};
+          openModal(
+            id ? "Modifier communication" : "Nouvelle communication",
+            `
+    <div class="field"><label>Titre *</label><input id="f_title" value="${esc(c?.title || "")}"></div>
+    <div class="row2">
+      <div class="field"><label>Canal *</label><select id="f_channel">${["Email", "SMS", "Push", "Affichage", "Réseaux sociaux"].map((x) => `<option ${c?.channel === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+      <div class="field"><label>Statut</label><select id="f_status">${["Brouillon", "Planifiée", "Envoyée", "Annulée"].map((x) => `<option ${c?.status === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Audience</label><input id="f_audience" value="${esc(c?.audience || "")}" placeholder="Tous étudiants, Collège C01, Promo 2027…"></div>
+      <div class="field"><label>Date d'envoi</label><input id="f_scheduledAt" type="datetime-local" value="${esc(c?.scheduledAt || "")}"></div>
+    </div>
+    <div class="field"><label>Contenu</label><textarea id="f_body" rows="5">${esc(c?.body || "")}</textarea></div>
+  `,
+            `<button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn" onclick="saveComm('${id || ""}')">Enregistrer</button>`,
+          );
+        }
+        function saveComm(id) {
+          const get = (k) => document.getElementById("f_" + k).value.trim();
+          const o = {
+            title: get("title"),
+            channel: get("channel"),
+            status: get("status") || "Brouillon",
+            audience: get("audience"),
+            scheduledAt: get("scheduledAt"),
+            body: get("body"),
+          };
+          if (!o.title) {
+            toast("Titre requis", "error");
+            return;
+          }
+          if (id) {
+            Object.assign(
+              STATE.communications.find((x) => x.id === id),
+              o,
+            );
+          } else {
+            o.id = uid();
+            STATE.communications.push(o);
+          }
+          save();
+          closeModal();
+          toast("Communication enregistrée", "success");
+          renderCommTable();
+        }
+        function delComm(id) {
+          const c = STATE.communications.find((x) => x.id === id);
+          confirmDelete(c.title, () => {
+            STATE.communications = STATE.communications.filter(
+              (x) => x.id !== id,
+            );
+            save();
+            renderCommTable();
+          });
+        }
+
+        /* ============================================================
+   11. ANALYTICS
+   ============================================================ */
+        function renderAnalytics() {
+          const m = document.getElementById("main");
+          m.innerHTML =
+            pageHead("Analytics", "Indicateurs croisés Vie Étudiante", "") +
+            `<div class="grid cols-2">
+    <div class="card"><div class="card-h"><h3>Étudiants par statut</h3></div><div class="card-b"><canvas id="aStatus" height="200"></canvas></div></div>
+    <div class="card"><div class="card-h"><h3>Tickets par catégorie</h3></div><div class="card-b"><canvas id="aTickCat" height="200"></canvas></div></div>
+    <div class="card"><div class="card-h"><h3>Participation aux événements</h3></div><div class="card-b"><canvas id="aEv" height="200"></canvas></div></div>
+    <div class="card"><div class="card-h"><h3>Membres par club</h3></div><div class="card-b"><canvas id="aClub" height="200"></canvas></div></div>
+    <div class="card"><div class="card-h"><h3>Sessions de mentorat</h3></div><div class="card-b"><canvas id="aMen" height="200"></canvas></div></div>
+    <div class="card"><div class="card-h"><h3>Satisfaction (distribution)</h3></div><div class="card-b"><canvas id="aSat" height="200"></canvas></div></div>
+  </div>`;
+          const stCounts = ["Actif", "En pause", "Diplômé", "Suspendu"].map(
+            (s) => STATE.students.filter((x) => x.status === s).length,
+          );
+          newChart("aStatus", "doughnut", {
+            labels: ["Actif", "En pause", "Diplômé", "Suspendu"],
+            datasets: [
+              {
+                data: stCounts,
+                backgroundColor: ["#16a34a", "#f5a524", "#0b5cff", "#e5484d"],
+              },
+            ],
+          });
+          const cats = {};
+          STATE.tickets.forEach(
+            (t) =>
+              (cats[t.category || "Autre"] =
+                (cats[t.category || "Autre"] || 0) + 1),
+          );
+          newChart(
+            "aTickCat",
+            "bar",
+            {
+              labels: Object.keys(cats).length ? Object.keys(cats) : ["—"],
+              datasets: [
+                {
+                  label: "Tickets",
+                  data: Object.values(cats).length ? Object.values(cats) : [0],
+                  backgroundColor: "#0b5cff",
+                  borderRadius: 6,
+                },
+              ],
+            },
+            { plugins: { legend: { display: false } } },
+          );
+          const evLab = STATE.events.map((e) => e.title);
+          const evD = STATE.events.map((e) => (e.attendees || []).length);
+          newChart(
+            "aEv",
+            "bar",
+            {
+              labels: evLab.length ? evLab : ["—"],
+              datasets: [
+                {
+                  label: "Inscrits",
+                  data: evD.length ? evD : [0],
+                  backgroundColor: "#00b39f",
+                  borderRadius: 6,
+                },
+              ],
+            },
+            { plugins: { legend: { display: false } } },
+          );
+          const clLab = STATE.clubs.map((c) => c.name);
+          const clD = STATE.clubs.map((c) => (c.members || []).length);
+          newChart(
+            "aClub",
+            "bar",
+            {
+              labels: clLab.length ? clLab : ["—"],
+              datasets: [
+                {
+                  label: "Membres",
+                  data: clD.length ? clD : [0],
+                  backgroundColor: "#8b5cf6",
+                  borderRadius: 6,
+                },
+              ],
+            },
+            { plugins: { legend: { display: false } } },
+          );
+          const mLab = STATE.mentorships.map(
+            (x) => personName(x.mentorId) + " → " + personName(x.menteeId),
+          );
+          const mD = STATE.mentorships.map((x) => Number(x.sessions || 0));
+          newChart(
+            "aMen",
+            "bar",
+            {
+              labels: mLab.length ? mLab : ["—"],
+              datasets: [
+                {
+                  label: "Sessions",
+                  data: mD.length ? mD : [0],
+                  backgroundColor: "#f5a524",
+                  borderRadius: 6,
+                },
+              ],
+            },
+            { plugins: { legend: { display: false } } },
+          );
+          const dist = [1, 2, 3, 4, 5].map(
+            (n) =>
+              STATE.surveyResponses.filter((r) => Number(r.rating) === n)
+                .length,
+          );
+          newChart(
+            "aSat",
+            "bar",
+            {
+              labels: ["1", "2", "3", "4", "5"],
+              datasets: [
+                {
+                  label: "Réponses",
+                  data: dist,
+                  backgroundColor: "#0b5cff",
+                  borderRadius: 6,
+                },
+              ],
+            },
+            { plugins: { legend: { display: false } } },
+          );
+        }
+
+        /* ============================================================
+   12. PARAMÈTRES
+   ============================================================ */
+        function renderSettings() {
+          const m = document.getElementById("main");
+          const s = STATE.settings;
+          m.innerHTML =
+            pageHead("Paramètres", "Configuration de l’ERP Vie Étudiante", "") +
+            `<div class="grid cols-2">
+    <div class="card"><div class="card-h"><h3>Organisation</h3></div><div class="card-b">
+      <div class="field"><label>Nom</label><input id="s_org" value="${esc(s.orgName || "")}"></div>
+      <div class="row2">
+        <div class="field"><label>Devise</label><select id="s_cur">${["EUR", "USD", "XOF", "MAD", "CHF", "GBP"].map((x) => `<option ${s.currency === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+        <div class="field"><label>Exercice</label><input id="s_fy" value="${esc(s.fiscalYear || "")}"></div>
+      </div>
+      <button class="btn" onclick="saveSettings()">Enregistrer</button>
+    </div></div>
+    <div class="card"><div class="card-h"><h3>Données</h3></div><div class="card-b">
+      <p style="color:var(--muted)">Sauvegardez ou réinitialisez l’ensemble de la base. Les données sont stockées localement (navigateur).</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn secondary" onclick="exportAll()">Exporter (JSON)</button>
+        <button class="btn secondary" onclick="importAllPrompt()">Importer (JSON)</button>
+        <button class="btn danger" onclick="resetAll()">Réinitialiser</button>
+      </div>
+      <hr style="border:0;border-top:1px solid var(--border);margin:14px 0">
+      <h4 style="margin:0 0 6px">Statistiques</h4>
+      <ul style="margin:0;padding-left:18px;color:var(--muted)">
+        <li>${STATE.students.length} étudiant(s)</li>
+        <li>${STATE.colleges.length} collège(s)</li>
+        <li>${STATE.tickets.length} ticket(s)</li>
+        <li>${STATE.events.length} événement(s)</li>
+        <li>${STATE.clubs.length} club(s)</li>
+        <li>${STATE.mentorships.length} binôme(s) de mentorat</li>
+        <li>${STATE.surveys.length} sondage(s), ${STATE.surveyResponses.length} réponse(s)</li>
+        <li>${STATE.budgetItems.length} ligne(s) budgétaire(s)</li>
+        <li>${STATE.communications.length} communication(s)</li>
+      </ul>
+    </div></div>
+  </div>`;
+        }
+        function saveSettings() {
+          STATE.settings.orgName = document.getElementById("s_org").value;
+          STATE.settings.currency = document.getElementById("s_cur").value;
+          STATE.settings.fiscalYear = document.getElementById("s_fy").value;
+          save();
+          toast("Paramètres enregistrés", "success");
+        }
+        function resetAll() {
+          confirmDelete("TOUTES les données de l’ERP", () => {
+            STATE = structuredClone(DEFAULT_STATE);
+            save();
+            go("dashboard");
+            toast("Base réinitialisée", "success");
+          });
+        }
+        function exportAll() {
+          const blob = new Blob([JSON.stringify(STATE, null, 2)], {
+            type: "application/json",
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `ssiav-erp-${new Date().toISOString().slice(0, 10)}.json`;
+          a.click();
+          URL.revokeObjectURL(url);
+          toast("Export téléchargé", "success");
+        }
+        function importAllPrompt() {
+          const i = document.createElement("input");
+          i.type = "file";
+          i.accept = "application/json";
+          i.onchange = () => {
+            const f = i.files[0];
+            if (!f) return;
+            const r = new FileReader();
+            r.onload = () => {
+              try {
+                const d = JSON.parse(r.result);
+                STATE = { ...DEFAULT_STATE, ...d };
+                save();
+                go("dashboard");
+                toast("Import réussi", "success");
+              } catch (e) {
+                toast("Fichier invalide", "error");
+              }
+            };
+            r.readAsText(f);
+          };
+          i.click();
+        }
+
+        /* ---------- global search ---------- */
+        document
+          .getElementById("globalSearch")
+          .addEventListener("keydown", (e) => {
+            if (e.key !== "Enter") return;
+            const q = e.target.value.toLowerCase().trim();
+            if (!q) return;
+            // priority: students > tickets > events
+            const s = STATE.students.find((x) =>
+              [x.firstName, x.lastName, x.email, x.studentId].some((v) =>
+                String(v || "")
+                  .toLowerCase()
+                  .includes(q),
+              ),
+            );
+            if (s) {
+              go("students");
+              setTimeout(() => {
+                const i = document.getElementById("stuSearch");
+                if (i) {
+                  i.value = q;
+                  renderStudentTable();
+                }
+              }, 50);
+              return;
+            }
+            const t = STATE.tickets.find((x) =>
+              String(x.subject || "")
+                .toLowerCase()
+                .includes(q),
+            );
+            if (t) {
+              go("tickets");
+              setTimeout(() => {
+                const i = document.getElementById("tkSearch");
+                if (i) {
+                  i.value = q;
+                  renderTicketTable();
+                }
+              }, 50);
+              return;
+            }
+            const ev = STATE.events.find((x) =>
+              String(x.title || "")
+                .toLowerCase()
+                .includes(q),
+            );
+            if (ev) {
+              go("events");
+              setTimeout(() => {
+                const i = document.getElementById("evSearch");
+                if (i) {
+                  i.value = q;
+                  renderEventTable();
+                }
+              }, 50);
+              return;
+            }
+            toast("Aucun résultat", "info");
+          });
+
+        /* ---------- boot ---------- */
+        buildNav();
+        go(location.hash.replace("#", "") || "dashboard");
+      </script>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+</html>

@@ -1,0 +1,94 @@
+.cbel-statut .statut-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.cbel-statut .list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0.3rem 0.7rem;
+  align-items: center;
+  background: #e7eff5;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.cbel-statut .list-item:hover {
+  background: #d4e8f7;
+  transform: scale(1.01);
+  box-shadow: 1px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cbel-statut .list-item:not(:last-child) {
+  border-bottom: #0a588846 1px solid;
+}
+
+.cbel-statut .img-item_text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.cbel-statut .list-item img {
+  width: 25px;
+  height: 25px;
+}
+
+.cbel-statut .item_text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+}
+
+.cbel-statut .item_text p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.1rem 0.5rem;
+  border-radius: 3px;
+  background: var(--white);
+  font-size: 0.6rem;
+  color: var(--versity-blue);
+}
+
+.cbel-statut .statut {
+  width: 6%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cbel-statut .statut span {
+  padding: 0.1rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.55rem;
+  font-weight: 600;
+  width: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cbel-statut .statut .on-hold {
+  background: rgb(204, 204, 204);
+  color: rgb(84, 84, 84);
+}
+
+.cbel-statut .statut .valider {
+  background: rgb(204, 255, 224);
+  color: rgb(0, 142, 54);
+}
+
+.cbel-statut .statut .refuser {
+  background: rgb(255, 202, 202);
+  color: rgb(156, 0, 0);
+}
