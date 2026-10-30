@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSIAVERSITY · ERP Vie Étudiante</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/gestion-document.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="document-set">
+      <header class="app-header">
+        <i class="fa-solid fa-folder-tree" aria-hidden="true"></i>
+        <div>
+          <h1>Documents Administratifs</h1>
+          <span class="subtitle">Espace de gestion documentaire</span>
+        </div>
+      </header>
+
+      <nav class="breadcrumb" id="breadcrumb" aria-label="Fil d'Ariane"></nav>
+
+      <main id="main-view"></main>
+
+      <div class="modal-overlay" id="modal-overlay" hidden>
+        <div
+          class="modal-box"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+        >
+          <h3 id="modal-title">Envoyer un document manuellement</h3>
+          <label for="doc-select">Choisir un document</label>
+          <select id="doc-select"></select>
+          <div class="modal-actions">
+            <button class="btn btn-outline" id="modal-cancel" type="button">
+              Annuler
+            </button>
+            <button class="btn btn-primary" id="modal-confirm" type="button">
+              <i class="fa-solid fa-paper-plane"></i> Envoyer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="toast" id="toast" hidden>
+        <i class="fa-solid fa-circle-check"></i><span id="toast-text"></span>
+      </div>
+
+      <script>
+        "use strict";
+
+        /* ---------- Données ---------- */
+        const CATALOGUE_DOCS = {
+          employes: [
+            "Attestation de travail",
+            "Bulletin de paie",
+            "Contrat de travail",
+            "Certificat de congé",
+          ],
+          professeurs: [
+            "Attestation de vacation",
+            "Bulletin de paie",
+            "Emploi du temps signé",
+            "Certificat de service",
+          ],
+          etudiants: [
+            "Certificat de scolarité",
+            "Relevé de notes",
+            "Attestation d'inscription",
+            "Convention de stage",
+          ],
+        };
+
+        const CATEGORIES = [
+          {
+            key: "employes",
+            label: "Employés",
+            icon: "fa-user-tie",
+            desc: "Personnel administratif et technique",
+          },
+          {
+            key: "professeurs",
+            label: "Professeurs",
+            icon: "fa-chalkboard-user",
+            desc: "Corps enseignant",
+          },
+          {
+            key: "etudiants",
+            label: "Étudiants",
+            icon: "fa-graduation-cap",
+            desc: "Population étudiante",
+          },
+        ];
+
+        const NOMS = {
+          employes: [
+            ["Koffi", "Aya"],
+            ["Traoré", "Ibrahim"],
+            ["Bamba", "Fatou"],
+            ["N'Guessan", "Serge"],
+          ],
+          professeurs: [
+            ["Kouassi", "Mireille"],
+            ["Diallo", "Amadou"],
+            ["Yao", "Edwige"],
+            ["Ouattara", "Paul"],
+          ],
+          etudiants: [
+            ["Koné", "Awa"],
+            ["Digbeu", "Marc"],
+            ["Camara", "Salimata"],
+            ["Assi", "Yves"],
+            ["Toure", "Nadia"],
+          ],
+        };
+        const POSTES = {
+          employes: ["Comptable", "RH", "Logistique", "Secrétariat"],
+          professeurs: ["Mathématiques", "Physique", "Lettres", "Informatique"],
+          etudiants: [
+            "L3 Info",
+            "L2 Gestion",
+            "M1 Droit",
+            "L1 Biologie",
+            "M2 Économie",
+          ],
+        };
+
+        function buildPeople() {
+          const people = {};
+          for (const cat of Object.keys(NOMS)) {
+            people[cat] = NOMS[cat].map((n, i) => {
+              const id = cat + "-" + i;
+              const docs = { aGenerer: [], envoyes: [] };
+              CATALOGUE_DOCS[cat].forEach((docName, di) => {
+                docs.aGenerer.push({ id: id + "-doc" + di, nom: docName });
+              });
+              // quelques envois initiaux simulés
+              docs.envoyes.push({
+                id: id + "-env0",
+                nom: CATALOGUE_DOCS[cat][0],
+                statut: i % 2 === 0 ? "recu" : "encours",
+                date: "12/09/2026",
+              });
+              if (i % 3 === 0) {
+                docs.envoyes.push({
+                  id: id + "-env1",
+                  nom: CATALOGUE_DOCS[cat][1],
+                  statut: "recu",
+                  date: "03/08/2026",
+                });
+              }
+              return {
+                id,
+                nom: n[0],
+                prenom: n[1],
+                role: POSTES[cat][i % POSTES[cat].length],
+                docs,
+              };
+            });
+          }
+          return people;
+        }
+        const PEOPLE = buildPeople();
+
+        /* ---------- Etat & helpers DOM ---------- */
+        const state = {
+          view: "categories",
+          categorie: null,
+          personneId: null,
+          tab: "envoyes",
+        };
+
+        function clear(el) {
+          while (el.firstChild) el.removeChild(el.firstChild);
+        }
+        function el(tag, opts = {}, children = []) {
+          const node = document.createElement(tag);
+          if (opts.class) node.className = opts.class;
+          if (opts.text) node.textContent = opts.text;
+          if (opts.attrs)
+            for (const k in opts.attrs) node.setAttribute(k, opts.attrs[k]);
+          if (opts.onClick) node.addEventListener("click", opts.onClick);
+          children.forEach((c) => c && node.appendChild(c));
+          return node;
+        }
+        function icon(name, extraClass = "") {
+          return el("i", {
+            class: "fa-solid " + name + (extraClass ? " " + extraClass : ""),
+            attrs: { "aria-hidden": "true" },
+          });
+        }
+
+        function showToast(msg) {
+          const t = document.getElementById("toast");
+          document.getElementById("toast-text").textContent = msg;
+          t.hidden = false;
+          clearTimeout(showToast._t);
+          showToast._t = setTimeout(() => {
+            t.hidden = true;
+          }, 2600);
+        }
+
+        /* ---------- Breadcrumb ---------- */
+        function renderBreadcrumb() {
+          const nav = document.getElementById("breadcrumb");
+          clear(nav);
+          const home = el("button", {
+            text: "Documents Administratifs",
+            onClick: () => {
+              state.view = "categories";
+              state.categorie = null;
+              state.personneId = null;
+              render();
+            },
+          });
+          nav.appendChild(home);
+
+          if (state.categorie) {
+            nav.appendChild(icon("fa-chevron-right"));
+            const catLabel = CATEGORIES.find(
+              (c) => c.key === state.categorie,
+            ).label;
+            if (state.view === "personnes") {
+              nav.appendChild(
+                el("span", { class: "crumb-current", text: catLabel }),
+              );
+            } else {
+              nav.appendChild(
+                el("button", {
+                  text: catLabel,
+                  onClick: () => {
+                    state.view = "personnes";
+                    state.personneId = null;
+                    render();
+                  },
+                }),
+              );
+            }
+          }
+          if (state.personneId) {
+            nav.appendChild(icon("fa-chevron-right"));
+            const p = PEOPLE[state.categorie].find(
+              (x) => x.id === state.personneId,
+            );
+            nav.appendChild(
+              el("span", {
+                class: "crumb-current",
+                text: p.prenom + " " + p.nom,
+              }),
+            );
+          }
+        }
+
+        /* ---------- Vue 1 : catégories ---------- */
+        function renderCategories(container) {
+          container.appendChild(
+            el("h2", { class: "view-title", text: "Choisir une catégorie" }),
+          );
+          const grid = el("div", { class: "category-grid" });
+          CATEGORIES.forEach((cat) => {
+            const badge = el("div", { class: "icon-badge" }, [icon(cat.icon)]);
+            const card = el(
+              "button",
+              {
+                class: "category-card",
+                onClick: () => {
+                  state.view = "personnes";
+                  state.categorie = cat.key;
+                  render();
+                },
+              },
+              [
+                badge,
+                el("h3", { text: cat.label }),
+                el("p", {
+                  text:
+                    cat.desc + " · " + PEOPLE[cat.key].length + " personne(s)",
+                }),
+              ],
+            );
+            grid.appendChild(card);
+          });
+          container.appendChild(grid);
+        }
+
+        /* ---------- Vue 2 : liste des personnes ---------- */
+        function initials(p) {
+          return (p.prenom[0] + p.nom[0]).toUpperCase();
+        }
+
+        function renderPersonnes(container) {
+          const cat = CATEGORIES.find((c) => c.key === state.categorie);
+          container.appendChild(
+            el("h2", { class: "view-title", text: cat.label }),
+          );
+          const list = el("div", { class: "person-list" });
+          PEOPLE[state.categorie].forEach((p) => {
+            const row = el(
+              "button",
+              {
+                class: "person-row",
+                onClick: () => {
+                  state.view = "documents";
+                  state.personneId = p.id;
+                  state.tab = "aGenerer";
+                  render();
+                },
+              },
+              [
+                el("div", { class: "person-avatar", text: initials(p) }),
+                el("div", { class: "person-info" }, [
+                  el("div", {
+                    class: "person-name",
+                    text: p.prenom + " " + p.nom,
+                  }),
+                  el("div", { class: "person-meta", text: p.role }),
+                ]),
+                icon("fa-chevron-right"),
+              ],
+            );
+            list.appendChild(row);
+          });
+          container.appendChild(list);
+        }
+
+        /* ---------- Vue 3 : documents d'une personne ---------- */
+        function getPersonne() {
+          return PEOPLE[state.categorie].find((x) => x.id === state.personneId);
+        }
+
+        function renderDocuments(container) {
+          const p = getPersonne();
+          container.appendChild(
+            el("h2", {
+              class: "view-title",
+              text: p.prenom + " " + p.nom + " — Documents",
+            }),
+          );
+
+          const tabs = el("div", { class: "tabs" });
+          const tabAGen = el(
+            "button",
+            {
+              class: "tab-btn" + (state.tab === "aGenerer" ? " active" : ""),
+              onClick: () => {
+                state.tab = "aGenerer";
+                render();
+              },
+            },
+            [
+              icon("fa-file-circle-plus"),
+              document.createTextNode("À générer"),
+              el("span", {
+                class: "count-pill",
+                text: String(p.docs.aGenerer.length),
+              }),
+            ],
+          );
+          const tabEnv = el(
+            "button",
+            {
+              class: "tab-btn" + (state.tab === "envoyes" ? " active" : ""),
+              onClick: () => {
+                state.tab = "envoyes";
+                render();
+              },
+            },
+            [
+              icon("fa-paper-plane"),
+              document.createTextNode("Envoyés"),
+              el("span", {
+                class: "count-pill",
+                text: String(p.docs.envoyes.length),
+              }),
+            ],
+          );
+          tabs.appendChild(tabAGen);
+          tabs.appendChild(tabEnv);
+          container.appendChild(tabs);
+
+          if (state.tab === "aGenerer") renderAGenerer(container, p);
+          else renderEnvoyes(container, p);
+        }
+
+        function renderAGenerer(container, p) {
+          const header = el("div", { class: "panel-header" }, [
+            el("p", {
+              text: "Documents que le système doit envoyer pour cette personne.",
+              attrs: { style: "color:var(--text-soft);font-size:.88rem" },
+            }),
+          ]);
+          container.appendChild(header);
+
+          if (p.docs.aGenerer.length === 0) {
+            container.appendChild(
+              emptyState("fa-folder-open", "Aucun document à générer."),
+            );
+            return;
+          }
+          const list = el("div", { class: "doc-list" });
+          p.docs.aGenerer.forEach((doc) => {
+            const dejaEnvoye = p.docs.envoyes.some((e) => e.nom === doc.nom);
+            const row = el("div", { class: "doc-row" }, [
+              el("div", { class: "doc-icon" }, [icon("fa-file-lines")]),
+              el("div", { class: "doc-info" }, [
+                el("div", { class: "doc-name", text: doc.nom }),
+                el("div", {
+                  class: "doc-sub",
+                  text: dejaEnvoye
+                    ? "Déjà envoyé au moins une fois"
+                    : "Jamais envoyé",
+                }),
+              ]),
+              el(
+                "button",
+                {
+                  class: "btn btn-primary",
+                  onClick: () => {
+                    envoyerDocument(p, doc.nom);
+                    render();
+                  },
+                },
+                [icon("fa-rotate"), document.createTextNode("Renvoyer")],
+              ),
+            ]);
+            list.appendChild(row);
+          });
+          container.appendChild(list);
+        }
+
+        function renderEnvoyes(container, p) {
+          const header = el("div", { class: "panel-header" }, [
+            el("p", {
+              text: "Documents envoyés par le système ou manuellement.",
+              attrs: { style: "color:var(--text-soft);font-size:.88rem" },
+            }),
+            el(
+              "button",
+              { class: "btn btn-ghost", onClick: () => openModal(p) },
+              [
+                icon("fa-square-plus"),
+                document.createTextNode("Envoyer manuellement"),
+              ],
+            ),
+          ]);
+          container.appendChild(header);
+
+          if (p.docs.envoyes.length === 0) {
+            container.appendChild(
+              emptyState("fa-inbox", "Aucun document envoyé pour le moment."),
+            );
+            return;
+          }
+          const list = el("div", { class: "doc-list" });
+          [...p.docs.envoyes].reverse().forEach((env) => {
+            const isRecu = env.statut === "recu";
+            const row = el("div", { class: "doc-row" }, [
+              el("div", { class: "doc-icon" }, [icon("fa-file-circle-check")]),
+              el("div", { class: "doc-info" }, [
+                el("div", { class: "doc-name", text: env.nom }),
+                el("div", { class: "doc-sub", text: "Envoyé le " + env.date }),
+              ]),
+              el("span", {
+                class: "status-pill " + (isRecu ? "status-ok" : "status-wait"),
+                text: isRecu ? "Reçu" : "En cours d'envoi",
+              }),
+              el(
+                "button",
+                {
+                  class: "btn btn-ghost",
+                  onClick: () => {
+                    relancerEnvoi(env);
+                    render();
+                  },
+                },
+                [icon("fa-arrows-rotate"), document.createTextNode("Relancer")],
+              ),
+            ]);
+            list.appendChild(row);
+          });
+          container.appendChild(list);
+        }
+
+        function emptyState(iconName, msg) {
+          return el("div", { class: "empty-state" }, [
+            icon(iconName),
+            el("p", { text: msg }),
+          ]);
+        }
+
+        /* ---------- Actions ---------- */
+        function todayFr() {
+          const d = new Date();
+          return (
+            String(d.getDate()).padStart(2, "0") +
+            "/" +
+            String(d.getMonth() + 1).padStart(2, "0") +
+            "/" +
+            d.getFullYear()
+          );
+        }
+
+        function envoyerDocument(p, nomDoc) {
+          p.docs.envoyes.push({
+            id: p.id + "-env" + Date.now(),
+            nom: nomDoc,
+            statut: "encours",
+            date: todayFr(),
+          });
+          showToast(
+            "« " + nomDoc + " » envoyé à " + p.prenom + " " + p.nom + ".",
+          );
+          setTimeout(() => {
+            const rec = p.docs.envoyes[p.docs.envoyes.length - 1];
+            rec.statut = "recu";
+            if (state.personneId === p.id && state.tab === "envoyes") render();
+          }, 3000);
+        }
+
+        function relancerEnvoi(env) {
+          env.statut = "encours";
+          env.date = todayFr();
+          showToast("Relance de l'envoi de « " + env.nom + " ».");
+          setTimeout(() => {
+            env.statut = "recu";
+            if (state.tab === "envoyes") render();
+          }, 3000);
+        }
+
+        /* ---------- Modal envoi manuel ---------- */
+        function openModal(p) {
+          const overlay = document.getElementById("modal-overlay");
+          const select = document.getElementById("doc-select");
+          clear(select);
+          CATALOGUE_DOCS[state.categorie].forEach((nom) => {
+            select.appendChild(
+              el("option", { text: nom, attrs: { value: nom } }),
+            );
+          });
+          overlay.hidden = false;
+          document.getElementById("modal-confirm").onclick = () => {
+            envoyerDocument(p, select.value);
+            overlay.hidden = true;
+            render();
+          };
+          document.getElementById("modal-cancel").onclick = () => {
+            overlay.hidden = true;
+          };
+        }
+
+        /* ---------- Rendu principal ---------- */
+        function render() {
+          renderBreadcrumb();
+          const main = document.getElementById("main-view");
+          clear(main);
+          if (state.view === "categories") renderCategories(main);
+          else if (state.view === "personnes") renderPersonnes(main);
+          else if (state.view === "documents") renderDocuments(main);
+        }
+
+        render();
+      </script>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+</html>

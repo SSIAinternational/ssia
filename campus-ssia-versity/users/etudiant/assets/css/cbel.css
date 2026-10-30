@@ -92,3 +92,129 @@
   background: rgb(255, 202, 202);
   color: rgb(156, 0, 0);
 }
+
+.submit-btn > button {
+  outline: none;
+}
+
+.paiement-frais-cbel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(3px);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.frais-cbel-form {
+  height: max-content;
+  width: 50%;
+  background: var(--white);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 30px;
+}
+
+.cbel-form-close {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cbel-form-close button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  border: none;
+  font-size: 0.6rem;
+  background: var(--primary);
+  color: var(--white);
+  outline: none;
+}
+
+.frais-cbel-form form {
+  background: var(--white);
+  width: 100%;
+  height: max-content;
+  padding: 10px;
+  border-radius: 10px;
+  display: grid;
+  column-gap: 15px;
+  row-gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  color: var(--versity-blue);
+  position: sticky;
+  top: 13%;
+}
+
+.frais-cbel-form form .label-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.frais-cbel-form form .label-input label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--versity-blue);
+}
+
+.frais-cbel-form form .label-input input,
+.frais-cbel-form form .label-input select,
+.frais-cbel-form form .label-input textarea {
+  margin: 0;
+  font-size: 11px;
+  border: solid 1px var(--versity-blue);
+  background: var(--white);
+  padding: 2px 5px;
+  color: black;
+  border-radius: 3px;
+  outline: none;
+}
+
+.frais-cbel-form form .label-input .label-input input:disabled {
+  background: var(--white);
+}
+
+.frais-cbel-form .cbel-form-submit {
+  height: max-content;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.frais-cbel-form .cbel-form-submit button {
+  border: none;
+  border-radius: 3px;
+  padding: 2px 5px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--primary);
+  color: var(--white);
+  margin-top: 10px;
+  outline: none;
+}
+
+.show {
+  display: flex !important;
+}
+
+.hide {
+  display: none !important;
+}

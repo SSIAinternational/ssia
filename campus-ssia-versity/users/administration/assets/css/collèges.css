@@ -718,7 +718,47 @@
   flex: 1;
   border-radius: 5px;
   padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.classe-matiere-nav {
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  transition: all ease-in-out 0.3s;
+  background: #0a588827;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.classe-matiere-nav span {
+  color: black;
+  font-size: 0.5rem;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 2px 5px;
+}
+
+.classe-matiere-nav span:hover {
+  background: var(--versity-blue);
+  color: var(--white);
+  transition: all ease-in-out 0.3s;
+}
+
+.classe-matiere-nav span.active {
+  background: var(--versity-blue);
+  color: var(--white);
+}
+
+.classe-matiere-list {
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
+  height: 100%;
 }
 
 .classe-matiere__item {

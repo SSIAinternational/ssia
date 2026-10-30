@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pédagogie - SSIAVERSITY | Programmation des entretiens</title>
+    <link rel="icon" href="../../../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/admis-list.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="admis-list">
+      <div class="admis-container">
+        <!-- En-tête -->
+        <div class="admis-header">
+          <div class="admis-heading">
+            <span class="admis-icon">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </span>
+
+            <div>
+              <h2>Étudiants admis</h2>
+              <p>Consultez la liste officielle des étudiants admis.</p>
+            </div>
+          </div>
+
+          <span class="admis-badge">
+            <i class="fa-solid fa-circle-check"></i>
+            Liste des admis
+          </span>
+        </div>
+
+        <!-- Recherche -->
+        <div class="admis-toolbar">
+          <div class="admis-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+              type="search"
+              id="searchMatricule"
+              placeholder="Rechercher par matricule..."
+              aria-label="Rechercher un étudiant par matricule"
+              autocomplete="off"
+            />
+
+            <button
+              type="button"
+              id="clearSearch"
+              class="admis-clear"
+              aria-label="Effacer la recherche"
+              hidden
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <span class="admis-count" id="admisCount"> 0 étudiant </span>
+        </div>
+
+        <!-- Tableau -->
+        <div class="admis-table-wrapper">
+          <table class="admis-table">
+            <thead>
+              <tr>
+                <th class="col-num">N°</th>
+                <th>Nom et prénoms</th>
+                <th>Matricule</th>
+                <th>Collège</th>
+                <th>Programme d'étude</th>
+                <th>Niveau d'étude</th>
+              </tr>
+            </thead>
+
+            <tbody id="admisTableBody">
+              <!-- Généré par JavaScript -->
+            </tbody>
+          </table>
+
+          <!-- Message vide -->
+          <div class="admis-empty" id="admisEmpty" hidden>
+            <span class="admis-empty-icon">
+              <i class="fa-solid fa-user-slash"></i>
+            </span>
+
+            <h3>Aucun étudiant trouvé</h3>
+
+            <p>Vérifiez le matricule saisi ou essayez une autre recherche.</p>
+
+            <button type="button" id="resetSearch">
+              Afficher tous les étudiants
+            </button>
+          </div>
+        </div>
+
+        <!-- Pied du tableau -->
+        <div class="admis-footer">
+          <p id="admisFooterText">Affichage des étudiants admis</p>
+
+          <span class="admis-footer-label">
+            <i class="fa-solid fa-shield-halved"></i>
+            SSIAVERSITY
+          </span>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+  <script src="../../assets/js/admis-list.js"></script>
+</html>

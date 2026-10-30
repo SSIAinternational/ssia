@@ -1,0 +1,392 @@
+/* 1. Tokens ------------------------------------------------------- */
+:root {
+  --bg: #060913;
+  --surface: rgba(255, 255, 255, 0.045);
+  --border: rgba(255, 255, 255, 0.09);
+  --text: #eef1ff;
+  --muted: #8a92b8;
+  --primary: #7c8cff;
+
+  --radius-card: 18px;
+  --radius-logo: 14px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --font: "Poppins", system-ui, sans-serif;
+}
+
+/* 2. Base --------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+/* 3. Arrière-plan : aurore + constellation ------------------------ */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.backdrop__aurora {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120vmax;
+  height: 120vmax;
+  margin: -60vmax 0 0 -60vmax;
+  background: conic-gradient(
+    from 0deg,
+    rgba(99, 102, 241, 0.55),
+    rgba(6, 182, 212, 0.35),
+    rgba(236, 72, 153, 0.3),
+    rgba(99, 102, 241, 0.55)
+  );
+  filter: blur(110px);
+  opacity: 0.28;
+  mask-image: radial-gradient(circle, #000 0%, transparent 55%);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 55%);
+  animation: aurora-spin 60s linear infinite;
+}
+
+.backdrop__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.backdrop__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    var(--bg) 100%
+  );
+}
+
+@keyframes aurora-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 4. Mise en page ------------------------------------------------- */
+.portal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(36px, 6vh, 64px);
+  min-height: 100vh;
+  padding: clamp(40px, 8vh, 80px) clamp(16px, 4vw, 40px) 28px;
+}
+
+/* 5. En-tête ------------------------------------------------------ */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.hero > * {
+  animation: enter 0.9s var(--ease-out) backwards;
+}
+.hero > :nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.hero__title {
+  font-size: clamp(1.7rem, 4.5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(110deg, #fff 20%, #aab4ff 50%, #fff 80%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation:
+    enter 0.9s var(--ease-out) backwards,
+    sheen 7s ease-in-out 1s infinite;
+}
+
+.hero__subtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+@keyframes sheen {
+  0%,
+  100% {
+    background-position: 100% 0;
+  }
+  50% {
+    background-position: 0 0;
+  }
+}
+
+/* 6. Grille de cartes -------------------------------------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  width: min(100%, 1100px);
+}
+
+.card {
+  animation: enter 0.8s var(--ease-out) backwards;
+  animation-delay: calc(var(--i) * 70ms + 250ms);
+}
+
+.card__link {
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 100%;
+  min-height: 175px;
+  padding: 24px 12px 20px;
+  overflow: hidden;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    transform 0.45s var(--ease-out),
+    background 0.4s,
+    border-color 0.4s,
+    box-shadow 0.4s;
+}
+
+/* Halo qui suit le curseur (visible sur toute la grille) */
+.card__link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    rgba(var(--accent) / 0.22),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+/* Bordure lumineuse qui suit le curseur */
+.card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    180px circle at var(--mx) var(--my),
+    rgb(var(--accent)),
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.cards:hover .card__link::before,
+.cards:hover .card__link::after {
+  opacity: 0.45;
+}
+
+.card__link:hover,
+.card__link:focus-visible {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px -12px rgba(var(--accent) / 0.45);
+}
+
+.card__link:hover::before,
+.card__link:hover::after,
+.card__link:focus-visible::before,
+.card__link:focus-visible::after {
+  opacity: 1;
+}
+
+.card__link:active {
+  transform: translateY(-2px) scale(0.98);
+  transition-duration: 0.12s;
+}
+
+/* Logo : flottement discret + couleur au survol */
+.card__logo {
+  display: grid;
+  place-items: center;
+  width: 65px;
+  height: 65px;
+  overflow: hidden;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1f45;
+  background: #fff;
+  border-radius: var(--radius-logo);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  animation: float 6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.6s);
+}
+
+.card__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+  opacity: 0.75;
+  transition:
+    filter 0.4s,
+    opacity 0.4s,
+    transform 0.5s var(--ease-out);
+}
+
+.card__link:hover .card__logo img,
+.card__link:focus-visible .card__logo img {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.12);
+}
+
+.card__name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.card__arrow {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 0.7rem;
+  color: rgb(var(--accent));
+  opacity: 0;
+  transform: translate(-6px, 6px);
+  transition:
+    opacity 0.3s,
+    transform 0.4s var(--ease-out);
+}
+
+.card__link:hover .card__arrow,
+.card__link:focus-visible .card__arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* 7. Pied de page ------------------------------------------------- */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: min(100%, 780px);
+  margin-top: auto;
+  animation: enter 0.9s var(--ease-out) 0.9s backwards;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand img {
+  width: 30px;
+  border-radius: 6px;
+}
+
+.brand span {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.footer__copy {
+  width: 100%;
+  padding-top: 14px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+/* 8. Animations partagées ---------------------------------------- */
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.97);
+    filter: blur(8px);
+  }
+}
+
+/* 9. Responsive & accessibilité ---------------------------------- */
+@media (max-width: 960px) {
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

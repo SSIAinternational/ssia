@@ -517,16 +517,26 @@
               status: "Actif",
               // Structure obligatoire : Premier Cycle + Cycle Supérieur
               premierCycle: {
-                label: "Classe 1er Cycle (BAC+3)",
+                label: "1er Cycle (BAC+3)",
                 cycle: "BAC+3",
                 semestres: ["Semestre 1", "Semestre 2"],
                 credits: ri(60, 90),
+                limit: 90,
+                class: [
+                  { clasName: "1er Cycle Classe A", totalPlaces: 30 },
+                  { clasName: "1er Cycle Classe B", totalPlaces: 30 },
+                ],
               },
               cycleSuperieur: {
-                label: "Classe 2ème Cycle (BAC+5)",
+                label: "2ème Cycle (BAC+5)",
                 cycle: "BAC+5",
                 semestres: ["Semestre 3", "Semestre 4"],
                 credits: ri(60, 90),
+                limit: 90,
+                class: [
+                  { clasName: "2ème Cycle Classe A", totalPlaces: 18 },
+                  { clasName: "2ème Cycle Classe B", totalPlaces: 15 },
+                ],
               },
             });
           }
@@ -1043,6 +1053,27 @@
         }
 
         function tableTpl(title, btn, cols, rows, extra = "") {
+          if (title === "Examens") {
+            return `<div class="page-h"><div><h2>${title}</h2><p>${rows.split("<tr").length - 1} enregistrement(s)</p></div>
+         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-pdf" onclick="exportPDF('${title}')">📄 Exporter PDF</button> <button class="btn btn-ghost" onclick="exportData()">⬇ CSV</button> </div></div>
+         ${extra}
+         <div class="filter-bar"><input placeholder="🔍 Rechercher..." oninput="filterTable(this)"/><select><option>Tous statuts</option><option>Actif</option><option>Inactif</option></select><select><option>Tous cycles</option><option>BAC+3</option><option>BAC+5</option></select></div>
+         <div class="card"><table><thead><tr>${cols.map((c) => `<th>${c}</th>`).join("")}<th>Actions</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+          }
+          if (title === "Étudiants") {
+            return `<div class="page-h"><div><h2>${title}</h2><p>${rows.split("<tr").length - 1} enregistrement(s)</p></div>
+         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-pdf" onclick="exportPDF('${title}')">📄 Exporter PDF</button> <button class="btn btn-ghost" onclick="exportData()">⬇ CSV</button> </div></div>
+         ${extra}
+         <div class="filter-bar"><input placeholder="🔍 Rechercher..." oninput="filterTable(this)"/><select><option>Tous statuts</option><option>Actif</option><option>Inactif</option></select><select><option>Tous cycles</option><option>BAC+3</option><option>BAC+5</option></select></div>
+         <div class="card"><table><thead><tr>${cols.map((c) => `<th>${c}</th>`).join("")}<th>Actions</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+          }
+          if (title === "Professeurs") {
+            return `<div class="page-h"><div><h2>${title}</h2><p>${rows.split("<tr").length - 1} enregistrement(s)</p></div>
+         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-pdf" onclick="exportPDF('${title}')">📄 Exporter PDF</button> <button class="btn btn-ghost" onclick="exportData()">⬇ CSV</button> </div></div>
+         ${extra}
+         <div class="filter-bar"><input placeholder="🔍 Rechercher..." oninput="filterTable(this)"/><select><option>Tous statuts</option><option>Actif</option><option>Inactif</option></select><select><option>Tous cycles</option><option>BAC+3</option><option>BAC+5</option></select></div>
+         <div class="card"><table><thead><tr>${cols.map((c) => `<th>${c}</th>`).join("")}<th>Actions</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+          }
           return `<div class="page-h"><div><h2>${title}</h2><p>${rows.split("<tr").length - 1} enregistrement(s)</p></div>
          <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-pdf" onclick="exportPDF('${title}')">📄 Exporter PDF</button> <button class="btn btn-ghost" onclick="exportData()">⬇ CSV</button> <button class="btn btn-primary" onclick="openModal('${btn}')">+ Ajouter</button></div></div>
          ${extra}
@@ -1081,39 +1112,75 @@
 
           const treeHtml = `<div class="card" style="margin-bottom:16px">
           <h3>Structure Académique SSIAVERSITY</h3>
-          <div class="struct-tree">
-            <div class="struct-level" style="background:var(--chip);font-weight:700">
-              <div class="struct-icon" style="background:#1d4ed8;color:#fff">🏛️</div>
-              <div>${c.name}</div>
+          <div class="program-tree">
+    <div class="program-head">
+        <span class="struct-icon" style="background:#1d4ed8;">🏛️</span>
+        <span><b>${c.name}</b></span>
+    </div>
+    <div class="program-body">
+        ${c.programs
+          .map(
+            (p) => `<div class="program-class">
+            <div class="programs">
+                <div class="program-details">
+                  <div class="struct-icon" style="background:#7c3aed;color:#fff">🎓</div>
+                        <b>${p.name}</b>
+                        <span style="font-size:11px;color:var(--muted)">
+                            (${p.code})
+                        </span></div>
+                <div class="actions">
+                <button class ="action-btn edit"><i class="fa-solid fa-pencil"></i></button>
+                <button class ="action-btn delete"><i class="fa-solid fa-trash"></i></button>
+                <button class ="action-btn see-more"><i class="fa-solid fa-chevron-up"></i></button></div>
             </div>
-            ${c.programs
-              .map(
-                (p) => `
-            <div class="struct-level" style="background:var(--panel)">
-              <div class="indent1" style="display:flex;align-items:center;gap:10px">
-                <div class="struct-icon" style="background:#7c3aed;color:#fff">🎓</div>
-                <div><b>${p.name}</b> <span style="font-size:11px;color:var(--muted)">(${p.code})</span></div>
-              </div>
+
+            <div class="level">
+                <div class="level-details">
+                  <div class="title"><div class="struct-icon" style="background:#059669;color:#fff">📘</div><b>${p.premierCycle.label}</b> — ${p.premierCycle.semestres.join(" · ")}
+                    <span class="badge b-info">BAC+3</span>
+                  </div>
+                    <div class="actions"><button class ="action-btn see-more"><i class="fa-solid fa-chevron-up"></i></button></div>
+                    
+                </div>
+                 ${p.premierCycle.class
+                   .map(
+                     (cl) => `
+                <div class="class">
+                    <div class="class-details"><div class="struct-icon" style="background:#ea580c;color:#fff">📙</div><span><b>${cl.clasName}</b></span> <span>${cl.totalPlaces} places</span></div>
+                    <div class="actions">
+                    <button class ="action-btn edit"><i class="fa-solid fa-pencil"></i></button>
+                    <button class ="action-btn delete"><i class="fa-solid fa-trash"></i></button></div>
+                </div>`,
+                   )
+                   .join("")}
+                
+                
+                <div class="level-details">
+                  <div class="title"><div class="struct-icon" style="background:#059669;color:#fff">📘</div><b>${p.cycleSuperieur.label}</b> — ${p.cycleSuperieur.semestres.join(" · ")}
+                    <span class="badge b-info">BAC+3</span>
+                  </div>
+                    <div class="actions"><button class ="action-btn see-more"><i class="fa-solid fa-chevron-up"></i></button></div>
+                    
+                </div>
+                 ${p.cycleSuperieur.class
+                   .map(
+                     (cl) => `
+                <div class="class">
+                    <div class="class-details"><div class="struct-icon" style="background:#ea580c;color:#fff">📙</div><span><b>${cl.clasName}</b></span> <span>${cl.totalPlaces} places</span></div>
+                    <div class="actions">
+                    <button class ="action-btn edit"><i class="fa-solid fa-pencil"></i></button>
+                    <button class ="action-btn delete"><i class="fa-solid fa-trash"></i></button></div>
+                </div>`,
+                   )
+                   .join("")}
             </div>
-            <div class="struct-level">
-              <div class="indent2" style="display:flex;align-items:center;gap:10px">
-                <div class="struct-icon" style="background:#059669;color:#fff">📘</div>
-                <div><b>${p.premierCycle.label}</b> — ${p.premierCycle.semestres.join(" · ")}</div>
-                <span class="badge b-info">BAC+3</span>
-              </div>
-            </div>
-            <div class="struct-level">
-              <div class="indent2" style="display:flex;align-items:center;gap:10px">
-                <div class="struct-icon" style="background:#ea580c;color:#fff">📙</div>
-                <div><b>${p.cycleSuperieur.label}</b> — ${p.cycleSuperieur.semestres.join(" · ")}</div>
-                <span class="badge b-warn">BAC+5</span>
-              </div>
-            </div>
-            `,
-              )
-              .join("")}
-          </div>
-        </div>`;
+        </div>`,
+          )
+          .join("")}
+        
+    </div>
+</div>
+          `;
 
           return tableTpl(
             "Programmes d'études",
@@ -1160,7 +1227,7 @@
               "Code",
               "Nom",
               "Programme",
-              "Classe",
+              "Niveau",
               "Semestre",
               "Crédit",
               "Coef",
@@ -1300,8 +1367,7 @@
           <td>${s.email}</td>
           <td><span class="badge ${s.status === "Actif" ? "b-ok" : "b-warn"}">${s.status}</span></td>
           <td>
-            <button class="btn btn-ghost" style="padding:4px 8px" onclick="event.stopPropagation();editRecord('student','${s.id}')">✎</button>
-            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('student','${s.id}')">✕</button>
+            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('student','${s.id}')">Suspendre</button>
           </td>
         </tr>`,
             )
@@ -1347,7 +1413,7 @@
           <td>${t.email}</td>
           <td>
             <button class="btn btn-ghost" style="padding:4px 8px" onclick="event.stopPropagation();editRecord('teacher','${t.id}')">✎</button>
-            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('teacher','${t.id}')">✕</button>
+            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('teacher','${t.id}')">Suspendre</button>
           </td>
         </tr>`,
             )
@@ -1384,7 +1450,7 @@
           <td><span class="badge ${s.present ? "b-ok" : "b-err"}">${s.present ? "Présent" : "Absent"}</span></td>
           <td>
             <button class="btn btn-ghost" style="padding:4px 8px" onclick="event.stopPropagation();editRecord('staff','${s.id}')">✎</button>
-            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('staff','${s.id}')">✕</button>
+            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('staff','${s.id}')">Suspendre</button>
           </td>
         </tr>`,
             )
@@ -1405,18 +1471,16 @@
                 co,
               ) => `<tr onclick="openDetailModal('course','${co.id}')" style="cursor:pointer">
           <td>${co.date}</td><td>${co.time}</td><td>${co.subject}</td><td>${co.program}</td><td>${co.teacher}</td>
-          <td><span class="badge b-info">${co.room}</span></td>
+          <td><span class="badge b-info"><!--${co.room}-->Premier Cycle</span></td>
           <td>
-            <button class="btn btn-ghost" style="padding:4px 8px" onclick="event.stopPropagation();editRecord('course','${co.id}')">✎</button>
-            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('course','${co.id}')">✕</button>
           </td>
         </tr>`,
             )
             .join("");
           return `<div class="page-h"><div><h2>Planification des cours</h2><p>Vues calendaires & liste</p></div>
-          <div style="display:flex;gap:8px"><button class="btn btn-pdf" onclick="exportPDF('Cours')">📄 PDF</button><button class="btn btn-primary" onclick="openModal('course')">+ Planifier</button></div></div>
+          <div style="display:flex;gap:8px"><button class="btn btn-pdf" onclick="exportPDF('Cours')">📄 PDF</button></div></div>
          <div class="tabs"><div class="tab active">Liste</div><div class="tab">Semaine</div></div>
-         <div class="card"><table><thead><tr><th>Date</th><th>Heure</th><th>Matière</th><th>Programme</th><th>Professeur</th><th>Salle</th><th>Actions</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+         <div class="card"><table><thead><tr><th>Date</th><th>Heure</th><th>Matière</th><th>Programme</th><th>Professeur</th><th>Niveau</th></tr></thead><tbody>${rows}</tbody></table></div>`;
         }
 
         function renderExams(c) {
@@ -1426,20 +1490,15 @@
                 e,
               ) => `<tr onclick="openDetailModal('exam','${e.id}')" style="cursor:pointer">
           <td>${e.date}</td><td>${e.time}</td><td>${e.subject}</td>
-          <td><span class="badge b-info">${e.room}</span></td>
           <td><span class="badge ${e.session === "Rattrapage" ? "b-warn" : "b-ok"}">${e.session}</span></td>
           <td>${e.surv}</td>
-          <td>
-            <button class="btn btn-ghost" style="padding:4px 8px" onclick="event.stopPropagation();editRecord('exam','${e.id}')">✎</button>
-            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('exam','${e.id}')">✕</button>
-          </td>
         </tr>`,
             )
             .join("");
           return tableTpl(
             "Examens",
             "exam",
-            ["Date", "Heure", "Matière", "Salle", "Session", "Surveillant"],
+            ["Date", "Heure", "Matière", "Session", "Surveillant"],
             rows,
           );
         }
@@ -1454,10 +1513,6 @@
           <td>${g.student}</td><td>${g.subject}</td><td>${g.cc}</td><td>${g.tp}</td><td>${g.final}</td>
           <td><b>${g.avg}</b></td>
           <td><span class="badge ${g.avg >= 10 ? "b-ok" : "b-err"}">${g.avg >= 10 ? "Validé" : "Non validé"}</span></td>
-          <td>
-            <button class="btn btn-ghost" style="padding:4px 8px" onclick="event.stopPropagation();editRecord('grade','${g.id}')">✎</button>
-            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('grade','${g.id}')">✕</button>
-          </td>
         </tr>`,
             )
             .join("");
@@ -1490,7 +1545,7 @@
         </div>`;
 
           return `<div class="page-h"><div><h2>Notes & Évaluations</h2><p>CC · TP · Examen Final · Validation semestrielle</p></div>
-          <div style="display:flex;gap:8px"><button class="btn btn-pdf" onclick="exportPDF('Notes')">📄 Exporter PDF</button><button class="btn btn-primary" onclick="openModal('grade')">+ Saisir note</button></div></div>
+          <div style="display:flex;gap:8px"><button class="btn btn-pdf" onclick="exportPDF('Notes')">📄 Exporter PDF</button></div></div>
          <div class="grid2">
           <div class="card"><h3>Distribution des moyennes</h3><div class="chart-sm"><canvas id="chG1"></canvas></div></div>
           <div class="card"><h3>Évolution semestrielle</h3><div class="chart-sm"><canvas id="chG2"></canvas></div></div>
@@ -1514,7 +1569,7 @@
           const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
           const hours = ["08:00", "10:00", "12:00", "14:00", "16:00"];
           let html =
-            '<div class="page-h"><div><h2>Emploi du temps</h2><p>Vue hebdomadaire</p></div><button class="btn btn-primary">+ Créneau</button></div><div class="card"><div class="cal">';
+            '<div class="page-h"><div><h2>Emploi du temps</h2><p>Vue hebdomadaire</p></div></div><div class="card"><div class="cal">';
           html +=
             '<div class="h"></div>' +
             days.map((d) => `<div class="h">${d}</div>`).join("");
@@ -1938,10 +1993,8 @@
               : "";
           const forms = {
             program: `
-            <div class="form-grid">
-              <div class="form-row"><label>Code</label><input id="f_code" placeholder="PRG..." value="${data ? data.code : ""}"/></div>
               <div class="form-row"><label>Nom du programme</label><input id="f_name" value="${data ? data.name : ""}"/></div>
-            </div>
+            
             <div class="form-row"><label>Responsable</label><input id="f_resp" value="${data ? data.resp : "Dr. "}"/></div>
             <div class="form-row"><label>Crédits totaux</label><input id="f_credits" type="number" value="${data ? data.credits : 180}"/></div>
             <div style="background:var(--chip);padding:12px;border-radius:8px;margin-bottom:12px">
@@ -1951,7 +2004,6 @@
             </div>`,
             subject: `
             <div class="form-grid">
-              <div class="form-row"><label>Code matière</label><input id="f_code" value="${data ? data.code : ""}"/></div>
               <div class="form-row"><label>Nom de la matière</label><input id="f_name" value="${data ? data.name : ""}"/></div>
             </div>
             <div class="form-row"><label>Programme</label><select id="f_prog"><option>-- Choisir --</option>${progs}</select></div>
@@ -2041,7 +2093,6 @@
           if (type === "program") {
             c.programs.push({
               id: newId,
-              code: g("f_code") || "PRG" + pad(c.programs.length + 1, 3),
               name: g("f_name") || "Nouveau Programme",
               credits: parseInt(g("f_credits")) || 180,
               resp: g("f_resp") || "—",
@@ -2063,7 +2114,6 @@
           } else if (type === "subject") {
             c.subjects.push({
               id: newId,
-              code: g("f_code") || "SUB" + pad(c.subjects.length + 1, 3),
               name: g("f_name") || "Nouvelle Matière",
               program: g("f_prog"),
               classe: g("f_classe"),
@@ -2398,12 +2448,21 @@
           }
           document.getElementById("modalRoot").innerHTML =
             `<div class="modal-bg" onclick="if(event.target===this)closeModal()">
-         <div class="modal"><div class="modal-h"><h3>Fiche détaillée</h3><button onclick="closeModal()" style="font-size:20px">×</button></div>
-         <div class="modal-b">${html}</div>
+         <div class="modal"><div class="modal-h"><h3>Fiche détaillée</h3><button onclick="closeModal()" style="font-size:20px">×</button>
+          </div>
+         <div class="modal-b"><!--${html}-->
+        <div style="font-size:14px">
+            <div style="margin-bottom:8px"><b>Matière :</b> Anglais des Affaires</div>
+            <div style="margin-bottom:8px"><b>Programme :</b> Intelligence Artificielle</div>
+            <div style="margin-bottom:8px"><b>Niveau :</b> Premier Cycle</div>
+            <div style="margin-bottom:8px"><b>Semestre :</b> 1</div>
+            <div style="margin-bottom:8px"><b>Date et heure :</b> 23-03-2026 à 15h00</div>
+            <div><b>Professeur :</b> Dr Diarra</div>
+        </div>
+          </div>
          <div class="modal-f">
           <button class="btn btn-pdf" onclick="exportPDF('Fiche_detail')">📄 Exporter PDF</button>
           <button class="btn btn-ghost" onclick="closeModal()">Fermer</button>
-          ${data ? `<button class="btn btn-primary" onclick="closeModal();editRecord('${type}','${itemId}')">✎ Modifier</button>` : ""}
          </div></div></div>`;
         }
 

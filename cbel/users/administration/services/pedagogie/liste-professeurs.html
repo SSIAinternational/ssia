@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pédagogie - SSIAVERSITY | Liste des professeurs</title>
+    <link rel="icon" href="../../../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/student-list.css" />
+    <link rel="stylesheet" href="../../assets/css/professeur-list.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="professeur-list">
+      <div class="professeur-list__header">
+        <h5>Liste des professeurs</h5>
+        <div class="professeur-list__header-search">
+          <input
+            type="text"
+            placeholder="Rechercher par le nom ou le matricule du professeur"
+          />
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="professeur-list__total-student">
+          <span><u>265</u> professeurs actifs</span>
+        </div>
+      </div>
+      <div class="professeur-list__table">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th class="left">Name</th>
+              <th class="left">Matricule</th>
+              <th class="left">E-mail</th>
+              <th class="left">Nationalité</th>
+              <th class="left">Pays</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td></td>
+              <td class="detail__name">
+                <img src="../../../../../img/lebondo.jpg" alt="" srcset="" />
+                <span>Lebondo</span>
+                <i class="fa-solid fa-mars"></i>
+              </td>
+              <td class="">VER14184935Z</td>
+              <td class="">lebondo@gmail.com</td>
+              <td class="">Ivoirienne</td>
+              <td class="">Côte d'Ivoire</td>
+              <td class="statut"><span>Doyen</span></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="detail__name">
+                <img src="../../../../../img/marie.JPG" alt="" srcset="" />
+                <span>Djakalet Marie De Dieu Christobelle Sekohonon</span>
+                <i class="fa-solid fa-venus"></i>
+              </td>
+              <td class="">VER14096917Z</td>
+              <td class="">christobelledjakalet12@gmail.com</td>
+              <td class="">Ivoirienne</td>
+              <td class="">Côte d'Ivoire</td>
+              <td class="statut"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-more-details hide">
+        <div class="action-close">
+          <i class="fa-solid fa-close"></i>
+        </div>
+        <div class="more-details__content">
+          <img src="../../../../../img/marie.JPG" alt="" srcset="" />
+
+          <div class="details-text__set">
+            <span class="doyen-marker">Doyen</span>
+            <div class="details-text__item">
+              <span>Nom</span>
+              <span>Djakalet</span>
+            </div>
+            <div class="details-text__item">
+              <span>Prénoms</span>
+              <span>Marie De Dieu Christobelle Sekohonon</span>
+            </div>
+            <div class="details-text__item">
+              <span>Âge</span>
+              <span>26 ans</span>
+            </div>
+            <div class="details-text__item">
+              <span>Genre</span>
+              <span>Féminin</span>
+            </div>
+            <div class="details-text__item">
+              <span>Nationalité</span>
+              <span>Ivoirienne</span>
+            </div>
+            <div class="details-text__item">
+              <span>Pays d'origine</span>
+              <span>Côte d'Ivoire</span>
+            </div>
+            <div class="details-text__item">
+              <span>E-mail</span>
+              <span>christobelledjakalet12@gmail.com</span>
+            </div>
+            <div class="details-text__item">
+              <span>Numéro de téléphone</span>
+              <span>+225 0749851279</span>
+            </div>
+            <div class="details-text__item">
+              <span>Pays de résidence</span>
+              <span>Côte d'Ivoire</span>
+            </div>
+            <div class="details-text__item">
+              <span>Collège / Programme d'étude / Niveau</span>
+              <span
+                >Collège Clermont / Administration des affaires / 1er
+                Cycle</span
+              >
+              <span
+                >Collège Fermont / Droit et actions humanitaires / 2nd
+                Cycle</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+  <script src="../../assets/js/professeur-list-more-details.js"></script>
+</html>

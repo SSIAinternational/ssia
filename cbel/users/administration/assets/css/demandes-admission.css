@@ -1,0 +1,1011 @@
+.demandes-admission {
+  background: #edf7fd;
+  width: 85%;
+  height: 100%;
+  padding: 1rem 0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/*Demandes sidebar*/
+.demandes-admission__sidebar {
+  background: var(--versity-blue);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 0.5rem;
+  height: max-content;
+  width: 13%;
+}
+
+.demandes-admission__sidebar span {
+  color: #629bbe;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.demandes-admission__sidebar span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.demandes-admission__sidebar .demandes-admission-nav__active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+/*Demandes section set*/
+
+.demandes-admission__set {
+  width: 85%;
+  height: 100%;
+}
+
+/*Demandes section filed*/
+
+.demandes-admission__list {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.demandes-admission__table {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.demandes-admission__table table {
+  width: 100%;
+  height: max-content;
+}
+
+.demandes-admission__table table thead {
+  background: var(--versity-blue);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.demandes-admission__table table thead tr th {
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.demandes-admission__table table thead tr th:nth-child(2) {
+  text-align: left;
+}
+
+/*filed-tbody*/
+
+.demandes-admission__table table tbody tr {
+  border-bottom: solid rgba(0, 0, 0, 0.3) 1px;
+  cursor: pointer;
+}
+
+.demandes-admission__table table tbody tr:hover {
+  background: #d2e7f4;
+}
+
+.demandes-admission__table table tbody tr td {
+  font-size: 0.7rem;
+  color: black;
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.demandes-admission__table table tbody tr td:nth-child(2) {
+  text-align: left;
+}
+
+.demandes-admission__table table tbody tr td:nth-child(2) img {
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+}
+
+.demandes-admission__table table tbody tr td:nth-child(4) span {
+  color: var(--white);
+  font-size: 0.6rem;
+  background: #50b150;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+}
+
+/*Demandes section filed modal details*/
+
+.demandes-admission__modal-details {
+  background: var(--white);
+  width: 80%;
+  max-width: 95%;
+  height: 100%;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+  right: 0;
+  animation: admission-modal-appear 1.5s ease-in-out forwards;
+}
+
+@keyframes admission-modal-appear {
+  0% {
+    transform: translate(100%);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+.details-content {
+  width: 100%;
+  height: 100%;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  overflow-y: auto;
+  position: relative;
+  transition: width ease 0.5s;
+}
+
+.details-content::-webkit-scrollbar {
+  display: none;
+}
+
+.details-content.shrink {
+  width: 60%;
+}
+
+.action-close {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding: 0.5rem 0 0.2rem 0;
+  background: var(--white);
+  z-index: 2;
+}
+
+.action-close .fa-close {
+  font-size: 0.6rem;
+  padding: 0.3rem 0.35rem;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.demande-refence {
+  width: 100%;
+}
+
+.demande-refence span {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Info perso*/
+
+.rubrique {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  border-bottom: dashed rgba(0, 0, 0, 0.3) 1px;
+  padding-bottom: 0.5rem;
+  max-height: 80%;
+}
+
+.details-content .title-angle-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.title-angle-actions .title-angle {
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.details-content .title-angle-actions .title-angle h5 {
+  font-size: 1rem;
+  color: var(--versity-blue);
+  margin: 0;
+  cursor: pointer;
+}
+
+.details-content .title-angle-actions .title-angle i {
+  font-size: 0.8rem;
+  color: var(--versity-blue);
+}
+
+.details-content .title-angle-actions .actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  margin-left: 0.5rem;
+}
+
+.details-content .title-angle-actions .actions span:first-of-type {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #50b150;
+  border: solid 1px #50b150;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+  height: max-content;
+  cursor: pointer;
+}
+
+.details-content .title-angle-actions .actions span:first-of-type:hover {
+  background: #50b150;
+  color: var(--white);
+}
+
+.details-content .title-angle-actions .actions span:first-of-type.complet {
+  background: #50b150;
+  border: solid 1px #50b150;
+  color: var(--white);
+  text-transform: capitalize;
+}
+
+.details-content
+  .title-angle-actions
+  .actions
+  span:first-of-type.complet
+  .fa-lock {
+  margin-left: 0.3rem;
+}
+
+.details-content .title-angle-actions .actions span:last-of-type {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+  height: max-content;
+  transition: ease 0.3s;
+  cursor: pointer;
+}
+
+.details-content .title-angle-actions .actions span:last-of-type:hover {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.details-content .title-angle-actions .actions span:last-of-type.imcomplet {
+  background: var(--primary);
+  color: var(--white);
+  border: solid 1px var(--primary);
+  text-transform: capitalize;
+}
+
+.details-content
+  .title-angle-actions
+  .actions
+  span:last-of-type.imcomplet.none {
+  display: none;
+}
+
+.rubrique .content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.information-personnelle__header {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.information-personnelle__header img {
+  height: 80px;
+  width: 80px;
+  background: var(--versity-blue);
+  border-radius: 100%;
+}
+
+.information-personnelle__header__detail-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/*style universelle pour tout les span-gourp et pdf-doc
+des détails*/
+
+.span-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.span-group span:first-of-type {
+  font-size: 0.6rem;
+  font-weight: 500;
+  background: #d2e7f4;
+  padding: 0.05rem 0.2rem;
+  width: max-content;
+  border-radius: 3px;
+  color: var(--versity-blue);
+  margin: 0;
+}
+
+.span-group span:last-child {
+  font-size: 0.7rem;
+  color: black;
+  margin: 0;
+}
+
+.pdf-doc {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.pdf-doc span:first-of-type {
+  font-size: 0.6rem;
+  font-weight: 500;
+  background: #d2e7f4;
+  padding: 0.05rem 0.2rem;
+  width: max-content;
+  border-radius: 3px;
+  color: var(--versity-blue);
+  margin: 0;
+}
+
+.pdf-doc .pdf-item__set {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+}
+
+.pdf-doc .pdf-item__set .pdf-item {
+  background: #d2e7f4;
+  width: 50px;
+  height: 80px;
+  border-radius: 3px;
+  border: dashed #629bbe 1px;
+  cursor: pointer;
+}
+
+.body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.details-content__action {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.details-content__action .inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+
+.details-content__action .inputs textarea {
+  background: var(--white);
+  border: solid 1px #629bbe;
+  flex: 1;
+  color: var(--versity-blue);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.3rem;
+  border-radius: 3px;
+  outline: none;
+}
+
+.details-content__action .inputs select {
+  background: var(--white);
+  border: solid 1px #629bbe;
+  flex: 1;
+  color: var(--versity-blue);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.3rem;
+  border-radius: 3px;
+  height: max-content;
+  outline: none;
+}
+
+.details-content__action .buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+
+.details-content__action .buttons button {
+  font-size: 0.6rem;
+  width: max-content;
+  color: var(--white);
+  padding: 0.2rem 0.3rem;
+  border-radius: 3px;
+  border: none;
+  margin-top: 1rem;
+}
+
+.details-content__action .buttons button:first-of-type {
+  background: #50b150;
+}
+
+.details-content__action button:nth-of-type(2) {
+  background: var(--primary);
+}
+
+.details-content__action .buttons button:last-of-type {
+  background: rgb(165, 165, 165);
+  color: black;
+}
+
+.note-entretien {
+  width: 100%;
+}
+
+.note-entretien span {
+  font-size: 0.7rem;
+  color: var(--versity-blue);
+  font-weight: 600;
+}
+
+.details-content__final-action {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.details-content__final-action .final-action__comment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.details-content__final-action .final-action__comment span {
+  font-size: 0.7rem;
+  color: black;
+}
+
+.details-content__final-action .final-action__comment textarea {
+  border: solid 1px #0a5888;
+  border-radius: 3px;
+  color: var(--versity-blue);
+  font-size: 0.7rem;
+}
+
+.final-action__college {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.final-action__college h6 {
+  color: var(--versity-blue);
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 0.3rem;
+}
+
+.final-action__college span {
+  font-size: 0.7rem;
+  color: black;
+}
+
+.final-action__college span .fa-close {
+  color: var(--white);
+  font-size: 0.6rem;
+  background: var(--primary);
+  border-radius: 100%;
+  padding: 0.1rem 0.2rem;
+}
+
+.final-action__college span .fa-check {
+  color: var(--white);
+  font-size: 0.5rem;
+  background: #50b150;
+  border-radius: 100%;
+  padding: 0.16rem 0.2rem;
+}
+
+.final-action__button {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  gap: 0.5rem;
+}
+
+.final-action__button button {
+  font-size: 0.6rem;
+  width: max-content;
+  color: var(--white);
+  padding: 0.2rem 0.3rem;
+  border-radius: 3px;
+  border: none;
+}
+
+.final-action__button .valider {
+  background: #50b150;
+}
+
+.final-action__button .refuser {
+  background: var(--primary);
+}
+
+/*document-preview*/
+
+.document-preview {
+  width: 40%;
+  height: 100%;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.document-item {
+  background: #d2e7f4;
+  border: dashed #629bbe 1px;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.document-preview__action-close {
+  width: 100%;
+  background: var(--white);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.document-preview__action-close .fa-close {
+  font-size: 0.6rem;
+  padding: 0.3rem 0.35rem;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+/*Demande d'admission traité*/
+
+.demandes-admission__processed {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.demandes-admission__processed .demandes-admission__table {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.demandes-admission__processed .demandes-admission__table table {
+  width: 100%;
+  height: max-content;
+}
+
+.demandes-admission__processed .demandes-admission__table table thead {
+  background: var(--versity-blue);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.demandes-admission__processed .demandes-admission__table table thead tr th {
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.demandes-admission__processed
+  .demandes-admission__table
+  table
+  thead
+  tr
+  th:nth-child(2) {
+  text-align: left;
+}
+
+/*processed-tbody*/
+
+.demandes-admission__processed .demandes-admission__table table tbody tr {
+  border-bottom: solid rgba(0, 0, 0, 0.3) 1px;
+  cursor: pointer;
+}
+
+.demandes-admission__processed .demandes-admission__table table tbody tr:hover {
+  background: #d2e7f4;
+}
+
+.demandes-admission__processed .demandes-admission__table table tbody tr td {
+  font-size: 0.7rem;
+  color: black;
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.demandes-admission__processed
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:nth-child(2) {
+  text-align: left;
+}
+
+.demandes-admission__processed
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:nth-child(2)
+  img {
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+}
+
+.demandes-admission__processed
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:last-of-type
+  .processed {
+  color: var(--white);
+  font-size: 0.6rem;
+  background: #50b150;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+}
+
+.demandes-admission__processed
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:last-of-type
+  .on-hold {
+  color: var(--white);
+  font-size: 0.6rem;
+  background: grey;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+}
+
+/*Demande d'admission décision finale*/
+
+.demandes-admission__final-decision {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.demandes-admission__final-decision .demandes-admission__table {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.demandes-admission__final-decision .demandes-admission__table table {
+  width: 100%;
+  height: max-content;
+}
+
+.demandes-admission__final-decision .demandes-admission__table table thead {
+  background: var(--versity-blue);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.demandes-admission__final-decision
+  .demandes-admission__table
+  table
+  thead
+  tr
+  th {
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.demandes-admission__final-decision
+  .demandes-admission__table
+  table
+  thead
+  tr
+  th:nth-child(2) {
+  text-align: left;
+}
+
+/*décision finale-tbody*/
+
+.demandes-admission__final-decision .demandes-admission__table table tbody tr {
+  border-bottom: solid rgba(0, 0, 0, 0.3) 1px;
+  cursor: pointer;
+}
+
+.demandes-admission__final-decision
+  .demandes-admission__table
+  table
+  tbody
+  tr:hover {
+  background: #d2e7f4;
+}
+
+.demandes-admission__final-decision
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td {
+  font-size: 0.7rem;
+  color: black;
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.demandes-admission__final-decision
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:nth-child(2) {
+  text-align: left;
+}
+
+.demandes-admission__final-decision
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:nth-child(2)
+  img {
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+}
+
+.demandes-admission__final-decision
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:last-of-type
+  span {
+  color: var(--white);
+  font-size: 0.6rem;
+  background: #50b150;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+}
+
+/*Demande d'admission accepter*/
+
+.demandes-admission__accepted {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.demandes-admission__accepted .demandes-admission__table {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.demandes-admission__accepted .demandes-admission__table table {
+  width: 100%;
+  height: max-content;
+}
+
+.demandes-admission__accepted .demandes-admission__table table thead {
+  background: var(--versity-blue);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.demandes-admission__accepted .demandes-admission__table table thead tr th {
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.demandes-admission__accepted
+  .demandes-admission__table
+  table
+  thead
+  tr
+  th:nth-child(2) {
+  text-align: left;
+}
+
+/*accepted-tbody*/
+
+.demandes-admission__accepted .demandes-admission__table table tbody tr {
+  border-bottom: solid rgba(0, 0, 0, 0.3) 1px;
+  cursor: pointer;
+}
+
+.demandes-admission__accepted .demandes-admission__table table tbody tr:hover {
+  background: #d2e7f4;
+}
+
+.demandes-admission__accepted .demandes-admission__table table tbody tr td {
+  font-size: 0.7rem;
+  color: black;
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.demandes-admission__accepted
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:nth-child(2) {
+  text-align: left;
+}
+
+.demandes-admission__accepted
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:nth-child(2)
+  img {
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+}
+
+.demandes-admission__accepted
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:last-of-type
+  span {
+  color: var(--white);
+  font-size: 0.6rem;
+  background: #50b150;
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+}
+
+/*Demande d'admission refuser*/
+
+.demandes-admission__refused {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.demandes-admission__refused .demandes-admission__table {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.demandes-admission__refused .demandes-admission__table table {
+  width: 100%;
+  height: max-content;
+}
+
+.demandes-admission__refused .demandes-admission__table table thead {
+  background: var(--versity-blue);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.demandes-admission__refused .demandes-admission__table table thead tr th {
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.demandes-admission__refused
+  .demandes-admission__table
+  table
+  thead
+  tr
+  th:nth-child(2) {
+  text-align: left;
+}
+
+/*refused-tbody*/
+
+.demandes-admission__refused .demandes-admission__table table tbody tr {
+  border-bottom: solid rgba(0, 0, 0, 0.3) 1px;
+  cursor: pointer;
+}
+
+.demandes-admission__refused .demandes-admission__table table tbody tr:hover {
+  background: #d2e7f4;
+}
+
+.demandes-admission__refused .demandes-admission__table table tbody tr td {
+  font-size: 0.7rem;
+  color: black;
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.demandes-admission__refused
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:nth-child(2) {
+  text-align: left;
+}
+
+.demandes-admission__refused
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:nth-child(2)
+  img {
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+}
+
+.demandes-admission__refused
+  .demandes-admission__table
+  table
+  tbody
+  tr
+  td:last-of-type
+  span {
+  color: var(--white);
+  font-size: 0.6rem;
+  background: var(--primary);
+  padding: 0.1rem 0.2rem;
+  border-radius: 3px;
+}
+
+.hide {
+  display: none !important;
+}

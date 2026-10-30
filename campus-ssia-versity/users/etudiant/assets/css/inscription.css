@@ -163,6 +163,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
 .paiement-type-swipe {
@@ -186,6 +188,73 @@
 .paiement-active {
   background: var(--versity-blue);
   color: white;
+}
+
+.paiement-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.paiement-form form {
+  background: var(--white);
+  width: 100%;
+  height: max-content;
+  padding: 10px;
+  border-radius: 10px;
+  display: grid;
+  column-gap: 15px;
+  row-gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  color: var(--versity-blue);
+  position: sticky;
+  top: 13%;
+}
+
+.paiement-form form .label-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.paiement-form form .label-input label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.paiement-form form .label-input .label-input input,
+.paiement-form form .label-input .label-input select,
+.paiement-form form .label-input .label-input textarea {
+  margin: 0;
+  font-size: 11px;
+  border: solid 1px var(--versity-blue);
+  padding: 2px 5px;
+  color: black;
+  border-radius: 3px;
+  outline: none;
+}
+
+.paiement-form .paiement-form-button {
+  height: max-content;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.paiement-form-button button {
+  border: none;
+  border-radius: 3px;
+  padding: 2px 5px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--primary);
+  color: var(--white);
+  margin-top: 10px;
 }
 
 .hide {

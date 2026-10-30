@@ -1,0 +1,750 @@
+/* =====================================
+   ORDRES DE PAIEMENT - SSIA VERSITY
+===================================== */
+
+:root {
+  --pay-border: #e5eaf0;
+  --pay-text: #243447;
+  --pay-muted: #758397;
+  --pay-surface: #f8fafc;
+}
+
+.pay-order {
+  width: 85%;
+  height: 100%;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: var(--pay-text);
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.pay-order *,
+.pay-order *::before,
+.pay-order *::after {
+  box-sizing: border-box;
+}
+
+.pay-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--pay-border);
+  border-radius: 14px;
+}
+
+/* En-tête */
+
+.pay-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 26px 28px;
+  border-bottom: 1px solid var(--pay-border);
+}
+
+.pay-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.pay-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #edf4f9;
+  color: var(--versity-blue);
+  font-size: 21px;
+}
+
+.pay-heading h2 {
+  margin: 0 0 6px;
+  color: var(--versity-blue);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.pay-heading p {
+  margin: 0;
+  color: var(--pay-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.pay-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid #dce6ef;
+  border-radius: 8px;
+  background: #f5f8fb;
+  color: var(--versity-blue);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Cartes récapitulatives */
+
+.pay-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--pay-border);
+}
+
+.pay-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 17px 15px;
+  border: 1px solid var(--pay-border);
+  border-radius: 10px;
+  background: #fff;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.pay-summary-card:hover {
+  border-color: #ccd9e5;
+  background: #fcfdff;
+}
+
+.pay-summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  font-size: 16px;
+}
+
+.pay-summary-blue {
+  background: #edf4f9;
+  color: var(--versity-blue);
+}
+
+.pay-summary-orange {
+  background: #fff6e8;
+  color: #b66b08;
+}
+
+.pay-summary-green {
+  background: #eaf7f0;
+  color: var(--versity-green);
+}
+
+.pay-summary-red {
+  background: #fff0f0;
+  color: var(--versity-red);
+}
+
+.pay-summary-card p {
+  margin: 0 0 6px;
+  color: var(--pay-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.pay-summary-card h3 {
+  margin: 0;
+  color: var(--versity-blue);
+  font-size: 23px;
+  font-weight: 700;
+}
+
+/* Recherche et tri*/
+
+.pay-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 28px;
+}
+
+.pay-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 460px;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid #dce3eb;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--pay-muted);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.pay-search:focus-within {
+  border-color: var(--versity-blue);
+  box-shadow: 0 0 0 3px rgb(0 58 98 / 8%);
+}
+
+.pay-search > i {
+  color: var(--versity-blue);
+  font-size: 15px;
+}
+
+.pay-search input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--pay-text);
+  font: inherit;
+  font-size: 13px;
+}
+
+.pay-search input::placeholder {
+  color: #9aa6b5;
+}
+
+.pay-search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.pay-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: #f0f3f7;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.pay-clear[hidden] {
+  display: none;
+}
+
+.pay-clear:hover {
+  background: #e5eaf0;
+  color: var(--versity-blue);
+}
+
+.pay-result-count {
+  color: var(--pay-muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* Barre de recherche + filtre par statut */
+
+.pay-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.pay-controls .pay-search {
+  flex: 1;
+  width: auto;
+  max-width: 460px;
+  min-width: 220px;
+}
+
+.pay-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  min-height: 46px;
+  width: 200px;
+  flex-shrink: 0;
+  padding: 0 13px;
+  border: 1px solid #dce3eb;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--versity-blue);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.pay-filter:focus-within {
+  border-color: var(--versity-blue);
+  box-shadow: 0 0 0 3px rgb(0 58 98 / 8%);
+}
+
+.pay-filter > i:first-child {
+  font-size: 14px;
+}
+
+.pay-filter select {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  appearance: none;
+  background: transparent;
+  color: #526174;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.pay-filter-arrow {
+  flex-shrink: 0;
+  color: #758397;
+  font-size: 11px;
+  pointer-events: none;
+}
+
+/* Tableau */
+
+.pay-table-wrapper {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  border-top: 1px solid var(--pay-border);
+}
+
+.pay-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.pay-table thead {
+  background: #f5f8fb;
+}
+
+.pay-table th {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--pay-border);
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.45px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pay-table td {
+  padding: 17px 20px;
+  border-bottom: 1px solid #edf0f4;
+  color: var(--pay-text);
+  vertical-align: middle;
+}
+
+.pay-table tbody tr {
+  transition: background 0.2s;
+}
+
+.pay-table tbody tr:hover {
+  background: #f7fafc;
+}
+
+.pay-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.pay-table .pay-col-number {
+  width: 65px;
+}
+
+.pay-number {
+  color: #8a97a8 !important;
+  font-size: 12px;
+}
+
+.pay-student {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 200px;
+}
+
+.pay-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #edf4f9;
+  color: var(--versity-blue);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pay-student-name {
+  color: #25374a;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.pay-account {
+  display: inline-block;
+  padding: 6px 9px;
+  border: 1px solid #e4ebf2;
+  border-radius: 6px;
+  background: #f7f9fc;
+  color: var(--versity-blue);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pay-amount {
+  color: var(--versity-blue) !important;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Badges de statut */
+
+.pay-status {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 108px;
+  padding: 8px 11px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: default;
+  outline-offset: 3px;
+}
+
+.pay-status i {
+  font-size: 12px;
+}
+
+.pay-status-pending {
+  border-color: #f5dfb9;
+  background: #fff8eb;
+  color: #a96308;
+}
+
+.pay-status-accepted {
+  border-color: #cde9dc;
+  background: #eff9f3;
+  color: var(--versity-green);
+}
+
+.pay-status-rejected {
+  border-color: #f0cccc;
+  background: #fff1f1;
+  color: #b4232a;
+  cursor: help;
+}
+
+/* Infobulle du motif de refus */
+
+.pay-reason-tooltip {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 12px);
+  left: 50%;
+  width: max-content;
+  max-width: 260px;
+  padding: 13px 15px;
+  border: 1px solid #f0cccc;
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(30 41 59 / 12%);
+  color: var(--pay-text);
+  text-align: left;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -4px);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0.18s ease;
+}
+
+.pay-reason-tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  border-top: 1px solid #f0cccc;
+  border-left: 1px solid #f0cccc;
+  background: #fff;
+  transform: translate(-50%, 50%) rotate(45deg);
+}
+
+.pay-reason-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 6px;
+  color: #b4232a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pay-reason-title i {
+  font-size: 12px;
+}
+
+.pay-reason-text {
+  display: block;
+  color: #5c6675;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.pay-status-rejected:hover .pay-reason-tooltip,
+.pay-status-rejected:focus-visible .pay-reason-tooltip,
+.pay-status-rejected:focus-within .pay-reason-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+/* État vide */
+
+.pay-empty {
+  padding: 45px 20px;
+  text-align: center;
+}
+
+.pay-empty[hidden] {
+  display: none;
+}
+
+.pay-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: #edf4f9;
+  color: var(--versity-blue);
+  font-size: 22px;
+}
+
+.pay-empty h3 {
+  margin: 0 0 8px;
+  color: var(--versity-blue);
+  font-size: 16px;
+}
+
+.pay-empty p {
+  margin: 0 0 20px;
+  color: var(--pay-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.pay-empty button {
+  padding: 11px 16px;
+  border: none;
+  border-radius: 7px;
+  background: var(--versity-blue);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pay-empty button:hover {
+  background: #005080;
+}
+
+/* Pied de tableau */
+
+.pay-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 17px 28px;
+  border-top: 1px solid var(--pay-border);
+  background: #fcfdfe;
+}
+
+.pay-footer p {
+  margin: 0;
+  color: var(--pay-muted);
+  font-size: 12px;
+}
+
+.pay-footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--versity-blue);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Responsive */
+
+@media (max-width: 1000px) {
+  .pay-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .pay-order {
+    padding: 12px;
+  }
+
+  .pay-header {
+    padding: 20px 16px;
+  }
+
+  .pay-heading {
+    gap: 11px;
+  }
+
+  .pay-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
+  }
+
+  .pay-heading h2 {
+    font-size: 17px;
+  }
+
+  .pay-heading p {
+    font-size: 12px;
+  }
+
+  .pay-header-badge {
+    padding: 8px;
+    font-size: 0;
+  }
+
+  .pay-header-badge i {
+    font-size: 14px;
+  }
+
+  .pay-summary {
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .pay-summary-card {
+    gap: 9px;
+    padding: 13px 10px;
+  }
+
+  .pay-summary-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .pay-summary-card p {
+    font-size: 11px;
+  }
+
+  .pay-summary-card h3 {
+    font-size: 20px;
+  }
+
+  .pay-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 18px 16px;
+    gap: 12px;
+  }
+
+  .pay-search {
+    max-width: none;
+  }
+
+  .pay-result-count {
+    align-self: flex-start;
+  }
+
+  .pay-table {
+    min-width: 800px;
+  }
+
+  .pay-table th,
+  .pay-table td {
+    padding: 14px 16px;
+  }
+
+  .pay-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .pay-order {
+    padding: 8px;
+  }
+
+  .pay-header {
+    padding: 16px 12px;
+  }
+
+  .pay-heading h2 {
+    font-size: 15px;
+  }
+
+  .pay-heading p {
+    max-width: 190px;
+    font-size: 11px;
+  }
+
+  .pay-summary {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .pay-summary-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

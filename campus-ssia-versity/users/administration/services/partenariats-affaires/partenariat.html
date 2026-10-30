@@ -217,7 +217,7 @@
           "Recherche",
           "Investissement",
         ];
-        const CURRENCIES = ["EUR", "USD", "XOF", "MAD", "GBP"];
+        const CURRENCIES = ["IV"];
 
         /* ---------- Storage ---------- */
         const DB_KEY = "ssia_erp_v1";
@@ -268,12 +268,13 @@
         }
 
         /* ---------- Utils ---------- */
-        const fmtMoney = (n, c = "EUR") =>
-          (Number(n) || 0).toLocaleString("fr-FR", {
-            style: "currency",
-            currency: c,
-            maximumFractionDigits: 0,
-          });
+        const fmtMoney = (n) => {
+          return (
+            new Intl.NumberFormat("fr-FR", {
+              maximumFractionDigits: 2,
+            }).format(n || 0) + " IV"
+          );
+        };
         const fmtDate = (d) =>
           d ? new Date(d).toLocaleDateString("fr-FR") : "—";
         const todayISO = () => new Date().toISOString().slice(0, 10);
@@ -854,7 +855,7 @@
       <div class="kcard" draggable="true" data-id="${d.id}" onclick="dealForm('${d.id}', ()=>views.pipeline(document.getElementById('view')))">
         <div class="nm">${escapeHtml(d.name || "—")}</div>
         <div style="font-size:12px;color:var(--text-soft);margin-top:2px">${escapeHtml(d.partner || "—")}</div>
-        <div class="meta"><span>${fmtMoney(d.amount || 0, d.currency || "EUR")}</span><span>${d.proba || 0}%</span></div>
+        <div class="meta"><span>${fmtMoney(d.amount || 0)}</span><span>${d.proba || 0}%</span></div>
       </div>`,
               )
               .join("")}</div>`;
@@ -897,7 +898,7 @@
     <td><b>${escapeHtml(d.name || "—")}</b></td>
     <td>${escapeHtml(d.partner || "—")}</td>
     <td><span class="badge">${escapeHtml(d.stage)}</span></td>
-    <td>${fmtMoney(d.amount || 0, d.currency || "EUR")}</td>
+    <td>${fmtMoney(d.amount || 0)}</td>
     <td><div class="progress"><i style="width:${+d.proba || 0}%"></i></div><div style="font-size:11px;color:var(--muted);margin-top:3px">${+d.proba || 0}%</div></td>
     <td>${fmtDate(d.closeDate)}</td>
     <td>${escapeHtml(d.owner || "—")}</td>
@@ -919,7 +920,7 @@
         function dealForm(id, cb) {
           const item = id
             ? db.deals.find((x) => x.id === id)
-            : { stage: "Identification", proba: 10, currency: "EUR" };
+            : { stage: "Identification", proba: 10, currency: "IV" };
           const form = document.createElement("div");
           form.className = "form-grid";
           const partners = ["", ...db.partners.map((p) => p.name)];
@@ -1138,7 +1139,7 @@
               {
                 key: "amount",
                 label: "Montant",
-                render: (r) => fmtMoney(r.amount || 0, r.currency || "EUR"),
+                render: (r) => fmtMoney(r.amount || 0),
               },
               {
                 key: "deadline",
@@ -1234,7 +1235,7 @@
               {
                 key: "value",
                 label: "Valeur",
-                render: (r) => fmtMoney(r.value || 0, r.currency || "EUR"),
+                render: (r) => fmtMoney(r.value || 0),
               },
               {
                 key: "startDate",

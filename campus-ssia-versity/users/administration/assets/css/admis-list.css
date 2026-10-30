@@ -1,0 +1,483 @@
+/* ==============================
+   LISTE DES ÉTUDIANTS ADMIS
+============================== */
+
+:root {
+  --admis-bg: #ffffff;
+  --admis-surface: #f8fafc;
+  --admis-border: #e5eaf0;
+  --admis-text: #243447;
+  --admis-muted: #758397;
+}
+
+/* Section principale */
+
+.admis-list {
+  width: 85%;
+  height: 100%;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--admis-bg);
+  color: var(--admis-text);
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.admis-list *,
+.admis-list *::before,
+.admis-list *::after {
+  box-sizing: border-box;
+}
+
+.admis-container {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--admis-border);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* En-tête */
+
+.admis-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 26px 28px;
+  border-bottom: 1px solid var(--admis-border);
+}
+
+.admis-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.admis-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #edf4f9;
+  color: var(--versity-blue);
+  font-size: 21px;
+}
+
+.admis-heading h2 {
+  margin: 0 0 6px;
+  color: var(--versity-blue);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.admis-heading p {
+  margin: 0;
+  color: var(--admis-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.admis-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid #dcefe7;
+  border-radius: 8px;
+  background: #f1faf6;
+  color: var(--versity-green);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Barre de recherche */
+
+.admis-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 28px;
+}
+
+.admis-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 440px;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid #dce3eb;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--admis-muted);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.admis-search:focus-within {
+  border-color: var(--versity-blue);
+  box-shadow: 0 0 0 3px rgb(0 58 98 / 8%);
+}
+
+.admis-search > i {
+  font-size: 15px;
+  color: var(--versity-blue);
+}
+
+.admis-search input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--admis-text);
+  font: inherit;
+  font-size: 13px;
+}
+
+.admis-search input::placeholder {
+  color: #9aa6b5;
+}
+
+.admis-search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.admis-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: #f0f3f7;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.admis-clear[hidden] {
+  display: none;
+}
+
+.admis-clear:hover {
+  background: #e5eaf0;
+  color: var(--versity-blue);
+}
+
+.admis-count {
+  color: var(--admis-muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.admis-count strong {
+  color: var(--versity-blue);
+  font-weight: 700;
+}
+
+/* Tableau */
+
+.admis-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-top: 1px solid var(--admis-border);
+}
+
+.admis-table-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.admis-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.admis-table thead {
+  background: var(--versity-blue);
+}
+
+.admis-table th {
+  padding: 16px 20px;
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.45px;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--admis-border);
+}
+
+.admis-table td {
+  padding: 10px 20px;
+  border-bottom: 1px solid #edf0f4;
+  color: var(--admis-text);
+  vertical-align: middle;
+}
+
+.admis-table tbody tr {
+  transition: background 0.2s;
+}
+
+.admis-table tbody tr:hover {
+  background: #f7fafc;
+}
+
+.admis-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admis-table .col-num {
+  width: 65px;
+}
+
+.admis-number {
+  color: #8a97a8;
+  font-size: 12px;
+}
+
+.admis-student {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 200px;
+}
+
+.admis-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #edf4f9;
+  color: var(--versity-blue);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.admis-student-name {
+  color: #25374a;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.admis-matricule {
+  display: inline-block;
+  padding: 6px 9px;
+  border: 1px solid #e4ebf2;
+  border-radius: 6px;
+  background: #f7f9fc;
+  color: var(--versity-blue);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admis-college {
+  display: inline-block;
+  padding: 6px 9px;
+  border-radius: 6px;
+  background: #edf4f9;
+  color: var(--versity-blue);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admis-programme {
+  color: #526174;
+  line-height: 1.6;
+  min-width: 160px;
+}
+
+/* État vide */
+
+.admis-empty {
+  padding: 45px 20px;
+  text-align: center;
+}
+
+.admis-empty[hidden] {
+  display: none;
+}
+
+.admis-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: #edf4f9;
+  color: var(--versity-blue);
+  font-size: 22px;
+}
+
+.admis-empty h3 {
+  margin: 0 0 8px;
+  color: var(--versity-blue);
+  font-size: 16px;
+}
+
+.admis-empty p {
+  margin: 0 0 20px;
+  color: var(--admis-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.admis-empty button {
+  padding: 11px 16px;
+  border: none;
+  border-radius: 7px;
+  background: var(--versity-blue);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admis-empty button:hover {
+  background: #005080;
+}
+
+/* Pied du tableau */
+
+.admis-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 17px 28px;
+  border-top: 1px solid var(--admis-border);
+  background: #fcfdfe;
+}
+
+.admis-footer p {
+  margin: 0;
+  color: var(--admis-muted);
+  font-size: 12px;
+}
+
+.admis-footer-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--versity-blue);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .admis-list {
+    padding: 12px;
+  }
+
+  .admis-header {
+    align-items: flex-start;
+    padding: 20px 16px;
+  }
+
+  .admis-heading {
+    gap: 11px;
+  }
+
+  .admis-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 17px;
+  }
+
+  .admis-heading h2 {
+    font-size: 17px;
+  }
+
+  .admis-heading p {
+    font-size: 12px;
+  }
+
+  .admis-badge {
+    padding: 8px;
+    font-size: 0;
+  }
+
+  .admis-badge i {
+    font-size: 14px;
+  }
+
+  .admis-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 18px 16px;
+    gap: 12px;
+  }
+
+  .admis-search {
+    max-width: none;
+  }
+
+  .admis-count {
+    align-self: flex-start;
+  }
+
+  .admis-table {
+    min-width: 760px;
+  }
+
+  .admis-table th,
+  .admis-table td {
+    padding: 14px 16px;
+  }
+
+  .admis-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .admis-list {
+    padding: 8px;
+  }
+
+  .admis-header {
+    padding: 16px 12px;
+  }
+
+  .admis-heading h2 {
+    font-size: 15px;
+  }
+
+  .admis-heading p {
+    max-width: 210px;
+    font-size: 11px;
+  }
+}

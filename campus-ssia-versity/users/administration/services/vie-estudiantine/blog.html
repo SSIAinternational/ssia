@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSIAVERSITY · ERP Vie Étudiante</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/blog.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="blog-set">
+      <header class="app-header">
+        <div class="logo">
+          <i class="fa-solid fa-newspaper" aria-hidden="true"></i> Blog &amp;
+          Actualités
+        </div>
+        <p>Espace de gestion éditoriale</p>
+      </header>
+
+      <nav class="tabs" aria-label="Navigation principale">
+        <button
+          id="tab-btn-articles"
+          class="active"
+          aria-controls="panel-articles"
+          aria-selected="true"
+        >
+          <i class="fa-solid fa-pen-nib" aria-hidden="true"></i> Articles de
+          blog
+        </button>
+        <button
+          id="tab-btn-bands"
+          aria-controls="panel-bands"
+          aria-selected="false"
+        >
+          <i class="fa-solid fa-bullhorn" aria-hidden="true"></i> Bandes
+          d'information
+        </button>
+      </nav>
+
+      <main
+        id="panel-articles"
+        class="active"
+        aria-labelledby="tab-btn-articles"
+      >
+        <nav class="subnav" aria-label="Vue des articles">
+          <button
+            id="subtab-btn-article-form"
+            class="active"
+            aria-controls="subview-article-form"
+            aria-selected="true"
+          >
+            <i class="fa-solid fa-file-pen" aria-hidden="true"></i> Formulaire
+          </button>
+          <button
+            id="subtab-btn-article-list"
+            aria-controls="subview-article-list"
+            aria-selected="false"
+          >
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i> Articles
+            publiés
+          </button>
+        </nav>
+
+        <div class="subview active" id="subview-article-form">
+          <section class="panel" id="article-form-panel">
+            <div class="panel-head">
+              <h2 id="article-form-title">
+                <i class="fa-solid fa-file-circle-plus" aria-hidden="true"></i>
+                Nouvel article
+              </h2>
+              <button
+                class="btn btn-ghost btn-sm"
+                id="cancel-article-edit"
+                hidden
+              >
+                <i class="fa-solid fa-xmark"></i> Annuler la modification
+              </button>
+            </div>
+            <form class="form-grid" id="article-form" novalidate>
+              <div class="field full">
+                <label for="art-title">Titre de l'article</label>
+                <input
+                  type="text"
+                  id="art-title"
+                  name="title"
+                  required
+                  maxlength="120"
+                />
+              </div>
+              <div class="field">
+                <label for="art-category">Catégorie</label>
+                <select id="art-category" name="category" required>
+                  <option value="Entreprise">Entreprise</option>
+                  <option value="Produit">Produit</option>
+                  <option value="Événement">Événement</option>
+                  <option value="Communiqué">Communiqué</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="art-author">Auteur</label>
+                <input
+                  type="text"
+                  id="art-author"
+                  name="author"
+                  maxlength="60"
+                  placeholder="Nom de l'auteur"
+                />
+              </div>
+              <div class="field full">
+                <label for="art-excerpt"
+                  >Résumé (extrait affiché dans la liste)</label
+                >
+                <textarea
+                  id="art-excerpt"
+                  name="excerpt"
+                  maxlength="200"
+                  rows="2"
+                  required
+                ></textarea>
+              </div>
+              <div class="field full">
+                <label for="art-content">Contenu de l'article</label>
+                <textarea
+                  id="art-content"
+                  name="content"
+                  rows="6"
+                  required
+                ></textarea>
+              </div>
+              <div class="field full">
+                <label id="art-image-label">Image à l'appui</label>
+                <div
+                  class="image-drop"
+                  id="art-image-drop"
+                  aria-labelledby="art-image-label"
+                >
+                  <i class="fa-solid fa-image" aria-hidden="true"></i>
+                  <span id="art-image-hint"
+                    >Cliquez ou déposez une image (JPG, PNG)</span
+                  >
+                  <input type="file" id="art-image" accept="image/*" />
+                </div>
+              </div>
+              <div class="form-actions full">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="article-submit-btn"
+                >
+                  <i class="fa-solid fa-check"></i> Publier l'article
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div class="subview" id="subview-article-list">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>
+                <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+                Articles publiés
+              </h2>
+              <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <label for="article-search" class="sr-only"
+                  >Rechercher un article</label
+                >
+                <input
+                  type="search"
+                  id="article-search"
+                  placeholder="Rechercher un article…"
+                />
+              </div>
+            </div>
+            <div class="grid-cards" id="articles-list"></div>
+          </section>
+        </div>
+      </main>
+
+      <main id="panel-bands" aria-labelledby="tab-btn-bands">
+        <nav class="subnav" aria-label="Vue des bandes d'information">
+          <button
+            id="subtab-btn-band-form"
+            class="active"
+            aria-controls="subview-band-form"
+            aria-selected="true"
+          >
+            <i class="fa-solid fa-file-pen" aria-hidden="true"></i> Formulaire
+          </button>
+          <button
+            id="subtab-btn-band-list"
+            aria-controls="subview-band-list"
+            aria-selected="false"
+          >
+            <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>
+            Bandes publiées
+          </button>
+        </nav>
+
+        <div class="subview active" id="subview-band-form">
+          <section class="panel">
+            <div class="panel-head">
+              <h2 id="band-form-title">
+                <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+                Nouvelle bande d'information
+              </h2>
+              <button class="btn btn-ghost btn-sm" id="cancel-band-edit" hidden>
+                <i class="fa-solid fa-xmark"></i> Annuler la modification
+              </button>
+            </div>
+            <form class="form-grid" id="band-form" novalidate>
+              <div class="field full">
+                <label for="band-text">Texte de l'annonce</label>
+                <textarea
+                  id="band-text"
+                  name="text"
+                  rows="2"
+                  maxlength="220"
+                  required
+                ></textarea>
+              </div>
+              <div class="field">
+                <label for="band-type">Type</label>
+                <select id="band-type" name="type" required>
+                  <option value="info">Information</option>
+                  <option value="alerte">Alerte</option>
+                  <option value="promo">Promotion</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="band-start">Date de début</label>
+                <input type="date" id="band-start" name="start" required />
+              </div>
+              <div class="field">
+                <label for="band-end">Date de fin</label>
+                <input type="date" id="band-end" name="end" required />
+              </div>
+              <div class="form-actions full">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="band-submit-btn"
+                >
+                  <i class="fa-solid fa-check"></i> Publier la bande
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div class="subview" id="subview-band-list">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>
+                <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>
+                Bandes actives &amp; passées
+              </h2>
+            </div>
+            <div class="band-list" id="bands-list"></div>
+          </section>
+        </div>
+      </main>
+
+      <script>
+        (function () {
+          "use strict";
+
+          // Données conservées en mémoire pour la durée de la session (pas de persistance)
+          var articles = [];
+          var bands = [];
+          var editingArticleId = null;
+          var editingBandId = null;
+
+          function uid() {
+            return (
+              Date.now().toString(36) + Math.random().toString(36).slice(2, 7)
+            );
+          }
+          function formatDate(iso) {
+            var d = new Date(iso);
+            return d.toLocaleDateString("fr-FR", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            });
+          }
+          function el(tag, opts) {
+            var node = document.createElement(tag);
+            opts = opts || {};
+            if (opts.className) node.className = opts.className;
+            if (opts.text !== undefined) node.textContent = opts.text;
+            if (opts.attrs) {
+              for (var k in opts.attrs) {
+                node.setAttribute(k, opts.attrs[k]);
+              }
+            }
+            return node;
+          }
+          function icon(name) {
+            var i = document.createElement("i");
+            i.className = "fa-solid " + name;
+            i.setAttribute("aria-hidden", "true");
+            return i;
+          }
+
+          /* ---------- TABS ---------- */
+          var tabBtnArticles = document.getElementById("tab-btn-articles");
+          var tabBtnBands = document.getElementById("tab-btn-bands");
+          var panelArticles = document.getElementById("panel-articles");
+          var panelBands = document.getElementById("panel-bands");
+
+          function activateTab(which) {
+            var isArticles = which === "articles";
+            tabBtnArticles.classList.toggle("active", isArticles);
+            tabBtnBands.classList.toggle("active", !isArticles);
+            tabBtnArticles.setAttribute("aria-selected", isArticles);
+            tabBtnBands.setAttribute("aria-selected", !isArticles);
+            panelArticles.classList.toggle("active", isArticles);
+            panelBands.classList.toggle("active", !isArticles);
+          }
+          tabBtnArticles.addEventListener("click", function () {
+            activateTab("articles");
+          });
+          tabBtnBands.addEventListener("click", function () {
+            activateTab("bands");
+          });
+
+          /* ---------- SOUS-ONGLETS (Formulaire / Publiés) ---------- */
+          function setupSubnav(btnFormId, btnListId, viewFormId, viewListId) {
+            var btnForm = document.getElementById(btnFormId);
+            var btnList = document.getElementById(btnListId);
+            var viewForm = document.getElementById(viewFormId);
+            var viewList = document.getElementById(viewListId);
+            function activate(which) {
+              var isForm = which === "form";
+              btnForm.classList.toggle("active", isForm);
+              btnList.classList.toggle("active", !isForm);
+              btnForm.setAttribute("aria-selected", isForm);
+              btnList.setAttribute("aria-selected", !isForm);
+              viewForm.classList.toggle("active", isForm);
+              viewList.classList.toggle("active", !isForm);
+            }
+            btnForm.addEventListener("click", function () {
+              activate("form");
+            });
+            btnList.addEventListener("click", function () {
+              activate("list");
+            });
+            return activate;
+          }
+          var showArticleSubview = setupSubnav(
+            "subtab-btn-article-form",
+            "subtab-btn-article-list",
+            "subview-article-form",
+            "subview-article-list",
+          );
+          var showBandSubview = setupSubnav(
+            "subtab-btn-band-form",
+            "subtab-btn-band-list",
+            "subview-band-form",
+            "subview-band-list",
+          );
+
+          /* ---------- ARTICLES ---------- */
+          var articleForm = document.getElementById("article-form");
+          var artTitle = document.getElementById("art-title");
+          var artCategory = document.getElementById("art-category");
+          var artAuthor = document.getElementById("art-author");
+          var artExcerpt = document.getElementById("art-excerpt");
+          var artContent = document.getElementById("art-content");
+          var artImageInput = document.getElementById("art-image");
+          var artImageDrop = document.getElementById("art-image-drop");
+          var artImageHint = document.getElementById("art-image-hint");
+          var articleSubmitBtn = document.getElementById("article-submit-btn");
+          var cancelArticleEditBtn = document.getElementById(
+            "cancel-article-edit",
+          );
+          var articlesList = document.getElementById("articles-list");
+          var articleSearch = document.getElementById("article-search");
+          var currentArticleImage = "";
+          var articlePreviewImg = null;
+
+          artImageInput.addEventListener("change", function () {
+            var file = artImageInput.files && artImageInput.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function (ev) {
+              currentArticleImage = ev.target.result;
+              renderImagePreview();
+            };
+            reader.readAsDataURL(file);
+          });
+
+          function renderImagePreview() {
+            if (articlePreviewImg) {
+              articlePreviewImg.remove();
+              articlePreviewImg = null;
+            }
+            artImageHint.hidden = !!currentArticleImage;
+            if (currentArticleImage) {
+              articlePreviewImg = el("img", {
+                attrs: { alt: "Aperçu de l'image de l'article" },
+              });
+              articlePreviewImg.src = currentArticleImage;
+              artImageDrop.insertBefore(
+                articlePreviewImg,
+                artImageDrop.firstChild,
+              );
+            }
+          }
+
+          function resetArticleForm() {
+            articleForm.reset();
+            currentArticleImage = "";
+            renderImagePreview();
+            editingArticleId = null;
+            document.getElementById(
+              "article-form-title",
+            ).lastChild.textContent = " Nouvel article";
+            articleSubmitBtn.lastChild.textContent = " Publier l'article";
+            cancelArticleEditBtn.hidden = true;
+          }
+
+          articleForm.addEventListener("submit", function (ev) {
+            ev.preventDefault();
+            if (!articleForm.reportValidity()) return;
+            var data = {
+              id: editingArticleId || uid(),
+              title: artTitle.value.trim(),
+              category: artCategory.value,
+              author: artAuthor.value.trim() || "Rédaction",
+              excerpt: artExcerpt.value.trim(),
+              content: artContent.value.trim(),
+              image: currentArticleImage,
+              date: editingArticleId
+                ? (
+                    articles.find(function (a) {
+                      return a.id === editingArticleId;
+                    }) || {}
+                  ).date || new Date().toISOString()
+                : new Date().toISOString(),
+            };
+            if (editingArticleId) {
+              articles = articles.map(function (a) {
+                return a.id === editingArticleId ? data : a;
+              });
+            } else {
+              articles.unshift(data);
+            }
+            resetArticleForm();
+            renderArticles();
+            showArticleSubview("list");
+          });
+
+          cancelArticleEditBtn.addEventListener("click", resetArticleForm);
+
+          function editArticle(id) {
+            var a = articles.find(function (x) {
+              return x.id === id;
+            });
+            if (!a) return;
+            editingArticleId = id;
+            artTitle.value = a.title;
+            artCategory.value = a.category;
+            artAuthor.value = a.author;
+            artExcerpt.value = a.excerpt;
+            artContent.value = a.content;
+            currentArticleImage = a.image || "";
+            renderImagePreview();
+            document.getElementById(
+              "article-form-title",
+            ).lastChild.textContent = " Modifier l'article";
+            articleSubmitBtn.lastChild.textContent =
+              " Enregistrer les modifications";
+            cancelArticleEditBtn.hidden = false;
+            showArticleSubview("form");
+            document
+              .getElementById("article-form-panel")
+              .scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+
+          function deleteArticle(id) {
+            if (!window.confirm("Supprimer définitivement cet article ?"))
+              return;
+            articles = articles.filter(function (a) {
+              return a.id !== id;
+            });
+            if (editingArticleId === id) resetArticleForm();
+            renderArticles();
+          }
+
+          function buildArticleCard(a) {
+            var card = el("article", { className: "article-card" });
+
+            if (a.image) {
+              var img = el("img", {
+                className: "thumb",
+                attrs: {
+                  alt: "Illustration de l'article : " + a.title,
+                  loading: "lazy",
+                },
+              });
+              img.src = a.image;
+              card.appendChild(img);
+            } else {
+              var ph = el("div", { className: "thumb-placeholder" });
+              ph.appendChild(icon("fa-image"));
+              card.appendChild(ph);
+            }
+
+            var body = el("div", { className: "card-body" });
+            var cat = el("span", { className: "cat", text: a.category });
+            var h3 = el("h3", { text: a.title });
+            var p = el("p", { text: a.excerpt });
+            var meta = el("div", { className: "meta" });
+            meta.appendChild(icon("fa-user"));
+            meta.appendChild(document.createTextNode(" " + a.author + " · "));
+            meta.appendChild(icon("fa-calendar"));
+            meta.appendChild(document.createTextNode(" " + formatDate(a.date)));
+
+            body.appendChild(cat);
+            body.appendChild(h3);
+            body.appendChild(p);
+            body.appendChild(meta);
+            card.appendChild(body);
+
+            var actions = el("div", { className: "card-actions" });
+            var editBtn = el("button", { className: "btn btn-ghost btn-sm" });
+            editBtn.appendChild(icon("fa-pen"));
+            editBtn.appendChild(document.createTextNode(" Modifier"));
+            editBtn.addEventListener("click", function () {
+              editArticle(a.id);
+            });
+
+            var delBtn = el("button", { className: "btn btn-danger btn-sm" });
+            delBtn.appendChild(icon("fa-trash"));
+            delBtn.appendChild(document.createTextNode(" Supprimer"));
+            delBtn.addEventListener("click", function () {
+              deleteArticle(a.id);
+            });
+
+            actions.appendChild(editBtn);
+            actions.appendChild(delBtn);
+            card.appendChild(actions);
+
+            return card;
+          }
+
+          function buildEmptyState(message, iconName) {
+            var wrap = el("div", { className: "empty-state" });
+            wrap.appendChild(icon(iconName));
+            wrap.appendChild(el("p", { text: message }));
+            return wrap;
+          }
+
+          function renderArticles() {
+            while (articlesList.firstChild) {
+              articlesList.removeChild(articlesList.firstChild);
+            }
+            var term = articleSearch.value.trim().toLowerCase();
+            var list = articles.filter(function (a) {
+              if (!term) return true;
+              return (
+                (a.title + a.excerpt + a.category)
+                  .toLowerCase()
+                  .indexOf(term) !== -1
+              );
+            });
+            if (list.length === 0) {
+              articlesList.appendChild(
+                buildEmptyState(
+                  "Aucun article pour le moment.",
+                  "fa-newspaper",
+                ),
+              );
+              return;
+            }
+            list.forEach(function (a) {
+              articlesList.appendChild(buildArticleCard(a));
+            });
+          }
+          articleSearch.addEventListener("input", renderArticles);
+
+          /* ---------- BANDS ---------- */
+          var bandForm = document.getElementById("band-form");
+          var bandText = document.getElementById("band-text");
+          var bandType = document.getElementById("band-type");
+          var bandStart = document.getElementById("band-start");
+          var bandEnd = document.getElementById("band-end");
+          var bandSubmitBtn = document.getElementById("band-submit-btn");
+          var cancelBandEditBtn = document.getElementById("cancel-band-edit");
+          var bandsList = document.getElementById("bands-list");
+
+          var TYPE_ICON = {
+            info: "fa-circle-info",
+            alerte: "fa-triangle-exclamation",
+            promo: "fa-tag",
+          };
+          var TYPE_LABEL = {
+            info: "Information",
+            alerte: "Alerte",
+            promo: "Promotion",
+          };
+
+          function resetBandForm() {
+            bandForm.reset();
+            editingBandId = null;
+            document.getElementById("band-form-title").lastChild.textContent =
+              " Nouvelle bande d'information";
+            bandSubmitBtn.lastChild.textContent = " Publier la bande";
+            cancelBandEditBtn.hidden = true;
+          }
+
+          bandForm.addEventListener("submit", function (ev) {
+            ev.preventDefault();
+            if (!bandForm.reportValidity()) return;
+            if (bandEnd.value < bandStart.value) {
+              window.alert(
+                "La date de fin doit être postérieure à la date de début.",
+              );
+              return;
+            }
+            var data = {
+              id: editingBandId || uid(),
+              text: bandText.value.trim(),
+              type: bandType.value,
+              start: bandStart.value,
+              end: bandEnd.value,
+            };
+            if (editingBandId) {
+              bands = bands.map(function (b) {
+                return b.id === editingBandId ? data : b;
+              });
+            } else {
+              bands.unshift(data);
+            }
+            resetBandForm();
+            renderBands();
+            showBandSubview("list");
+          });
+
+          cancelBandEditBtn.addEventListener("click", resetBandForm);
+
+          function editBand(id) {
+            var b = bands.find(function (x) {
+              return x.id === id;
+            });
+            if (!b) return;
+            editingBandId = id;
+            bandText.value = b.text;
+            bandType.value = b.type;
+            bandStart.value = b.start;
+            bandEnd.value = b.end;
+            document.getElementById("band-form-title").lastChild.textContent =
+              " Modifier la bande d'information";
+            bandSubmitBtn.lastChild.textContent =
+              " Enregistrer les modifications";
+            cancelBandEditBtn.hidden = false;
+            showBandSubview("form");
+            bandForm.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+
+          function deleteBand(id) {
+            if (
+              !window.confirm(
+                "Supprimer définitivement cette bande d'information ?",
+              )
+            )
+              return;
+            bands = bands.filter(function (b) {
+              return b.id !== id;
+            });
+            if (editingBandId === id) resetBandForm();
+            renderBands();
+          }
+
+          function buildBandItem(b) {
+            var today = new Date().toISOString().slice(0, 10);
+            var isActive = b.start <= today && today <= b.end;
+
+            var item = el("div", { className: "band-item type-" + b.type });
+            var iconWrap = el("div", { className: "type-icon" });
+            iconWrap.appendChild(icon(TYPE_ICON[b.type]));
+            item.appendChild(iconWrap);
+
+            var textWrap = el("div", { className: "band-text" });
+            var p = el("p", { text: b.text });
+            var dates = el("div", { className: "band-dates" });
+            dates.appendChild(
+              document.createTextNode(
+                TYPE_LABEL[b.type] +
+                  " · Du " +
+                  formatDate(b.start) +
+                  " au " +
+                  formatDate(b.end) +
+                  " — ",
+              ),
+            );
+            var badge = el("span", {
+              className: isActive ? "badge-active" : "badge-expired",
+              text: isActive ? "Active" : "Terminée",
+            });
+            dates.appendChild(badge);
+            textWrap.appendChild(p);
+            textWrap.appendChild(dates);
+            item.appendChild(textWrap);
+
+            var actions = el("div", { className: "band-actions" });
+            var editBtn = el("button", {
+              className: "btn btn-ghost btn-sm",
+              attrs: { "aria-label": "Modifier la bande" },
+            });
+            editBtn.appendChild(icon("fa-pen"));
+            editBtn.addEventListener("click", function () {
+              editBand(b.id);
+            });
+            var delBtn = el("button", {
+              className: "btn btn-danger btn-sm",
+              attrs: { "aria-label": "Supprimer la bande" },
+            });
+            delBtn.appendChild(icon("fa-trash"));
+            delBtn.addEventListener("click", function () {
+              deleteBand(b.id);
+            });
+            actions.appendChild(editBtn);
+            actions.appendChild(delBtn);
+            item.appendChild(actions);
+
+            return item;
+          }
+
+          function renderBands() {
+            while (bandsList.firstChild) {
+              bandsList.removeChild(bandsList.firstChild);
+            }
+            if (bands.length === 0) {
+              bandsList.appendChild(
+                buildEmptyState(
+                  "Aucune bande d'information pour le moment.",
+                  "fa-bullhorn",
+                ),
+              );
+              return;
+            }
+            var sorted = bands.slice().sort(function (a, b) {
+              return a.start < b.start ? 1 : a.start > b.start ? -1 : 0;
+            });
+            sorted.forEach(function (b) {
+              bandsList.appendChild(buildBandItem(b));
+            });
+          }
+
+          /* ---------- INIT ---------- */
+          renderArticles();
+          renderBands();
+        })();
+      </script>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+</html>

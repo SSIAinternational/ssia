@@ -71,49 +71,6 @@ const historiqueData = [
       },
     ],
   },
-  {
-    thead: [
-      "N°",
-      "Ref",
-      "Date & Heure",
-      "ID de l'entité",
-      "Service",
-      "Motif",
-      "Montant",
-      "Echélonnement",
-      "Echéance",
-      "Statut",
-      "Facture",
-      "Confirmation",
-    ],
-    tbody: [
-      {
-        numero: "1",
-        ref: "#0001-FAC",
-        entityId: "#SSIABC-23D5",
-        date: "02-05-2026 16:38",
-        service: "Pédagogie",
-        motif: "Inscription S1 PRO2384VER VER-14096917Z",
-        montant: "100",
-        echelonnement: "4",
-        echeance: "12-08-2026",
-
-        statut: {
-          text: "Payée",
-          className: "success",
-        },
-
-        facture: {
-          icon: "fa-solid fa-download",
-        },
-
-        confirmation: {
-          text: "Confirmé",
-          className: "confirmed",
-        },
-      },
-    ],
-  },
 
   {
     thead: [
@@ -219,7 +176,7 @@ const historiqueData = [
   },
 ];
 
-const stateTab = ["cree", "envoye", "reçue"];
+const stateTab = ["cree", "reçue"];
 
 let state = "cree";
 

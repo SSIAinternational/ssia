@@ -1,0 +1,1627 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSIA Enterprise — Marketing & Communication ERP</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/communication.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="communication-set">
+      <div class="app">
+        <aside class="sidebar">
+          <div class="brand">
+            <div class="brand-logo">
+              <img src="../../../../../img/logoci.jpg" alt="" srcset="" />
+            </div>
+            <div class="brand-text">
+              <div class="brand-name">SSIA Enterprise</div>
+              <div class="brand-sub">Marketing & Communication</div>
+            </div>
+          </div>
+          <div class="nav" id="nav"></div>
+          <div class="nav-foot" id="navFoot"></div>
+        </aside>
+        <main class="main">
+          <header class="topbar">
+            <h1 id="pageTitle">Centre de commande</h1>
+            <span class="sp"></span>
+            <input
+              class="search"
+              id="globalSearch"
+              placeholder="Rechercher..."
+            />
+            <button class="btn" onclick="exportData()">⤓ Export</button>
+            <button
+              class="btn"
+              onclick="document.getElementById('importFile').click()"
+            >
+              ⤒ Import
+            </button>
+            <input
+              type="file"
+              id="importFile"
+              accept=".json"
+              style="display: none"
+              onchange="importData(event)"
+            />
+            <button class="btn btn-danger" onclick="resetAll()">
+              Réinitialiser
+            </button>
+          </header>
+          <div class="content" id="content"></div>
+        </main>
+      </div>
+
+      <div class="modal-bg" id="modal">
+        <div class="modal" id="modalBody"></div>
+      </div>
+    </section>
+
+    <script>
+      /* ============= STATE ============= */
+      const KEY = "ssia_marketing_erp_v1";
+      const DEFAULT_STATE = {
+        settings: {
+          year: new Date().getFullYear(),
+          quarter: "Q" + Math.floor(new Date().getMonth() / 3 + 1),
+          currency: "IV",
+          targetLeads: 0,
+          targetRecruits: 0,
+          targetROI: 0,
+          annualBudget: 0,
+        },
+        campaigns: [],
+        contents: [],
+        social: [],
+        events: [],
+        partners: [],
+        expenses: [],
+        budgets: [],
+        impact: [],
+        team: [],
+        validations: [],
+        forecasts: [],
+      };
+      let STATE = load();
+      function load() {
+        try {
+          const r = localStorage.getItem(KEY);
+          return r
+            ? { ...DEFAULT_STATE, ...JSON.parse(r) }
+            : structuredClone(DEFAULT_STATE);
+        } catch {
+          return structuredClone(DEFAULT_STATE);
+        }
+      }
+      function save() {
+        localStorage.setItem(KEY, JSON.stringify(STATE));
+        updateNavFoot();
+      }
+      function uid() {
+        return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      }
+      function fmt(n) {
+        return (
+          new Intl.NumberFormat("fr-FR", {
+            maximumFractionDigits: 2,
+          }).format(n || 0) + " IV"
+        );
+      }
+      function num(n) {
+        return new Intl.NumberFormat("fr-FR").format(n || 0);
+      }
+      function pct(n) {
+        return (n || 0).toFixed(1) + "%";
+      }
+      function toast(msg, type = "ok") {
+        const t = document.createElement("div");
+        t.className = "toast";
+        t.style.borderLeftColor =
+          type === "err"
+            ? "var(--err)"
+            : type === "warn"
+              ? "var(--warn)"
+              : "var(--ok)";
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 2400);
+      }
+
+      /* ============= NAV ============= */
+      const MODULES = [
+        {
+          id: "dashboard",
+          label: "Centre de commande",
+          icon: "fa-solid fa-chalkboard",
+          group: "Pilotage",
+        },
+        {
+          id: "campaigns",
+          label: "Campagnes",
+          icon: "fa-solid fa-bullhorn",
+          group: "Marketing",
+        },
+        {
+          id: "content",
+          label: "Centre de contenu",
+          icon: "fa-solid fa-hard-drive",
+          group: "Marketing",
+        },
+        {
+          id: "social",
+          label: "Réseaux sociaux",
+          icon: "fa-solid fa-globe",
+          group: "Marketing",
+        },
+        {
+          id: "events",
+          label: "Événements",
+          icon: "fa-solid fa-star",
+          group: "Marketing",
+        },
+        {
+          id: "partners",
+          label: "Partenariats",
+          icon: "fa-solid fa-handshake",
+          group: "Relations",
+        },
+        {
+          id: "budget",
+          label: "Centre de coûts",
+          icon: "fa-solid fa-money-bill-wave",
+          group: "Finance",
+        },
+        {
+          id: "impact",
+          label: "Impact SSIAVERSITY",
+          icon: "fa-solid fa-star",
+          group: "Stratégie",
+        },
+        {
+          id: "team",
+          label: "Équipe",
+          icon: "fa-solid fa-users",
+          group: "Ressources",
+        },
+        {
+          id: "analytics",
+          label: "Analytics & BI",
+          icon: "fa-solid fa-money-bill-trend-up",
+          group: "Analyse",
+        },
+        {
+          id: "forecast",
+          label: "Forecast Marketing",
+          icon: "fa-solid fa-arrow-trend-up",
+          group: "Analyse",
+        },
+        {
+          id: "validation",
+          label: "Workflow Validation",
+          icon: "fa-solid fa-check",
+          group: "Gouvernance",
+        },
+        {
+          id: "settings",
+          label: "Paramètres globaux",
+          icon: "fa-solid fa-gear",
+          group: "Système",
+        },
+      ];
+      let CURRENT = "dashboard";
+      function renderNav() {
+        const groups = {};
+        MODULES.forEach((m) => {
+          (groups[m.group] = groups[m.group] || []).push(m);
+        });
+        const n = document.getElementById("nav");
+        n.innerHTML = "";
+        Object.entries(groups).forEach(([g, items]) => {
+          const h = document.createElement("div");
+          h.className = "nav-section";
+          h.textContent = g;
+          n.appendChild(h);
+          items.forEach((m) => {
+            const d = document.createElement("div");
+            d.className = "nav-item" + (m.id === CURRENT ? " active" : "");
+            d.innerHTML = `<i class="icon ${m.icon}"></i><span>${m.label}</span>`;
+            d.onclick = () => {
+              CURRENT = m.id;
+              renderNav();
+              render();
+            };
+            n.appendChild(d);
+          });
+        });
+        updateNavFoot();
+      }
+      function updateNavFoot() {
+        document.getElementById("navFoot").innerHTML =
+          `Année <b>${STATE.settings.year}</b> · ${STATE.settings.quarter} · ${STATE.settings.currency}`;
+      }
+
+      /* ============= MODAL ============= */
+      function openModal(html) {
+        document.getElementById("modalBody").innerHTML = html;
+        document.getElementById("modal").classList.add("show");
+      }
+      function closeModal() {
+        document.getElementById("modal").classList.remove("show");
+      }
+      document.getElementById("modal").addEventListener("click", (e) => {
+        if (e.target.id === "modal") closeModal();
+      });
+
+      /* ============= ROUTER ============= */
+      function render() {
+        document.getElementById("pageTitle").textContent = MODULES.find(
+          (m) => m.id === CURRENT,
+        ).label;
+        const c = document.getElementById("content");
+        c.innerHTML = "";
+        ({
+          dashboard: renderDashboard,
+          campaigns: renderCampaigns,
+          content: renderContent,
+          social: renderSocial,
+          events: renderEvents,
+          partners: renderPartners,
+          budget: renderBudget,
+          impact: renderImpact,
+          team: renderTeam,
+          analytics: renderAnalytics,
+          forecast: renderForecast,
+          validation: renderValidation,
+          settings: renderSettings,
+        })[CURRENT]();
+      }
+
+      /* ============= COMPUTATIONS ============= */
+      function totals() {
+        const expensesY = STATE.expenses.filter(
+          (e) => new Date(e.date).getFullYear() == STATE.settings.year,
+        );
+        const consumed = expensesY.reduce((s, e) => s + (+e.amount || 0), 0);
+        const annual = +STATE.settings.annualBudget || 0;
+        const leads = STATE.campaigns.reduce((s, c) => s + (+c.leads || 0), 0);
+        const recruits = STATE.campaigns.reduce(
+          (s, c) => s + (+c.recruits || 0),
+          0,
+        );
+        const revenue = STATE.campaigns.reduce(
+          (s, c) => s + (+c.revenue || 0),
+          0,
+        );
+        const roi = consumed > 0 ? ((revenue - consumed) / consumed) * 100 : 0;
+        const roas = consumed > 0 ? revenue / consumed : 0;
+        const active = STATE.campaigns.filter(
+          (c) => c.status === "Active",
+        ).length;
+        const upcoming = STATE.events.filter(
+          (e) => new Date(e.date) >= new Date(),
+        ).length;
+        const cpl = leads > 0 ? consumed / leads : 0;
+        const cac = recruits > 0 ? consumed / recruits : 0;
+        const conv = leads > 0 ? (recruits / leads) * 100 : 0;
+        const score = Math.min(
+          100,
+          Math.round(
+            (roi > 0 ? 20 : 0) +
+              (conv > 2 ? 20 : 0) +
+              (active > 0 ? 15 : 0) +
+              (leads > 0 ? 15 : 0) +
+              (recruits > 0 ? 15 : 0) +
+              (consumed <= annual && annual > 0 ? 15 : 0),
+          ),
+        );
+        return {
+          consumed,
+          annual,
+          remaining: annual - consumed,
+          leads,
+          recruits,
+          revenue,
+          roi,
+          roas,
+          active,
+          upcoming,
+          cpl,
+          cac,
+          conv,
+          score,
+        };
+      }
+
+      /* ============= DASHBOARD ============= */
+      function renderDashboard() {
+        const t = totals();
+        const c = document.getElementById("content");
+        c.innerHTML = `
+    <div class="page-head"><h2>Centre de commande exécutif</h2><span class="desc">Vue stratégique · Année ${STATE.settings.year}</span></div>
+    <div class="grid cards-4">
+      ${kpi("Budget annuel", fmt(t.annual), "Total alloué")}
+      ${kpi("Consommé", fmt(t.consumed), `${t.annual > 0 ? pct((t.consumed / t.annual) * 100) : "0%"} du budget`)}
+      ${kpi("Restant", fmt(t.remaining), t.remaining < 0 ? "Dépassement" : "Disponible", t.remaining < 0 ? "down" : "up")}
+      ${kpi("ROI Global", pct(t.roi), `ROAS ${t.roas.toFixed(2)}x`, t.roi >= 0 ? "up" : "down")}
+    </div>
+    <div class="grid cards-4" style="margin-top:16px">
+      ${kpi("Leads générés", num(t.leads))}
+      ${kpi("Étudiants recrutés", num(t.recruits))}
+      ${kpi("Taux conversion", pct(t.conv))}
+      ${kpi("Campagnes actives", t.active)}
+    </div>
+    <div class="grid cards-4" style="margin-top:16px">
+      ${kpi("CPL", fmt(t.cpl), "Coût par lead")}
+      ${kpi("CAC", fmt(t.cac), "Coût acquisition")}
+      ${kpi("Événements à venir", t.upcoming)}
+      ${kpi("Score performance", t.score + "/100", "Marketing score", "up")}
+    </div>
+    <div class="split" style="margin-top:16px">
+      <div class="panel"><div class="panel-head"><h3>Budget vs Réel — par mois</h3></div><div class="chart-wrap"><canvas id="c1"></canvas></div></div>
+      <div class="panel"><div class="panel-head"><h3>Répartition par catégorie</h3></div><div class="chart-wrap"><canvas id="c2"></canvas></div></div>
+    </div>
+    <div class="split" style="margin-top:0">
+      <div class="panel"><div class="panel-head"><h3>Évolution des leads</h3></div><div class="chart-wrap"><canvas id="c3"></canvas></div></div>
+      <div class="panel"><div class="panel-head"><h3>Performance par filiale</h3></div><div class="chart-wrap"><canvas id="c4"></canvas></div></div>
+    </div>
+    <div class="panel"><div class="panel-head"><h3>Performance des campagnes</h3></div>${campaignsTable(STATE.campaigns.slice(0, 8), true)}</div>
+  `;
+        buildDashCharts();
+      }
+      function kpi(label, val, sub = "", trend = "") {
+        return `<div class="card"><h3>${label}</h3><div class="kpi-val">${val}</div>${sub ? `<div class="kpi-sub ${trend === "up" ? "kpi-up" : trend === "down" ? "kpi-down" : ""}">${sub}</div>` : ""}</div>`;
+      }
+      let charts = {};
+      function destroyCharts() {
+        Object.values(charts).forEach((c) => {
+          try {
+            c.destroy();
+          } catch {}
+        });
+        charts = {};
+      }
+      function buildDashCharts() {
+        destroyCharts();
+        const months = [
+          "Jan",
+          "Fév",
+          "Mar",
+          "Avr",
+          "Mai",
+          "Jun",
+          "Jul",
+          "Aoû",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Déc",
+        ];
+        const y = STATE.settings.year;
+        const budM = Array(12).fill(0),
+          realM = Array(12).fill(0),
+          leadsM = Array(12).fill(0);
+        STATE.expenses
+          .filter((e) => new Date(e.date).getFullYear() == y)
+          .forEach((e) => {
+            realM[new Date(e.date).getMonth()] += +e.amount || 0;
+          });
+        STATE.budgets
+          .filter((b) => b.year == y)
+          .forEach((b) => {
+            if (b.month != null) budM[b.month - 1] += +b.amount || 0;
+          });
+        STATE.campaigns.forEach((c) => {
+          if (c.startDate && new Date(c.startDate).getFullYear() == y)
+            leadsM[new Date(c.startDate).getMonth()] += +c.leads || 0;
+        });
+        const opts = {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: "#cbd5e1" } } },
+          scales: {
+            x: { ticks: { color: "#8a98b3" }, grid: { color: "#1f2c47" } },
+            y: { ticks: { color: "#8a98b3" }, grid: { color: "#1f2c47" } },
+          },
+        };
+        charts.c1 = new Chart(document.getElementById("c1"), {
+          type: "bar",
+          data: {
+            labels: months,
+            datasets: [
+              { label: "Budget", data: budM, backgroundColor: "#3b82f6" },
+              { label: "Réel", data: realM, backgroundColor: "#22d3ee" },
+            ],
+          },
+          options: opts,
+        });
+        const cats = {};
+        STATE.expenses.forEach((e) => {
+          cats[e.category || "Autre"] =
+            (cats[e.category || "Autre"] || 0) + (+e.amount || 0);
+        });
+        const ck = Object.keys(cats),
+          cv = Object.values(cats);
+        charts.c2 = new Chart(document.getElementById("c2"), {
+          type: "doughnut",
+          data: {
+            labels: ck.length ? ck : ["Aucune donnée"],
+            datasets: [
+              {
+                data: cv.length ? cv : [1],
+                backgroundColor: [
+                  "#3b82f6",
+                  "#22d3ee",
+                  "#8b5cf6",
+                  "#10b981",
+                  "#f59e0b",
+                  "#ef4444",
+                  "#ec4899",
+                ],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { labels: { color: "#cbd5e1" }, position: "right" },
+            },
+          },
+        });
+        charts.c3 = new Chart(document.getElementById("c3"), {
+          type: "line",
+          data: {
+            labels: months,
+            datasets: [
+              {
+                label: "Leads",
+                data: leadsM,
+                borderColor: "#22d3ee",
+                backgroundColor: "rgba(34,211,238,.15)",
+                fill: true,
+                tension: 0.3,
+              },
+            ],
+          },
+          options: opts,
+        });
+        const fil = {};
+        STATE.campaigns.forEach((c) => {
+          const f = c.subsidiary || "SSIA";
+          fil[f] = (fil[f] || 0) + (+c.revenue || 0);
+        });
+        const fk = Object.keys(fil),
+          fv = Object.values(fil);
+        charts.c4 = new Chart(document.getElementById("c4"), {
+          type: "bar",
+          data: {
+            labels: fk.length ? fk : ["—"],
+            datasets: [
+              {
+                label: "Revenu",
+                data: fv.length ? fv : [0],
+                backgroundColor: "#8b5cf6",
+              },
+            ],
+          },
+          options: opts,
+        });
+      }
+
+      /* ============= CAMPAIGNS ============= */
+      function campaignsTable(list, compact = false) {
+        if (!list.length)
+          return emptyState(
+            "Aucune campagne",
+            "Créez votre première campagne marketing.",
+          );
+        return `<table><thead><tr><th>Nom</th><th>Filiale</th><th>Statut</th><th>Budget</th><th>Leads</th><th>Conv.</th><th>ROI</th>${compact ? "" : "<th></th>"}</tr></thead><tbody>${list
+          .map((c) => {
+            const conv = +c.leads > 0 ? (+c.recruits / +c.leads) * 100 : 0;
+            const roi =
+              +c.budget > 0 ? ((+c.revenue - +c.budget) / +c.budget) * 100 : 0;
+            return `<tr><td><b>${esc(c.name)}</b><div style="color:var(--muted);font-size:11px">${esc(c.objective || "")}</div></td>
+      <td>${esc(c.subsidiary || "-")}</td>
+      <td>${chipStatus(c.status)}</td>
+      <td>${fmt(c.budget)}</td>
+      <td>${num(c.leads)}</td>
+      <td>${pct(conv)}</td>
+      <td class="${roi >= 0 ? "kpi-up" : "kpi-down"}">${pct(roi)}</td>
+      ${compact ? "" : `<td class="actions"><button class="icon-btn" onclick="editCampaign('${c.id}')">✎</button><button class="icon-btn" onclick="dupCampaign('${c.id}')">⎘</button><button class="icon-btn" onclick="delItem('campaigns','${c.id}')">✕</button></td>`}
+    </tr>`;
+          })
+          .join("")}</tbody></table>`;
+      }
+      function chipStatus(s) {
+        const map = {
+          Brouillon: "chip",
+          Validation: "chip-warn",
+          Approuvée: "chip-info",
+          Active: "chip-ok",
+          Terminée: "chip-violet",
+          Archivée: "chip",
+        };
+        return `<span class="chip ${map[s] || ""}">${s || "—"}</span>`;
+      }
+      function renderCampaigns() {
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Gestion des campagnes</h2><span class="sp"></span>
+      <button class="btn btn-primary" onclick="editCampaign()">+ Nouvelle campagne</button></div>
+    <div class="panel">${campaignsTable(STATE.campaigns)}</div>`;
+      }
+      function editCampaign(id) {
+        const c = id
+          ? STATE.campaigns.find((x) => x.id === id)
+          : {
+              id: "",
+              name: "",
+              objective: "",
+              owner: "",
+              subsidiary: "SSIAVERSITY",
+              department: "Marketing",
+              budget: 0,
+              startDate: "",
+              endDate: "",
+              status: "Brouillon",
+              targetLeads: 0,
+              leads: 0,
+              recruits: 0,
+              revenue: 0,
+              channel: "",
+            };
+        openModal(`
+    <h3>${id ? "Modifier" : "Nouvelle"} campagne</h3>
+    <div class="form-row row-2"><div><label>Nom</label><input id="f_name" value="${esc(c.name)}"/></div>
+      <div><label>Objectif</label><input id="f_objective" value="${esc(c.objective)}"/></div></div>
+    <div class="form-row row-3"><div><label>Responsable</label><input id="f_owner" value="${esc(c.owner)}"/></div>
+      <div><label>Filiale</label><select id="f_sub">${["SSIAVERSITY", "SSIA Blockchain", "SSIA Finance", "SSIA Consulting", "SSIA Group"].map((s) => `<option ${s === c.subsidiary ? "selected" : ""}>${s}</option>`).join("")}</select></div>
+      <div><label>Département</label><input id="f_dept" value="${esc(c.department)}"/></div></div>
+    <div class="form-row row-3"><div><label>Canal</label><input id="f_channel" value="${esc(c.channel)}" placeholder="Ads, SEO, Email..."/></div>
+      <div><label>Date début</label><input type="date" id="f_start" value="${c.startDate || ""}"/></div>
+      <div><label>Date fin</label><input type="date" id="f_end" value="${c.endDate || ""}"/></div></div>
+    <div class="form-row row-3"><div><label>Budget (${STATE.settings.currency})</label><input type="number" id="f_budget" value="${c.budget || 0}"/></div>
+      <div><label>Leads cibles</label><input type="number" id="f_tleads" value="${c.targetLeads || 0}"/></div>
+      <div><label>Statut</label><select id="f_status">${["Brouillon", "Validation", "Approuvée", "Active", "Terminée", "Archivée"].map((s) => `<option ${s === c.status ? "selected" : ""}>${s}</option>`).join("")}</select></div></div>
+    <div class="form-row row-3"><div><label>Leads réalisés</label><input type="number" id="f_leads" value="${c.leads || 0}"/></div>
+      <div><label>Recrutements</label><input type="number" id="f_recruits" value="${c.recruits || 0}"/></div>
+      <div><label>Revenu généré</label><input type="number" id="f_revenue" value="${c.revenue || 0}"/></div></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary" onclick="saveCampaign('${c.id || ""}')">Enregistrer</button>
+    </div>`);
+      }
+      function saveCampaign(id) {
+        const get = (k) => document.getElementById("f_" + k).value;
+        const name = get("name").trim();
+        if (!name) return toast("Nom requis", "err");
+        const obj = {
+          id: id || uid(),
+          name,
+          objective: get("objective"),
+          owner: get("owner"),
+          subsidiary: get("sub"),
+          department: get("dept"),
+          channel: get("channel"),
+          startDate: get("start"),
+          endDate: get("end"),
+          budget: +get("budget"),
+          targetLeads: +get("tleads"),
+          status: get("status"),
+          leads: +get("leads"),
+          recruits: +get("recruits"),
+          revenue: +get("revenue"),
+        };
+        if (id) {
+          const i = STATE.campaigns.findIndex((c) => c.id === id);
+          STATE.campaigns[i] = obj;
+        } else STATE.campaigns.push(obj);
+        save();
+        closeModal();
+        render();
+        toast("Campagne enregistrée");
+      }
+      function dupCampaign(id) {
+        const c = STATE.campaigns.find((x) => x.id === id);
+        if (!c) return;
+        STATE.campaigns.push({
+          ...c,
+          id: uid(),
+          name: c.name + " (copie)",
+          status: "Brouillon",
+        });
+        save();
+        render();
+        toast("Dupliqué");
+      }
+      function delItem(coll, id) {
+        if (!confirm("Supprimer cet élément ?")) return;
+        STATE[coll] = STATE[coll].filter((x) => x.id !== id);
+        save();
+        render();
+        toast("Supprimé");
+      }
+
+      /* ============= CONTENT ============= */
+      function renderContent() {
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Centre de contenu</h2><span class="sp"></span>
+      <button class="btn btn-primary" onclick="editContent()">+ Nouveau contenu</button></div>
+    <div class="panel">${STATE.contents.length ? `<table><thead><tr><th>Titre</th><th>Type</th><th>Auteur</th><th>Statut</th><th>Date</th><th></th></tr></thead><tbody>${STATE.contents.map((c) => `<tr><td><b>${esc(c.title)}</b></td><td>${esc(c.type)}</td><td>${esc(c.author || "-")}</td><td>${chipStatus(c.status)}</td><td>${c.date || "-"}</td><td class="actions"><button class="icon-btn" onclick="editContent('${c.id}')">✎</button><button class="icon-btn" onclick="delItem('contents','${c.id}')">✕</button></td></tr>`).join("")}</tbody></table>` : emptyState("Aucun contenu", "Créez articles, communiqués, vidéos, podcasts...")}</div>`;
+      }
+      function editContent(id) {
+        const c = id
+          ? STATE.contents.find((x) => x.id === id)
+          : {
+              id: "",
+              title: "",
+              type: "Article",
+              author: "",
+              status: "Rédaction",
+              date: "",
+              channel: "",
+              body: "",
+            };
+        openModal(`<h3>${id ? "Modifier" : "Nouveau"} contenu</h3>
+    <div class="form-row row-2"><div><label>Titre</label><input id="c_title" value="${esc(c.title)}"/></div>
+      <div><label>Type</label><select id="c_type">${["Article", "Communiqué", "Publication", "Newsletter", "Podcast", "Vidéo", "Document"].map((s) => `<option ${s === c.type ? "selected" : ""}>${s}</option>`).join("")}</select></div></div>
+    <div class="form-row row-3"><div><label>Auteur</label><input id="c_author" value="${esc(c.author)}"/></div>
+      <div><label>Canal</label><input id="c_channel" value="${esc(c.channel)}"/></div>
+      <div><label>Date</label><input type="date" id="c_date" value="${c.date || ""}"/></div></div>
+    <div class="form-row"><div><label>Statut</label><select id="c_status">${["Rédaction", "Révision", "Validation", "Publication", "Archivage"].map((s) => `<option ${s === c.status ? "selected" : ""}>${s}</option>`).join("")}</select></div></div>
+    <div class="form-row"><div><label>Contenu / résumé</label><textarea id="c_body" rows="5">${esc(c.body || "")}</textarea></div></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveContent('${c.id || ""}')">Enregistrer</button></div>`);
+      }
+      function saveContent(id) {
+        const get = (k) => document.getElementById("c_" + k).value;
+        const title = get("title").trim();
+        if (!title) return toast("Titre requis", "err");
+        const obj = {
+          id: id || uid(),
+          title,
+          type: get("type"),
+          author: get("author"),
+          channel: get("channel"),
+          date: get("date"),
+          status: get("status"),
+          body: get("body"),
+        };
+        if (id) {
+          const i = STATE.contents.findIndex((c) => c.id === id);
+          STATE.contents[i] = obj;
+        } else STATE.contents.push(obj);
+        save();
+        closeModal();
+        render();
+        toast("Contenu enregistré");
+      }
+
+      /* ============= SOCIAL ============= */
+      function renderSocial() {
+        const list = STATE.social;
+        const platforms = [
+          { name: "LinkedIn", icon: "fa-brands fa-linkedin" },
+          { name: "Facebook", icon: "fa-brands fa-facebook-f" },
+          { name: "Instagram", icon: "fa-brands fa-instagram" },
+          { name: "X", icon: "fa-brands fa-x-twitter" },
+          { name: "TikTok", icon: "fa-brands fa-tiktok" },
+          { name: "YouTube", icon: "fa-brands fa-youtube" },
+        ];
+        const agg = {};
+        platforms.forEach(
+          (p) =>
+            (agg[p] = {
+              posts: 0,
+              reach: 0,
+              eng: 0,
+              clicks: 0,
+              conv: 0,
+              foll: 0,
+            }),
+        );
+        list.forEach((s) => {
+          if (!agg[s.platform])
+            agg[s.platform] = {
+              posts: 0,
+              reach: 0,
+              eng: 0,
+              clicks: 0,
+              conv: 0,
+              foll: 0,
+            };
+          agg[s.platform].posts++;
+          agg[s.platform].reach += +s.reach || 0;
+          agg[s.platform].eng += +s.engagement || 0;
+          agg[s.platform].clicks += +s.clicks || 0;
+          agg[s.platform].conv += +s.conversions || 0;
+          agg[s.platform].foll = Math.max(
+            agg[s.platform].foll,
+            +s.followers || 0,
+          );
+        });
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Réseaux sociaux</h2><span class="sp"></span>
+      <button class="btn btn-primary" onclick="editSocial()">+ Publication</button></div>
+    <div class="grid cards-3">${platforms.map((p) => `<div class="card"><i class="${p.icon}"></i><h3>${p.name}</h3><div class="kpi-val">${num(agg[p].foll)}</div><div class="kpi-sub">Abonnés · ${agg[p].posts} pubs · ${num(agg[p].reach)} portée · ${num(agg[p].eng)} eng.</div></div>`).join("")}</div>
+    <div class="panel" style="margin-top:16px"><div class="panel-head"><h3>Calendrier éditorial</h3></div>
+      ${
+        list.length
+          ? `<table><thead><tr><th>Date</th><th>Plateforme</th><th>Sujet</th><th>Portée</th><th>Engagement</th><th>Clics</th><th></th></tr></thead><tbody>${list
+              .sort((a, b) => (b.date || "").localeCompare(a.date || ""))
+              .map(
+                (s) =>
+                  `<tr><td>${s.date || "-"}</td><td><span class="chip chip-info">${esc(s.platform)}</span></td><td>${esc(s.topic || "")}</td><td>${num(s.reach)}</td><td>${num(s.engagement)}</td><td>${num(s.clicks)}</td><td class="actions"><button class="icon-btn" onclick="editSocial('${s.id}')">✎</button><button class="icon-btn" onclick="delItem('social','${s.id}')">✕</button></td></tr>`,
+              )
+              .join("")}</tbody></table>`
+          : emptyState(
+              "Aucune publication",
+              "Planifiez vos publications sur tous les canaux.",
+            )
+      }</div>`;
+      }
+      function editSocial(id) {
+        const s = id
+          ? STATE.social.find((x) => x.id === id)
+          : {
+              id: "",
+              platform: "LinkedIn",
+              topic: "",
+              date: "",
+              reach: 0,
+              engagement: 0,
+              clicks: 0,
+              conversions: 0,
+              followers: 0,
+              link: "",
+            };
+        openModal(`<h3>${id ? "Modifier" : "Nouvelle"} publication</h3>
+    <div class="form-row row-2"><div><label>Plateforme</label><select id="s_platform">${["LinkedIn", "Facebook", "Instagram", "X", "TikTok", "YouTube"].map((p) => `<option ${p === s.platform ? "selected" : ""}>${p}</option>`).join("")}</select></div>
+      <div><label>Date</label><input type="date" id="s_date" value="${s.date || ""}"/></div></div>
+    <div class="form-row"><div><label>Sujet</label><input id="s_topic" value="${esc(s.topic)}"/></div></div>
+    <div class="form-row row-3"><div><label>Portée</label><input type="number" id="s_reach" value="${s.reach || 0}"/></div>
+      <div><label>Engagement</label><input type="number" id="s_eng" value="${s.engagement || 0}"/></div>
+      <div><label>Clics</label><input type="number" id="s_clicks" value="${s.clicks || 0}"/></div></div>
+    <div class="form-row row-2"><div><label>Conversions</label><input type="number" id="s_conv" value="${s.conversions || 0}"/></div>
+      <div><label>Abonnés (total plateforme)</label><input type="number" id="s_foll" value="${s.followers || 0}"/></div></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveSocial('${s.id || ""}')">Enregistrer</button></div>`);
+      }
+      function saveSocial(id) {
+        const g = (k) => document.getElementById("s_" + k).value;
+        const obj = {
+          id: id || uid(),
+          platform: g("platform"),
+          date: g("date"),
+          topic: g("topic"),
+          reach: +g("reach"),
+          engagement: +g("eng"),
+          clicks: +g("clicks"),
+          conversions: +g("conv"),
+          followers: +g("foll"),
+        };
+        if (id) {
+          const i = STATE.social.findIndex((c) => c.id === id);
+          STATE.social[i] = obj;
+        } else STATE.social.push(obj);
+        save();
+        closeModal();
+        render();
+        toast("Publication enregistrée");
+      }
+
+      /* ============= EVENTS ============= */
+      function renderEvents() {
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Événements</h2><span class="sp"></span>
+      <button class="btn btn-primary" onclick="editEvent()">+ Nouvel événement</button></div>
+    <div class="panel">${STATE.events.length ? `<table><thead><tr><th>Nom</th><th>Type</th><th>Date</th><th>Lieu</th><th>Budget</th><th>Inscrits</th><th>Présents</th><th>Satisfaction</th><th></th></tr></thead><tbody>${STATE.events.map((e) => `<tr><td><b>${esc(e.name)}</b></td><td>${esc(e.type)}</td><td>${e.date || "-"}</td><td>${esc(e.location || "-")}</td><td>${fmt(e.budget)}</td><td>${num(e.registrations)}</td><td>${num(e.attendees)}</td><td>${e.satisfaction || 0}/10</td><td class="actions"><button class="icon-btn" onclick="editEvent('${e.id}')">✎</button><button class="icon-btn" onclick="delItem('events','${e.id}')">✕</button></td></tr>`).join("")}</tbody></table>` : emptyState("Aucun événement", "Webinaires, conférences, salons, JPO...")}</div>`;
+      }
+      function editEvent(id) {
+        const e = id
+          ? STATE.events.find((x) => x.id === id)
+          : {
+              id: "",
+              name: "",
+              type: "Webinaire",
+              date: "",
+              location: "",
+              budget: 0,
+              spent: 0,
+              registrations: 0,
+              attendees: 0,
+              satisfaction: 0,
+              revenue: 0,
+              owner: "",
+            };
+        openModal(`<h3>${id ? "Modifier" : "Nouvel"} événement</h3>
+    <div class="form-row row-2"><div><label>Nom</label><input id="e_name" value="${esc(e.name)}"/></div>
+      <div><label>Type</label><select id="e_type">${["Webinaire", "Conférence", "Salon", "Journée portes ouvertes", "Forum", "Hackathon", "Atelier"].map((s) => `<option ${s === e.type ? "selected" : ""}>${s}</option>`).join("")}</select></div></div>
+    <div class="form-row row-3"><div><label>Date</label><input type="date" id="e_date" value="${e.date || ""}"/></div>
+      <div><label>Lieu</label><input id="e_loc" value="${esc(e.location)}"/></div>
+      <div><label>Responsable</label><input id="e_owner" value="${esc(e.owner)}"/></div></div>
+    <div class="form-row row-3"><div><label>Budget</label><input type="number" id="e_budget" value="${e.budget || 0}"/></div>
+      <div><label>Dépensé</label><input type="number" id="e_spent" value="${e.spent || 0}"/></div>
+      <div><label>Revenu / valeur</label><input type="number" id="e_revenue" value="${e.revenue || 0}"/></div></div>
+    <div class="form-row row-3"><div><label>Inscrits</label><input type="number" id="e_reg" value="${e.registrations || 0}"/></div>
+      <div><label>Présents</label><input type="number" id="e_att" value="${e.attendees || 0}"/></div>
+      <div><label>Satisfaction /10</label><input type="number" step="0.1" id="e_sat" value="${e.satisfaction || 0}"/></div></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveEvent('${e.id || ""}')">Enregistrer</button></div>`);
+      }
+      function saveEvent(id) {
+        const g = (k) => document.getElementById("e_" + k).value;
+        const name = g("name").trim();
+        if (!name) return toast("Nom requis", "err");
+        const obj = {
+          id: id || uid(),
+          name,
+          type: g("type"),
+          date: g("date"),
+          location: g("loc"),
+          owner: g("owner"),
+          budget: +g("budget"),
+          spent: +g("spent"),
+          revenue: +g("revenue"),
+          registrations: +g("reg"),
+          attendees: +g("att"),
+          satisfaction: +g("sat"),
+        };
+        if (id) {
+          const i = STATE.events.findIndex((c) => c.id === id);
+          STATE.events[i] = obj;
+        } else STATE.events.push(obj);
+        save();
+        closeModal();
+        render();
+        toast("Événement enregistré");
+      }
+
+      /* ============= PARTNERS ============= */
+      function renderPartners() {
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Partenariats</h2><span class="sp"></span>
+      <button class="btn btn-primary" onclick="editPartner()">+ Nouveau partenaire</button></div>
+    <div class="panel">${STATE.partners.length ? `<table><thead><tr><th>Nom</th><th>Type</th><th>Contact</th><th>Statut contrat</th><th>Contribution</th><th>Début</th><th>Fin</th><th></th></tr></thead><tbody>${STATE.partners.map((p) => `<tr><td><b>${esc(p.name)}</b></td><td>${esc(p.type)}</td><td>${esc(p.contact || "-")}</td><td>${chipStatus(p.contractStatus)}</td><td>${fmt(p.contribution)}</td><td>${p.startDate || "-"}</td><td>${p.endDate || "-"}</td><td class="actions"><button class="icon-btn" onclick="editPartner('${p.id}')">✎</button><button class="icon-btn" onclick="delItem('partners','${p.id}')">✕</button></td></tr>`).join("")}</tbody></table>` : emptyState("Aucun partenaire", "Entreprises, sponsors, médias, universités...")}</div>`;
+      }
+      function editPartner(id) {
+        const p = id
+          ? STATE.partners.find((x) => x.id === id)
+          : {
+              id: "",
+              name: "",
+              type: "Entreprise",
+              contact: "",
+              email: "",
+              contribution: 0,
+              contractStatus: "Brouillon",
+              startDate: "",
+              endDate: "",
+              notes: "",
+            };
+        openModal(`<h3>${id ? "Modifier" : "Nouveau"} partenaire</h3>
+    <div class="form-row row-2"><div><label>Nom</label><input id="p_name" value="${esc(p.name)}"/></div>
+      <div><label>Type</label><select id="p_type">${["Entreprise", "Sponsor", "Média", "Institution", "Université"].map((s) => `<option ${s === p.type ? "selected" : ""}>${s}</option>`).join("")}</select></div></div>
+    <div class="form-row row-3"><div><label>Contact</label><input id="p_contact" value="${esc(p.contact)}"/></div>
+      <div><label>Email</label><input id="p_email" value="${esc(p.email || "")}"/></div>
+      <div><label>Contribution</label><input type="number" id="p_contrib" value="${p.contribution || 0}"/></div></div>
+    <div class="form-row row-3"><div><label>Statut</label><select id="p_status">${["Brouillon", "Validation", "Approuvée", "Active", "Terminée", "Archivée"].map((s) => `<option ${s === p.contractStatus ? "selected" : ""}>${s}</option>`).join("")}</select></div>
+      <div><label>Début</label><input type="date" id="p_start" value="${p.startDate || ""}"/></div>
+      <div><label>Fin</label><input type="date" id="p_end" value="${p.endDate || ""}"/></div></div>
+    <div class="form-row"><div><label>Notes</label><textarea id="p_notes" rows="3">${esc(p.notes || "")}</textarea></div></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="savePartner('${p.id || ""}')">Enregistrer</button></div>`);
+      }
+      function savePartner(id) {
+        const g = (k) => document.getElementById("p_" + k).value;
+        const name = g("name").trim();
+        if (!name) return toast("Nom requis", "err");
+        const obj = {
+          id: id || uid(),
+          name,
+          type: g("type"),
+          contact: g("contact"),
+          email: g("email"),
+          contribution: +g("contrib"),
+          contractStatus: g("status"),
+          startDate: g("start"),
+          endDate: g("end"),
+          notes: g("notes"),
+        };
+        if (id) {
+          const i = STATE.partners.findIndex((c) => c.id === id);
+          STATE.partners[i] = obj;
+        } else STATE.partners.push(obj);
+        save();
+        closeModal();
+        render();
+        toast("Partenaire enregistré");
+      }
+
+      /* ============= BUDGET ============= */
+      function renderBudget() {
+        const cats = [
+          "Publicité",
+          "Événements",
+          "Réseaux sociaux",
+          "Communication",
+          "Branding",
+          "Partenariats",
+          "Autre",
+        ];
+        const y = STATE.settings.year;
+        const expY = STATE.expenses.filter(
+          (e) => new Date(e.date).getFullYear() == y,
+        );
+        const total = expY.reduce((s, e) => s + (+e.amount || 0), 0);
+        const byCat = {};
+        cats.forEach(
+          (c) =>
+            (byCat[c] = expY
+              .filter((e) => e.category === c)
+              .reduce((s, e) => s + (+e.amount || 0), 0)),
+        );
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Centre de coûts marketing</h2><span class="sp"></span>
+      <button class="btn" onclick="editBudget()">+ Allouer budget</button>
+      <button class="btn btn-primary" onclick="editExpense()">+ Dépense</button></div>
+    <div class="grid cards-4">
+      ${kpi("Budget annuel", fmt(STATE.settings.annualBudget))}
+      ${kpi("Consommé", fmt(total))}
+      ${kpi("Restant", fmt((+STATE.settings.annualBudget || 0) - total))}
+      ${kpi("Allocations", STATE.budgets.filter((b) => b.year == y).length)}
+    </div>
+    <div class="split" style="margin-top:16px">
+      <div class="panel"><div class="panel-head"><h3>Par catégorie (${y})</h3></div>
+        <table><thead><tr><th>Catégorie</th><th>Dépensé</th><th>%</th></tr></thead><tbody>${cats.map((c) => `<tr><td>${c}</td><td>${fmt(byCat[c])}</td><td><div class="bar-prog"><div style="width:${total > 0 ? (byCat[c] / total) * 100 : 0}%"></div></div></td></tr>`).join("")}</tbody></table>
+      </div>
+      <div class="panel"><div class="panel-head"><h3>Allocations budgétaires</h3></div>
+        ${
+          STATE.budgets.filter((b) => b.year == y).length
+            ? `<table><thead><tr><th>Catégorie</th><th>Période</th><th>Montant</th><th></th></tr></thead><tbody>${STATE.budgets
+                .filter((b) => b.year == y)
+                .map(
+                  (b) =>
+                    `<tr><td>${esc(b.category)}</td><td>${b.month ? "M" + b.month : b.quarter || "Annuel"}</td><td>${fmt(b.amount)}</td><td class="actions"><button class="icon-btn" onclick="delItem('budgets','${b.id}')">✕</button></td></tr>`,
+                )
+                .join("")}</tbody></table>`
+            : emptyState("Aucune allocation")
+        }
+      </div>
+    </div>
+    <div class="panel"><div class="panel-head"><h3>Dépenses ${y}</h3></div>
+      ${
+        expY.length
+          ? `<table><thead><tr><th>Date</th><th>Description</th><th>Catégorie</th><th>Campagne</th><th>Montant</th><th></th></tr></thead><tbody>${expY
+              .sort((a, b) => (b.date || "").localeCompare(a.date || ""))
+              .map(
+                (e) =>
+                  `<tr><td>${e.date || "-"}</td><td>${esc(e.description || "-")}</td><td><span class="chip">${esc(e.category || "-")}</span></td><td>${esc(e.campaign || "-")}</td><td>${fmt(e.amount)}</td><td class="actions"><button class="icon-btn" onclick="editExpense('${e.id}')">✎</button><button class="icon-btn" onclick="delItem('expenses','${e.id}')">✕</button></td></tr>`,
+              )
+              .join("")}</tbody></table>`
+          : emptyState("Aucune dépense")
+      }
+    </div>`;
+      }
+      function editExpense(id) {
+        const cats = [
+          "Publicité",
+          "Événements",
+          "Réseaux sociaux",
+          "Communication",
+          "Branding",
+          "Partenariats",
+          "Autre",
+        ];
+        const e = id
+          ? STATE.expenses.find((x) => x.id === id)
+          : {
+              id: "",
+              date: new Date().toISOString().slice(0, 10),
+              description: "",
+              category: "Publicité",
+              amount: 0,
+              campaign: "",
+            };
+        openModal(`<h3>${id ? "Modifier" : "Nouvelle"} dépense</h3>
+    <div class="form-row row-2"><div><label>Date</label><input type="date" id="x_date" value="${e.date || ""}"/></div>
+      <div><label>Catégorie</label><select id="x_cat">${cats.map((c) => `<option ${c === e.category ? "selected" : ""}>${c}</option>`).join("")}</select></div></div>
+    <div class="form-row"><div><label>Description</label><input id="x_desc" value="${esc(e.description)}"/></div></div>
+    <div class="form-row row-2"><div><label>Campagne associée</label><select id="x_camp"><option value="">—</option>${STATE.campaigns.map((c) => `<option ${c.name === e.campaign ? "selected" : ""}>${esc(c.name)}</option>`).join("")}</select></div>
+      <div><label>Montant</label><input type="number" id="x_amt" value="${e.amount || 0}"/></div></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveExpense('${e.id || ""}')">Enregistrer</button></div>`);
+      }
+      function saveExpense(id) {
+        const g = (k) => document.getElementById("x_" + k).value;
+        const obj = {
+          id: id || uid(),
+          date: g("date"),
+          category: g("cat"),
+          description: g("desc"),
+          campaign: g("camp"),
+          amount: +g("amt"),
+        };
+        if (id) {
+          const i = STATE.expenses.findIndex((c) => c.id === id);
+          STATE.expenses[i] = obj;
+        } else STATE.expenses.push(obj);
+        save();
+        closeModal();
+        render();
+        toast("Dépense enregistrée");
+      }
+      function editBudget() {
+        const cats = [
+          "Publicité",
+          "Événements",
+          "Réseaux sociaux",
+          "Communication",
+          "Branding",
+          "Partenariats",
+          "Autre",
+        ];
+        openModal(`<h3>Allouer un budget</h3>
+    <div class="form-row row-3"><div><label>Catégorie</label><select id="b_cat">${cats.map((c) => `<option>${c}</option>`).join("")}</select></div>
+      <div><label>Année</label><input type="number" id="b_year" value="${STATE.settings.year}"/></div>
+      <div><label>Mois (1-12, vide=annuel)</label><input type="number" id="b_month" min="1" max="12"/></div></div>
+    <div class="form-row"><div><label>Montant</label><input type="number" id="b_amt" value="0"/></div></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveBudget()">Enregistrer</button></div>`);
+      }
+      function saveBudget() {
+        const g = (k) => document.getElementById("b_" + k).value;
+        STATE.budgets.push({
+          id: uid(),
+          category: g("cat"),
+          year: +g("year"),
+          month: g("month") ? +g("month") : null,
+          amount: +g("amt"),
+        });
+        save();
+        closeModal();
+        render();
+        toast("Budget alloué");
+      }
+
+      /* ============= IMPACT SSIAVERSITY ============= */
+      function renderImpact() {
+        const totals = { cand: 0, insc: 0, adm: 0, act: 0 };
+        STATE.impact.forEach((i) => {
+          totals.cand += +i.candidates || 0;
+          totals.insc += +i.registrations || 0;
+          totals.adm += +i.admissions || 0;
+          totals.act += +i.active || 0;
+        });
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Impact SSIAVERSITY</h2><span class="desc">Mesure l'impact des campagnes sur les 21 collèges</span><span class="sp"></span>
+      <button class="btn btn-primary" onclick="editImpact()">+ Ajouter collège</button></div>
+    <div class="grid cards-4">
+      ${kpi("Candidats", num(totals.cand))}
+      ${kpi("Inscriptions", num(totals.insc))}
+      ${kpi("Admissions", num(totals.adm))}
+      ${kpi("Étudiants actifs", num(totals.act))}
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="panel-head"><h3>Performance par collège</h3></div>
+      ${
+        STATE.impact.length
+          ? `<table><thead><tr><th>Collège</th><th>Candidats</th><th>Inscriptions</th><th>Admissions</th><th>Actifs</th><th>Conversion</th><th></th></tr></thead><tbody>${STATE.impact
+              .map((i) => {
+                const conv =
+                  +i.candidates > 0 ? (+i.admissions / +i.candidates) * 100 : 0;
+                return `<tr><td><b>${esc(i.college)}</b></td><td>${num(i.candidates)}</td><td>${num(i.registrations)}</td><td>${num(i.admissions)}</td><td>${num(i.active)}</td><td>${pct(conv)}</td><td class="actions"><button class="icon-btn" onclick="editImpact('${i.id}')">✎</button><button class="icon-btn" onclick="delItem('impact','${i.id}')">✕</button></td></tr>`;
+              })
+              .join("")}</tbody></table>`
+          : emptyState(
+              "Aucune donnée",
+              "Ajoutez les 21 collèges de SSIAVERSITY pour suivre leur performance.",
+            )
+      }
+    </div>`;
+      }
+      function editImpact(id) {
+        const i = id
+          ? STATE.impact.find((x) => x.id === id)
+          : {
+              id: "",
+              college: "",
+              candidates: 0,
+              registrations: 0,
+              admissions: 0,
+              active: 0,
+              year: STATE.settings.year,
+            };
+        openModal(`<h3>${id ? "Modifier" : "Ajouter"} performance collège</h3>
+    <div class="form-row row-2"><div><label>Collège</label><input id="i_college" value="${esc(i.college)}"/></div>
+      <div><label>Année</label><input type="number" id="i_year" value="${i.year || STATE.settings.year}"/></div></div>
+    <div class="form-row row-2"><div><label>Candidats</label><input type="number" id="i_cand" value="${i.candidates || 0}"/></div>
+      <div><label>Inscriptions</label><input type="number" id="i_reg" value="${i.registrations || 0}"/></div></div>
+    <div class="form-row row-2"><div><label>Admissions</label><input type="number" id="i_adm" value="${i.admissions || 0}"/></div>
+      <div><label>Étudiants actifs</label><input type="number" id="i_act" value="${i.active || 0}"/></div></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveImpact('${i.id || ""}')">Enregistrer</button></div>`);
+      }
+      function saveImpact(id) {
+        const g = (k) => document.getElementById("i_" + k).value;
+        const college = g("college").trim();
+        if (!college) return toast("Nom collège requis", "err");
+        const obj = {
+          id: id || uid(),
+          college,
+          year: +g("year"),
+          candidates: +g("cand"),
+          registrations: +g("reg"),
+          admissions: +g("adm"),
+          active: +g("act"),
+        };
+        if (id) {
+          const i = STATE.impact.findIndex((c) => c.id === id);
+          STATE.impact[i] = obj;
+        } else STATE.impact.push(obj);
+        save();
+        closeModal();
+        render();
+        toast("Enregistré");
+      }
+
+      /* ============= TEAM ============= */
+      function renderTeam() {
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Équipe Communication & Marketing</h2><span class="sp"></span>
+      <button class="btn btn-primary" onclick="editTeam()">+ Nouveau membre</button></div>
+    <div class="panel">${
+      STATE.team.length
+        ? `<table><thead><tr><th>Nom</th><th>Poste</th><th>Email</th><th>Objectif</th><th>KPI réalisé</th><th>Productivité</th><th>Coût</th><th></th></tr></thead><tbody>${STATE.team
+            .map((m) => {
+              const prod =
+                +m.objective > 0 ? (+m.achieved / +m.objective) * 100 : 0;
+              return `<tr><td><b>${esc(m.name)}</b></td><td>${esc(m.role)}</td><td>${esc(m.email || "-")}</td><td>${num(m.objective)}</td><td>${num(m.achieved)}</td><td>${pct(prod)}</td><td>${fmt(m.cost)}</td><td class="actions"><button class="icon-btn" onclick="editTeam('${m.id}')">✎</button><button class="icon-btn" onclick="delItem('team','${m.id}')">✕</button></td></tr>`;
+            })
+            .join("")}</tbody></table>`
+        : emptyState(
+            "Aucun membre",
+            "Ajoutez les membres de l'équipe marketing & communication.",
+          )
+    }</div>`;
+      }
+      function editTeam(id) {
+        const roles = [
+          "Directeur Marketing",
+          "Responsable Communication",
+          "Community Manager",
+          "Graphiste",
+          "Vidéaste",
+          "Content Manager",
+          "Responsable Événementiel",
+          "Analyste Marketing",
+          "Responsable Partenariats",
+        ];
+        const m = id
+          ? STATE.team.find((x) => x.id === id)
+          : {
+              id: "",
+              name: "",
+              role: roles[0],
+              email: "",
+              objective: 0,
+              achieved: 0,
+              cost: 0,
+              kpi: "",
+            };
+        openModal(`<h3>${id ? "Modifier" : "Nouveau"} membre</h3>
+    <div class="form-row row-2"><div><label>Nom</label><input id="m_name" value="${esc(m.name)}"/></div>
+      <div><label>Poste</label><select id="m_role">${roles.map((r) => `<option ${r === m.role ? "selected" : ""}>${r}</option>`).join("")}</select></div></div>
+    <div class="form-row row-2"><div><label>Email</label><input id="m_email" value="${esc(m.email || "")}"/></div>
+      <div><label>KPI suivi</label><input id="m_kpi" value="${esc(m.kpi || "")}" placeholder="ex: leads/mois"/></div></div>
+    <div class="form-row row-3"><div><label>Objectif</label><input type="number" id="m_obj" value="${m.objective || 0}"/></div>
+      <div><label>Réalisé</label><input type="number" id="m_ach" value="${m.achieved || 0}"/></div>
+      <div><label>Coût</label><input type="number" id="m_cost" value="${m.cost || 0}"/></div></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveTeam('${m.id || ""}')">Enregistrer</button></div>`);
+      }
+      function saveTeam(id) {
+        const g = (k) => document.getElementById("m_" + k).value;
+        const name = g("name").trim();
+        if (!name) return toast("Nom requis", "err");
+        const obj = {
+          id: id || uid(),
+          name,
+          role: g("role"),
+          email: g("email"),
+          kpi: g("kpi"),
+          objective: +g("obj"),
+          achieved: +g("ach"),
+          cost: +g("cost"),
+        };
+        if (id) {
+          const i = STATE.team.findIndex((c) => c.id === id);
+          STATE.team[i] = obj;
+        } else STATE.team.push(obj);
+        save();
+        closeModal();
+        render();
+        toast("Membre enregistré");
+      }
+
+      /* ============= ANALYTICS ============= */
+      function renderAnalytics() {
+        const t = totals();
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Analytics & Business Intelligence</h2></div>
+    <div class="grid cards-4">
+      ${kpi("ROI", pct(t.roi))}${kpi("ROAS", t.roas.toFixed(2) + "x")}
+      ${kpi("CPL", fmt(t.cpl))}${kpi("CAC", fmt(t.cac))}
+    </div>
+    <div class="grid cards-4" style="margin-top:16px">
+      ${kpi("Conversion", pct(t.conv))}
+      ${kpi("Engagement social", num(STATE.social.reduce((s, x) => s + (+x.engagement || 0), 0)))}
+      ${kpi("Satisfaction événements", (STATE.events.length ? (STATE.events.reduce((s, e) => s + (+e.satisfaction || 0), 0) / STATE.events.length).toFixed(1) : "0") + "/10")}
+      ${kpi("Croissance leads", "—")}
+    </div>
+    <div class="split" style="margin-top:16px">
+      <div class="panel"><div class="panel-head"><h3>Performance des campagnes (Revenu vs Budget)</h3></div><div class="chart-wrap"><canvas id="a1"></canvas></div></div>
+      <div class="panel"><div class="panel-head"><h3>Engagement réseaux sociaux</h3></div><div class="chart-wrap"><canvas id="a2"></canvas></div></div>
+    </div>
+    <div class="panel"><div class="panel-head"><h3>Top campagnes par ROI</h3></div>${campaignsTable(
+      [...STATE.campaigns]
+        .sort((a, b) => {
+          const ra = +a.budget > 0 ? (+a.revenue - +a.budget) / +a.budget : 0;
+          const rb = +b.budget > 0 ? (+b.revenue - +b.budget) / +b.budget : 0;
+          return rb - ra;
+        })
+        .slice(0, 10),
+      true,
+    )}</div>
+  `;
+        destroyCharts();
+        const opts = {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: "#cbd5e1" } } },
+          scales: {
+            x: { ticks: { color: "#8a98b3" }, grid: { color: "#1f2c47" } },
+            y: { ticks: { color: "#8a98b3" }, grid: { color: "#1f2c47" } },
+          },
+        };
+        const names = STATE.campaigns.map((c) => c.name);
+        charts.a1 = new Chart(document.getElementById("a1"), {
+          type: "bar",
+          data: {
+            labels: names.length ? names : ["—"],
+            datasets: [
+              {
+                label: "Budget",
+                data: STATE.campaigns.map((c) => +c.budget || 0),
+                backgroundColor: "#3b82f6",
+              },
+              {
+                label: "Revenu",
+                data: STATE.campaigns.map((c) => +c.revenue || 0),
+                backgroundColor: "#10b981",
+              },
+            ],
+          },
+          options: opts,
+        });
+        const plats = [
+          "LinkedIn",
+          "Facebook",
+          "Instagram",
+          "X",
+          "TikTok",
+          "YouTube",
+        ];
+        const eng = plats.map((p) =>
+          STATE.social
+            .filter((s) => s.platform === p)
+            .reduce((a, b) => a + (+b.engagement || 0), 0),
+        );
+        charts.a2 = new Chart(document.getElementById("a2"), {
+          type: "radar",
+          data: {
+            labels: plats,
+            datasets: [
+              {
+                label: "Engagement",
+                data: eng,
+                backgroundColor: "rgba(139,92,246,.2)",
+                borderColor: "#8b5cf6",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: "#cbd5e1" } } },
+            scales: {
+              r: {
+                angleLines: { color: "#1f2c47" },
+                grid: { color: "#1f2c47" },
+                pointLabels: { color: "#cbd5e1" },
+                ticks: { color: "#8a98b3", backdropColor: "transparent" },
+              },
+            },
+          },
+        });
+      }
+
+      /* ============= FORECAST ============= */
+      function renderForecast() {
+        const list = STATE.forecasts;
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Forecast Marketing</h2><span class="sp"></span>
+      <button class="btn btn-primary" onclick="editForecast()">+ Nouveau scénario</button></div>
+    <div class="panel">${
+      list.length
+        ? `<table><thead><tr><th>Période</th><th>Scénario</th><th>Budget</th><th>Leads</th><th>Conversions</th><th>Revenus</th><th>ROI prévu</th><th></th></tr></thead><tbody>${list
+            .map((f) => {
+              const roi =
+                +f.budget > 0
+                  ? ((+f.revenue - +f.budget) / +f.budget) * 100
+                  : 0;
+              return `<tr><td>${esc(f.period)}</td><td><span class="chip ${f.scenario === "Optimiste" ? "chip-ok" : f.scenario === "Pessimiste" ? "chip-err" : "chip-info"}">${esc(f.scenario)}</span></td><td>${fmt(f.budget)}</td><td>${num(f.leads)}</td><td>${num(f.conversions)}</td><td>${fmt(f.revenue)}</td><td>${pct(roi)}</td><td class="actions"><button class="icon-btn" onclick="editForecast('${f.id}')">✎</button><button class="icon-btn" onclick="delItem('forecasts','${f.id}')">✕</button></td></tr>`;
+            })
+            .join("")}</tbody></table>`
+        : emptyState(
+            "Aucun forecast",
+            "Créez des scénarios pessimiste, réaliste, optimiste.",
+          )
+    }</div>`;
+      }
+      function editForecast(id) {
+        const f = id
+          ? STATE.forecasts.find((x) => x.id === id)
+          : {
+              id: "",
+              period: STATE.settings.year + " " + STATE.settings.quarter,
+              scenario: "Réaliste",
+              budget: 0,
+              leads: 0,
+              conversions: 0,
+              revenue: 0,
+            };
+        openModal(`<h3>${id ? "Modifier" : "Nouveau"} scénario</h3>
+    <div class="form-row row-2"><div><label>Période</label><input id="z_period" value="${esc(f.period)}"/></div>
+      <div><label>Scénario</label><select id="z_sc">${["Pessimiste", "Réaliste", "Optimiste"].map((s) => `<option ${s === f.scenario ? "selected" : ""}>${s}</option>`).join("")}</select></div></div>
+    <div class="form-row row-2"><div><label>Budget prévu</label><input type="number" id="z_budget" value="${f.budget || 0}"/></div>
+      <div><label>Leads prévus</label><input type="number" id="z_leads" value="${f.leads || 0}"/></div></div>
+    <div class="form-row row-2"><div><label>Conversions</label><input type="number" id="z_conv" value="${f.conversions || 0}"/></div>
+      <div><label>Revenus prévus</label><input type="number" id="z_revenue" value="${f.revenue || 0}"/></div></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveForecast('${f.id || ""}')">Enregistrer</button></div>`);
+      }
+      function saveForecast(id) {
+        const g = (k) => document.getElementById("z_" + k).value;
+        const obj = {
+          id: id || uid(),
+          period: g("period"),
+          scenario: g("sc"),
+          budget: +g("budget"),
+          leads: +g("leads"),
+          conversions: +g("conv"),
+          revenue: +g("revenue"),
+        };
+        if (id) {
+          const i = STATE.forecasts.findIndex((c) => c.id === id);
+          STATE.forecasts[i] = obj;
+        } else STATE.forecasts.push(obj);
+        save();
+        closeModal();
+        render();
+        toast("Scénario enregistré");
+      }
+
+      /* ============= VALIDATION ============= */
+      const VAL_STEPS = [
+        "Communication",
+        "Resp. Marketing",
+        "Directeur Marketing",
+        "Direction Financière",
+        "Validation",
+        "Exécution",
+      ];
+      function renderValidation() {
+        const list = STATE.validations;
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Workflow de validation</h2><span class="sp"></span>
+      <button class="btn btn-primary" onclick="editValidation()">+ Nouvelle demande</button></div>
+    <div class="panel">${
+      list.length
+        ? list
+            .map((v) => {
+              const idx = VAL_STEPS.indexOf(v.step);
+              return `<div class="card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div><b>${esc(v.subject)}</b><div style="color:var(--muted);font-size:12px">${esc(v.requester || "-")} · ${fmt(v.amount)} · ${v.date || ""}</div></div><div class="actions"><button class="btn btn-sm" onclick="advanceVal('${v.id}')">→ Étape suivante</button><button class="icon-btn" onclick="delItem('validations','${v.id}')">✕</button></div></div><div class="workflow">${VAL_STEPS.map((s, i) => `<span class="wf-step ${i < idx ? "done" : i === idx ? "current" : ""}">${s}</span>${i < VAL_STEPS.length - 1 ? '<span class="wf-arrow">→</span>' : ""}`).join("")}</div></div>`;
+            })
+            .join("")
+        : emptyState(
+            "Aucune demande",
+            "Soumettez vos demandes de validation budgétaire ou de campagne.",
+          )
+    }</div>`;
+      }
+      function editValidation() {
+        openModal(`<h3>Nouvelle demande de validation</h3>
+    <div class="form-row row-2"><div><label>Objet</label><input id="v_subject"/></div>
+      <div><label>Demandeur</label><input id="v_req"/></div></div>
+    <div class="form-row row-2"><div><label>Montant</label><input type="number" id="v_amt" value="0"/></div>
+      <div><label>Date</label><input type="date" id="v_date" value="${new Date().toISOString().slice(0, 10)}"/></div></div>
+    <div class="form-row"><div><label>Description</label><textarea id="v_desc" rows="3"></textarea></div></div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveValidation()">Soumettre</button></div>`);
+      }
+      function saveValidation() {
+        const g = (k) => document.getElementById("v_" + k).value;
+        const subject = g("subject").trim();
+        if (!subject) return toast("Objet requis", "err");
+        STATE.validations.push({
+          id: uid(),
+          subject,
+          requester: g("req"),
+          amount: +g("amt"),
+          date: g("date"),
+          description: g("desc"),
+          step: VAL_STEPS[0],
+        });
+        save();
+        closeModal();
+        render();
+        toast("Demande soumise");
+      }
+      function advanceVal(id) {
+        const v = STATE.validations.find((x) => x.id === id);
+        if (!v) return;
+        const i = VAL_STEPS.indexOf(v.step);
+        if (i < VAL_STEPS.length - 1) v.step = VAL_STEPS[i + 1];
+        save();
+        render();
+        toast("Étape avancée");
+      }
+
+      /* ============= SETTINGS ============= */
+      function renderSettings() {
+        const s = STATE.settings;
+        document.getElementById("content").innerHTML = `
+    <div class="page-head"><h2>Paramètres globaux</h2></div>
+    <div class="panel" style="max-width:760px">
+      <div class="form-row row-3">
+        <div><label>Année active</label><input type="number" id="set_year" value="${s.year}"/></div>
+        <div><label>Trimestre actif</label><select id="set_q">${["Q1", "Q2", "Q3", "Q4"].map((q) => `<option ${q === s.quarter ? "selected" : ""}>${q}</option>`).join("")}</select></div>
+        <div><label>Devise</label><select id="set_curr">${["IV"].map((c) => `<option ${c === s.currency ? "selected" : ""}>${c}</option>`).join("")}</select></div>
+      </div>
+      <div class="form-row row-3">
+        <div><label>Budget annuel cible</label><input type="number" id="set_budget" value="${s.annualBudget || 0}"/></div>
+        <div><label>Objectif leads</label><input type="number" id="set_leads" value="${s.targetLeads || 0}"/></div>
+        <div><label>Objectif recrutements</label><input type="number" id="set_recruits" value="${s.targetRecruits || 0}"/></div>
+      </div>
+      <div class="form-row"><div><label>Objectif ROI (%)</label><input type="number" id="set_roi" value="${s.targetROI || 0}"/></div></div>
+      <div class="modal-actions"><button class="btn btn-primary" onclick="saveSettings()">Enregistrer</button></div>
+    </div>
+    <div class="panel" style="max-width:760px"><div class="panel-head"><h3>Données</h3></div>
+      <p class="subtitle">L'ERP utilise le stockage local de votre navigateur. Exportez régulièrement.</p>
+      <div style="display:flex;gap:8px"><button class="btn" onclick="exportData()">⤓ Export JSON</button><button class="btn" onclick="document.getElementById('importFile').click()">⤒ Import JSON</button><button class="btn btn-danger" onclick="resetAll()">Réinitialiser tout</button></div>
+    </div>`;
+      }
+      function saveSettings() {
+        const g = (k) => document.getElementById("set_" + k).value;
+        STATE.settings = {
+          year: +g("year"),
+          quarter: g("q"),
+          currency: g("curr"),
+          annualBudget: +g("budget"),
+          targetLeads: +g("leads"),
+          targetRecruits: +g("recruits"),
+          targetROI: +g("roi"),
+        };
+        save();
+        render();
+        toast("Paramètres enregistrés");
+      }
+
+      /* ============= HELPERS ============= */
+      function esc(s) {
+        return (s == null ? "" : String(s)).replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      }
+      function emptyState(title, desc = "") {
+        return `<div class="empty"><div class="empty-icon">◌</div><div style="font-weight:600;color:#cbd5e1">${title}</div><div style="margin-top:6px">${desc}</div></div>`;
+      }
+
+      function exportData() {
+        const b = new Blob([JSON.stringify(STATE, null, 2)], {
+          type: "application/json",
+        });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(b);
+        a.download = `ssia-marketing-erp-${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        toast("Export OK");
+      }
+      function importData(e) {
+        const f = e.target.files[0];
+        if (!f) return;
+        const r = new FileReader();
+        r.onload = (ev) => {
+          try {
+            STATE = { ...DEFAULT_STATE, ...JSON.parse(ev.target.result) };
+            save();
+            render();
+            toast("Import OK");
+          } catch {
+            toast("Fichier invalide", "err");
+          }
+        };
+        r.readAsText(f);
+        e.target.value = "";
+      }
+      function resetAll() {
+        if (
+          !confirm(
+            "Réinitialiser toutes les données ? Cette action est irréversible.",
+          )
+        )
+          return;
+        STATE = structuredClone(DEFAULT_STATE);
+        save();
+        render();
+        toast("Réinitialisé");
+      }
+
+      /* ============= GLOBAL SEARCH ============= */
+      document.getElementById("globalSearch").addEventListener("input", (e) => {
+        const q = e.target.value.toLowerCase();
+        if (!q) return;
+        const rows = document.querySelectorAll("table tbody tr");
+        rows.forEach((r) => {
+          r.style.display = r.textContent.toLowerCase().includes(q)
+            ? ""
+            : "none";
+        });
+      });
+
+      renderNav();
+      render();
+    </script>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+</html>

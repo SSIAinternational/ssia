@@ -111,10 +111,15 @@ function renderLogoSideItem() {
     alt: "Logo SSIA Versity",
   });
 
+  const dashTitle = Object.assign(document.createElement("h3"), {
+    classList: "dash-title",
+    textContent: "Dashboard - PCA",
+  });
+  /*
   const sideItemGroup = Object.assign(document.createElement("div"), {
     className: "side_item_group",
   });
-
+  
   sidebarTab.forEach((sidebarTabItem) => {
     const sideItem = Object.assign(document.createElement("div"), {
       className: "side_item",
@@ -130,9 +135,9 @@ function renderLogoSideItem() {
 
     sideItem.append(i);
     sideItemGroup.append(sideItem);
-  });
+  });*/
 
-  logoSideItem.append(img, sideItemGroup);
+  logoSideItem.append(img, dashTitle /* , sideItemGroup*/);
   nav.append(logoSideItem);
 }
 

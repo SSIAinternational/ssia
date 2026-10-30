@@ -1,0 +1,3735 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSIA — Institutional Financial Platform | IPO Grade</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/etat-financier.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="etat-set">
+      <!-- ══ STICKY NAV ══ -->
+      <nav id="nav-bar">
+        <div class="nav-brand">
+          <span class="nav-logo"
+            ><img src="../../img/versity-icon.png" alt="" srcset=""
+          /></span>
+          <span class="nav-year-badge"
+            >EX. <span id="nav-year-display">2024</span></span
+          >
+        </div>
+        <div class="nav-links">
+          <a class="nav-link active" onclick="showPage('ceo')">CEO DASHBOARD</a>
+          <a class="nav-link" onclick="showPage('bilan')">BILAN</a>
+          <a class="nav-link" onclick="showPage('resultat')">RÉSULTAT</a>
+          <a class="nav-link" onclick="showPage('flux')">FLUX</a>
+          <a class="nav-link" onclick="showPage('debt')">DETTE</a>
+          <a class="nav-link" onclick="showPage('investor')">INVESTORS</a>
+          <a class="nav-link" onclick="showPage('valuation')">VALUATION</a>
+          <a class="nav-link" onclick="showPage('forecast')">FORECAST</a>
+          <a class="nav-link" onclick="showPage('ma')">M&amp;A</a>
+          <a class="nav-link" onclick="showPage('health')">HEALTH</a>
+        </div>
+        <div class="nav-right">
+          <input
+            id="fiscal-year-input"
+            type="number"
+            value="2024"
+            min="2000"
+            max="2099"
+            onchange="updateYear(this.value)"
+          />
+          <button class="nav-btn" onclick="window.print()">⎙ PRINT</button>
+        </div>
+      </nav>
+      <div id="document-root">
+        <!-- ══════════════════════════════════════════════════════════════
+       PAGE 01 — CEO DASHBOARD
+      ══════════════════════════════════════════════════════════════ -->
+        <div class="page" id="page-ceo">
+          <div class="page-header">
+            <div>
+              <div class="company-name">
+                <img src="../../img/versity-icon.png" alt="" srcset="" />Monnaie
+                &amp; Ivoire — SSIA
+              </div>
+              <div class="company-tagline">
+                SSIA Federal Reserve · SSIA Holding · Plateforme
+                Institutionnelle
+              </div>
+            </div>
+            <div>
+              <div class="page-title-label">Tableau de Bord Exécutif</div>
+              <div class="page-title">CEO DASHBOARD</div>
+              <div class="page-subtitle">
+                Exercice <span class="year-display">2024</span> |
+                Bloomberg-Grade
+              </div>
+              <div class="page-num">PAGE 01 / 10</div>
+            </div>
+          </div>
+          <div class="ceo-grid">
+            <div class="ceo-card">
+              <div class="ceo-lbl">Chiffre d'Affaires</div>
+              <div class="ceo-val accent" id="ceo-ca">—</div>
+              <div class="ceo-sub">Revenus totaux d'exploitation</div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">EBITDA</div>
+              <div class="ceo-val" id="ceo-ebitda">—</div>
+              <div class="ceo-sub">Marge: <span id="ceo-ebitda-m">—</span></div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">EBIT</div>
+              <div class="ceo-val" id="ceo-ebit">—</div>
+              <div class="ceo-sub">Marge: <span id="ceo-ebit-m">—</span></div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">Résultat Net</div>
+              <div class="ceo-val" id="ceo-net">—</div>
+              <div class="ceo-sub">
+                Marge nette: <span id="ceo-net-m">—</span>
+              </div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">Cash Disponible</div>
+              <div class="ceo-val accent" id="ceo-cash">—</div>
+              <div class="ceo-sub">Trésorerie &amp; équivalents</div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">Dette Nette</div>
+              <div class="ceo-val" id="ceo-dette-nette">—</div>
+              <div class="ceo-sub">Dettes financières − Cash</div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">Capitaux Propres</div>
+              <div class="ceo-val accent" id="ceo-cp">—</div>
+              <div class="ceo-sub">Book value total</div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">Total Actif</div>
+              <div class="ceo-val accent" id="ceo-actif">—</div>
+              <div class="ceo-sub">Total du bilan</div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">BPA (EPS)</div>
+              <div class="ceo-val" id="ceo-bpa">—</div>
+              <div class="ceo-sub">Bénéfice par action</div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">ROE</div>
+              <div class="ceo-val" id="ceo-roe">—</div>
+              <div class="ceo-sub">Return on Equity</div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">Capitalisation Boursière</div>
+              <div class="ceo-val accent" id="ceo-cap">—</div>
+              <div class="ceo-sub">Prix × Nb actions</div>
+            </div>
+            <div class="ceo-card">
+              <div class="ceo-lbl">Enterprise Value</div>
+              <div class="ceo-val accent" id="ceo-ev">—</div>
+              <div class="ceo-sub">Market Cap + Dette Nette</div>
+            </div>
+          </div>
+          <div class="charts-grid">
+            <div class="chart-box">
+              <div class="chart-box-title">
+                Structure du Bilan — Composition
+              </div>
+              <canvas id="chart-bilan"></canvas>
+            </div>
+            <div class="chart-box">
+              <div class="chart-box-title">
+                Compte de Résultat — Cascade P&amp;L
+              </div>
+              <canvas id="chart-resultat"></canvas>
+            </div>
+          </div>
+          <div class="eyebrow">ANALYSE INTELLIGENTE AUTOMATIQUE</div>
+          <div
+            id="auto-insights"
+            style="
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 1px;
+              background: var(--border);
+              border-top: 1px solid var(--border-2);
+            "
+          >
+            <!-- filled by JS -->
+          </div>
+          <div class="page-footer">
+            <span class="footer-left"
+              >SSIA — Monnaie &amp; Ivoire | Document Financier Confidentiel |
+              OHADA / IFRS</span
+            >
+            <span class="footer-right"
+              >CEO DASHBOARD — <span class="year-display">2024</span></span
+            >
+          </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+       PAGE 02 — BILAN
+      ══════════════════════════════════════════════════════════════ -->
+        <div class="page" id="page-bilan" style="display: none">
+          <div class="page-header">
+            <div>
+              <div class="company-name">
+                <img src="../../img/versity-icon.png" alt="" srcset="" />Monnaie
+                &amp; Ivoire — SSIA
+              </div>
+              <div class="company-tagline">
+                SSIA Federal Reserve · SSIA Holding
+              </div>
+            </div>
+            <div>
+              <div class="page-title-label">
+                État de la Situation Financière
+              </div>
+              <div class="page-title">BILAN</div>
+              <div class="page-subtitle">
+                Au 31 Décembre <span class="year-display">2024</span>
+                <span class="tag-ifrs">IAS 1</span>
+              </div>
+              <div class="page-num">PAGE 02 / 10</div>
+            </div>
+          </div>
+          <div
+            id="balance-status"
+            class="balance-status balance-ok"
+            style="margin: 14px 36px"
+          >
+            <span id="balance-text"
+              >✓ BILAN ÉQUILIBRÉ — ACTIF = PASSIF + CAPITAUX PROPRES</span
+            >
+            <span id="balance-gap" style="font-weight: 700"></span>
+          </div>
+          <div class="bilan-wrap">
+            <div class="bilan-col">
+              <div class="eyebrow">ACTIF</div>
+              <table class="fin-table">
+                <thead>
+                  <tr>
+                    <th>Poste Comptable</th>
+                    <th style="text-align: right">Montant (IVOIRE)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="2" class="group-lbl">Actifs Courants</td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Trésorerie &amp; Équivalents</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a100"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Placements Court Terme</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a120"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Créances Clients</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a130"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Autres Créances</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a140"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Stocks</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a145"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Charges Constatées d'Avance</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a148"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr class="subtotal-row">
+                    <td class="subtotal-label">
+                      Total Actifs Courants
+                      <span class="formula-badge">AC</span>
+                    </td>
+                    <td class="subtotal-value" id="total-ac">0 IVO</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="group-lbl">Actifs Non Courants</td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">
+                      Immobilisations Corporelles (PP&amp;E)
+                    </td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a190"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Immobilisations Incorporelles</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a192"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">
+                      Goodwill <span class="tag-ifrs">IFRS 3</span>
+                    </td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a195"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Participations Stratégiques</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a170"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Actifs Financiers Long Terme</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a160"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">
+                      Actifs Numériques <span class="tag-ifrs">CRYPTO</span>
+                    </td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a180"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Impôts Différés Actifs</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a198"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Autres Actifs Non Courants</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="a199"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr class="subtotal-row">
+                    <td class="subtotal-label">
+                      Total Actifs Non Courants
+                      <span class="formula-badge">ANC</span>
+                    </td>
+                    <td class="subtotal-value" id="total-anc">0 IVO</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="fin-table">
+                <tbody>
+                  <tr class="total-row">
+                    <td class="total-label">
+                      TOTAL ACTIF
+                      <span
+                        class="formula-badge"
+                        style="
+                          background: rgba(255, 255, 255, 0.15);
+                          border-color: rgba(255, 255, 255, 0.3);
+                          color: #fff;
+                        "
+                        >AC + ANC</span
+                      >
+                    </td>
+                    <td class="total-value" id="total-actif">0 IVO</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="bilan-col">
+              <div class="eyebrow">PASSIF &amp; CAPITAUX PROPRES</div>
+              <table class="fin-table">
+                <thead>
+                  <tr>
+                    <th>Poste Comptable</th>
+                    <th style="text-align: right">Montant (IVOIRE)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="2" class="group-lbl">Passifs Courants</td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Fournisseurs</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p230"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Dettes Fiscales</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p250"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Dettes Sociales</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p240"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Emprunts Court Terme</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p211"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Autres Passifs Courants</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p260"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr class="subtotal-row">
+                    <td class="subtotal-label">
+                      Total Passifs Courants
+                      <span class="formula-badge">PC</span>
+                    </td>
+                    <td class="subtotal-value" id="total-pc">0 IVO</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="group-lbl">
+                      Passifs Non Courants (Long Terme)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Emprunts Long Terme</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p200"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Obligations Émises</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p201"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Intérêts à Payer (LT)</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p202"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Provisions</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p270"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Impôts Différés Passifs</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p280"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Autres Passifs Non Courants</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="p290"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr class="subtotal-row">
+                    <td class="subtotal-label">
+                      Total Passifs Non Courants
+                      <span class="formula-badge">PNC</span>
+                    </td>
+                    <td class="subtotal-value" id="total-pnc">0 IVO</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="group-lbl">Capitaux Propres</td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Capital Social</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="cp300"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Prime d'Émission</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="cp301"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Réserves</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="cp310"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Résultats Reportés</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="cp320"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Actions Propres (−)</td>
+                    <td class="acct-val">
+                      <input
+                        type="number"
+                        id="cp330"
+                        value="0"
+                        oninput="recalc()"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="acct-name">Résultat Net de l'Exercice</td>
+                    <td class="acct-val">
+                      <span
+                        id="cp-net-display"
+                        style="
+                          font-family: var(--font-mono);
+                          font-size: 12px;
+                          font-weight: 700;
+                          color: var(--blue);
+                        "
+                        >0</span
+                      >
+                    </td>
+                  </tr>
+                  <tr class="subtotal-row">
+                    <td class="subtotal-label">
+                      Total Capitaux Propres
+                      <span class="formula-badge">CP</span>
+                    </td>
+                    <td class="subtotal-value" id="total-cp">0 IVO</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="fin-table">
+                <tbody>
+                  <tr class="total-row">
+                    <td class="total-label">
+                      TOTAL PASSIF + CP
+                      <span
+                        class="formula-badge"
+                        style="
+                          background: rgba(255, 255, 255, 0.15);
+                          border-color: rgba(255, 255, 255, 0.3);
+                          color: #fff;
+                        "
+                        >PC + PNC + CP</span
+                      >
+                    </td>
+                    <td class="total-value" id="total-passif-cp">0 IVO</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="page-footer">
+            <span class="footer-left"
+              >SSIA — Monnaie &amp; Ivoire | Document Financier Confidentiel |
+              OHADA / IFRS IAS 1</span
+            >
+            <span class="footer-right"
+              >BILAN — <span class="year-display">2024</span></span
+            >
+          </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+       PAGE 03 — COMPTE DE RÉSULTAT
+      ══════════════════════════════════════════════════════════════ -->
+        <div class="page" id="page-resultat" style="display: none">
+          <div class="page-header">
+            <div>
+              <div class="company-name">
+                <img src="../../img/versity-icon.png" alt="" srcset="" />Monnaie
+                &amp; Ivoire — SSIA
+              </div>
+              <div class="company-tagline">
+                SSIA Federal Reserve · SSIA Holding
+              </div>
+            </div>
+            <div>
+              <div class="page-title-label">État de Performance Financière</div>
+              <div class="page-title">COMPTE DE RÉSULTAT</div>
+              <div class="page-subtitle">
+                Exercice clos au 31 Décembre
+                <span class="year-display">2024</span>
+                <span class="tag-ifrs">IAS 1</span>
+              </div>
+              <div class="page-num">PAGE 03 / 10</div>
+            </div>
+          </div>
+          <div class="kpi-strip kpi-strip-4">
+            <div class="kpi-cell">
+              <div class="kpi-lbl">Chiffre d'Affaires</div>
+              <div class="kpi-val" id="kpi-ca">—</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-lbl">EBITDA</div>
+              <div class="kpi-val" id="kpi-ebitda">—</div>
+              <div class="kpi-sub" id="kpi-ebitda-m">—</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-lbl">EBIT</div>
+              <div class="kpi-val" id="kpi-ebit">—</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-lbl">Résultat Net</div>
+              <div class="kpi-val" id="kpi-net">—</div>
+            </div>
+          </div>
+          <div class="eyebrow">PRODUITS</div>
+          <div class="result-line">
+            <span class="rl-label"
+              >Chiffre d'Affaires (Revenus d'Exploitation)</span
+            >
+            <span class="rl-value accent"
+              ><input
+                type="number"
+                id="r400"
+                value="0"
+                oninput="recalc()"
+                style="width: 170px; font-size: 13px; font-weight: 700"
+            /></span>
+          </div>
+          <div class="result-line">
+            <span class="rl-label">Coût des Ventes (COGS)</span>
+            <span class="rl-value"
+              ><input type="number" id="r410" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line" style="background: var(--primary-lte)">
+            <span class="rl-label" style="font-weight: 700; color: var(--blue)"
+              >MARGE BRUTE
+              <span class="formula-badge">CA − Coût Ventes</span></span
+            >
+            <div style="display: flex; align-items: center; gap: 16px">
+              <span class="rl-margin" id="r-marge-brute-pct">—%</span>
+              <span class="rl-value accent" id="r-marge-brute">—</span>
+            </div>
+          </div>
+          <div class="eyebrow">CHARGES OPÉRATIONNELLES</div>
+          <div class="result-line">
+            <span class="rl-label">Charges de Personnel</span
+            ><span class="rl-value"
+              ><input type="number" id="c510" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line">
+            <span class="rl-label">Charges Administratives</span
+            ><span class="rl-value"
+              ><input type="number" id="c520" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line">
+            <span class="rl-label">Marketing &amp; Commercial</span
+            ><span class="rl-value"
+              ><input type="number" id="c530" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line">
+            <span class="rl-label">Recherche &amp; Développement</span
+            ><span class="rl-value"
+              ><input type="number" id="c540" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line">
+            <span class="rl-label">Autres Charges Opérationnelles</span
+            ><span class="rl-value"
+              ><input type="number" id="c550" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line" style="background: var(--primary-lte)">
+            <span class="rl-label" style="font-weight: 700; color: var(--blue)"
+              >EBITDA
+              <span class="formula-badge">Marge Brute − Charges Op.</span></span
+            >
+            <div style="display: flex; align-items: center; gap: 16px">
+              <span class="rl-margin" id="r-ebitda-pct">—%</span>
+              <span class="rl-value" id="r-ebitda">—</span>
+            </div>
+          </div>
+          <div class="eyebrow">AMORTISSEMENTS &amp; DÉPRÉCIATIONS</div>
+          <div class="result-line">
+            <span class="rl-label">Dotations aux Amortissements (D&amp;A)</span
+            ><span class="rl-value"
+              ><input type="number" id="c560" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line">
+            <span class="rl-label">Provisions &amp; Dépréciations</span
+            ><span class="rl-value"
+              ><input type="number" id="c565" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line" style="background: var(--primary-lte)">
+            <span class="rl-label" style="font-weight: 700; color: var(--blue)"
+              >EBIT <span class="formula-badge">EBITDA − Amort.</span></span
+            >
+            <div style="display: flex; align-items: center; gap: 16px">
+              <span class="rl-margin" id="r-ebit-pct">—%</span>
+              <span class="rl-value" id="r-ebit">—</span>
+            </div>
+          </div>
+          <div class="eyebrow">RÉSULTAT FINANCIER</div>
+          <div class="result-line">
+            <span class="rl-label">Charges Financières — Intérêts dette CT</span
+            ><span class="rl-value"
+              ><input type="number" id="c570" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line">
+            <span class="rl-label">Charges Financières — Intérêts dette LT</span
+            ><span class="rl-value"
+              ><input type="number" id="c571" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line">
+            <span class="rl-label">Produits Financiers</span
+            ><span class="rl-value"
+              ><input type="number" id="r420" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div class="result-line" style="background: var(--primary-lte)">
+            <span class="rl-label" style="font-weight: 700; color: var(--blue)"
+              >RÉSULTAT AVANT IMPÔT
+              <span class="formula-badge"
+                >EBIT − Charges Fin. + Produits Fin.</span
+              ></span
+            >
+            <span class="rl-value" id="r-avant-impot">—</span>
+          </div>
+          <div class="result-line">
+            <span class="rl-label">Impôts sur les Bénéfices (IS)</span
+            ><span class="rl-value"
+              ><input type="number" id="c580" value="0" oninput="recalc()"
+            /></span>
+          </div>
+          <div
+            style="
+              padding: 16px 36px;
+              background: var(--versity-blue);
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <span
+              style="
+                font-size: 14px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #fff;
+              "
+              >RÉSULTAT NET
+              <span
+                class="formula-badge"
+                style="
+                  background: rgba(255, 255, 255, 0.15);
+                  border-color: rgba(255, 255, 255, 0.3);
+                  color: #fff;
+                "
+                >Résultat Avant Impôt − IS</span
+              ></span
+            >
+            <div style="display: flex; align-items: center; gap: 16px">
+              <span
+                class="rl-margin"
+                id="r-net-pct"
+                style="color: rgba(255, 255, 255, 0.7)"
+                >—%</span
+              >
+              <span
+                style="
+                  font-family: var(--font-mono);
+                  font-size: 22px;
+                  font-weight: 700;
+                  color: #fff;
+                "
+                id="r-net"
+                >—</span
+              >
+            </div>
+          </div>
+          <div class="page-footer">
+            <span class="footer-left"
+              >SSIA — Monnaie &amp; Ivoire | Document Financier Confidentiel |
+              OHADA / IFRS IAS 1</span
+            >
+            <span class="footer-right"
+              >COMPTE DE RÉSULTAT — <span class="year-display">2024</span></span
+            >
+          </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+       PAGE 04 — FLUX DE TRÉSORERIE
+      ══════════════════════════════════════════════════════════════ -->
+        <div class="page" id="page-flux" style="display: none">
+          <div class="page-header">
+            <div>
+              <div class="company-name">
+                <img src="../../img/versity-icon.png" alt="" srcset="" />Monnaie
+                &amp; Ivoire — SSIA
+              </div>
+              <div class="company-tagline">
+                SSIA Federal Reserve · SSIA Holding
+              </div>
+            </div>
+            <div>
+              <div class="page-title-label">État des Flux de Trésorerie</div>
+              <div class="page-title">CASH FLOW STATEMENT</div>
+              <div class="page-subtitle">
+                Exercice clos au 31 Décembre
+                <span class="year-display">2024</span>
+                <span class="tag-ifrs">IAS 7</span>
+              </div>
+              <div class="page-num">PAGE 04 / 10</div>
+            </div>
+          </div>
+          <div class="kpi-strip kpi-strip-4">
+            <div class="kpi-cell">
+              <div class="kpi-lbl">Flux Opérationnels (CFO)</div>
+              <div class="kpi-val" id="kpi-flux-op">—</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-lbl">Flux d'Investissement (CFI)</div>
+              <div class="kpi-val" id="kpi-flux-inv">—</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-lbl">Flux de Financement (CFF)</div>
+              <div class="kpi-val" id="kpi-flux-fin">—</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-lbl">Variation Nette</div>
+              <div class="kpi-val" id="kpi-flux-var">—</div>
+            </div>
+          </div>
+          <div class="flux-section flux-op">
+            <div class="flux-head">
+              <span class="flux-icon">⚙</span>I — FLUX DE TRÉSORERIE
+              OPÉRATIONNELS
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">Résultat Net de l'Exercice (repris)</span
+              ><span
+                id="f-net-repris"
+                style="
+                  font-family: var(--font-mono);
+                  font-size: 12px;
+                  font-weight: 600;
+                  min-width: 180px;
+                  text-align: right;
+                "
+                >—</span
+              >
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl"
+                >+ Amortissements &amp; Dépréciations (non-cash)</span
+              ><span
+                id="f-amort-repris"
+                style="
+                  font-family: var(--font-mono);
+                  font-size: 12px;
+                  font-weight: 600;
+                  min-width: 180px;
+                  text-align: right;
+                "
+                >—</span
+              >
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">± Variation Créances Clients</span
+              ><input
+                type="number"
+                id="f-var-creances"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">± Variation Dettes Fournisseurs</span
+              ><input
+                type="number"
+                id="f-var-four"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl"
+                >± Variation Impôts &amp; Charges Sociales</span
+              ><input
+                type="number"
+                id="f-var-impots"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">± Autres Variations BFR</span
+              ><input
+                type="number"
+                id="f-var-bfr"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+          </div>
+          <table class="fin-table">
+            <tbody>
+              <tr class="subtotal-row">
+                <td class="subtotal-label">
+                  CASH FLOW OPÉRATIONNEL <span class="formula-badge">CFO</span>
+                </td>
+                <td class="subtotal-value" id="f-op-total">—</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="flux-section flux-inv">
+            <div class="flux-head">
+              <span class="flux-icon">◈</span>II — FLUX DE TRÉSORERIE
+              D'INVESTISSEMENT
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">CAPEX — Acquisitions Immobilisations</span
+              ><input type="number" id="f-capex" value="0" oninput="recalc()" />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">Acquisitions Actifs Numériques</span
+              ><input
+                type="number"
+                id="f-acq-crypto"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl"
+                >Acquisitions Participations &amp; Filiales</span
+              ><input
+                type="number"
+                id="f-acq-partic"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">Cession d'Actifs (produits)</span
+              ><input
+                type="number"
+                id="f-cession"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">Variation Placements Financiers</span
+              ><input
+                type="number"
+                id="f-var-placements"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+          </div>
+          <table class="fin-table">
+            <tbody>
+              <tr class="subtotal-row">
+                <td class="subtotal-label">
+                  CASH FLOW D'INVESTISSEMENT
+                  <span class="formula-badge">CFI</span>
+                </td>
+                <td class="subtotal-value" id="f-inv-total">—</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="flux-section flux-fin">
+            <div class="flux-head">
+              <span class="flux-icon">◎</span>III — FLUX DE TRÉSORERIE DE
+              FINANCEMENT
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl"
+                >Émission d'Actions / Augmentation Capital</span
+              ><input
+                type="number"
+                id="f-em-actions"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">Émission d'Obligations</span
+              ><input
+                type="number"
+                id="f-em-oblig"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">Nouveaux Emprunts Bancaires</span
+              ><input
+                type="number"
+                id="f-new-emprunts"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">Remboursements Emprunts</span
+              ><input
+                type="number"
+                id="f-remb-emprunts"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">Dividendes Versés</span
+              ><input
+                type="number"
+                id="f-dividendes"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+            <div class="flux-row">
+              <span class="flux-lbl">Rachat d'Actions Propres (Buyback)</span
+              ><input
+                type="number"
+                id="f-rachat"
+                value="0"
+                oninput="recalc()"
+              />
+            </div>
+          </div>
+          <table class="fin-table">
+            <tbody>
+              <tr class="subtotal-row">
+                <td class="subtotal-label">
+                  CASH FLOW DE FINANCEMENT
+                  <span class="formula-badge">CFF</span>
+                </td>
+                <td class="subtotal-value" id="f-fin-total">—</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="variation-finale">
+            <span class="vf-label"
+              >VARIATION NETTE DE TRÉSORERIE
+              <span
+                class="formula-badge"
+                style="
+                  background: rgba(255, 255, 255, 0.15);
+                  border-color: rgba(255, 255, 255, 0.3);
+                  color: #fff;
+                "
+                >CFO + CFI + CFF</span
+              ></span
+            >
+            <span class="vf-value" id="f-var-nette">—</span>
+          </div>
+          <div class="result-line">
+            <span class="rl-label">Trésorerie d'Ouverture</span
+            ><input
+              type="number"
+              id="f-treso-ouv"
+              value="0"
+              oninput="recalc()"
+              style="font-size: 13px"
+            />
+          </div>
+          <div
+            style="
+              padding: 14px 36px;
+              background: var(--versity-blue);
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <span
+              style="
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: #fff;
+              "
+              >TRÉSORERIE DE CLÔTURE
+              <span
+                class="formula-badge"
+                style="
+                  background: rgba(255, 255, 255, 0.15);
+                  border-color: rgba(255, 255, 255, 0.3);
+                  color: #fff;
+                "
+                >Ouverture + Variation</span
+              ></span
+            >
+            <span
+              style="
+                font-family: var(--font-mono);
+                font-size: 20px;
+                font-weight: 700;
+                color: #fff;
+              "
+              id="f-treso-cloture"
+              >—</span
+            >
+          </div>
+          <div class="page-footer">
+            <span class="footer-left"
+              >SSIA — Monnaie &amp; Ivoire | Document Financier Confidentiel |
+              IAS 7</span
+            >
+            <span class="footer-right"
+              >FLUX DE TRÉSORERIE — <span class="year-display">2024</span></span
+            >
+          </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+       PAGE 05 — DETTE & FINANCEMENT
+      ══════════════════════════════════════════════════════════════ -->
+        <div class="page" id="page-debt" style="display: none">
+          <div class="page-header">
+            <div>
+              <div class="company-name">
+                <img src="../../img/versity-icon.png" alt="" srcset="" />Monnaie
+                &amp; Ivoire — SSIA
+              </div>
+              <div class="company-tagline">
+                SSIA Federal Reserve · SSIA Holding
+              </div>
+            </div>
+            <div>
+              <div class="page-title-label">
+                Analyse de la Structure de Dette
+              </div>
+              <div class="page-title">DETTE &amp; FINANCEMENT</div>
+              <div class="page-subtitle">
+                Exercice <span class="year-display">2024</span>
+              </div>
+              <div class="page-num">PAGE 05 / 10</div>
+            </div>
+          </div>
+          <div class="eyebrow">STRUCTURE DE DETTE</div>
+          <div class="debt-grid">
+            <div class="debt-card">
+              <div class="debt-lbl">Dette Court Terme</div>
+              <div class="debt-val" id="d-ct">—</div>
+              <div class="debt-sub">Emprunts &lt; 1 an</div>
+            </div>
+            <div class="debt-card">
+              <div class="debt-lbl">Dette Long Terme</div>
+              <div class="debt-val" id="d-lt">—</div>
+              <div class="debt-sub">Emprunts &gt; 1 an</div>
+            </div>
+            <div class="debt-card">
+              <div class="debt-lbl">Obligations Émises</div>
+              <div class="debt-val" id="d-oblig">—</div>
+              <div class="debt-sub">Bond obligations</div>
+            </div>
+            <div class="debt-card">
+              <div class="debt-lbl">Dette Totale Brute</div>
+              <div class="debt-val" id="d-total-brute">—</div>
+              <div class="debt-sub">CT + LT + Obligations</div>
+            </div>
+            <div class="debt-card">
+              <div class="debt-lbl">Cash &amp; Équivalents</div>
+              <div class="debt-val" id="d-cash">—</div>
+              <div class="debt-sub">Trésorerie disponible</div>
+            </div>
+            <div class="debt-card">
+              <div class="debt-lbl">Dette Nette</div>
+              <div class="debt-val" id="d-nette">—</div>
+              <div class="debt-sub">Dette Brute − Cash</div>
+            </div>
+            <div class="debt-card">
+              <div class="debt-lbl">Intérêts Annuels</div>
+              <div class="debt-val" id="d-interets">—</div>
+              <div class="debt-sub">CT + LT combinés</div>
+            </div>
+            <div class="debt-card">
+              <div class="debt-lbl">Coût Moyen Dette</div>
+              <div class="debt-val" id="d-cout">—</div>
+              <div class="debt-sub">Intérêts / Dette brute</div>
+            </div>
+          </div>
+          <div class="eyebrow">RATIOS D'ENDETTEMENT — ANALYSE</div>
+          <div class="metrics-grid metrics-grid-4">
+            <div class="m-card">
+              <div class="m-cat">Couverture</div>
+              <div class="m-name">Interest Coverage Ratio</div>
+              <div class="m-value" id="d-icr">—</div>
+              <div class="m-sub">EBIT / Charges Fin. totales</div>
+              <div class="m-formula">EBIT / (Intérêts CT + LT)</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Levier</div>
+              <div class="m-name">Debt / Equity</div>
+              <div class="m-value" id="d-de">—</div>
+              <div class="m-sub">Dette totale / Capitaux propres</div>
+              <div class="m-formula">Total Debt / Equity</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Levier</div>
+              <div class="m-name">Net Debt / EBITDA</div>
+              <div class="m-value" id="d-nd-ebitda">—</div>
+              <div class="m-sub">Années de désendettement</div>
+              <div class="m-formula">Net Debt / EBITDA</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Solvabilité</div>
+              <div class="m-name">Debt Ratio</div>
+              <div class="m-value" id="d-ratio">—</div>
+              <div class="m-sub">Dettes / Total Actif</div>
+              <div class="m-formula">Total Liabilities / Total Assets</div>
+            </div>
+          </div>
+          <div class="eyebrow">RACHAT D'ACTIONS — BUYBACK PROGRAM</div>
+          <div style="padding: 16px 36px 0">
+            <div
+              class="inputs-grid"
+              style="
+                border: none;
+                background: none;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 12px;
+                margin-bottom: 12px;
+              "
+            >
+              <div
+                class="input-card"
+                style="border: 1px solid var(--border); border-radius: 5px"
+              >
+                <div class="input-lbl">Montant Buyback</div>
+                <input
+                  type="number"
+                  id="bb-montant"
+                  value="0"
+                  oninput="recalc()"
+                  style="
+                    width: 100%;
+                    text-align: left;
+                    font-size: 14px;
+                    font-weight: 700;
+                  "
+                />
+                <div class="input-unit">Total programme rachat</div>
+              </div>
+              <div
+                class="input-card"
+                style="border: 1px solid var(--border); border-radius: 5px"
+              >
+                <div class="input-lbl">Prix de Rachat / Action</div>
+                <input
+                  type="number"
+                  id="bb-prix"
+                  value="0"
+                  oninput="recalc()"
+                  style="
+                    width: 100%;
+                    text-align: left;
+                    font-size: 14px;
+                    font-weight: 700;
+                  "
+                />
+                <div class="input-unit">Prix moyen exécution</div>
+              </div>
+              <div
+                class="input-card"
+                style="border: 1px solid var(--border); border-radius: 5px"
+              >
+                <div class="input-lbl">Actions en Circulation</div>
+                <input
+                  type="number"
+                  id="i-nb-actions"
+                  value="1000000"
+                  oninput="recalc()"
+                  style="
+                    width: 100%;
+                    text-align: left;
+                    font-size: 14px;
+                    font-weight: 700;
+                  "
+                />
+                <div class="input-unit">Avant buyback</div>
+              </div>
+              <div
+                class="input-card"
+                style="border: 1px solid var(--border); border-radius: 5px"
+              >
+                <div class="input-lbl">Actions Diluées</div>
+                <input
+                  type="number"
+                  id="i-nb-diluted"
+                  value="1000000"
+                  oninput="recalc()"
+                  style="
+                    width: 100%;
+                    text-align: left;
+                    font-size: 14px;
+                    font-weight: 700;
+                  "
+                />
+                <div class="input-unit">Inclus options &amp; warrants</div>
+              </div>
+            </div>
+          </div>
+          <div class="buyback-summary">
+            <div class="bb-item">
+              <div class="bb-lbl">Actions Rachetées</div>
+              <div class="bb-val" id="bb-nb-actions">—</div>
+            </div>
+            <div class="bb-item">
+              <div class="bb-lbl">Actions Post-Buyback</div>
+              <div class="bb-val" id="bb-nb-post">—</div>
+            </div>
+            <div class="bb-item">
+              <div class="bb-lbl">Réduction Capital</div>
+              <div class="bb-val" id="bb-pct">—</div>
+            </div>
+            <div class="bb-item">
+              <div class="bb-lbl">BPA Avant Buyback</div>
+              <div class="bb-val" id="bb-bpa-avant">—</div>
+            </div>
+            <div class="bb-item">
+              <div class="bb-lbl">BPA Après Buyback</div>
+              <div class="bb-val" id="bb-bpa-apres">—</div>
+            </div>
+            <div class="bb-item">
+              <div class="bb-lbl">Accrétion BPA</div>
+              <div class="bb-val" id="bb-acretion">—</div>
+            </div>
+          </div>
+          <div class="page-footer">
+            <span class="footer-left"
+              >SSIA — Monnaie &amp; Ivoire | Analyse Dette &amp; Financement |
+              IFRS</span
+            >
+            <span class="footer-right"
+              >DETTE &amp; FINANCEMENT —
+              <span class="year-display">2024</span></span
+            >
+          </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+       PAGE 06 — INVESTOR DASHBOARD
+      ══════════════════════════════════════════════════════════════ -->
+        <div class="page" id="page-investor" style="display: none">
+          <div class="page-header">
+            <div>
+              <div class="company-name">
+                <img src="../../img/versity-icon.png" alt="" srcset="" />Monnaie
+                &amp; Ivoire — SSIA
+              </div>
+              <div class="company-tagline">
+                SSIA Federal Reserve · SSIA Holding
+              </div>
+            </div>
+            <div>
+              <div class="page-title-label">Investor Relations</div>
+              <div class="page-title">INVESTOR DASHBOARD</div>
+              <div class="page-subtitle">
+                Données au <span class="year-display">2024</span>
+              </div>
+              <div class="page-num">PAGE 06 / 10</div>
+            </div>
+          </div>
+          <div class="investor-bar">
+            <div class="ticker-badge">
+              <span class="ticker">SSIA</span>
+              <span class="exchange-tag">Capital Holding</span>
+            </div>
+            <div class="market-inputs">
+              <div class="mi-group">
+                <div class="mi-label">Prix Action</div>
+                <input
+                  type="number"
+                  id="i-prix-action"
+                  value="0"
+                  oninput="recalc()"
+                  style="width: 120px; text-align: right"
+                />
+              </div>
+              <div class="mi-group">
+                <div class="mi-label">DPS</div>
+                <input
+                  type="number"
+                  id="i-dps"
+                  value="0"
+                  oninput="recalc()"
+                  style="width: 100px; text-align: right"
+                />
+              </div>
+              <div class="mi-group">
+                <div class="mi-label">Taux IS (%)</div>
+                <input
+                  type="number"
+                  id="i-taux-is"
+                  value="25"
+                  oninput="recalc()"
+                  style="width: 80px; text-align: right"
+                />
+              </div>
+              <div class="mi-group">
+                <div class="mi-label">WACC (%)</div>
+                <input
+                  type="number"
+                  id="i-wacc"
+                  value="10"
+                  oninput="recalc()"
+                  style="width: 80px; text-align: right"
+                />
+              </div>
+              <div class="mi-group">
+                <div class="mi-label">Taux Sans Risque (%)</div>
+                <input
+                  type="number"
+                  id="i-rfr"
+                  value="3"
+                  oninput="recalc()"
+                  style="width: 80px; text-align: right"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="ev-hero">
+            <div class="ev-cell">
+              <div class="ev-lbl">Market Capitalization</div>
+              <div class="ev-val" id="i-cap">—</div>
+              <div class="ev-sub">Prix × Nb. Actions</div>
+            </div>
+            <div class="ev-cell">
+              <div class="ev-lbl">Enterprise Value</div>
+              <div class="ev-val" id="i-ev">—</div>
+              <div class="ev-sub">Mkt Cap + Dette Nette</div>
+            </div>
+            <div class="ev-cell">
+              <div class="ev-lbl">Book Value / Action (BVPS)</div>
+              <div class="ev-val" id="i-bvps">—</div>
+              <div class="ev-sub">CP / Nb. Actions</div>
+            </div>
+          </div>
+          <div class="eyebrow">RATIOS ACTIONNAIRES</div>
+          <div class="metrics-grid metrics-grid-4">
+            <div class="m-card">
+              <div class="m-cat">Actionnaires</div>
+              <div class="m-name">BPA (EPS)</div>
+              <div class="m-value" id="im-bpa">—</div>
+              <div class="m-sub">Rés. Net / Nb Actions</div>
+              <div class="m-formula">Net Income / Shares</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Actionnaires</div>
+              <div class="m-name">BPA Dilué</div>
+              <div class="m-value" id="im-bpa-d">—</div>
+              <div class="m-sub">Diluted EPS</div>
+              <div class="m-formula">Net Inc / Diluted Shares</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Actionnaires</div>
+              <div class="m-name">Dividend Yield</div>
+              <div class="m-value" id="im-div-yield">—</div>
+              <div class="m-sub">DPS / Prix Action</div>
+              <div class="m-formula">DPS / Price × 100</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Actionnaires</div>
+              <div class="m-name">Payout Ratio</div>
+              <div class="m-value" id="im-payout">—</div>
+              <div class="m-sub">Dividendes / Rés. Net</div>
+              <div class="m-formula">Total Div / Net Income</div>
+            </div>
+          </div>
+          <div class="eyebrow">RATIOS DE VALORISATION</div>
+          <div class="metrics-grid metrics-grid-4">
+            <div class="m-card">
+              <div class="m-cat">Valorisation</div>
+              <div class="m-name">P/E Ratio</div>
+              <div class="m-value accent" id="im-pe">—</div>
+              <div class="m-sub">Prix / BPA</div>
+              <div class="m-formula">Price / EPS</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Valorisation</div>
+              <div class="m-name">P/B Ratio</div>
+              <div class="m-value accent" id="im-pb">—</div>
+              <div class="m-sub">Prix / Book Value</div>
+              <div class="m-formula">Price / BVPS</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Valorisation</div>
+              <div class="m-name">EV/EBITDA</div>
+              <div class="m-value accent" id="im-ev-ebitda">—</div>
+              <div class="m-sub">Enterprise Value / EBITDA</div>
+              <div class="m-formula">EV / EBITDA</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Valorisation</div>
+              <div class="m-name">EV/EBIT</div>
+              <div class="m-value accent" id="im-ev-ebit">—</div>
+              <div class="m-sub">Enterprise Value / EBIT</div>
+              <div class="m-formula">EV / EBIT</div>
+            </div>
+          </div>
+          <div class="eyebrow">RATIOS DE RENTABILITÉ</div>
+          <div class="metrics-grid metrics-grid-6">
+            <div class="m-card">
+              <div class="m-cat">Rentabilité</div>
+              <div class="m-name">ROE</div>
+              <div class="m-value" id="im-roe">—</div>
+              <div class="m-sub">Return on Equity</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Rentabilité</div>
+              <div class="m-name">ROA</div>
+              <div class="m-value" id="im-roa">—</div>
+              <div class="m-sub">Return on Assets</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Rentabilité</div>
+              <div class="m-name">ROIC</div>
+              <div class="m-value" id="im-roic">—</div>
+              <div class="m-sub">Return on Inv. Cap.</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Rentabilité</div>
+              <div class="m-name">Marge Brute</div>
+              <div class="m-value" id="im-mg">—</div>
+              <div class="m-sub">Gross Margin</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Rentabilité</div>
+              <div class="m-name">Marge EBITDA</div>
+              <div class="m-value" id="im-mebitda">—</div>
+              <div class="m-sub">EBITDA Margin</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Rentabilité</div>
+              <div class="m-name">Marge Nette</div>
+              <div class="m-value" id="im-mnet">—</div>
+              <div class="m-sub">Net Margin</div>
+            </div>
+          </div>
+          <div class="eyebrow">LIQUIDITÉ &amp; SOLVABILITÉ</div>
+          <div class="metrics-grid metrics-grid-6">
+            <div class="m-card">
+              <div class="m-cat">Liquidité</div>
+              <div class="m-name">Current Ratio</div>
+              <div class="m-value" id="im-cr">—</div>
+              <div class="m-sub">AC / PC</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Liquidité</div>
+              <div class="m-name">Quick Ratio</div>
+              <div class="m-value" id="im-qr">—</div>
+              <div class="m-sub">(AC − Stocks) / PC</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Solvabilité</div>
+              <div class="m-name">Debt Ratio</div>
+              <div class="m-value" id="im-dr">—</div>
+              <div class="m-sub">Total Dettes / Total Actif</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Solvabilité</div>
+              <div class="m-name">D/E Ratio</div>
+              <div class="m-value" id="im-de">—</div>
+              <div class="m-sub">Dettes / CP</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Solvabilité</div>
+              <div class="m-name">Net Debt/EBITDA</div>
+              <div class="m-value" id="im-nd-ebitda">—</div>
+              <div class="m-sub">Levier financier</div>
+            </div>
+            <div class="m-card">
+              <div class="m-cat">Solvabilité</div>
+              <div class="m-name">Interest Cover</div>
+              <div class="m-value" id="im-icr">—</div>
+              <div class="m-sub">EBIT / Charges Fin.</div>
+            </div>
+          </div>
+          <div class="page-footer">
+            <span class="footer-left"
+              >SSIA — Monnaie &amp; Ivoire | Document Financier
+              Confidentiel</span
+            >
+            <span class="footer-right"
+              >INVESTOR DASHBOARD — <span class="year-display">2024</span></span
+            >
+          </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+       PAGE 07 — VALUATION CENTER
+      ══════════════════════════════════════════════════════════════ -->
+        <div class="page" id="page-valuation" style="display: none">
+          <div class="page-header">
+            <div>
+              <div class="company-name">
+                <img src="../../img/versity-icon.png" alt="" srcset="" />Monnaie
+                &amp; Ivoire — SSIA
+              </div>
+              <div class="company-tagline">
+                SSIA Federal Reserve · SSIA Holding
+              </div>
+            </div>
+            <div>
+              <div class="page-title-label">Analyse de Valorisation</div>
+              <div class="page-title">VALUATION CENTER</div>
+              <div class="page-subtitle">
+                Exercice <span class="year-display">2024</span>
+              </div>
+              <div class="page-num">PAGE 07 / 10</div>
+            </div>
+          </div>
+          <div class="val-grid">
+            <div class="val-card">
+              <div class="val-title">Valorisation Marché</div>
+              <div class="val-row">
+                <span class="val-row-label">Market Capitalization</span
+                ><span class="val-row-value accent" id="v-cap">—</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">Dette Brute</span
+                ><span class="val-row-value" id="v-dette-brute">—</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">Cash &amp; Équivalents</span
+                ><span class="val-row-value" id="v-cash">—</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">Dette Nette</span
+                ><span class="val-row-value" id="v-dette-nette">—</span>
+              </div>
+              <div
+                class="val-row"
+                style="
+                  border-top: 1px solid var(--border);
+                  margin-top: 8px;
+                  padding-top: 8px;
+                "
+              >
+                <span
+                  class="val-row-label"
+                  style="font-weight: 700; color: var(--ink)"
+                  >Enterprise Value</span
+                ><span
+                  class="val-row-value accent"
+                  style="font-size: 16px"
+                  id="v-ev"
+                  >—</span
+                >
+              </div>
+            </div>
+            <div class="val-card">
+              <div class="val-title">Multiples de Valorisation</div>
+              <div class="val-row">
+                <span class="val-row-label">P/E (Price-to-Earnings)</span
+                ><span class="val-row-value accent" id="v-pe">—x</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">P/B (Price-to-Book)</span
+                ><span class="val-row-value accent" id="v-pb">—x</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">EV/EBITDA</span
+                ><span class="val-row-value accent" id="v-ev-ebitda">—x</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">EV/EBIT</span
+                ><span class="val-row-value accent" id="v-ev-ebit">—x</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">EV/Revenue</span
+                ><span class="val-row-value accent" id="v-ev-rev">—x</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">PEG Ratio</span
+                ><span class="val-row-value accent" id="v-peg">—</span>
+              </div>
+            </div>
+            <div class="val-card">
+              <div class="val-title">DCF &amp; Valeur Intrinsèque</div>
+              <div class="val-row">
+                <span class="val-row-label">WACC utilisé</span
+                ><span class="val-row-value" id="v-wacc">—%</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">Taux de Croissance</span
+                ><span class="val-row-value" id="v-growth">—%</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">Free Cash Flow (FCF)</span
+                ><span class="val-row-value" id="v-fcf">—</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">Valeur DCF (5 ans)</span
+                ><span class="val-row-value pos" id="v-dcf">—</span>
+              </div>
+              <div class="val-row">
+                <span class="val-row-label">Valeur Intrinsèque / Action</span
+                ><span class="val-row-value pos" id="v-intrinseque">—</span>
+              </div>
+              <div
+                class="val-row"
+                style="
+                  border-top: 1px solid var(--border);
+                  margin-top: 8px;
+                  padding-top: 8px;
+                "
+              >
+                <span class="val-row-label" style="font-weight: 700"
+                  >Potentiel Upside / Downside</span
+                ><span class="val-row-value" id="v-upside">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="charts-grid">
+            <div class="chart-box">
+              <div class="chart-box-title">
+                Répartition de l'Enterprise Value
+              </div>
+              <canvas id="chart-ev"></canvas>
+            </div>
+            <div class="chart-box">
+              <div class="chart-box-title">Multiples vs Benchmark Secteur</div>
+              <canvas id="chart-multiples"></canvas>
+            </div>
+          </div>
+          <div class="page-footer">
+            <span class="footer-left"
+              >SSIA — Monnaie &amp; Ivoire | Les valorisations sont indicatives
+              et basées sur les données saisies</span
+            >
+            <span class="footer-right"
+              >VALUATION CENTER — <span class="year-display">2024</span></span
+            >
+          </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+       PAGE 08 — FORECAST CENTER
+      ══════════════════════════════════════════════════════════════ -->
+        <div class="page" id="page-forecast" style="display: none">
+          <div class="page-header">
+            <div>
+              <div class="company-name">
+                <img src="../../img/versity-icon.png" alt="" srcset="" />Monnaie
+                &amp; Ivoire — SSIA
+              </div>
+              <div class="company-tagline">
+                SSIA Federal Reserve · SSIA Holding
+              </div>
+            </div>
+            <div>
+              <div class="page-title-label">Prévisions Financières</div>
+              <div class="page-title">FORECAST CENTER</div>
+              <div class="page-subtitle">
+                Projection N à N+5 | Scénario:
+                <span id="fc-scenario-display">Neutre</span> |
+                <span id="fc-growth-display">10</span>%
+              </div>
+              <div class="page-num">PAGE 08 / 10</div>
+            </div>
+          </div>
+          <div class="scenario-bar">
+            <span class="scen-label">Scénario :</span>
+            <button
+              class="scen-btn pess"
+              onclick="setScenario('pessimiste', -10)"
+            >
+              📉 Pessimiste (−10%)
+            </button>
+            <button
+              class="scen-btn neut active"
+              onclick="setScenario('neutre', 10)"
+            >
+              ➡ Neutre (+10%)
+            </button>
+            <button class="scen-btn opt" onclick="setScenario('optimiste', 20)">
+              📈 Optimiste (+20%)
+            </button>
+            <button class="scen-btn agg" onclick="setScenario('agressif', 35)">
+              🚀 Agressif (+35%)
+            </button>
+            <div class="scen-custom">
+              <label>Personnalisé :</label>
+              <input
+                type="number"
+                id="i-growth"
+                value="10"
+                oninput="
+                  recalc();
+                  syncGrowthDisplay();
+                "
+                style="width: 70px; text-align: center"
+              />
+              <span style="font-size: 11px; color: var(--muted)">%/an</span>
+            </div>
+          </div>
+          <div style="overflow-x: auto; padding: 20px 36px 0">
+            <table class="forecast-table" id="forecast-table">
+              <thead>
+                <tr>
+                  <th style="width: 200px">Indicateur</th>
+                  <th id="fth-n">N (2024)</th>
+                  <th id="fth-n1">N+1</th>
+                  <th id="fth-n2">N+2</th>
+                  <th id="fth-n3">N+3</th>
+                  <th id="fth-n4">N+4</th>
+                  <th id="fth-n5">N+5</th>
+                </tr>
+              </thead>
+              <tbody id="forecast-body"></tbody>
+            </table>
+          </div>
+          <div class="eyebrow" style="margin-top: 8px">
+            ANALYSE DE SENSIBILITÉ
+          </div>
+          <div style="overflow-x: auto; padding: 8px 36px 16px">
+            <table class="sensitivity-table" id="sens-table">
+              <thead>
+                <tr>
+                  <th>Indicateur</th>
+                  <th style="color: var(--red)">−20%</th>
+                  <th style="color: #d97706">−10%</th>
+                  <th style="color: var(--blue)">Base</th>
+                  <th style="color: #16a34a">+10%</th>
+                  <th style="color: #7c3aed">+20%</th>
+                  <th>Break-Even</th>
+                </tr>
+              </thead>
+              <tbody id="sens-body"></tbody>
+            </table>
+          </div>
+          <div class="charts-grid">
+            <div class="chart-box">
+              <div class="chart-box-title">Projection CA &amp; EBITDA</div>
+              <canvas id="chart-forecast-ca"></canvas>
+            </div>
+            <div class="chart-box">
+              <div class="chart-box-title">
+                Résultat Net &amp; Cash Flow Opérationnel
+              </div>
+              <canvas id="chart-forecast-net"></canvas>
+            </div>
+          </div>
+          <div class="page-footer">
+            <span class="footer-left"
+              >SSIA — Monnaie &amp; Ivoire | Projections basées sur taux de
+              croissance constant. À des fins d'illustration uniquement.</span
+            >
+            <span class="footer-right"
+              >FORECAST — <span class="year-display">2024</span></span
+            >
+          </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+       PAGE 09 — M&A / ACQUISITIONS
+      ══════════════════════════════════════════════════════════════ -->
+        <div class="page" id="page-ma" style="display: none">
+          <div class="page-header">
+            <div>
+              <div class="company-name">
+                <img src="../../img/versity-icon.png" alt="" srcset="" />Monnaie
+                &amp; Ivoire — SSIA
+              </div>
+              <div class="company-tagline">
+                SSIA Federal Reserve · SSIA Holding
+              </div>
+            </div>
+            <div>
+              <div class="page-title-label">Fusions &amp; Acquisitions</div>
+              <div class="page-title">M&amp;A CENTER</div>
+              <div class="page-subtitle">
+                Acquisitions, Fusions, Actifs Stratégiques |
+                <span class="year-display">2024</span>
+              </div>
+              <div class="page-num">PAGE 09 / 10</div>
+            </div>
+          </div>
+          <div class="eyebrow">AJOUT D'UNE OPÉRATION M&amp;A</div>
+          <div style="padding: 16px 36px">
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+                gap: 10px;
+                align-items: end;
+              "
+            >
+              <div>
+                <div class="input-lbl">Nom de la Cible / Actif</div>
+                <input
+                  type="text"
+                  id="ma-nom"
+                  placeholder="Ex: Tech Corp SA"
+                  style="
+                    width: 100%;
+                    padding: 6px 10px;
+                    border: 1px solid var(--border);
+                    border-radius: 4px;
+                    font-family: var(--font-body);
+                    font-size: 12px;
+                    color: var(--ink);
+                    background: var(--surface);
+                    outline: none;
+                  "
+                />
+              </div>
+              <div>
+                <div class="input-lbl">Type</div>
+                <select id="ma-type" style="width: 100%; font-size: 11px">
+                  <option>Acquisition</option>
+                  <option>Fusion</option>
+                  <option>Actif Stratégique</option>
+                  <option>Domaine / IP</option>
+                </select>
+              </div>
+              <div>
+                <div class="input-lbl">Valeur Transaction</div>
+                <input
+                  type="number"
+                  id="ma-valeur"
+                  value="0"
+                  style="width: 100%; text-align: left"
+                />
+              </div>
+              <div>
+                <div class="input-lbl">Goodwill Généré</div>
+                <input
+                  type="number"
+                  id="ma-goodwill"
+                  value="0"
+                  style="width: 100%; text-align: left"
+                />
+              </div>
+              <div>
+                <div class="input-lbl">EBITDA Contribution</div>
+                <input
+                  type="number"
+                  id="ma-ebitda"
+                  value="0"
+                  style="width: 100%; text-align: left"
+                />
+              </div>
+              <div>
+                <button class="ma-add-btn" onclick="addMADeal()">
+                  + Ajouter
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="eyebrow">PORTEFEUILLE M&amp;A</div>
+          <div style="padding: 0 36px 16px; overflow-x: auto">
+            <table class="ma-table" id="ma-table">
+              <thead>
+                <tr>
+                  <th>Cible / Actif</th>
+                  <th>Type</th>
+                  <th>Valeur Transaction</th>
+                  <th>Goodwill</th>
+                  <th>EBITDA Contrib.</th>
+                  <th>Synergies Est.</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="ma-tbody">
+                <tr>
+                  <td
+                    colspan="7"
+                    style="
+                      text-align: center;
+                      color: var(--muted);
+                      padding: 20px;
+                      font-style: italic;
+                    "
+                  >
+                    Aucune opération enregistrée. Utilisez le formulaire
+                    ci-dessus.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="eyebrow">IMPACTS CONSOLIDÉS M&amp;A</div>
+          <div class="ma-grid">
+            <div class="ma-card">
+              <div class="ma-title">Impact sur le Bilan</div>
+              <div class="ma-row">
+                <span class="ma-lbl">Total Acquisitions</span
+                ><span class="ma-val" id="ma-total-acq">—</span>
+              </div>
+              <div class="ma-row">
+                <span class="ma-lbl">Total Goodwill Généré</span
+                ><span class="ma-val" id="ma-total-gw">—</span>
+              </div>
+              <div class="ma-row">
+                <span class="ma-lbl">Goodwill / Total Actif</span
+                ><span class="ma-val" id="ma-gw-pct">—</span>
+              </div>
+              <div class="ma-row">
+                <span class="ma-lbl">Nb. Opérations</span
+                ><span class="ma-val" id="ma-nb">0</span>
+              </div>
+            </div>
+            <div class="ma-card">
+              <div class="ma-title">Impact sur le Résultat</div>
+              <div class="ma-row">
+                <span class="ma-lbl">EBITDA Contribution Totale</span
+                ><span class="ma-val pos" id="ma-total-ebitda">—</span>
+              </div>
+              <div class="ma-row">
+                <span class="ma-lbl">Synergies Estimées (15% EBITDA)</span
+                ><span class="ma-val pos" id="ma-synergies">—</span>
+              </div>
+              <div class="ma-row">
+                <span class="ma-lbl">EBITDA Pro-Forma</span
+                ><span class="ma-val accent" id="ma-proforma-ebitda">—</span>
+              </div>
+              <div class="ma-row">
+                <span class="ma-lbl">Impact Marge EBITDA</span
+                ><span class="ma-val" id="ma-impact-marge">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="page-footer">
+            <span class="footer-left"
+              >SSIA — Monnaie &amp; Ivoire | M&amp;A Center | IFRS 3 Business
+              Combinations</span
+            >
+            <span class="footer-right"
+              >M&amp;A — <span class="year-display">2024</span></span
+            >
+          </div>
+        </div>
+        <!-- ══════════════════════════════════════════════════════════════
+       PAGE 10 — FINANCIAL HEALTH SCORE
+      ══════════════════════════════════════════════════════════════ -->
+        <div class="page" id="page-health" style="display: none">
+          <div class="page-header">
+            <div>
+              <div class="company-name">
+                <img src="../../img/versity-icon.png" alt="" srcset="" />Monnaie
+                &amp; Ivoire — SSIA
+              </div>
+              <div class="company-tagline">
+                SSIA Federal Reserve · SSIA Holding
+              </div>
+            </div>
+            <div>
+              <div class="page-title-label">Analyse de Santé Financière</div>
+              <div class="page-title">FINANCIAL HEALTH</div>
+              <div class="page-subtitle">
+                Score &amp; Diagnostic Automatique |
+                <span class="year-display">2024</span>
+              </div>
+              <div class="page-num">PAGE 10 / 10</div>
+            </div>
+          </div>
+          <div class="health-section">
+            <div class="health-gauge-wrap">
+              <div class="gauge-ring">
+                <canvas id="chart-gauge" width="200" height="110"></canvas>
+                <div class="gauge-score">
+                  <div class="gauge-score-num" id="health-score">—</div>
+                  <div class="gauge-score-label">/ 100</div>
+                </div>
+              </div>
+              <div class="gauge-rating" id="health-rating">—</div>
+              <div class="gauge-rating-sub" id="health-rating-desc">
+                Saisir des données pour l'analyse
+              </div>
+            </div>
+            <div class="health-breakdown">
+              <div
+                style="
+                  font-size: 9px;
+                  letter-spacing: 0.18em;
+                  text-transform: uppercase;
+                  color: var(--blue);
+                  margin-bottom: 20px;
+                  font-weight: 700;
+                "
+              >
+                COMPOSANTES DU SCORE
+              </div>
+              <div class="health-component">
+                <div class="hc-header">
+                  <span class="hc-name">Liquidité (max 20)</span
+                  ><span class="hc-score" id="hc-liq">—</span>
+                </div>
+                <div class="hc-bar">
+                  <div
+                    class="hc-fill"
+                    id="hc-liq-bar"
+                    style="width: 0%; background: var(--blue)"
+                  ></div>
+                </div>
+              </div>
+              <div class="health-component">
+                <div class="hc-header">
+                  <span class="hc-name">Rentabilité (max 25)</span
+                  ><span class="hc-score" id="hc-rent">—</span>
+                </div>
+                <div class="hc-bar">
+                  <div
+                    class="hc-fill"
+                    id="hc-rent-bar"
+                    style="width: 0%; background: var(--green)"
+                  ></div>
+                </div>
+              </div>
+              <div class="health-component">
+                <div class="hc-header">
+                  <span class="hc-name">Solvabilité (max 25)</span
+                  ><span class="hc-score" id="hc-solv">—</span>
+                </div>
+                <div class="hc-bar">
+                  <div
+                    class="hc-fill"
+                    id="hc-solv-bar"
+                    style="width: 0%; background: var(--amber)"
+                  ></div>
+                </div>
+              </div>
+              <div class="health-component">
+                <div class="hc-header">
+                  <span class="hc-name">Création de Valeur (max 15)</span
+                  ><span class="hc-score" id="hc-val">—</span>
+                </div>
+                <div class="hc-bar">
+                  <div
+                    class="hc-fill"
+                    id="hc-val-bar"
+                    style="width: 0%; background: var(--purple)"
+                  ></div>
+                </div>
+              </div>
+              <div class="health-component">
+                <div class="hc-header">
+                  <span class="hc-name">Croissance (max 15)</span
+                  ><span class="hc-score" id="hc-growth">—</span>
+                </div>
+                <div class="hc-bar">
+                  <div
+                    class="hc-fill"
+                    id="hc-growth-bar"
+                    style="width: 0%; background: var(--gold)"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="eyebrow">DIAGNOSTIC AUTOMATIQUE INTELLIGENT</div>
+          <div class="diagnosis-grid" id="diagnosis-grid"></div>
+          <div class="page-footer">
+            <span class="footer-left"
+              >SSIA — Monnaie &amp; Ivoire | Score basé sur ratios IFRS/OHADA.
+              Indicatif uniquement.</span
+            >
+            <span class="footer-right"
+              >FINANCIAL HEALTH — <span class="year-display">2024</span></span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /document-root -->
+
+    <script>
+      // ════════════════════════════════════════════════════════════════
+      // SSIA INSTITUTIONAL FINANCIAL PLATFORM v3.0 — LIGHT THEME
+      // Bloomberg-Grade | IPO Ready | IFRS/OHADA
+      // ════════════════════════════════════════════════════════════════
+
+      const g = (id) => document.getElementById(id);
+      const s = (id, v) => {
+        const el = g(id);
+        if (el) el.textContent = v;
+      };
+      const gv = (id) => {
+        const el = g(id);
+        if (!el) return 0;
+        const v = parseFloat(el.value);
+        return isNaN(v) ? 0 : v;
+      };
+
+      // ── FORMATTERS ────────────────────────────────────────────────────
+      function fmtI(n) {
+        if (n === null || n === undefined || isNaN(n)) return "—";
+        const abs = Math.abs(n);
+        let str;
+        if (abs >= 1e12) str = (n / 1e12).toFixed(2) + "T";
+        else if (abs >= 1e9) str = (n / 1e9).toFixed(2) + "B";
+        else if (abs >= 1e6) str = (n / 1e6).toFixed(2) + "M";
+        else if (abs >= 1e3) str = (n / 1e3).toFixed(1) + "K";
+        else str = n.toFixed(0);
+        return str + " IVO";
+      }
+      function fmtPct(n) {
+        if (n === null || isNaN(n) || !isFinite(n)) return "—";
+        return (n >= 0 ? "+" : "") + n.toFixed(1) + "%";
+      }
+      function fmtPctClean(n) {
+        if (n === null || isNaN(n) || !isFinite(n)) return "—";
+        return n.toFixed(1) + "%";
+      }
+      function fmtX(n) {
+        if (n === null || isNaN(n) || !isFinite(n)) return "—";
+        return n.toFixed(1) + "x";
+      }
+      function fmtRaw(n, dec = 2) {
+        if (n === null || isNaN(n)) return "—";
+        return n.toFixed(dec);
+      }
+
+      function colorEl(id, val, posGood = true) {
+        const el = g(id);
+        if (!el) return;
+        el.classList.remove("pos", "neg", "accent");
+        if (val === null || isNaN(val)) return;
+        el.classList.add(
+          posGood ? (val >= 0 ? "pos" : "neg") : val <= 0 ? "pos" : "neg",
+        );
+      }
+
+      // ── NAVIGATION ────────────────────────────────────────────────────
+      const pages = [
+        "ceo",
+        "bilan",
+        "resultat",
+        "flux",
+        "debt",
+        "investor",
+        "valuation",
+        "forecast",
+        "ma",
+        "health",
+      ];
+      const pageMap = {
+        ceo: "page-ceo",
+        bilan: "page-bilan",
+        resultat: "page-resultat",
+        flux: "page-flux",
+        debt: "page-debt",
+        investor: "page-investor",
+        valuation: "page-valuation",
+        forecast: "page-forecast",
+        ma: "page-ma",
+        health: "page-health",
+      };
+
+      function showPage(key) {
+        pages.forEach((k) => {
+          const p = g(pageMap[k]);
+          if (p) p.style.display = k === key ? "" : "none";
+        });
+        document.querySelectorAll(".nav-link").forEach((l, i) => {
+          l.classList.toggle("active", pages[i] === key);
+        });
+        if (key === "health") renderGauge();
+        if (key === "forecast") renderForecasts();
+        if (key === "valuation") renderValCharts();
+        if (key === "ceo") renderCEOCharts();
+      }
+
+      function updateYear(y) {
+        g("nav-year-display").textContent = y;
+        document
+          .querySelectorAll(".year-display")
+          .forEach((el) => (el.textContent = y));
+        const yr = parseInt(y);
+        if (g("fth-n")) g("fth-n").textContent = "N (" + yr + ")";
+        if (g("fth-n1")) g("fth-n1").textContent = "N+1 (" + (yr + 1) + ")";
+        if (g("fth-n2")) g("fth-n2").textContent = "N+2 (" + (yr + 2) + ")";
+        if (g("fth-n3")) g("fth-n3").textContent = "N+3 (" + (yr + 3) + ")";
+        if (g("fth-n4")) g("fth-n4").textContent = "N+4 (" + (yr + 4) + ")";
+        if (g("fth-n5")) g("fth-n5").textContent = "N+5 (" + (yr + 5) + ")";
+      }
+
+      // ── M&A DATA STORE ────────────────────────────────────────────────
+      let maDeals = [];
+      function addMADeal() {
+        const nom = g("ma-nom").value.trim();
+        if (!nom) {
+          g("ma-nom").focus();
+          return;
+        }
+        maDeals.push({
+          nom,
+          type: g("ma-type").value,
+          valeur: parseFloat(g("ma-valeur").value) || 0,
+          goodwill: parseFloat(g("ma-goodwill").value) || 0,
+          ebitda: parseFloat(g("ma-ebitda").value) || 0,
+        });
+        g("ma-nom").value = "";
+        g("ma-valeur").value = "0";
+        g("ma-goodwill").value = "0";
+        g("ma-ebitda").value = "0";
+        renderMATable();
+        recalc();
+      }
+      function removeMADeal(i) {
+        maDeals.splice(i, 1);
+        renderMATable();
+        recalc();
+      }
+      function renderMATable() {
+        const tbody = g("ma-tbody");
+        if (!tbody) return;
+        if (!maDeals.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px;font-style:italic">Aucune opération enregistrée.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = maDeals
+          .map(
+            (d, i) => `
+    <tr>
+      <td style="font-weight:600;color:var(--ink)">${d.nom}</td>
+      <td><span style="background:var(--blue-light);color:var(--blue);padding:2px 8px;border-radius:3px;font-size:10px;font-weight:600">${d.type}</span></td>
+      <td style="font-family:var(--font-mono);text-align:right">${fmtI(d.valeur)}</td>
+      <td style="font-family:var(--font-mono);text-align:right">${fmtI(d.goodwill)}</td>
+      <td style="font-family:var(--font-mono);text-align:right;color:var(--green)">${fmtI(d.ebitda)}</td>
+      <td style="font-family:var(--font-mono);text-align:right;color:var(--purple)">${fmtI(d.ebitda * 0.15)}</td>
+      <td><button class="del-btn" onclick="removeMADeal(${i})">✕ Retirer</button></td>
+    </tr>`,
+          )
+          .join("");
+      }
+
+      // ── SCENARIO ─────────────────────────────────────────────────────
+      function setScenario(name, pct) {
+        document
+          .querySelectorAll(".scen-btn")
+          .forEach((b) => b.classList.remove("active"));
+        event.target.classList.add("active");
+        const inp = g("i-growth");
+        if (inp) inp.value = pct;
+        const dsp = g("fc-scenario-display");
+        if (dsp) dsp.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+        const dsp2 = g("fc-growth-display");
+        if (dsp2) dsp2.textContent = pct;
+        recalc();
+      }
+      function syncGrowthDisplay() {
+        const v = gv("i-growth");
+        const dsp = g("fc-growth-display");
+        if (dsp) dsp.textContent = v;
+        document
+          .querySelectorAll(".scen-btn")
+          .forEach((b) => b.classList.remove("active"));
+        const dsp2 = g("fc-scenario-display");
+        if (dsp2) dsp2.textContent = "Personnalisé";
+      }
+
+      // ── MAIN RECALC ───────────────────────────────────────────────────
+      let lastData = {};
+      function recalc() {
+        // BILAN ACTIF
+        const ac =
+          gv("a100") +
+          gv("a120") +
+          gv("a130") +
+          gv("a140") +
+          gv("a145") +
+          gv("a148");
+        const anc =
+          gv("a190") +
+          gv("a192") +
+          gv("a195") +
+          gv("a170") +
+          gv("a160") +
+          gv("a180") +
+          gv("a198") +
+          gv("a199");
+        const totalActif = ac + anc;
+        s("total-ac", fmtI(ac));
+        s("total-anc", fmtI(anc));
+        s("total-actif", fmtI(totalActif));
+
+        // BILAN PASSIF
+        const pc =
+          gv("p230") + gv("p250") + gv("p240") + gv("p211") + gv("p260");
+        const pnc =
+          gv("p200") +
+          gv("p201") +
+          gv("p202") +
+          gv("p270") +
+          gv("p280") +
+          gv("p290");
+        const totalPassif = pc + pnc;
+        const rn0 = lastData.resultatNet || 0;
+        const cp =
+          gv("cp300") +
+          gv("cp301") +
+          gv("cp310") +
+          gv("cp320") -
+          gv("cp330") +
+          rn0;
+        const totalPassifCp = totalPassif + cp;
+
+        s("total-pc", fmtI(pc));
+        s("total-pnc", fmtI(pnc));
+        s("total-cp", fmtI(cp));
+        s("total-passif-cp", fmtI(totalPassifCp));
+
+        const gap = Math.abs(totalActif - totalPassifCp);
+        const bs = g("balance-status");
+        if (bs) {
+          const ok = (totalActif === 0 && totalPassifCp === 0) || gap <= 1;
+          bs.className =
+            "balance-status " + (ok ? "balance-ok" : "balance-err");
+          s(
+            "balance-text",
+            ok
+              ? "✓ BILAN ÉQUILIBRÉ — ACTIF = PASSIF + CAPITAUX PROPRES"
+              : "⚠ BILAN NON ÉQUILIBRÉ",
+          );
+          s("balance-gap", ok ? "" : "Écart : " + fmtI(gap));
+        }
+
+        // P&L
+        const ca = gv("r400");
+        const coutVentes = gv("r410");
+        const margeBrute = ca - coutVentes;
+        const produitsFin = gv("r420");
+        const chargesOp =
+          gv("c510") + gv("c520") + gv("c530") + gv("c540") + gv("c550");
+        const ebitda = margeBrute - chargesOp;
+        const amort = gv("c560") + gv("c565");
+        const ebit = ebitda - amort;
+        const chargesFinCT = gv("c570");
+        const chargesFinLT = gv("c571");
+        const chargesFin = chargesFinCT + chargesFinLT;
+        const avantImpot = ebit - chargesFin + produitsFin;
+        const impots = gv("c580");
+        const resultatNet = avantImpot - impots;
+
+        const mbPct = ca !== 0 ? (margeBrute / ca) * 100 : null;
+        const ebitdaPct = ca !== 0 ? (ebitda / ca) * 100 : null;
+        const ebitPct = ca !== 0 ? (ebit / ca) * 100 : null;
+        const netPct = ca !== 0 ? (resultatNet / ca) * 100 : null;
+
+        s("r-marge-brute", fmtI(margeBrute));
+        s("r-marge-brute-pct", fmtPctClean(mbPct));
+        colorEl("r-marge-brute", margeBrute);
+        s("r-ebitda", fmtI(ebitda));
+        s("r-ebitda-pct", fmtPctClean(ebitdaPct));
+        colorEl("r-ebitda", ebitda);
+        s("r-ebit", fmtI(ebit));
+        s("r-ebit-pct", fmtPctClean(ebitPct));
+        colorEl("r-ebit", ebit);
+        s("r-avant-impot", fmtI(avantImpot));
+        colorEl("r-avant-impot", avantImpot);
+        s("r-net", fmtI(resultatNet));
+        s("r-net-pct", fmtPctClean(netPct));
+        s("kpi-ca", fmtI(ca));
+        s("kpi-ebitda", fmtI(ebitda));
+        s("kpi-ebitda-m", fmtPctClean(ebitdaPct));
+        s("kpi-ebit", fmtI(ebit));
+        s("kpi-net", fmtI(resultatNet));
+        colorEl("kpi-ebitda", ebitda);
+        colorEl("kpi-ebit", ebit);
+        colorEl("kpi-net", resultatNet);
+
+        // Re-calc CP with real RN
+        const cpFinal =
+          gv("cp300") +
+          gv("cp301") +
+          gv("cp310") +
+          gv("cp320") -
+          gv("cp330") +
+          resultatNet;
+        s("total-cp", fmtI(cpFinal));
+        s("total-passif-cp", fmtI(totalPassif + cpFinal));
+        s("cp-net-display", fmtI(resultatNet));
+
+        // FLUX
+        const fOp =
+          resultatNet +
+          amort +
+          gv("f-var-creances") +
+          gv("f-var-four") +
+          gv("f-var-impots") +
+          gv("f-var-bfr");
+        const fInv =
+          gv("f-capex") +
+          gv("f-acq-crypto") +
+          gv("f-acq-partic") +
+          gv("f-cession") +
+          gv("f-var-placements");
+        const fFin =
+          gv("f-em-actions") +
+          gv("f-em-oblig") +
+          gv("f-new-emprunts") +
+          gv("f-remb-emprunts") +
+          gv("f-dividendes") +
+          gv("f-rachat");
+        const varNette = fOp + fInv + fFin;
+        const tresoOuv = gv("f-treso-ouv");
+        const tresoClo = tresoOuv + varNette;
+        const fcf = fOp + gv("f-capex");
+
+        s("f-net-repris", fmtI(resultatNet));
+        s("f-amort-repris", fmtI(amort));
+        s("f-op-total", fmtI(fOp));
+        colorEl("f-op-total", fOp);
+        s("f-inv-total", fmtI(fInv));
+        colorEl("f-inv-total", fInv, false);
+        s("f-fin-total", fmtI(fFin));
+        colorEl("f-fin-total", fFin);
+        s("f-var-nette", fmtI(varNette));
+        colorEl("f-var-nette", varNette);
+        s("f-treso-cloture", fmtI(tresoClo));
+        s("kpi-flux-op", fmtI(fOp));
+        colorEl("kpi-flux-op", fOp);
+        s("kpi-flux-inv", fmtI(fInv));
+        colorEl("kpi-flux-inv", fInv, false);
+        s("kpi-flux-fin", fmtI(fFin));
+        colorEl("kpi-flux-fin", fFin);
+        s("kpi-flux-var", fmtI(varNette));
+        colorEl("kpi-flux-var", varNette);
+
+        // DEBT MODULE
+        const detteCT = gv("p211");
+        const detteLT = gv("p200") + gv("p201");
+        const detteBrute = detteCT + detteLT;
+        const cashAvail = gv("a100");
+        const detteNette = detteBrute - cashAvail;
+        const interetsTotal = chargesFinCT + chargesFinLT;
+        const coutDette =
+          detteBrute > 0 ? (interetsTotal / detteBrute) * 100 : null;
+
+        s("d-ct", fmtI(detteCT));
+        s("d-lt", fmtI(detteLT));
+        s("d-oblig", fmtI(gv("p201")));
+        s("d-total-brute", fmtI(detteBrute));
+        s("d-cash", fmtI(cashAvail));
+        s("d-nette", fmtI(detteNette));
+        colorEl("d-nette", detteNette, false);
+        s("d-interets", fmtI(interetsTotal));
+        s("d-cout", coutDette !== null ? fmtPctClean(coutDette) : "—");
+
+        const dIcr = chargesFin > 0 ? ebit / chargesFin : null;
+        const dDe = cpFinal !== 0 ? totalPassif / cpFinal : null;
+        const dNdEbit = ebitda > 0 ? detteNette / ebitda : null;
+        const dRatio = totalActif > 0 ? (totalPassif / totalActif) * 100 : null;
+
+        s("d-icr", dIcr !== null ? fmtX(dIcr) : "—");
+        s("d-de", dDe !== null ? fmtX(dDe) : "—");
+        s("d-nd-ebitda", dNdEbit !== null ? fmtX(dNdEbit) : "—");
+        s("d-ratio", dRatio !== null ? fmtPctClean(dRatio) : "—");
+        colorEl("d-icr", dIcr);
+        if (dDe !== null) {
+          const el = g("d-de");
+          if (el) {
+            el.classList.remove("pos", "neg");
+            el.classList.add(dDe < 2 ? "pos" : dDe < 4 ? "" : "neg");
+          }
+        }
+        if (dNdEbit !== null) {
+          const el = g("d-nd-ebitda");
+          if (el) {
+            el.classList.remove("pos", "neg");
+            el.classList.add(dNdEbit < 3 ? "pos" : dNdEbit < 5 ? "" : "neg");
+          }
+        }
+
+        // BUYBACK
+        const bbMontant = gv("bb-montant");
+        const bbPrix = gv("bb-prix");
+        const nbActions = gv("i-nb-actions");
+        const nbDiluted = gv("i-nb-diluted");
+        const bbRachetees = bbPrix > 0 ? Math.floor(bbMontant / bbPrix) : 0;
+        const nbPost = Math.max(0, nbActions - bbRachetees);
+        const bbPct = nbActions > 0 ? (bbRachetees / nbActions) * 100 : 0;
+        const bpaAvant = nbActions > 0 ? resultatNet / nbActions : null;
+        const bpaApres = nbPost > 0 ? resultatNet / nbPost : null;
+        const acretion =
+          bpaAvant && bpaApres && bpaAvant !== 0
+            ? ((bpaApres - bpaAvant) / Math.abs(bpaAvant)) * 100
+            : null;
+
+        s(
+          "bb-nb-actions",
+          bbRachetees > 0 ? bbRachetees.toLocaleString("fr") : "—",
+        );
+        s("bb-nb-post", nbPost.toLocaleString("fr"));
+        s("bb-pct", bbPct > 0 ? fmtPctClean(bbPct) : "—");
+        s("bb-bpa-avant", bpaAvant !== null ? fmtI(bpaAvant) : "—");
+        s("bb-bpa-apres", bpaApres !== null ? fmtI(bpaApres) : "—");
+        s("bb-acretion", acretion !== null ? fmtPct(acretion) : "—");
+
+        // INVESTOR RATIOS
+        const prix = gv("i-prix-action");
+        const dps = gv("i-dps");
+        const growth = gv("i-growth") / 100;
+        const wacc = gv("i-wacc") / 100;
+        const capBoursiere = prix * nbActions;
+        const ev = capBoursiere + detteNette;
+        const bpa = nbActions > 0 ? resultatNet / nbActions : null;
+        const bpaDiluted = nbDiluted > 0 ? resultatNet / nbDiluted : null;
+        const bvps = nbActions > 0 ? cpFinal / nbActions : null;
+        const roe = cpFinal !== 0 ? (resultatNet / cpFinal) * 100 : null;
+        const roa = totalActif !== 0 ? (resultatNet / totalActif) * 100 : null;
+        const ic = detteLT + gv("p211") + cpFinal;
+        const nopat = ebit * (1 - gv("i-taux-is") / 100);
+        const roic = ic !== 0 ? (nopat / ic) * 100 : null;
+        const pe = bpa && bpa > 0 ? prix / bpa : null;
+        const pb = bvps && bvps > 0 ? prix / bvps : null;
+        const evEbitda = ebitda > 0 ? ev / ebitda : null;
+        const evEbit = ebit > 0 ? ev / ebit : null;
+        const evRev = ca > 0 ? ev / ca : null;
+        const peg = pe && growth > 0 ? pe / (growth * 100) : null;
+        const divYield = prix > 0 ? (dps / prix) * 100 : null;
+        const payoutRatio =
+          resultatNet > 0 ? ((dps * nbActions) / resultatNet) * 100 : null;
+        const cr = pc !== 0 ? ac / pc : null;
+        const qr = pc !== 0 ? (ac - gv("a145")) / pc : null;
+        const dr = totalActif !== 0 ? (totalPassif / totalActif) * 100 : null;
+        const de = cpFinal !== 0 ? totalPassif / cpFinal : null;
+        const ndEbitda = ebitda > 0 ? detteNette / ebitda : null;
+        const icr = chargesFin > 0 ? ebit / chargesFin : null;
+
+        // DCF
+        let dcfSum = 0;
+        const baseFCF = fcf;
+        for (let i = 1; i <= 5; i++)
+          dcfSum += (baseFCF * Math.pow(1 + growth, i)) / Math.pow(1 + wacc, i);
+        const tv =
+          wacc > growth
+            ? (baseFCF * Math.pow(1 + growth, 6)) /
+              ((wacc - growth) * Math.pow(1 + wacc, 5))
+            : 0;
+        const dcfTotal = dcfSum + tv - detteNette;
+        const intrinsicPerShare = nbActions > 0 ? dcfTotal / nbActions : null;
+        const upside =
+          intrinsicPerShare && prix > 0
+            ? ((intrinsicPerShare - prix) / prix) * 100
+            : null;
+
+        // Store
+        lastData = {
+          ca,
+          coutVentes,
+          margeBrute,
+          chargesOp,
+          ebitda,
+          amort,
+          ebit,
+          chargesFin,
+          chargesFinCT,
+          chargesFinLT,
+          produitsFin,
+          avantImpot,
+          impots,
+          resultatNet,
+          totalActif,
+          totalPassif,
+          cpFinal,
+          pc,
+          pnc,
+          ac,
+          anc,
+          mbPct,
+          ebitdaPct,
+          ebitPct,
+          netPct,
+          fOp,
+          fInv,
+          fFin,
+          fcf,
+          varNette,
+          tresoClo,
+          detteBrute,
+          detteCT,
+          detteLT,
+          detteNette,
+          cashAvail,
+          interetsTotal,
+          nbActions,
+          nbPost,
+          prix,
+          dps,
+          growth,
+          wacc,
+          capBoursiere,
+          ev,
+          bpa,
+          bpaDiluted,
+          bvps,
+          roe,
+          roa,
+          roic,
+          pe,
+          pb,
+          evEbitda,
+          evEbit,
+          evRev,
+          peg,
+          divYield,
+          payoutRatio,
+          cr,
+          qr,
+          dr,
+          de,
+          ndEbitda,
+          icr,
+          dcfTotal,
+          intrinsicPerShare,
+          upside,
+        };
+
+        // CEO
+        s("ceo-ca", fmtI(ca));
+        s("ceo-ebitda", fmtI(ebitda));
+        s("ceo-ebitda-m", fmtPctClean(ebitdaPct));
+        s("ceo-ebit", fmtI(ebit));
+        s("ceo-ebit-m", fmtPctClean(ebitPct));
+        s("ceo-net", fmtI(resultatNet));
+        s("ceo-net-m", fmtPctClean(netPct));
+        s("ceo-cash", fmtI(gv("a100")));
+        s("ceo-dette-nette", fmtI(detteNette));
+        s("ceo-cp", fmtI(cpFinal));
+        s("ceo-actif", fmtI(totalActif));
+        s("ceo-bpa", bpa !== null ? fmtI(bpa) : "—");
+        s("ceo-roe", fmtPctClean(roe));
+        s("ceo-cap", fmtI(capBoursiere));
+        s("ceo-ev", fmtI(ev));
+        colorEl("ceo-ebitda", ebitda);
+        colorEl("ceo-ebit", ebit);
+        colorEl("ceo-net", resultatNet);
+        colorEl("ceo-dette-nette", detteNette, false);
+
+        // Investor
+        s("i-cap", fmtI(capBoursiere));
+        s("i-ev", fmtI(ev));
+        s("i-bvps", bvps !== null ? fmtI(bvps) : "—");
+        const iMetrics = [
+          ["im-bpa", bpa, fmtI, true],
+          ["im-bpa-d", bpaDiluted, fmtI, true],
+          ["im-div-yield", divYield, fmtPctClean, true],
+          ["im-payout", payoutRatio, fmtPctClean, null],
+          ["im-pe", pe, fmtX, null],
+          ["im-pb", pb, fmtX, null],
+          ["im-ev-ebitda", evEbitda, fmtX, null],
+          ["im-ev-ebit", evEbit, fmtX, null],
+          ["im-roe", roe, fmtPctClean, true],
+          ["im-roa", roa, fmtPctClean, true],
+          ["im-roic", roic, fmtPctClean, true],
+          ["im-mg", mbPct, fmtPctClean, true],
+          ["im-mebitda", ebitdaPct, fmtPctClean, true],
+          ["im-mnet", netPct, fmtPctClean, true],
+          ["im-cr", cr, fmtRaw, null],
+          ["im-qr", qr, fmtRaw, null],
+          ["im-dr", dr, fmtPctClean, null],
+          ["im-de", de, fmtRaw, null],
+          ["im-nd-ebitda", ndEbitda, fmtRaw, null],
+          ["im-icr", icr, fmtRaw, true],
+        ];
+        iMetrics.forEach(([id, val, fmt, posGood]) => {
+          const el = g(id);
+          if (!el) return;
+          el.textContent =
+            val !== null && !isNaN(val) && isFinite(val) ? fmt(val) : "—";
+          el.classList.remove("pos", "neg", "accent");
+          if (val !== null && !isNaN(val) && isFinite(val) && posGood !== null)
+            el.classList.add(
+              posGood ? (val >= 0 ? "pos" : "neg") : val <= 0 ? "pos" : "neg",
+            );
+        });
+
+        // Valuation
+        s("v-cap", fmtI(capBoursiere));
+        s("v-dette-brute", fmtI(detteBrute));
+        s("v-cash", fmtI(gv("a100")));
+        s("v-dette-nette", fmtI(detteNette));
+        s("v-ev", fmtI(ev));
+        s("v-pe", pe !== null && isFinite(pe) ? fmtX(pe) : "—x");
+        s("v-pb", pb !== null && isFinite(pb) ? fmtX(pb) : "—x");
+        s(
+          "v-ev-ebitda",
+          evEbitda !== null && isFinite(evEbitda) ? fmtX(evEbitda) : "—x",
+        );
+        s(
+          "v-ev-ebit",
+          evEbit !== null && isFinite(evEbit) ? fmtX(evEbit) : "—x",
+        );
+        s("v-ev-rev", evRev !== null && isFinite(evRev) ? fmtX(evRev) : "—x");
+        s("v-peg", peg !== null && isFinite(peg) ? fmtRaw(peg) : "—");
+        s("v-wacc", fmtPctClean(wacc * 100));
+        s("v-growth", fmtPctClean(growth * 100));
+        s("v-fcf", fmtI(baseFCF));
+        colorEl("v-fcf", baseFCF);
+        s("v-dcf", fmtI(dcfTotal));
+        colorEl("v-dcf", dcfTotal);
+        s(
+          "v-intrinseque",
+          intrinsicPerShare !== null ? fmtI(intrinsicPerShare) : "—",
+        );
+        colorEl("v-intrinseque", intrinsicPerShare);
+        if (upside !== null && isFinite(upside)) {
+          const el = g("v-upside");
+          if (el) {
+            el.textContent = (upside >= 0 ? "+" : "") + fmtPctClean(upside);
+            el.className = "val-row-value " + (upside >= 0 ? "pos" : "neg");
+          }
+        } else s("v-upside", "—");
+
+        // M&A
+        const maTotal = maDeals.reduce((s, d) => s + d.valeur, 0);
+        const maGW = maDeals.reduce((s, d) => s + d.goodwill, 0);
+        const maEB = maDeals.reduce((s, d) => s + d.ebitda, 0);
+        const maSyn = maEB * 0.15;
+        const maPF = ebitda + maEB + maSyn;
+        const maGWPct = totalActif > 0 ? (maGW / totalActif) * 100 : null;
+        const maImpMarge = ca > 0 ? ((maPF - ebitda) / ca) * 100 : null;
+        s("ma-total-acq", fmtI(maTotal));
+        s("ma-total-gw", fmtI(maGW));
+        s("ma-gw-pct", maGWPct !== null ? fmtPctClean(maGWPct) : "—");
+        s("ma-nb", maDeals.length);
+        s("ma-total-ebitda", fmtI(maEB));
+        s("ma-synergies", fmtI(maSyn));
+        s("ma-proforma-ebitda", fmtI(maPF));
+        s("ma-impact-marge", maImpMarge !== null ? fmtPct(maImpMarge) : "—");
+
+        // Forecast display
+        const fcGEl = g("fc-growth-display");
+        if (fcGEl) fcGEl.textContent = gv("i-growth");
+
+        // Auto insights
+        renderInsights();
+        // Health
+        computeHealthScore();
+      }
+
+      // ── AUTO INSIGHTS ─────────────────────────────────────────────────
+      function renderInsights() {
+        const d = lastData;
+        const items = [];
+        // Profitability
+        if (d.netPct > 15)
+          items.push({
+            icon: "✅",
+            txt: `Rentabilité élevée — marge nette de ${fmtPctClean(d.netPct)}. Structure de coûts maîtrisée.`,
+            type: "ok",
+          });
+        else if (d.netPct > 0)
+          items.push({
+            icon: "ℹ️",
+            txt: `Rentabilité positive mais limitée — marge nette de ${fmtPctClean(d.netPct)}. Potentiel d'optimisation.`,
+            type: "warn",
+          });
+        else if (d.resultatNet)
+          items.push({
+            icon: "⚠️",
+            txt: `Entreprise déficitaire. Résultat net négatif de ${fmtI(d.resultatNet)}.`,
+            type: "bad",
+          });
+        // Liquidity
+        if (d.cr >= 2)
+          items.push({
+            icon: "✅",
+            txt: `Liquidité excellente — ratio courant de ${fmtRaw(d.cr)}x. Solvabilité court terme solide.`,
+            type: "ok",
+          });
+        else if (d.cr !== null && d.cr < 1)
+          items.push({
+            icon: "🔴",
+            txt: `Risque de liquidité — ratio courant inférieur à 1 (${fmtRaw(d.cr)}x). Tension trésorerie possible.`,
+            type: "bad",
+          });
+        // Debt
+        if (d.ndEbitda !== null && d.ndEbitda < 2)
+          items.push({
+            icon: "✅",
+            txt: `Levier faible — Net Debt/EBITDA à ${fmtRaw(d.ndEbitda)}x. Capacité de remboursement confortable.`,
+            type: "ok",
+          });
+        else if (d.ndEbitda !== null && d.ndEbitda > 5)
+          items.push({
+            icon: "⚠️",
+            txt: `Endettement élevé — Net Debt/EBITDA à ${fmtRaw(d.ndEbitda)}x. Surveiller la structure financière.`,
+            type: "bad",
+          });
+        // Valuation
+        if (d.pe !== null && d.pe < 12 && d.pe > 0)
+          items.push({
+            icon: "💡",
+            txt: `Potentielle sous-évaluation — P/E de ${fmtX(d.pe)}, inférieur aux benchmarks sectoriels (15x).`,
+            type: "ok",
+          });
+        if (d.evEbitda !== null && d.evEbitda < 8 && d.evEbitda > 0)
+          items.push({
+            icon: "💡",
+            txt: `EV/EBITDA attractif à ${fmtX(d.evEbitda)} — en dessous du benchmark de 10x. Opportunité potentielle.`,
+            type: "ok",
+          });
+        // Growth
+        if (d.growth > 0.2)
+          items.push({
+            icon: "🚀",
+            txt: `Ambition de croissance forte — CAGR cible de ${fmtPctClean(d.growth * 100)}. Profil fintech africain dynamique.`,
+            type: "ok",
+          });
+        // FCF
+        if (d.fOp > 0)
+          items.push({
+            icon: "✅",
+            txt: `Cash flow opérationnel positif (${fmtI(d.fOp)}). L'entreprise autofinance sa croissance.`,
+            type: "ok",
+          });
+        // ROE
+        if (d.roe > 20)
+          items.push({
+            icon: "🌟",
+            txt: `Création de valeur élevée — ROE de ${fmtPctClean(d.roe)}, supérieur au coût du capital.`,
+            type: "ok",
+          });
+
+        if (!items.length) {
+          items.push({
+            icon: "📊",
+            txt: "Saisir les données financières pour générer les insights automatiques.",
+            type: "warn",
+          });
+        }
+
+        const container = g("auto-insights");
+        if (!container) return;
+        container.innerHTML = items
+          .slice(0, 6)
+          .map(
+            (it) => `
+    <div style="background:var(--surface);padding:16px 20px;border-left:3px solid ${it.type === "ok" ? "var(--green)" : it.type === "bad" ? "var(--red)" : "var(--amber)"}">
+      <div style="font-size:16px;margin-bottom:6px">${it.icon}</div>
+      <div style="font-size:11px;color:var(--silver);line-height:1.55">${it.txt}</div>
+    </div>`,
+          )
+          .join("");
+      }
+
+      // ── CHARTS ────────────────────────────────────────────────────────
+      const CHART_OPTS = {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: "#5A5A6E",
+              font: { family: "IBM Plex Mono", size: 10 },
+            },
+          },
+          tooltip: {
+            backgroundColor: "#1E3A8A",
+            titleColor: "#fff",
+            bodyColor: "rgba(255,255,255,0.85)",
+            callbacks: { label: (ctx) => fmtI(ctx.raw) },
+          },
+        },
+        scales: {
+          x: {
+            ticks: { color: "#7A7A8C", font: { size: 10 } },
+            grid: { color: "rgba(0,0,0,0.05)" },
+          },
+          y: {
+            ticks: {
+              color: "#7A7A8C",
+              font: { size: 10 },
+              callback: (v) => fmtI(v),
+            },
+            grid: { color: "rgba(0,0,0,0.05)" },
+          },
+        },
+      };
+
+      let chartBilan = null,
+        chartResultat = null;
+      function renderCEOCharts() {
+        const d = lastData;
+        const co = {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              position: "right",
+              labels: {
+                color: "#5A5A6E",
+                font: { family: "IBM Plex Mono", size: 10 },
+                padding: 12,
+              },
+            },
+            tooltip: {
+              backgroundColor: "#1E3A8A",
+              titleColor: "#fff",
+              bodyColor: "rgba(255,255,255,0.8)",
+              callbacks: { label: (ctx) => ctx.label + ": " + fmtI(ctx.raw) },
+            },
+          },
+        };
+        const c1 = g("chart-bilan");
+        if (c1) {
+          if (chartBilan) chartBilan.destroy();
+          chartBilan = new Chart(c1, {
+            type: "doughnut",
+            data: {
+              labels: [
+                "Actifs Courants",
+                "Actifs NC",
+                "Passifs Courants",
+                "Passifs NC",
+                "Cap. Propres",
+              ],
+              datasets: [
+                {
+                  data: [
+                    d.ac || 0,
+                    d.anc || 0,
+                    d.pc || 0,
+                    d.pnc || 0,
+                    d.cpFinal || 0,
+                  ],
+                  backgroundColor: [
+                    "#1E3A8A",
+                    "#3B82F6",
+                    "#EF4444",
+                    "#F59E0B",
+                    "#16A34A",
+                  ],
+                  borderWidth: 2,
+                  borderColor: "#fff",
+                  borderRadius: 3,
+                },
+              ],
+            },
+            options: { ...co, cutout: "58%" },
+          });
+        }
+        const c2 = g("chart-resultat");
+        if (c2) {
+          if (chartResultat) chartResultat.destroy();
+          chartResultat = new Chart(c2, {
+            type: "bar",
+            data: {
+              labels: ["CA", "Marge Brute", "EBITDA", "EBIT", "Rés. Net"],
+              datasets: [
+                {
+                  label: "Cascade P&L",
+                  data: [
+                    d.ca || 0,
+                    d.margeBrute || 0,
+                    d.ebitda || 0,
+                    d.ebit || 0,
+                    d.resultatNet || 0,
+                  ],
+                  backgroundColor: [
+                    "rgba(30,58,138,0.75)",
+                    "rgba(59,130,246,0.7)",
+                    "rgba(22,163,74,0.7)",
+                    "rgba(124,58,237,0.7)",
+                    "rgba(22,163,74,0.85)",
+                  ],
+                  borderRadius: 3,
+                  borderWidth: 0,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  backgroundColor: "#1E3A8A",
+                  callbacks: { label: (ctx) => fmtI(ctx.raw) },
+                },
+              },
+              scales: {
+                x: {
+                  ticks: { color: "#7A7A8C", font: { size: 10 } },
+                  grid: { color: "rgba(0,0,0,0.04)" },
+                },
+                y: {
+                  ticks: {
+                    color: "#7A7A8C",
+                    font: { size: 10 },
+                    callback: (v) => fmtI(v),
+                  },
+                  grid: { color: "rgba(0,0,0,0.04)" },
+                },
+              },
+            },
+          });
+        }
+      }
+
+      let chartEV = null,
+        chartMultiples = null;
+      function renderValCharts() {
+        const d = lastData;
+        const c1 = g("chart-ev");
+        if (c1) {
+          if (chartEV) chartEV.destroy();
+          chartEV = new Chart(c1, {
+            type: "doughnut",
+            data: {
+              labels: ["Market Cap", "Dette Nette"],
+              datasets: [
+                {
+                  data: [
+                    Math.max(d.capBoursiere || 0, 0),
+                    Math.max(d.detteNette || 0, 0),
+                  ],
+                  backgroundColor: ["#1E3A8A", "#EF4444"],
+                  borderWidth: 2,
+                  borderColor: "#fff",
+                  borderRadius: 3,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { labels: { color: "#5A5A6E", font: { size: 10 } } },
+                tooltip: {
+                  backgroundColor: "#1E3A8A",
+                  callbacks: {
+                    label: (ctx) => ctx.label + ": " + fmtI(ctx.raw),
+                  },
+                },
+              },
+              cutout: "55%",
+            },
+          });
+        }
+        const c2 = g("chart-multiples");
+        if (c2) {
+          if (chartMultiples) chartMultiples.destroy();
+          chartMultiples = new Chart(c2, {
+            type: "bar",
+            data: {
+              labels: ["P/E", "P/B", "EV/EBITDA", "EV/EBIT"],
+              datasets: [
+                {
+                  label: "SSIA",
+                  data: [d.pe || 0, d.pb || 0, d.evEbitda || 0, d.evEbit || 0],
+                  backgroundColor: "rgba(30,58,138,0.80)",
+                  borderRadius: 3,
+                  borderWidth: 0,
+                },
+                {
+                  label: "Benchmark Secteur",
+                  data: [15, 2, 10, 14],
+                  backgroundColor: "rgba(22,163,74,0.40)",
+                  borderRadius: 3,
+                  borderWidth: 0,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { labels: { color: "#5A5A6E", font: { size: 10 } } },
+                tooltip: {
+                  backgroundColor: "#1E3A8A",
+                  callbacks: {
+                    label: (ctx) => ctx.label + ": " + fmtX(ctx.raw),
+                  },
+                },
+              },
+              scales: {
+                x: {
+                  ticks: { color: "#7A7A8C", font: { size: 10 } },
+                  grid: { color: "rgba(0,0,0,0.04)" },
+                },
+                y: {
+                  ticks: { color: "#7A7A8C", font: { size: 10 } },
+                  grid: { color: "rgba(0,0,0,0.04)" },
+                },
+              },
+            },
+          });
+        }
+      }
+
+      let chartForecastCA = null,
+        chartForecastNet = null;
+      function renderForecasts() {
+        const d = lastData;
+        const g_ = gv("i-growth") / 100;
+        const yr = parseInt(g("fiscal-year-input").value) || 2024;
+        const labels = Array.from({ length: 6 }, (_, i) =>
+          i === 0 ? "N" : "N+" + i,
+        );
+
+        const indicators = [
+          { label: "Chiffre d'Affaires", base: d.ca, highlight: true },
+          { label: "Marge Brute", base: d.margeBrute },
+          { label: "EBITDA", base: d.ebitda },
+          { label: "EBIT", base: d.ebit },
+          { label: "Résultat Net", base: d.resultatNet },
+          { label: "Cash Flow Opérationnel", base: d.fOp },
+          { label: "Capitaux Propres", base: d.cpFinal },
+        ];
+
+        const tbody = g("forecast-body");
+        if (!tbody) return;
+        tbody.innerHTML = indicators
+          .map((ind) => {
+            const years = Array.from(
+              { length: 6 },
+              (_, i) => ind.base * Math.pow(1 + g_, i),
+            );
+            const cells = years
+              .map((v, i) => {
+                const clr = v >= 0 ? "var(--green)" : "var(--red)";
+                const badge =
+                  i > 0
+                    ? `<br><span class="${v >= 0 ? "forecast-growth" : "forecast-neg"}">${g_ >= 0 ? "+" : ""}${(g_ * 100).toFixed(0)}%</span>`
+                    : "";
+                return `<td style="color:${i === 0 ? "var(--blue)" : clr};font-weight:${i === 0 ? 700 : 400}">${fmtI(v)}${badge}</td>`;
+              })
+              .join("");
+            return `<tr class="${ind.highlight ? "forecast-current" : ""}"><td>${ind.label}</td>${cells}</tr>`;
+          })
+          .join("");
+
+        // Sensitivity
+        const sbody = g("sens-body");
+        if (sbody) {
+          const deltas = [-20, -10, 0, 10, 20];
+          const sensIndicators = [
+            { label: "EBITDA", base: d.ebitda },
+            { label: "Résultat Net", base: d.resultatNet },
+            { label: "Cash Flow Op.", base: d.fOp },
+          ];
+          sbody.innerHTML = sensIndicators
+            .map((ind) => {
+              const cells = deltas
+                .map((dt) => {
+                  const val = ind.base * (1 + dt / 100);
+                  const clr =
+                    val >= 0 ? "color:var(--green)" : "color:var(--red)";
+                  return `<td style="${clr}">${fmtI(val)}</td>`;
+                })
+                .join("");
+              // break-even: where result = 0
+              const be = ind.base !== 0 ? -100 : null;
+              return `<tr><td>${ind.label}</td>${cells}<td style="font-weight:600;color:var(--blue)">${be !== null ? be + "%" : "—"}</td></tr>`;
+            })
+            .join("");
+        }
+
+        const caYears = Array.from(
+          { length: 6 },
+          (_, i) => (d.ca || 0) * Math.pow(1 + g_, i),
+        );
+        const ebYears = Array.from(
+          { length: 6 },
+          (_, i) => (d.ebitda || 0) * Math.pow(1 + g_, i),
+        );
+        const netYears = Array.from(
+          { length: 6 },
+          (_, i) => (d.resultatNet || 0) * Math.pow(1 + g_, i),
+        );
+        const cfYears = Array.from(
+          { length: 6 },
+          (_, i) => (d.fOp || 0) * Math.pow(1 + g_, i),
+        );
+
+        const barOpts = (datasets) => ({
+          type: "bar",
+          data: { labels, datasets },
+          options: { ...CHART_OPTS },
+        });
+
+        const c1 = g("chart-forecast-ca");
+        if (c1) {
+          if (chartForecastCA) chartForecastCA.destroy();
+          chartForecastCA = new Chart(
+            c1,
+            barOpts([
+              {
+                label: "Chiffre d'Affaires",
+                data: caYears,
+                backgroundColor: "rgba(30,58,138,0.75)",
+                borderColor: "#1E3A8A",
+                borderWidth: 1,
+                borderRadius: 2,
+              },
+              {
+                label: "EBITDA",
+                data: ebYears,
+                backgroundColor: "rgba(22,163,74,0.55)",
+                borderColor: "#16A34A",
+                borderWidth: 1,
+                borderRadius: 2,
+              },
+            ]),
+          );
+        }
+        const c2 = g("chart-forecast-net");
+        if (c2) {
+          if (chartForecastNet) chartForecastNet.destroy();
+          chartForecastNet = new Chart(
+            c2,
+            barOpts([
+              {
+                label: "Résultat Net",
+                data: netYears,
+                backgroundColor: "rgba(124,58,237,0.65)",
+                borderColor: "#7C3AED",
+                borderWidth: 1,
+                borderRadius: 2,
+              },
+              {
+                label: "Cash Flow Op.",
+                data: cfYears,
+                backgroundColor: "rgba(59,130,246,0.55)",
+                borderColor: "#3B82F6",
+                borderWidth: 1,
+                borderRadius: 2,
+              },
+            ]),
+          );
+        }
+      }
+
+      // ── HEALTH SCORE ──────────────────────────────────────────────────
+      function computeHealthScore() {
+        const d = lastData;
+        const scores = {};
+
+        let liq = 0;
+        if (d.cr >= 2) liq = 20;
+        else if (d.cr >= 1.5) liq = 16;
+        else if (d.cr >= 1) liq = 12;
+        else if (d.cr >= 0.5) liq = 6;
+        scores.liquidite = liq;
+
+        let rent = 0;
+        if (d.netPct > 20) rent = 25;
+        else if (d.netPct > 10) rent = 20;
+        else if (d.netPct > 5) rent = 15;
+        else if (d.netPct > 0) rent = 10;
+        else if (d.netPct > -10) rent = 5;
+        scores.rentabilite = rent;
+
+        let solv = 0;
+        if (d.dr < 30) solv = 25;
+        else if (d.dr < 50) solv = 20;
+        else if (d.dr < 65) solv = 14;
+        else if (d.dr < 80) solv = 8;
+        else solv = 3;
+        scores.solvabilite = solv;
+
+        let val = 0;
+        if (d.roe > 20) val = 15;
+        else if (d.roe > 12) val = 12;
+        else if (d.roe > 6) val = 8;
+        else if (d.roe > 0) val = 4;
+        scores.valeur = val;
+
+        let growthScore = 0;
+        const gr = gv("i-growth");
+        if (gr > 20) growthScore = 15;
+        else if (gr > 12) growthScore = 12;
+        else if (gr > 6) growthScore = 9;
+        else if (gr > 0) growthScore = 5;
+        scores.croissance = growthScore;
+
+        const total =
+          scores.liquidite +
+          scores.rentabilite +
+          scores.solvabilite +
+          scores.valeur +
+          scores.croissance;
+
+        s("health-score", total);
+        const maxes = [20, 25, 25, 15, 15];
+        ["liq", "rent", "solv", "val", "growth"].forEach((k, i) => {
+          const sc = [
+            scores.liquidite,
+            scores.rentabilite,
+            scores.solvabilite,
+            scores.valeur,
+            scores.croissance,
+          ][i];
+          s(`hc-${k}`, Math.round(sc) + " / " + maxes[i]);
+          const bar = g(`hc-${k}-bar`);
+          if (bar) bar.style.width = (sc / maxes[i]) * 100 + "%";
+        });
+
+        let rating, desc, rColor;
+        if (total >= 90) {
+          rating = "AAA";
+          desc = "Qualité institutionnelle exceptionnelle";
+          rColor = "var(--green)";
+        } else if (total >= 80) {
+          rating = "AA";
+          desc = "Solidité financière très élevée";
+          rColor = "var(--green)";
+        } else if (total >= 70) {
+          rating = "A";
+          desc = "Bonne santé financière";
+          rColor = "var(--blue)";
+        } else if (total >= 60) {
+          rating = "BBB";
+          desc = "Investment Grade — Qualité satisfaisante";
+          rColor = "var(--blue)";
+        } else if (total >= 50) {
+          rating = "BB";
+          desc = "Spéculatif — Risque modéré";
+          rColor = "var(--amber)";
+        } else if (total >= 35) {
+          rating = "B";
+          desc = "Risque financier notable";
+          rColor = "var(--amber)";
+        } else {
+          rating = "CCC";
+          desc = "Situation financière fragile";
+          rColor = "var(--red)";
+        }
+
+        s("health-rating", rating);
+        s("health-rating-desc", desc);
+        const rEl = g("health-rating");
+        if (rEl) rEl.style.color = rColor;
+
+        renderGauge(total, rColor);
+        renderDiagnosis(d, scores);
+      }
+
+      let gaugeChart = null;
+      function renderGauge(score = 0, color = "var(--blue)") {
+        const canvas = g("chart-gauge");
+        if (!canvas) return;
+        if (gaugeChart) gaugeChart.destroy();
+        const c = score >= 70 ? "#16A34A" : score >= 50 ? "#D97706" : "#DC2626";
+        gaugeChart = new Chart(canvas, {
+          type: "doughnut",
+          data: {
+            datasets: [
+              {
+                data: [score, 100 - score],
+                backgroundColor: [c, "rgba(0,0,0,0.08)"],
+                borderWidth: 0,
+                borderRadius: 3,
+              },
+            ],
+          },
+          options: {
+            cutout: "72%",
+            rotation: -90,
+            circumference: 180,
+            responsive: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: { enabled: false },
+            },
+          },
+        });
+      }
+
+      function renderDiagnosis(d, scores) {
+        const container = g("diagnosis-grid");
+        if (!container) return;
+        const items = [
+          {
+            icon: "💧",
+            title: "Liquidité",
+            score: scores.liquidite,
+            max: 20,
+            text:
+              d.cr >= 1.5
+                ? `Liquidité excellente. Ratio courant de ${fmtRaw(d.cr)}x — couverture confortable des engagements court terme.`
+                : d.cr >= 1
+                  ? `Liquidité correcte. Ratio courant de ${fmtRaw(d.cr)}x. Surveiller l'évolution du BFR.`
+                  : `Liquidité tendue. Ratio courant inférieur à 1. Risque de tension de trésorerie.`,
+          },
+          {
+            icon: "📈",
+            title: "Rentabilité",
+            score: scores.rentabilite,
+            max: 25,
+            text:
+              d.netPct > 10
+                ? `Rentabilité solide. Marge nette de ${fmtPctClean(d.netPct)} avec EBITDA de ${fmtPctClean(d.ebitdaPct)}.`
+                : d.netPct > 0
+                  ? `Rentabilité positive mais modérée. Marge nette de ${fmtPctClean(d.netPct)}. Potentiel d'amélioration.`
+                  : `Entreprise déficitaire. Marge nette de ${fmtPctClean(d.netPct)}. Action correctrice nécessaire.`,
+          },
+          {
+            icon: "🏛",
+            title: "Solvabilité",
+            score: scores.solvabilite,
+            max: 25,
+            text:
+              d.dr < 50
+                ? `Structure financière très solide. Ratio d'endettement de ${fmtPctClean(d.dr)} du total actif.`
+                : d.dr < 70
+                  ? `Solvabilité correcte. Ratio d'endettement de ${fmtPctClean(d.dr)}. Surveiller l'évolution.`
+                  : `Endettement élevé (${fmtPctClean(d.dr)}). Levier financier nécessite une attention particulière.`,
+          },
+          {
+            icon: "💎",
+            title: "Création de Valeur",
+            score: scores.valeur,
+            max: 15,
+            text:
+              d.roe > 15
+                ? `ROE de ${fmtPctClean(d.roe)} — création de valeur élevée. Performance supérieure au coût du capital.`
+                : d.roe > 0
+                  ? `ROE positif de ${fmtPctClean(d.roe)}. Création de valeur mesurée. Optimisation du capital possible.`
+                  : `ROE négatif. Le capital ne génère pas de rendement. Restructuration des actifs recommandée.`,
+          },
+          {
+            icon: "🚀",
+            title: "Croissance",
+            score: scores.croissance,
+            max: 15,
+            text: `Taux de croissance cible de ${gv("i-growth")}% par an. ${gv("i-growth") > 10 ? "Ambition de croissance forte alignée sur les standards fintech d'Afrique de l'Ouest." : "Croissance conservatrice, priorité à la consolidation."}`,
+          },
+          {
+            icon: "💰",
+            title: "Cash Flow",
+            score: d.fOp > 0 ? 15 : d.fOp > -(d.ca * 0.1) ? 8 : 3,
+            max: 15,
+            text:
+              d.fOp > 0
+                ? `Cash flow opérationnel positif (${fmtI(d.fOp)}). Autofinancement de la croissance opérationnel.`
+                : `Cash flow opérationnel négatif. L'entreprise consomme de la trésorerie. À surveiller de près.`,
+          },
+        ];
+
+        container.innerHTML = items
+          .map((item) => {
+            const pct = item.score / item.max;
+            const cls = pct >= 0.7 ? "ok" : pct >= 0.4 ? "warn" : "bad";
+            return `<div class="diag-card ${cls}">
+      <div class="diag-icon">${item.icon}</div>
+      <div class="diag-title">${item.title} — ${item.score}/${item.max}</div>
+      <div class="diag-text">${item.text}</div>
+    </div>`;
+          })
+          .join("");
+      }
+
+      // ── INIT ──────────────────────────────────────────────────────────
+      showPage("ceo");
+      recalc();
+      renderCEOCharts();
+
+      // Live recalc on all inputs
+      document.querySelectorAll('input[type="number"]').forEach((el) => {
+        el.addEventListener("input", () => {
+          recalc();
+          const activePage = pages.find((k) => {
+            const p = g(pageMap[k]);
+            return p && p.style.display !== "none";
+          });
+          if (activePage === "ceo") renderCEOCharts();
+          if (activePage === "valuation") renderValCharts();
+          if (activePage === "forecast") renderForecasts();
+        });
+      });
+    </script>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+</html>

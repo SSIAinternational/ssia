@@ -128,7 +128,7 @@
           documents: [],
           settings: {
             orgName: "SSIAVERSITY · Direction de la Vie Étudiante",
-            currency: "EUR",
+            currency: "IV",
             fiscalYear: String(new Date().getFullYear()),
           },
         };
@@ -160,10 +160,12 @@
           return x.toLocaleDateString("fr-FR");
         }
         function fmtMoney(n) {
-          return new Intl.NumberFormat("fr-FR", {
-            style: "currency",
-            currency: STATE.settings.currency || "EUR",
-          }).format(Number(n || 0));
+          return (
+            new Intl.NumberFormat("fr-FR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(Number(n || 0)) + " IV"
+          );
         }
         function esc(s) {
           return String(s ?? "").replace(
@@ -2036,7 +2038,7 @@
     <div class="card"><div class="card-h"><h3>Organisation</h3></div><div class="card-b">
       <div class="field"><label>Nom</label><input id="s_org" value="${esc(s.orgName || "")}"></div>
       <div class="row2">
-        <div class="field"><label>Devise</label><select id="s_cur">${["EUR", "USD", "XOF", "MAD", "CHF", "GBP"].map((x) => `<option ${s.currency === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
+        <div class="field"><label>Devise</label><select id="s_cur">${["IV"].map((x) => `<option ${s.currency === x ? "selected" : ""}>${x}</option>`).join("")}</select></div>
         <div class="field"><label>Exercice</label><input id="s_fy" value="${esc(s.fiscalYear || "")}"></div>
       </div>
       <button class="btn" onclick="saveSettings()">Enregistrer</button>

@@ -1,0 +1,2727 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CAMPUS SSIAVERSITY ERP</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/pedagogie.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="pedagogie-set">
+      <!-- =========== HOME =========== -->
+      <div id="home" class="home">
+        <div class="home-header">
+          <div class="brand-logo">
+            <div class="brand-mark">
+              <img src="../../img/versity-icon.png" alt="" />
+            </div>
+            <div>
+              CAMPUS SSIAVERSITY ERP
+              <div style="font-size: 11px; opacity: 0.7; font-weight: 400">
+                Enterprise Resource Planning
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="home-hero">
+          <h1>Bienvenue dans le Campus Numérique SSIAVERSITY</h1>
+          <p>
+            Plateforme unifiée de gestion académique — 21 collèges autonomes,
+            données isolées, gouvernance centrale. Sélectionnez un collège pour
+            accéder à son espace de gestion privé.
+          </p>
+        </div>
+        <div class="home-stats" id="homeStats"></div>
+        <div class="colleges-grid" id="collegesGrid"></div>
+        <div class="login-form">
+          <form action="">
+            <h3>Connexion Collège</h3>
+            <div class="input-group">
+              <span>Identifiant</span>
+              <input type="text" placeholder="Entrez l'identifiant" />
+            </div>
+            <div class="input-group">
+              <span>Mot de passe</span>
+              <input type="password" placeholder="Entrez le mot de passe" />
+            </div>
+
+            <div class="login-btn">
+              <button>Se connecter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- =========== APP =========== -->
+      <div id="app" class="app">
+        <aside class="sidebar" id="sidebar">
+          <div class="sb-brand">
+            <div class="mk" id="sbMark">
+              <img id="logoImg" src="" alt="" srcset="" />
+            </div>
+            <div class="nm" id="sbName">
+              Collège<small id="sbSub">SSIAVERSITY</small>
+            </div>
+          </div>
+          <div class="sb-section">Pilotage</div>
+          <div class="sb-item active" data-page="dashboard">
+            <span class="ic">📊</span><span>Tableau de bord</span>
+          </div>
+          <div class="sb-section">Académique</div>
+          <div class="sb-item" data-page="programs">
+            <span class="ic">🎓</span><span>Programmes</span>
+          </div>
+          <div class="sb-item" data-page="subjects">
+            <span class="ic">📚</span><span>Matières</span>
+          </div>
+          <div class="sb-item" data-page="applications">
+            <span class="ic">📥</span><span>Candidatures</span>
+          </div>
+          <div class="sb-item" data-page="students">
+            <span class="ic">👨‍🎓</span><span>Étudiants</span>
+          </div>
+          <div class="sb-item" data-page="teachers">
+            <span class="ic">👨‍🏫</span><span>Professeurs</span>
+          </div>
+          <div class="sb-item" data-page="staff">
+            <span class="ic">👥</span><span>Employés</span>
+          </div>
+          <div class="sb-section">Opérations</div>
+          <div class="sb-item" data-page="courses">
+            <span class="ic">📅</span><span>Planification</span>
+          </div>
+          <div class="sb-item" data-page="exams">
+            <span class="ic">📝</span><span>Examens</span>
+          </div>
+          <div class="sb-item" data-page="grades">
+            <span class="ic">📈</span><span>Notes</span>
+          </div>
+          <div class="sb-item" data-page="attendance">
+            <span class="ic">✓</span><span>Présence</span>
+          </div>
+          <div class="sb-item" data-page="timetable">
+            <span class="ic">🗓️</span><span>Emploi du temps</span>
+          </div>
+          <div class="sb-section">Gestion</div>
+          <div class="sb-item" data-page="budget">
+            <span class="ic">💰</span><span>Budget</span>
+          </div>
+          <div class="sb-item" data-page="reports">
+            <span class="ic">📑</span><span>Rapports</span>
+          </div>
+          <div class="sb-item" data-page="settings">
+            <span class="ic">⚙️</span><span>Personnalisation</span>
+          </div>
+          <div class="sb-section">Système</div>
+          <div class="sb-item" data-page="exit" onclick="exitCollege()">
+            <span class="ic">↩</span><span>Retour Campus</span>
+          </div>
+        </aside>
+
+        <header class="topbar">
+          <button
+            class="tb-burger"
+            onclick="
+              document.getElementById('app').classList.toggle('collapsed');
+              document.getElementById('sidebar').classList.toggle('collapsed');
+            "
+          >
+            ☰
+          </button>
+          <div class="crumb">
+            <span id="crumbCol">Collège</span> /
+            <b id="crumbPage">Tableau de bord</b>
+          </div>
+          <input
+            class="tb-search"
+            placeholder="🔍 Recherche dans le collège..."
+            id="searchBox"
+            oninput="globalSearch(this.value)"
+          />
+          <button class="tb-btn" onclick="toggleTheme()">🌓</button>
+          <button class="tb-btn" onclick="alert('3 nouvelles notifications')">
+            🔔
+          </button>
+          <div class="tb-user">
+            <div class="av" id="tbAv">D</div>
+            <div style="font-size: 12px">
+              <b>Doyen</b>
+              <div style="color: var(--muted); font-size: 11px" id="tbCol">
+                Collège
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="main" id="main"></main>
+      </div>
+
+      <div id="modalRoot"></div>
+
+      <script>
+        /* ============ DATA ============ */
+        const COLLEGES_DEF = [
+          [
+            "montclair",
+            "Études Générales et Humanités",
+            "#1d4ed8",
+            "assets/college-logo/college montclair.jpeg",
+          ],
+          [
+            "valmont",
+            "Sciences du Management",
+            "#7c3aed",
+            "assets/college-logo/college valmont.jpeg",
+          ],
+          [
+            "maplebridge",
+            "Finance Quantitative",
+            "#059669",
+            "assets/college-logo/college maplebridge.jpeg",
+          ],
+          [
+            "saintford",
+            "Sciences des Données",
+            "#0891b2",
+            "assets/college-logo/college saintford.jpeg",
+          ],
+          [
+            "rosemon",
+            "Échanges & Logistique",
+            "#ea580c",
+            "assets/college-logo/college rosemon.jpeg",
+          ],
+          [
+            "barrington",
+            "Politiques d'Entreprise",
+            "#0f766e",
+            "assets/college-logo/college barrington.jpeg",
+          ],
+          [
+            "grandchester",
+            "Sciences Juridiques",
+            "#9333ea",
+            "assets/college-logo/college grandchester.jpeg",
+          ],
+          [
+            "fairmount",
+            "Communication & Médias",
+            "#db2777",
+            "assets/college-logo/college fairmount.jpeg",
+          ],
+          [
+            "belmont",
+            "Capital Humain",
+            "#f59e0b",
+            "assets/college-logo/college belmont.jpeg",
+          ],
+          [
+            "prestonia",
+            "Économie Appliquée",
+            "#0ea5e9",
+            "assets/college-logo/college prestonia.jpeg",
+          ],
+          [
+            "brightmore",
+            "Sécurité des SI",
+            "#dc2626",
+            "assets/college-logo/college brightmore.jpeg",
+          ],
+          [
+            "crestwood",
+            "IA & ML",
+            "#4f46e5",
+            "assets/college-logo/college crestwood.jpeg",
+          ],
+          [
+            "riverton",
+            "Software Engineering",
+            "#16a34a",
+            "assets/college-logo/college riverton.jpeg",
+          ],
+          [
+            "westbridge",
+            "Health Management",
+            "#06b6d4",
+            "assets/college-logo/college westbridge.jpeg",
+          ],
+          [
+            "highstone",
+            "Design Urbain",
+            "#92400e",
+            "assets/college-logo/college highstone.jpeg",
+          ],
+          [
+            "northlake",
+            "Création Visuelle",
+            "#be185d",
+            "assets/college-logo/college northlake.jpeg",
+          ],
+          [
+            "crestmont",
+            "Relations Internationales",
+            "#1e40af",
+            "assets/college-logo/college crestmont.jpeg",
+          ],
+          [
+            "northbridge",
+            "Hospitality",
+            "#ca8a04",
+            "assets/college-logo/college northbridge.jpeg",
+          ],
+          [
+            "silvergate",
+            "Comptabilité Avancée",
+            "#475569",
+            "assets/college-logo/college silvergate.jpeg",
+          ],
+          [
+            "crownfield",
+            "Innovation & Startup",
+            "#e11d48",
+            "assets/college-logo/college crownfield.jpeg",
+          ],
+          [
+            "kingswell",
+            "RSE & Environnement",
+            "#15803d",
+            "assets/college-logo/college kingswell.jpeg",
+          ],
+        ];
+
+        const FNAMES = [
+          "Adama",
+          "Aïcha",
+          "Mamadou",
+          "Fatoumata",
+          "Ibrahim",
+          "Awa",
+          "Oumar",
+          "Mariam",
+          "Sékou",
+          "Aminata",
+          "Moussa",
+          "Khadija",
+          "Yacouba",
+          "Bintou",
+          "Souleymane",
+          "Rokia",
+          "Bakary",
+          "Salimata",
+          "Drissa",
+          "Hawa",
+          "Boubacar",
+          "Kadiatou",
+          "Modibo",
+          "Djeneba",
+          "Issa",
+          "Nana",
+          "Cheick",
+          "Assitan",
+          "Lassana",
+          "Maïmouna",
+        ];
+        const LNAMES = [
+          "Diallo",
+          "Traoré",
+          "Touré",
+          "Coulibaly",
+          "Keïta",
+          "Diarra",
+          "Doumbia",
+          "Sangaré",
+          "Cissé",
+          "Konaté",
+          "Sidibé",
+          "Bah",
+          "Sow",
+          "Camara",
+          "Fofana",
+          "Kane",
+          "Barry",
+          "Dembélé",
+          "Sylla",
+          "Sacko",
+        ];
+        const NATIONS = [
+          "Sénégal",
+          "Mali",
+          "Côte d'Ivoire",
+          "Guinée",
+          "Burkina Faso",
+          "Bénin",
+          "Togo",
+          "Niger",
+          "Cameroun",
+          "Gabon",
+          "France",
+          "Maroc",
+          "Tunisie",
+        ];
+        const PROG_NAMES = [
+          "Administration des Affaires",
+          "Ingénierie Financière",
+          "Data Analytics & BI",
+          "Management Stratégique",
+          "Commerce International",
+          "Leadership Organisationnel",
+          "Droit International",
+          "Gouvernance d'Entreprise",
+          "Marketing Digital",
+          "Cybersécurité Avancée",
+          "Génie Logiciel",
+          "Intelligence Artificielle",
+          "RH Stratégiques",
+          "Audit & Contrôle",
+          "Économie Appliquée",
+          "Entrepreneuriat",
+          "Tourisme International",
+          "Santé Publique",
+          "Architecture Numérique",
+          "Design UX/UI",
+        ];
+        const SUBJ_NAMES = [
+          "Comptabilité Générale",
+          "Microéconomie",
+          "Macroéconomie",
+          "Statistiques",
+          "Algèbre Linéaire",
+          "Marketing Fondamental",
+          "Droit des Affaires",
+          "Anglais des Affaires",
+          "Management",
+          "Gestion de Projet",
+          "Finance d'Entreprise",
+          "Analyse Financière",
+          "Stratégie",
+          "SI de Gestion",
+          "Programmation",
+          "Base de Données",
+          "Probabilités",
+          "Économétrie",
+          "Négociation",
+          "Leadership",
+          "Éthique",
+          "RSE",
+          "Innovation",
+          "Logistique",
+          "Fiscalité",
+          "Audit",
+          "Contrôle de Gestion",
+          "RH",
+          "Communication",
+          "Recherche Opérationnelle",
+        ];
+        const DEPTS = [
+          "RH",
+          "Scolarité",
+          "Comptabilité",
+          "Informatique",
+          "Bibliothèque",
+          "Administration",
+        ];
+        const ROOMS = [
+          "A101",
+          "A102",
+          "B201",
+          "B202",
+          "C301",
+          "C302",
+          "Amphi 1",
+          "Amphi 2",
+          "Labo Info",
+          "Salle Conf",
+        ];
+        const GRADES = [
+          "Maître Assistant",
+          "Maître de Conférences",
+          "Professeur",
+          "Professeur Émérite",
+          "Chargé de Cours",
+        ];
+        const CURRENCY = "IV";
+
+        const rand = (a) => a[Math.floor(Math.random() * a.length)];
+        const ri = (n, m) => Math.floor(Math.random() * (m - n + 1)) + n;
+        const pad = (n, l = 4) => String(n).padStart(l, "0");
+        const fmtMoney = (v) => v.toLocaleString("fr-FR") + " " + CURRENCY;
+
+        /* Generate colleges with isolated data */
+        const STATE = { current: null, page: "dashboard", colleges: [] };
+        COLLEGES_DEF.forEach((c, i) => {
+          const id = "col" + (i + 1);
+          // Programmes avec structure Collège > Programme > Classe 1er Cycle (BAC+3) > Classe 2ème Cycle (BAC+5)
+          const programs = [];
+          const usedP = new Set();
+          for (let p = 0; p < ri(2, 3); p++) {
+            let n;
+            do {
+              n = rand(PROG_NAMES);
+            } while (usedP.has(n));
+            usedP.add(n);
+            programs.push({
+              id: id + "-p" + p,
+              code: "PRG" + pad(p + 1, 3),
+              name: n,
+              credits: ri(120, 180),
+              resp: "Dr. " + rand(LNAMES),
+              date: "2024-09-01",
+              status: "Actif",
+              // Structure obligatoire : Premier Cycle + Cycle Supérieur
+              premierCycle: {
+                label: "1er Cycle (BAC+3)",
+                cycle: "BAC+3",
+                semestres: ["Semestre 1", "Semestre 2"],
+                credits: ri(60, 90),
+                limit: 90,
+                class: [
+                  { clasName: "1er Cycle Classe A", totalPlaces: 30 },
+                  { clasName: "1er Cycle Classe B", totalPlaces: 30 },
+                ],
+              },
+              cycleSuperieur: {
+                label: "2ème Cycle (BAC+5)",
+                cycle: "BAC+5",
+                semestres: ["Semestre 3", "Semestre 4"],
+                credits: ri(60, 90),
+                limit: 90,
+                class: [
+                  { clasName: "2ème Cycle Classe A", totalPlaces: 18 },
+                  { clasName: "2ème Cycle Classe B", totalPlaces: 15 },
+                ],
+              },
+            });
+          }
+          const subjects = [];
+          programs.forEach((pr, pi) => {
+            for (let s = 1; s <= 4; s++) {
+              const cls =
+                s <= 2 ? "Premier Cycle (BAC+3)" : "Cycle Supérieur (BAC+5)";
+              for (let k = 0; k < 5; k++) {
+                subjects.push({
+                  id: id + "-s" + pi + "-" + s + "-" + k,
+                  code: "SUB" + pad(subjects.length + 1, 3),
+                  name: rand(SUBJ_NAMES),
+                  program: pr.name,
+                  classe: cls,
+                  sem: "S" + s,
+                  credit: ri(2, 6),
+                  coef: ri(1, 4),
+                  hours: ri(20, 60),
+                  teacher: "Dr. " + rand(LNAMES),
+                });
+              }
+            }
+          });
+          const teachers = [];
+          for (let t = 0; t < ri(8, 14); t++) {
+            // Affectation complète : Programme > Classe > Semestre > Matière
+            const prog = rand(programs);
+            const sem = ri(1, 4);
+            const cls =
+              sem <= 2 ? "Premier Cycle (BAC+3)" : "Cycle Supérieur (BAC+5)";
+            teachers.push({
+              id: id + "-t" + t,
+              num: "PR" + pad(t + 1, 3),
+              name: "Dr. " + rand(FNAMES) + " " + rand(LNAMES),
+              grade: rand(GRADES),
+              dept: c[1],
+              spec: rand(SUBJ_NAMES),
+              phone:
+                "+225 07" + ri(10, 99) + " " + ri(100, 999) + " " + ri(10, 99),
+              email: "prof" + t + "@" + id + ".ssiaversity.edu",
+              // Affectations multiples
+              affectation: {
+                programme: prog.name,
+                classe: cls,
+                semestre: "S" + sem,
+                matiere: rand(SUBJ_NAMES),
+              },
+            });
+          }
+          const staff = [];
+          for (let s = 0; s < ri(4, 8); s++) {
+            staff.push({
+              id: id + "-st" + s,
+              num: "EMP" + pad(s + 1, 3),
+              name: rand(FNAMES) + " " + rand(LNAMES),
+              post: rand([
+                "Assistant",
+                "Secrétaire",
+                "Comptable",
+                "Bibliothécaire",
+                "Technicien",
+                "Gestionnaire",
+              ]),
+              dept: rand(DEPTS),
+              contract: rand(["CDI", "CDD", "Stage"]),
+              present: Math.random() > 0.15,
+            });
+          }
+          const students = [];
+          for (let st = 0; st < ri(40, 90); st++) {
+            const pr = rand(programs);
+            const sem = ri(1, 4);
+            const cls =
+              sem <= 2 ? "Premier Cycle (BAC+3)" : "Cycle Supérieur (BAC+5)";
+            students.push({
+              id: id + "-stu" + st,
+              mat: "ETU" + pad(st + 1, 5),
+              numDossier: "DOS" + pad(st + 1, 6),
+              first: rand(FNAMES),
+              last: rand(LNAMES),
+              sex: Math.random() > 0.5 ? "M" : "F",
+              dob:
+                2000 +
+                ri(0, 5) +
+                "-" +
+                pad(ri(1, 12), 2) +
+                "-" +
+                pad(ri(1, 28), 2),
+              nation: rand(NATIONS),
+              phone:
+                "+225 07" + ri(10, 99) + " " + ri(100, 999) + " " + ri(10, 99),
+              email: "etu" + st + "@" + id + ".edu",
+              program: pr.name,
+              classe: cls,
+              cycle: sem <= 2 ? "BAC+3" : "BAC+5",
+              sem: "S" + sem,
+              status: rand(["Actif", "Actif", "Actif", "En Pause"]),
+              // Progression académique
+              notes: {
+                s1: ri(80, 190) / 10,
+                s2: ri(80, 190) / 10,
+                s3: ri(80, 190) / 10,
+                s4: ri(80, 190) / 10,
+              },
+              creditsValides: ri(30, 120),
+            });
+          }
+          // Candidatures reçues de l'Administration Centrale — pas créées par le collège
+          const applications = [];
+          for (let a = 0; a < ri(8, 18); a++) {
+            applications.push({
+              id: id + "-a" + a,
+              ref: "CAND" + pad(a + 1, 4),
+              numDossier: "DOS" + pad(ri(1000, 9999), 4),
+              name: rand(FNAMES) + " " + rand(LNAMES),
+              photo: "👤",
+              program: rand(programs).name,
+              score: ri(45, 95),
+              interview:
+                "Synthèse positive, candidat motivé, profil cohérent avec le programme visé.",
+              synthese:
+                "Le candidat présente un parcours académique solide et une motivation claire. Les compétences évaluées lors de l'entretien correspondent aux exigences du programme.",
+              recommend: rand([
+                "Admission recommandée",
+                "À étudier attentivement",
+                "Liste d'attente suggérée",
+                "Refus suggéré",
+              ]),
+              // Décision du collège
+              decisionCollege: rand([
+                "En attente",
+                "Admis",
+                "Liste d'attente",
+                "Refusé",
+              ]),
+              dateDecision: ri(0, 1) ? "2026-06-" + pad(ri(1, 15), 2) : "—",
+              status: rand([
+                "Reçue",
+                "En revue",
+                "Admis",
+                "Liste d'attente",
+                "Refusé",
+              ]),
+            });
+          }
+          const exams = [];
+          for (let e = 0; e < ri(8, 15); e++) {
+            exams.push({
+              id: id + "-e" + e,
+              subject: rand(SUBJ_NAMES),
+              date: "2026-0" + ri(6, 9) + "-" + pad(ri(1, 28), 2),
+              time: ri(8, 16) + ":00",
+              room: rand(ROOMS),
+              session: Math.random() > 0.7 ? "Rattrapage" : "Session 1",
+              surv: "Dr. " + rand(LNAMES),
+            });
+          }
+          const courses = [];
+          for (let cc = 0; cc < ri(20, 30); cc++) {
+            courses.push({
+              id: id + "-c" + cc,
+              subject: rand(SUBJ_NAMES),
+              date: "2026-06-" + pad(ri(15, 30), 2),
+              time: ri(8, 17) + ":00",
+              room: rand(ROOMS),
+              teacher: "Dr. " + rand(LNAMES),
+              program: rand(programs).name,
+            });
+          }
+          const grades = [];
+          for (let g = 0; g < 30; g++) {
+            grades.push({
+              id: id + "-g" + g,
+              student: "ETU" + pad(ri(1, students.length), 5),
+              subject: rand(SUBJ_NAMES),
+              cc: ri(8, 18),
+              tp: ri(8, 18),
+              final: ri(8, 18),
+              avg: (ri(80, 180) / 10).toFixed(2),
+            });
+          }
+          // Budget avancé en francs CFA (IV)
+          const annualBudget = ri(800, 2500) * 1000000;
+          const budget = {
+            annual: annualBudget,
+            acad: Math.round(annualBudget * 0.35),
+            admin: Math.round(annualBudget * 0.15),
+            research: Math.round(annualBudget * 0.1),
+            equipment: Math.round(annualBudget * 0.12),
+            marketing: Math.round(annualBudget * 0.08),
+            rh: Math.round(annualBudget * 0.2),
+            spent: ri(40, 80),
+            prevision: Math.round(annualBudget * 1.05),
+            engagement: Math.round(annualBudget * 0.6),
+            depenseReelle: Math.round(annualBudget * (ri(40, 80) / 100)),
+            tauxExecution: ri(40, 80),
+            centresCouts: [
+              "Académique",
+              "Administration",
+              "Recherche",
+              "Équipement",
+              "Marketing",
+              "Ressources Humaines",
+            ],
+            depenses: [
+              {
+                id: "dep1",
+                libelle: "Salaires enseignants",
+                categorie: "RH",
+                dept: "Académique",
+                montant: Math.round(annualBudget * 0.18),
+                statut: "Validé",
+                date: "2026-01-05",
+              },
+              {
+                id: "dep2",
+                libelle: "Matériel informatique",
+                categorie: "Équipement",
+                dept: "Informatique",
+                montant: Math.round(annualBudget * 0.05),
+                statut: "En cours",
+                date: "2026-02-14",
+              },
+              {
+                id: "dep3",
+                libelle: "Fournitures bureautiques",
+                categorie: "Admin",
+                dept: "Administration",
+                montant: Math.round(annualBudget * 0.02),
+                statut: "Validé",
+                date: "2026-03-01",
+              },
+              {
+                id: "dep4",
+                libelle: "Communication & Marketing",
+                categorie: "Marketing",
+                dept: "Marketing",
+                montant: Math.round(annualBudget * 0.04),
+                statut: "En attente",
+                date: "2026-04-10",
+              },
+              {
+                id: "dep5",
+                libelle: "Projets de recherche",
+                categorie: "Recherche",
+                dept: "Recherche",
+                montant: Math.round(annualBudget * 0.08),
+                statut: "Validé",
+                date: "2026-05-20",
+              },
+            ],
+          };
+          const attendance = {
+            students: ri(82, 97),
+            teachers: ri(88, 99),
+            absences: ri(20, 80),
+            late: ri(10, 40),
+          };
+          STATE.colleges.push({
+            id,
+            name: "Collège " + c[0].toUpperCase(),
+            sub: c[1],
+            color: c[2],
+            dean: "Prof. " + rand(FNAMES) + " " + rand(LNAMES),
+            initials: c[0].slice(0, 2).toUpperCase(),
+            logo: c[3],
+            programs,
+            subjects,
+            teachers,
+            staff,
+            students,
+            applications,
+            exams,
+            courses,
+            grades,
+            budget,
+            attendance,
+            settings: {
+              logo: c[3],
+              primary: c[2],
+              secondary: "#0ea5e9",
+              site: "https://" + id + ".ssiaversity.edu",
+              phone:
+                "+225 20 " + ri(10, 99) + " " + ri(10, 99) + " " + ri(10, 99),
+              address:
+                "Campus Universitaire SSIAVERSITY, Abidjan, Côte d'Ivoire",
+              infosBancaires:
+                "Banque BSSI — IBAN CI" +
+                pad(ri(1000, 9999)) +
+                "" +
+                pad(ri(1000, 9999)),
+            },
+          });
+        });
+
+        /* ============ HOME ============ */
+        function renderHome() {
+          let totalStu = 0,
+            totalProg = 0,
+            totalProf = 0,
+            totalApp = 0;
+          STATE.colleges.forEach((c) => {
+            totalStu += c.students.length;
+            totalProg += c.programs.length;
+            totalProf += c.teachers.length;
+            totalApp += c.applications.length;
+          });
+          document.getElementById("homeStats").innerHTML = `
+         <div class="stat-mini"><div class="l">Collèges</div><div class="v">21</div></div>
+         <div class="stat-mini"><div class="l">Étudiants</div><div class="v">${totalStu.toLocaleString("fr")}</div></div>
+         <div class="stat-mini"><div class="l">Programmes</div><div class="v">${totalProg}</div></div>
+         <div class="stat-mini"><div class="l">Professeurs</div><div class="v">${totalProf}</div></div>
+         <div class="stat-mini"><div class="l">Candidatures</div><div class="v">${totalApp}</div></div>
+         <div class="stat-mini"><div class="l">Cycles</div><div class="v">BAC+3 / BAC+5</div></div>`;
+          let html = "";
+          STATE.colleges.forEach((c) => {
+            html += `<div class="col-card" onclick="enterCollege('${c.id}')">
+            <div class="col-bar" style="background:${c.color}"></div>
+            <div class="col-logo" style="background:${c.color}; border: solid 1px ${c.color}1A"><img src="${encodeURI("../../../../" + c.logo)}" alt="" srcset=""></div>
+            <h3>${c.name}</h3>
+            <div class="sub">Doyen ${c.dean}</div>
+            <div class="col-kpis">
+              <div><b>${c.students.length}</b><span>Étudiants</span></div>
+              <div><b>${c.programs.length}</b><span>Programmes</span></div>
+              <div><b>${c.teachers.length}</b><span>Profs</span></div>
+            </div></div>`;
+          });
+          html += `<div class="col-card admin-card" onclick="enterCollege('admin')">
+            <div class="col-bar" style="background:#facc15"></div>
+            <div class="col-logo" style="background:#facc15;color:#0f172a">AC</div>
+            <h3>Administration Centrale</h3>
+            <div class="sub">Diplômes · Attestations · Documents officiels</div>
+            <div class="col-kpis">
+              <div><b>${STATE.colleges.reduce((s, c) => s + c.applications.length, 0)}</b><span>Candidatures</span></div>
+              <div><b>21</b><span>Collèges</span></div>
+              <div><b>∞</b><span>Diplômes</span></div>
+            </div></div>`;
+          document.getElementById("collegesGrid").innerHTML = html;
+        }
+
+        /* ============ NAV ============ */
+        function enterCollege(id) {
+          STATE.current =
+            id === "admin"
+              ? {
+                  id: "admin",
+                  name: "Administration Centrale",
+                  sub: "Gouvernance & Documents Officiels",
+                  color: "#0f172a",
+                  initials: "AC",
+                  isAdmin: true,
+                }
+              : STATE.colleges.find((c) => c.id === id);
+          document.getElementById("home").classList.add("hidden");
+          document.getElementById("app").classList.add("show");
+          const c = STATE.current;
+          document.getElementById("sbMark").style.background = `${c.color}1A`;
+          document.getElementById("sbMark").style.border =
+            `solid 1px ${c.color}`;
+          document.getElementById("logoImg").src = `../../../../${c.logo}`;
+          document.getElementById("sbName").firstChild.textContent = c.name;
+          document.getElementById("sbSub").textContent = c.sub || "SSIAVERSITY";
+          document.getElementById("crumbCol").textContent = c.name;
+          document.getElementById("tbCol").textContent = c.name;
+          document.getElementById("tbAv").style.background = c.color;
+          document.documentElement.style.setProperty("--brand", c.color);
+          STATE.page = "dashboard";
+          setActive("dashboard");
+          render();
+        }
+        function exitCollege() {
+          document.getElementById("app").classList.remove("show");
+          document.getElementById("home").classList.remove("hidden");
+          document.documentElement.style.setProperty("--brand", "#1d4ed8");
+        }
+        document.querySelectorAll(".sb-item").forEach((el) => {
+          el.addEventListener("click", () => {
+            const p = el.dataset.page;
+            if (p && p !== "exit") {
+              STATE.page = p;
+              setActive(p);
+              render();
+            }
+          });
+        });
+        function setActive(p) {
+          document
+            .querySelectorAll(".sb-item")
+            .forEach((e) => e.classList.toggle("active", e.dataset.page === p));
+        }
+        function toggleTheme() {
+          document.body.classList.toggle("dark");
+        }
+
+        /* ============ PAGES ============ */
+        function render() {
+          const c = STATE.current;
+          const labels = {
+            dashboard: "Tableau de bord",
+            programs: "Programmes d'études",
+            subjects: "Matières",
+            applications: "Candidatures",
+            students: "Étudiants",
+            teachers: "Professeurs",
+            staff: "Employés",
+            courses: "Planification des cours",
+            exams: "Examens",
+            grades: "Notes & Évaluations",
+            attendance: "Présence",
+            timetable: "Emploi du temps",
+            budget: "Budget du Collège",
+            reports: "Rapports",
+            settings: "Personnalisation",
+          };
+          document.getElementById("crumbPage").textContent =
+            labels[STATE.page] || STATE.page;
+          const m = document.getElementById("main");
+          if (c.isAdmin) {
+            m.innerHTML = renderAdmin();
+            return;
+          }
+          let html = `<div class="notice-bar">ℹ️ Espace privé du <b>${c.name}</b>. Les données affichées sont isolées et ne sont visibles par aucun autre collège.</div>`;
+          switch (STATE.page) {
+            case "dashboard":
+              html += renderDash(c);
+              break;
+            case "programs":
+              html += renderPrograms(c);
+              break;
+            case "subjects":
+              html += renderSubjects(c);
+              break;
+            case "applications":
+              html += renderApps(c);
+              break;
+            case "students":
+              html += renderStudents(c);
+              break;
+            case "teachers":
+              html += renderTeachers(c);
+              break;
+            case "staff":
+              html += renderStaff(c);
+              break;
+            case "courses":
+              html += renderCourses(c);
+              break;
+            case "exams":
+              html += renderExams(c);
+              break;
+            case "grades":
+              html += renderGrades(c);
+              break;
+            case "attendance":
+              html += renderAtt(c);
+              break;
+            case "timetable":
+              html += renderTT(c);
+              break;
+            case "budget":
+              html += renderBudget(c);
+              break;
+            case "reports":
+              html += renderReports(c);
+              break;
+            case "settings":
+              html += renderSettings(c);
+              break;
+          }
+          m.innerHTML = html;
+          setTimeout(initCharts, 30);
+        }
+
+        function renderDash(c) {
+          const exU = c.exams.length;
+          const appR = c.applications.filter(
+            (a) => a.status === "Reçue" || a.status === "En revue",
+          ).length;
+          return `
+         <div class="page-h"><div><h2>Tableau de bord</h2><p>Vue d'ensemble de la performance du ${c.name}</p></div>
+          <div><button class="btn btn-ghost" onclick="exportData()">⬇ Exporter</button> <button class="btn btn-primary" onclick="openModal('new')">+ Nouveau</button></div></div>
+         <div class="banner">⚠️ Les diplômes et documents officiels sont exclusivement délivrés par l'Administration Centrale de SSIAVERSITY.</div>
+         <div class="kpis">
+          <div class="kpi"><div class="ic">👨‍🎓</div><div class="lbl">Étudiants actifs</div><div class="val">${c.students.length}</div><div class="trd up">▲ ${ri(2, 8)}% ce mois</div></div>
+          <div class="kpi"><div class="ic">🎓</div><div class="lbl">Programmes</div><div class="val">${c.programs.length}</div><div class="trd up">▲ stable</div></div>
+          <div class="kpi"><div class="ic">👨‍🏫</div><div class="lbl">Professeurs</div><div class="val">${c.teachers.length}</div><div class="trd up">▲ ${ri(1, 3)}</div></div>
+          <div class="kpi"><div class="ic">👥</div><div class="lbl">Employés</div><div class="val">${c.staff.length}</div><div class="trd up">▲ ${ri(0, 2)}</div></div>
+          <div class="kpi"><div class="ic">📝</div><div class="lbl">Examens à venir</div><div class="val">${exU}</div><div class="trd dn">▼ session active</div></div>
+          <div class="kpi"><div class="ic">📥</div><div class="lbl">Candidatures reçues</div><div class="val">${appR}</div><div class="trd up">▲ ${ri(5, 15)}%</div></div>
+          <div class="kpi"><div class="ic">💰</div><div class="lbl">Budget consommé</div><div class="val">${c.budget.spent}%</div><div class="trd up">de ${fmtMoney(c.budget.annual)}</div></div>
+          <div class="kpi"><div class="ic">✓</div><div class="lbl">Présence moyenne</div><div class="val">${c.attendance.students}%</div><div class="trd up">▲ ${ri(1, 4)}%</div></div>
+         </div>
+         <div class="grid2">
+          <div class="card"><h3>Évolution des effectifs <span class="more">12 derniers mois</span></h3><div class="chart-wrap"><canvas id="ch1"></canvas></div></div>
+          <div class="card"><h3>Répartition par cycle</h3><div class="chart-wrap"><canvas id="ch2"></canvas></div></div>
+         </div>
+         <div class="grid2">
+          <div class="card"><h3>Performance académique par programme</h3><div class="chart-wrap"><canvas id="ch3"></canvas></div></div>
+          <div class="card"><h3>Activité récente</h3><ul class="activity">
+           ${[1, 2, 3, 4, 5, 6].map(() => `<li><div class="dot"></div><div><b>${rand(["Note saisie", "Candidature reçue", "Cours planifié", "Examen ajouté", "Présence validée", "Budget mis à jour"])}</b><div style="color:var(--muted)">Il y a ${ri(1, 59)} min · ${rand(c.teachers).name}</div></div></li>`).join("")}
+          </ul></div>
+         </div>
+         <div class="card"><h3>Prochains examens <span class="more" onclick="STATE.page='exams';setActive('exams');render()">Voir tout →</span></h3>
+          <table><thead><tr><th>Matière</th><th>Date</th><th>Heure</th><th>Salle</th><th>Session</th><th>Surveillant</th></tr></thead><tbody>
+          ${c.exams
+            .slice(0, 6)
+            .map(
+              (e) =>
+                `<tr onclick="openDetailModal('exam','${e.id}')"><td>${e.subject}</td><td>${e.date}</td><td>${e.time}</td><td>${e.room}</td><td><span class="badge ${e.session === "Rattrapage" ? "b-warn" : "b-info"}">${e.session}</span></td><td>${e.surv}</td></tr>`,
+            )
+            .join("")}
+          </tbody></table></div>`;
+        }
+
+        function tableTpl(title, btn, cols, rows, extra = "") {
+          if (title === "Examens") {
+            return `<div class="page-h"><div><h2>${title}</h2><p>${rows.split("<tr").length - 1} enregistrement(s)</p></div>
+         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-pdf" onclick="exportPDF('${title}')">📄 Exporter PDF</button> <button class="btn btn-ghost" onclick="exportData()">⬇ CSV</button> </div></div>
+         ${extra}
+         <div class="filter-bar"><input placeholder="🔍 Rechercher..." oninput="filterTable(this)"/><select><option>Tous statuts</option><option>Actif</option><option>Inactif</option></select><select><option>Tous cycles</option><option>BAC+3</option><option>BAC+5</option></select></div>
+         <div class="card"><table><thead><tr>${cols.map((c) => `<th>${c}</th>`).join("")}<th>Actions</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+          }
+          if (title === "Étudiants") {
+            return `<div class="page-h"><div><h2>${title}</h2><p>${rows.split("<tr").length - 1} enregistrement(s)</p></div>
+         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-pdf" onclick="exportPDF('${title}')">📄 Exporter PDF</button> <button class="btn btn-ghost" onclick="exportData()">⬇ CSV</button> </div></div>
+         ${extra}
+         <div class="filter-bar"><input placeholder="🔍 Rechercher..." oninput="filterTable(this)"/><select><option>Tous statuts</option><option>Actif</option><option>Inactif</option></select><select><option>Tous cycles</option><option>BAC+3</option><option>BAC+5</option></select></div>
+         <div class="card"><table><thead><tr>${cols.map((c) => `<th>${c}</th>`).join("")}<th>Actions</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+          }
+          if (title === "Professeurs") {
+            return `<div class="page-h"><div><h2>${title}</h2><p>${rows.split("<tr").length - 1} enregistrement(s)</p></div>
+         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-pdf" onclick="exportPDF('${title}')">📄 Exporter PDF</button> <button class="btn btn-ghost" onclick="exportData()">⬇ CSV</button> </div></div>
+         ${extra}
+         <div class="filter-bar"><input placeholder="🔍 Rechercher..." oninput="filterTable(this)"/><select><option>Tous statuts</option><option>Actif</option><option>Inactif</option></select><select><option>Tous cycles</option><option>BAC+3</option><option>BAC+5</option></select></div>
+         <div class="card"><table><thead><tr>${cols.map((c) => `<th>${c}</th>`).join("")}<th>Actions</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+          }
+          return `<div class="page-h"><div><h2>${title}</h2><p>${rows.split("<tr").length - 1} enregistrement(s)</p></div>
+         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-pdf" onclick="exportPDF('${title}')">📄 Exporter PDF</button> <button class="btn btn-ghost" onclick="exportData()">⬇ CSV</button> <button class="btn btn-primary" onclick="openModal('${btn}')">+ Ajouter</button></div></div>
+         ${extra}
+         <div class="filter-bar"><input placeholder="🔍 Rechercher..." oninput="filterTable(this)"/><select><option>Tous statuts</option><option>Actif</option><option>Inactif</option></select><select><option>Tous cycles</option><option>BAC+3</option><option>BAC+5</option></select></div>
+         <div class="card"><table><thead><tr>${cols.map((c) => `<th>${c}</th>`).join("")}<th>Actions</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+        }
+
+        /* ============ PROGRAMMES - Structure hiérarchique ============ */
+        function renderPrograms(c) {
+          const rows = c.programs
+            .map(
+              (
+                p,
+              ) => `<tr onclick="openDetailModal('program','${p.id}')" style="cursor:pointer">
+          <td><b>${p.code}</b></td>
+          <td><b>${p.name}</b></td>
+          <td>
+            <div style="font-size:11px;color:var(--muted)">
+              <span class="badge b-info" style="margin-right:4px">1er Cycle BAC+3</span> S1-S2
+            </div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">
+              <span class="badge b-warn" style="margin-right:4px">2ème Cycle BAC+5</span> S3-S4
+            </div>
+          </td>
+          <td>${p.credits} crédits</td>
+          <td>${p.resp}</td>
+          <td>${p.date}</td>
+          <td><span class="badge b-ok">${p.status}</span></td>
+          <td>
+            <button class="btn btn-ghost" style="padding:4px 8px" onclick="event.stopPropagation();editRecord('program','${p.id}')">✎ Modifier</button>
+            <button class="btn btn-danger" style="padding:4px 8px;margin-left:4px" onclick="event.stopPropagation();deleteRecord('program','${p.id}')">✕</button>
+          </td>
+        </tr>`,
+            )
+            .join("");
+
+          const treeHtml = `<div class="card" style="margin-bottom:16px">
+          <h3>Structure Académique SSIAVERSITY</h3>
+          <div class="program-tree">
+    <div class="program-head">
+        <span class="struct-icon" style="background:#1d4ed8;">🏛️</span>
+        <span><b>${c.name}</b></span>
+    </div>
+    <div class="program-body">
+        ${c.programs
+          .map(
+            (p) => `<div class="program-class">
+            <div class="programs">
+                <div class="program-details">
+                  <div class="struct-icon" style="background:#7c3aed;color:#fff">🎓</div>
+                        <b>${p.name}</b>
+                        <span style="font-size:11px;color:var(--muted)">
+                            (${p.code})
+                        </span></div>
+                <div class="actions">
+                <button class ="action-btn edit"><i class="fa-solid fa-pencil"></i></button>
+                <button class ="action-btn delete"><i class="fa-solid fa-trash"></i></button>
+                <button class ="action-btn see-more"><i class="fa-solid fa-chevron-up"></i></button></div>
+            </div>
+
+            <div class="level">
+                <div class="level-details">
+                  <div class="title"><div class="struct-icon" style="background:#059669;color:#fff">📘</div><b>${p.premierCycle.label}</b> — ${p.premierCycle.semestres.join(" · ")}
+                    <span class="badge b-info">BAC+3</span>
+                  </div>
+                    <div class="actions"><button class ="action-btn see-more"><i class="fa-solid fa-chevron-up"></i></button></div>
+                    
+                </div>
+                 ${p.premierCycle.class
+                   .map(
+                     (cl) => `
+                <div class="class">
+                    <div class="class-details"><div class="struct-icon" style="background:#ea580c;color:#fff">📙</div><span><b>${cl.clasName}</b></span> <span>${cl.totalPlaces} places</span></div>
+                    <div class="actions">
+                    <button class ="action-btn edit"><i class="fa-solid fa-pencil"></i></button>
+                    <button class ="action-btn delete"><i class="fa-solid fa-trash"></i></button></div>
+                </div>`,
+                   )
+                   .join("")}
+                
+                
+                <div class="level-details">
+                  <div class="title"><div class="struct-icon" style="background:#059669;color:#fff">📘</div><b>${p.cycleSuperieur.label}</b> — ${p.cycleSuperieur.semestres.join(" · ")}
+                    <span class="badge b-info">BAC+3</span>
+                  </div>
+                    <div class="actions"><button class ="action-btn see-more"><i class="fa-solid fa-chevron-up"></i></button></div>
+                    
+                </div>
+                 ${p.cycleSuperieur.class
+                   .map(
+                     (cl) => `
+                <div class="class">
+                    <div class="class-details"><div class="struct-icon" style="background:#ea580c;color:#fff">📙</div><span><b>${cl.clasName}</b></span> <span>${cl.totalPlaces} places</span></div>
+                    <div class="actions">
+                    <button class ="action-btn edit"><i class="fa-solid fa-pencil"></i></button>
+                    <button class ="action-btn delete"><i class="fa-solid fa-trash"></i></button></div>
+                </div>`,
+                   )
+                   .join("")}
+            </div>
+        </div>`,
+          )
+          .join("")}
+        
+    </div>
+</div>
+          `;
+
+          return tableTpl(
+            "Programmes d'études",
+            "program",
+            [
+              "Code",
+              "Nom du Programme",
+              "Structure Cycles",
+              "Crédits",
+              "Responsable",
+              "Création",
+              "Statut",
+            ],
+            rows,
+            treeHtml,
+          );
+        }
+
+        /* ============ MATIÈRES ============ */
+        function renderSubjects(c) {
+          const rows = c.subjects
+            .slice(0, 40)
+            .map(
+              (
+                s,
+              ) => `<tr onclick="openDetailModal('subject','${s.id}')" style="cursor:pointer">
+          <td><b>${s.code}</b></td>
+          <td>${s.name}</td>
+          <td>${s.program}</td>
+          <td><span class="badge b-mut" style="font-size:10px">${s.classe}</span></td>
+          <td><span class="badge b-info">${s.sem}</span></td>
+          <td>${s.credit}</td><td>${s.coef}</td><td>${s.hours}h</td><td>${s.teacher}</td>
+          <td>
+            <button class="btn btn-ghost" style="padding:4px 8px" onclick="event.stopPropagation();editRecord('subject','${s.id}')">✎</button>
+            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('subject','${s.id}')">✕</button>
+          </td>
+        </tr>`,
+            )
+            .join("");
+          return tableTpl(
+            "Matières",
+            "subject",
+            [
+              "Code",
+              "Nom",
+              "Programme",
+              "Niveau",
+              "Semestre",
+              "Crédit",
+              "Coef",
+              "Heures",
+              "Enseignant",
+            ],
+            rows,
+          );
+        }
+
+        /* ============ CANDIDATURES — Reçues de l'Admin Centrale ============ */
+        function renderApps(c) {
+          const cols = [
+            ["Reçue", "b-info"],
+            ["En revue", "b-warn"],
+            ["Admis", "b-ok"],
+            ["Refusé", "b-err"],
+          ];
+          let k = `<div class="page-h"><div><h2>Candidatures</h2><p>Dossiers transmis par l'Administration Centrale</p></div>
+          <button class="btn btn-pdf" onclick="exportPDF('Candidatures')">📄 Exporter PDF</button></div>`;
+          k += `<div class="notice-bar">📨 Les dossiers sont reçus exclusivement de l'Administration Centrale (entretien, évaluation, synthèse, recommandation). Le collège prend uniquement la décision finale : <b>Admis / Liste d'attente / Refusé</b>.</div>`;
+          k += `<div class="banner">🚫 Le collège ne crée pas de candidatures. Toute candidature est initiée et évaluée par l'Administration Centrale avant transmission.</div>`;
+          k += '<div class="kanban">';
+          cols.forEach(([s, badge]) => {
+            const items = c.applications.filter(
+              (a) =>
+                a.status === s ||
+                (s === "Reçue" && a.status === "Liste d'attente" && false),
+            );
+            k += `<div class="kb-col"><h4>${s} <span class="badge ${badge}">${items.length}</span></h4>`;
+            items.forEach((a) => {
+              k += `<div class="kb-card" onclick="openDossierModal('${a.id}')">
+            <b>${a.photo} ${a.name}</b>
+            <div>${a.program}</div>
+            <div class="meta">Réf ${a.ref} · Dossier ${a.numDossier}</div>
+            <div class="meta" style="margin-top:4px">🎯 Score entretien : <b>${a.score}/100</b></div>
+            <div class="meta" style="margin-top:4px;padding:5px;background:var(--chip);border-radius:4px">💡 ${a.recommend}</div>
+            <div class="meta" style="margin-top:6px">
+              Décision : <span class="badge ${a.decisionCollege === "Admis" ? "b-ok" : a.decisionCollege === "Refusé" ? "b-err" : a.decisionCollege === "Liste d'attente" ? "b-warn" : "b-mut"}">${a.decisionCollege}</span>
+            </div>
+          </div>`;
+            });
+            k += "</div>";
+          });
+          k += "</div>";
+          return k;
+        }
+
+        /* ============ DOSSIER CANDIDAT ============ */
+        function openDossierModal(appId) {
+          const c = STATE.current;
+          const a = c.applications.find((x) => x.id === appId);
+          if (!a) return;
+          document.getElementById("modalRoot").innerHTML =
+            `<div class="modal-bg" onclick="if(event.target===this)closeModal()">
+         <div class="modal" style="max-width:700px; border: solid red 3px;">
+          <div class="modal-h"><h3>📋 Dossier Candidat — ${a.ref}</h3><button onclick="closeModal()" style="font-size:20px">×</button></div>
+          <div class="modal-b">
+           <div class="dossier-grid">
+            <div>
+             <div class="dossier-avatar">${a.photo}</div>
+             <div style="margin-top:10px;font-size:12px;color:var(--muted);text-align:center">N° Dossier : <b>${a.numDossier}</b></div>
+            </div>
+            <div>
+             <h3 style="margin:0 0 8px">${a.name}</h3>
+             <div style="font-size:13px;margin-bottom:4px">Programme visé : <b>${a.program}</b></div>
+             <div style="font-size:13px;margin-bottom:4px">Score entretien : <b>${a.score}/100</b></div>
+             <hr style="border-color:var(--line);margin:12px 0"/>
+             <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Synthèse entretien (Admin Centrale)</div>
+             <div style="font-size:13px;background:var(--chip);padding:10px;border-radius:8px;line-height:1.5">${a.synthese}</div>
+             <div style="margin-top:10px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Recommandation Admin Centrale</div>
+             <div style="font-size:13px;font-weight:700;color:var(--brand)">${a.recommend}</div>
+            </div>
+           </div>
+           <div class="dossier-docs">
+            <div class="doc-item">📄 CV du candidat</div>
+            <div class="doc-item">🎓 Diplômes</div>
+            <div class="doc-item">📊 Relevés de notes</div>
+            <div class="doc-item">📝 Résultat entretien</div>
+           </div>
+           <hr style="border-color:var(--line);margin:16px 0"/>
+           <div style="font-size:14px;font-weight:700;margin-bottom:10px">🏛️ Décision du Collège</div>
+           <div class="form-row">
+            <label>Décision finale</label>
+            <select id="decisionSelect">
+             <option ${a.decisionCollege === "En attente" ? "selected" : ""}>En attente</option>
+             <option ${a.decisionCollege === "Admis" ? "selected" : ""}>Admis</option>
+             <option ${a.decisionCollege === "Liste d'attente" ? "selected" : ""}>Liste d'attente</option>
+             <option ${a.decisionCollege === "Refusé" ? "selected" : ""}>Refusé</option>
+            </select>
+           </div>
+           <div class="form-row"><label>Date de décision</label><input type="date" id="decisionDate" value="${a.dateDecision !== "—" ? a.dateDecision : "2026-06-15"}"/></div>
+          </div>
+          <div class="modal-f">
+           <button class="btn btn-pdf" onclick="exportPDF('Dossier_${a.ref}')">📄 Exporter PDF</button>
+           <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+           <button class="btn btn-primary" onclick="saveDecision('${a.id}')">💾 Enregistrer décision</button>
+          </div>
+         </div></div>`;
+        }
+
+        function saveDecision(appId) {
+          const c = STATE.current;
+          const a = c.applications.find((x) => x.id === appId);
+          if (!a) return;
+          a.decisionCollege = document.getElementById("decisionSelect").value;
+          a.dateDecision = document.getElementById("decisionDate").value;
+          a.status =
+            a.decisionCollege === "Admis"
+              ? "Admis"
+              : a.decisionCollege === "Refusé"
+                ? "Refusé"
+                : a.decisionCollege === "Liste d'attente"
+                  ? "Liste d'attente"
+                  : "Reçue";
+          closeModal();
+          render();
+        }
+
+        /* ============ ÉTUDIANTS ============ */
+        function renderStudents(c) {
+          const rows = c.students
+            .slice(0, 50)
+            .map(
+              (
+                s,
+              ) => `<tr onclick="openDetailModal('student','${s.id}')" style="cursor:pointer">
+          <td><b>${s.mat}</b></td>
+          <td>${s.first} ${s.last}</td>
+          <td>${s.sex}</td>
+          <td>${s.dob}</td>
+          <td>${s.nation}</td>
+          <td>${s.program}</td>
+          <td><span class="badge b-mut" style="font-size:10px">${s.classe}</span></td>
+          <td><span class="badge b-info">${s.cycle}</span></td>
+          <td>${s.sem}</td>
+          <td>${s.email}</td>
+          <td><span class="badge ${s.status === "Actif" ? "b-ok" : "b-warn"}">${s.status}</span></td>
+          <td>
+            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('student','${s.id}')">Suspendre</button>
+          </td>
+        </tr>`,
+            )
+            .join("");
+          return tableTpl(
+            "Étudiants",
+            "student",
+            [
+              "Matricule",
+              "Nom complet",
+              "Sexe",
+              "Naissance",
+              "Nationalité",
+              "Programme",
+              "Classe",
+              "Cycle",
+              "Semestre",
+              "Email",
+              "Statut",
+            ],
+            rows,
+          );
+        }
+
+        /* ============ PROFESSEURS + AFFECTATIONS ============ */
+        function renderTeachers(c) {
+          const rows = c.teachers
+            .map(
+              (
+                t,
+              ) => `<tr onclick="openDetailModal('teacher','${t.id}')" style="cursor:pointer">
+          <td><b>${t.num}</b></td>
+          <td>${t.name}</td>
+          <td><span class="badge b-info">${t.grade}</span></td>
+          <td>${t.dept}</td>
+          <td>${t.spec}</td>
+          <td style="font-size:11px">
+            <div><b>Prog :</b> ${t.affectation.programme}</div>
+            <div><b>Classe :</b> ${t.affectation.classe}</div>
+            <div><b>Sem :</b> ${t.affectation.semestre} · <b>Matière :</b> ${t.affectation.matiere}</div>
+          </td>
+          <td>${t.phone}</td>
+          <td>${t.email}</td>
+          <td>
+            <button class="btn btn-ghost" style="padding:4px 8px" onclick="event.stopPropagation();editRecord('teacher','${t.id}')">✎</button>
+            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('teacher','${t.id}')">Suspendre</button>
+          </td>
+        </tr>`,
+            )
+            .join("");
+          return tableTpl(
+            "Professeurs",
+            "teacher",
+            [
+              "N° Emp",
+              "Nom",
+              "Grade",
+              "Département",
+              "Spécialité",
+              "Affectation Complète",
+              "Téléphone",
+              "Email",
+            ],
+            rows,
+          );
+        }
+
+        /* ============ EMPLOYÉS ============ */
+        function renderStaff(c) {
+          const rows = c.staff
+            .map(
+              (
+                s,
+              ) => `<tr onclick="openDetailModal('staff','${s.id}')" style="cursor:pointer">
+          <td><b>${s.num}</b></td>
+          <td>${s.name}</td>
+          <td>${s.post}</td>
+          <td>${s.dept}</td>
+          <td><span class="badge b-info">${s.contract}</span></td>
+          <td><span class="badge ${s.present ? "b-ok" : "b-err"}">${s.present ? "Présent" : "Absent"}</span></td>
+          <td>
+            <button class="btn btn-ghost" style="padding:4px 8px" onclick="event.stopPropagation();editRecord('staff','${s.id}')">✎</button>
+            <button class="btn btn-danger" style="padding:4px 8px" onclick="event.stopPropagation();deleteRecord('staff','${s.id}')">Suspendre</button>
+          </td>
+        </tr>`,
+            )
+            .join("");
+          return tableTpl(
+            "Employés",
+            "staff",
+            ["N° Emp", "Nom", "Poste", "Département", "Contrat", "Présence"],
+            rows,
+          );
+        }
+
+        function renderCourses(c) {
+          const rows = c.courses
+            .slice(0, 30)
+            .map(
+              (
+                co,
+              ) => `<tr onclick="openDetailModal('course','${co.id}')" style="cursor:pointer">
+          <td>${co.date}</td><td>${co.time}</td><td>${co.subject}</td><td>${co.program}</td><td>${co.teacher}</td>
+          <td><span class="badge b-info"><!--${co.room}-->Premier Cycle</span></td>
+          <td>
+          </td>
+        </tr>`,
+            )
+            .join("");
+          return `<div class="page-h"><div><h2>Planification des cours</h2><p>Vues calendaires & liste</p></div>
+          <div style="display:flex;gap:8px"><button class="btn btn-pdf" onclick="exportPDF('Cours')">📄 PDF</button></div></div>
+         <div class="tabs"><div class="tab active">Liste</div><div class="tab">Semaine</div></div>
+         <div class="card"><table><thead><tr><th>Date</th><th>Heure</th><th>Matière</th><th>Programme</th><th>Professeur</th><th>Niveau</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+        }
+
+        function renderExams(c) {
+          const rows = c.exams
+            .map(
+              (
+                e,
+              ) => `<tr onclick="openDetailModal('exam','${e.id}')" style="cursor:pointer">
+          <td>${e.date}</td><td>${e.time}</td><td>${e.subject}</td>
+          <td><span class="badge ${e.session === "Rattrapage" ? "b-warn" : "b-ok"}">${e.session}</span></td>
+          <td>${e.surv}</td>
+        </tr>`,
+            )
+            .join("");
+          return tableTpl(
+            "Examens",
+            "exam",
+            ["Date", "Heure", "Matière", "Session", "Surveillant"],
+            rows,
+          );
+        }
+
+        /* ============ NOTES + VALIDATION SEMESTRIELLE ============ */
+        function renderGrades(c) {
+          const rows = c.grades
+            .map(
+              (
+                g,
+              ) => `<tr onclick="openDetailModal('grade','${g.id}')" style="cursor:pointer">
+          <td>${g.student}</td><td>${g.subject}</td><td>${g.cc}</td><td>${g.tp}</td><td>${g.final}</td>
+          <td><b>${g.avg}</b></td>
+          <td><span class="badge ${g.avg >= 10 ? "b-ok" : "b-err"}">${g.avg >= 10 ? "Validé" : "Non validé"}</span></td>
+        </tr>`,
+            )
+            .join("");
+
+          // Blocs validation semestrielle
+          const validationBlocs = `<div class="card" style="margin-bottom:16px">
+          <h3>Progression académique & Validation</h3>
+          <div class="prog-academic">
+            ${["S1", "S2", "S3", "S4"]
+              .map((s, i) => {
+                const avg = (ri(80, 190) / 10).toFixed(1);
+                const validated = avg >= 10;
+                const isCurrent = i === 1;
+                return `<div class="sem-block ${validated ? "validated" : ""} ${isCurrent ? "current" : ""}">
+                <div class="sem-label">${s} ${i < 2 ? "BAC+3" : "BAC+5"}</div>
+                <div class="sem-score">${avg}</div>
+                <div class="sem-credits">${ri(15, 30)} crédits</div>
+                <div style="margin-top:6px"><span class="badge ${validated ? "b-ok" : "b-mut"}">${validated ? "✓ Validé" : "En cours"}</span></div>
+              </div>`;
+              })
+              .join("")}
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;font-size:13px;padding-top:10px;border-top:1px solid var(--line)">
+            <div><b>Premier Cycle :</b> <span class="badge b-info">En cours</span></div>
+            <div><b>Cycle Supérieur :</b> <span class="badge b-mut">Non débuté</span></div>
+            <div><b>Crédits validés :</b> ${ri(30, 90)} / 180</div>
+            <div><b>Crédits restants :</b> ${ri(30, 90)}</div>
+            <div><b>Taux d'avancement :</b> ${ri(20, 80)}%</div>
+          </div>
+        </div>`;
+
+          return `<div class="page-h"><div><h2>Notes & Évaluations</h2><p>CC · TP · Examen Final · Validation semestrielle</p></div>
+          <div style="display:flex;gap:8px"><button class="btn btn-pdf" onclick="exportPDF('Notes')">📄 Exporter PDF</button></div></div>
+         <div class="grid2">
+          <div class="card"><h3>Distribution des moyennes</h3><div class="chart-sm"><canvas id="chG1"></canvas></div></div>
+          <div class="card"><h3>Évolution semestrielle</h3><div class="chart-sm"><canvas id="chG2"></canvas></div></div>
+         </div>
+         ${validationBlocs}
+         <div class="card"><table><thead><tr><th>Étudiant</th><th>Matière</th><th>CC</th><th>TP</th><th>Final</th><th>Moyenne</th><th>Statut</th><th>Actions</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+        }
+
+        function renderAtt(c) {
+          return `<div class="page-h"><div><h2>Présence</h2><p>Suivi étudiants & enseignants</p></div><button class="btn btn-pdf" onclick="exportPDF('Présence')">📄 Exporter PDF</button></div>
+         <div class="kpis">
+          <div class="kpi"><div class="lbl">Présence étudiants</div><div class="val">${c.attendance.students}%</div></div>
+          <div class="kpi"><div class="lbl">Présence enseignants</div><div class="val">${c.attendance.teachers}%</div></div>
+          <div class="kpi"><div class="lbl">Absences (mois)</div><div class="val">${c.attendance.absences}</div></div>
+          <div class="kpi"><div class="lbl">Retards (mois)</div><div class="val">${c.attendance.late}</div></div>
+         </div>
+         <div class="card"><h3>Évolution mensuelle</h3><div class="chart-wrap"><canvas id="chA"></canvas></div></div>`;
+        }
+
+        function renderTT(c) {
+          const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
+          const hours = ["08:00", "10:00", "12:00", "14:00", "16:00"];
+          let html =
+            '<div class="page-h"><div><h2>Emploi du temps</h2><p>Vue hebdomadaire</p></div></div><div class="card"><div class="cal">';
+          html +=
+            '<div class="h"></div>' +
+            days.map((d) => `<div class="h">${d}</div>`).join("");
+          hours.forEach((h) => {
+            html += `<div class="h">${h}</div>`;
+            days.forEach(() => {
+              html +=
+                "<div>" +
+                (Math.random() > 0.55
+                  ? `<div class="ev">${rand(SUBJ_NAMES).slice(0, 18)}<br>${rand(ROOMS)}</div>`
+                  : "") +
+                "</div>";
+            });
+          });
+          html += "</div></div>";
+          return html;
+        }
+
+        /* ============ BUDGET AVANCÉ ============ */
+        function renderBudget(c) {
+          const b = c.budget;
+          const ecart = b.prevision - b.depenseReelle;
+          const catBudgets = [
+            {
+              label: "Budget Académique",
+              val: b.acad,
+              pct: 35,
+              color: "#1d4ed8",
+            },
+            { label: "Budget RH", val: b.rh, pct: 20, color: "#7c3aed" },
+            {
+              label: "Budget Équipement",
+              val: b.equipment,
+              pct: 12,
+              color: "#0891b2",
+            },
+            { label: "Budget Admin", val: b.admin, pct: 15, color: "#059669" },
+            {
+              label: "Budget Recherche",
+              val: b.research,
+              pct: 10,
+              color: "#f59e0b",
+            },
+            {
+              label: "Budget Marketing",
+              val: b.marketing,
+              pct: 8,
+              color: "#ea580c",
+            },
+          ];
+          return `<div class="page-h"><div><h2>Budget du Collège</h2><p>Exercice 2026 — Gestion budgétaire avancée</p></div>
+          <div style="display:flex;gap:8px"><button class="btn btn-pdf" onclick="exportPDF('Budget')">📄 Exporter PDF</button><button class="btn btn-primary" onclick="openModal('depense')">+ Demande de dépense</button></div></div>
+         <div class="kpis">
+          <div class="kpi"><div class="lbl">Budget Annuel</div><div class="val" style="font-size:16px">${fmtMoney(b.annual)}</div></div>
+          <div class="kpi"><div class="lbl">Prévision budgétaire</div><div class="val" style="font-size:16px">${fmtMoney(b.prevision)}</div></div>
+          <div class="kpi"><div class="lbl">Engagements</div><div class="val" style="font-size:16px">${fmtMoney(b.engagement)}</div></div>
+          <div class="kpi"><div class="lbl">Dépenses Réelles</div><div class="val" style="font-size:16px">${fmtMoney(b.depenseReelle)}</div></div>
+          <div class="kpi"><div class="lbl">Écart Budgétaire</div><div class="val" style="font-size:16px;color:${ecart > 0 ? "var(--ok)" : "var(--err)"}">${fmtMoney(Math.abs(ecart))}</div><div class="trd ${ecart > 0 ? "up" : "dn"}">${ecart > 0 ? "▲ Excédent" : "▼ Dépassement"}</div></div>
+          <div class="kpi"><div class="lbl">Taux d'exécution</div><div class="val">${b.tauxExecution}%</div><div class="trd up">Objectif 85%</div></div>
+         </div>
+         <div class="budget-cats">
+          ${catBudgets
+            .map(
+              (cat) => `<div class="bcat">
+            <div class="bl">${cat.label}</div>
+            <div class="bv">${fmtMoney(cat.val)}</div>
+            <div class="bp">${cat.pct}% du budget total</div>
+            <div class="prog-bar"><div class="prog-bar-fill" style="width:${((b.tauxExecution * cat.pct) / 100) * 2}%;background:${cat.color}"></div></div>
+          </div>`,
+            )
+            .join("")}
+         </div>
+         <div class="grid2">
+          <div class="card"><h3>Budget vs Réalisé</h3><div class="chart-wrap"><canvas id="chB1"></canvas></div></div>
+          <div class="card"><h3>Dépenses par département</h3><div class="chart-wrap"><canvas id="chB2"></canvas></div></div>
+         </div>
+         <div class="card" style="margin-bottom:16px"><h3>Prévisions annuelles</h3><div class="chart-wrap"><canvas id="chB3"></canvas></div></div>
+         <div class="card">
+          <h3>Historique des dépenses <span class="more" onclick="openModal('depense')">+ Nouvelle demande</span></h3>
+          <table><thead><tr><th>Libellé</th><th>Catégorie</th><th>Département</th><th>Montant</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead><tbody>
+          ${b.depenses
+            .map(
+              (d) => `<tr>
+            <td><b>${d.libelle}</b></td>
+            <td>${d.categorie}</td>
+            <td>${d.dept}</td>
+            <td>${fmtMoney(d.montant)}</td>
+            <td><span class="badge ${d.statut === "Validé" ? "b-ok" : d.statut === "En cours" ? "b-info" : "b-warn"}">${d.statut}</span></td>
+            <td>${d.date}</td>
+            <td>
+              <button class="btn btn-ghost" style="padding:4px 8px" onclick="editDepense('${d.id}')">✎</button>
+              <button class="btn btn-danger" style="padding:4px 8px" onclick="deleteDepense('${d.id}')">✕</button>
+            </td>
+          </tr>`,
+            )
+            .join("")}
+          </tbody></table>
+         </div>`;
+        }
+
+        /* ============ RAPPORTS + EXPORT PDF ============ */
+        function renderReports(c) {
+          const cats = [
+            { n: "Étudiants", v: c.students.length, type: "student" },
+            { n: "Candidatures", v: c.applications.length, type: "app" },
+            { n: "Programmes", v: c.programs.length, type: "program" },
+            { n: "Matières", v: c.subjects.length, type: "subject" },
+            { n: "Enseignants", v: c.teachers.length, type: "teacher" },
+            { n: "Examens", v: c.exams.length, type: "exam" },
+            { n: "Notes", v: c.grades.length, type: "grade" },
+            { n: "Budget", v: "1 rapport", type: "budget" },
+          ];
+          return `<div class="page-h"><div><h2>Rapports</h2><p>Tableaux avancés & exports PDF</p></div></div>
+         <div class="kpis">${cats
+           .map(
+             (cat) => `<div class="kpi">
+          <div class="lbl">${cat.n}</div>
+          <div class="val" style="font-size:18px">${cat.v}</div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <button class="btn btn-pdf" style="font-size:11px;padding:4px 8px" onclick="exportPDF('${cat.n}')">📄 PDF</button>
+            <button class="btn btn-ghost" style="font-size:11px;padding:4px 8px" onclick="exportData()">⬇ CSV</button>
+          </div>
+         </div>`,
+           )
+           .join("")}</div>
+         <div class="card"><h3>Indicateurs clés trimestriels</h3><table><thead><tr><th>Indicateur</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>Total</th><th>Évolution</th></tr></thead><tbody>
+         ${["Effectif", "Candidatures", "Taux réussite", "Présence", "Budget %"]
+           .map((k) => {
+             const v = [ri(50, 200), ri(50, 200), ri(50, 200), ri(50, 200)];
+             return `<tr><td><b>${k}</b></td>${v.map((x) => `<td>${x}</td>`).join("")}<td><b>${v.reduce((a, b) => a + b)}</b></td><td><span class="badge b-ok">▲ ${ri(2, 15)}%</span></td></tr>`;
+           })
+           .join("")}
+         </tbody></table></div>
+         <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-pdf" onclick="exportPDF('Rapport_complet')">📄 Rapport PDF Complet</button>
+          <button class="btn btn-pdf" onclick="exportPDF('Rapport_etudiants')">📄 Rapport Étudiants</button>
+          <button class="btn btn-pdf" onclick="exportPDF('Rapport_budget')">📄 Rapport Budget</button>
+          <button class="btn btn-pdf" onclick="exportPDF('Rapport_candidatures')">📄 Rapport Candidatures</button>
+         </div>`;
+        }
+
+        /* ============ PERSONNALISATION ============ */
+        function renderSettings(c) {
+          return `<div class="page-h"><div><h2>Personnalisation du Collège</h2><p>Identité visuelle, signature & informations officielles</p></div></div>
+         <div class="settings-grid">
+          <div class="card"><h3>Identité</h3>
+           <div class="form-row"><label>Nom du collège</label><input value="${c.name}" onchange="STATE.current.name=this.value"/></div>
+           <div class="form-row"><label>Logo officiel (initiales)</label><input value="${c.settings.logo}"/></div>
+           <div class="form-row"><label>Couleur principale</label><input type="color" value="${c.settings.primary}" onchange="document.documentElement.style.setProperty('--brand',this.value)"/></div>
+           <div class="form-row"><label>Couleur secondaire</label><input type="color" value="${c.settings.secondary}"/></div>
+           <button class="btn btn-primary" style="width:100%;margin-top:6px" onclick="alert('Logo mis à jour')">⬆ Téléverser logo officiel</button>
+          </div>
+          <div class="card"><h3>Coordonnées</h3>
+           <div class="form-row"><label>Doyen</label><input value="${c.dean}"/></div>
+           <div class="form-row"><label>Site web</label><input value="${c.settings.site}"/></div>
+           <div class="form-row"><label>Téléphone</label><input value="${c.settings.phone}"/></div>
+           <div class="form-row"><label>Adresse</label><textarea>${c.settings.address}</textarea></div>
+          </div>
+          <div class="card"><h3>Signature numérique du Doyen</h3>
+           <div style="border:2px dashed var(--line);border-radius:8px;padding:30px;text-align:center;color:var(--muted)">✍️ Aperçu signature<br><i style="font-family:cursive;font-size:24px;color:var(--brand)">${c.dean}</i></div>
+           <button class="btn btn-ghost" style="margin-top:10px;width:100%">⬆ Téléverser nouvelle signature</button>
+          </div>
+          <div class="card"><h3>Cachet officiel</h3>
+           <div style="border:2px dashed var(--line);border-radius:8px;padding:30px;text-align:center"><div style="width:140px;height:140px;border:3px solid var(--brand);border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;color:var(--brand);font-weight:700;text-align:center;font-size:11px">${c.name}<br>· OFFICIEL ·</div></div>
+           <button class="btn btn-ghost" style="margin-top:10px;width:100%">⬆ Téléverser cachet officiel</button>
+          </div>
+          <div class="card"><h3>Informations bancaires</h3>
+           <div class="form-row"><label>Banque</label><input value="Banque SSIAVERSITY (BSSI)"/></div>
+           <div class="form-row"><label>IBAN / RIB</label><input value="${c.settings.infosBancaires}"/></div>
+           <div class="form-row"><label>Devise</label><input value="Franc CFA (IV — SSIAVERSITY Côte d'Ivoire)" readonly/></div>
+          </div>
+          <div class="card"><h3>Budget propre au Collège</h3>
+           <div style="font-size:13px;margin-bottom:8px">Budget annuel alloué : <b>${fmtMoney(c.budget.annual)}</b></div>
+           <div style="font-size:13px;margin-bottom:8px">Dépenses réelles : <b>${fmtMoney(c.budget.depenseReelle)}</b></div>
+           <div style="font-size:13px">Taux d'exécution : <b>${c.budget.tauxExecution}%</b></div>
+           <div class="prog-bar" style="margin-top:10px"><div class="prog-bar-fill" style="width:${c.budget.tauxExecution}%"></div></div>
+          </div>
+         </div>
+         <div class="banner" style="margin-top:16px">⚠️ Cette personnalisation est interne au collège. Les documents officiels (diplômes, attestations) demeurent sous le contrôle exclusif de l'Administration Centrale.</div>`;
+        }
+
+        /* ============ ADMIN CENTRALE ============ */
+        function renderAdmin() {
+          const totalApp = STATE.colleges.reduce(
+            (s, c) => s + c.applications.length,
+            0,
+          );
+          const totalStu = STATE.colleges.reduce(
+            (s, c) => s + c.students.length,
+            0,
+          );
+          return `<div class="page-h"><div><h2>Administration Centrale</h2><p>Vue de consultation — Gouvernance & Documents Officiels</p></div>
+         <button class="btn btn-pdf" onclick="exportPDF('Admin_Centrale')">📄 Exporter PDF</button></div>
+         <div class="banner" style="background:linear-gradient(90deg,#dbeafe,#bfdbfe);border-color:#1d4ed8;color:#1e3a8a">🏛️ L'Administration Centrale délivre exclusivement les <b>diplômes, attestations et lettres officielles</b> de SSIAVERSITY. Elle organise les entretiens, rédige les synthèses et recommandations, puis transmet les dossiers aux collèges pour décision finale.</div>
+         <div class="kpis">
+          <div class="kpi"><div class="lbl">Collèges</div><div class="val">21</div></div>
+          <div class="kpi"><div class="lbl">Étudiants total</div><div class="val">${totalStu}</div></div>
+          <div class="kpi"><div class="lbl">Candidatures total</div><div class="val">${totalApp}</div></div>
+          <div class="kpi"><div class="lbl">Entretiens (mois)</div><div class="val">${ri(80, 200)}</div></div>
+          <div class="kpi"><div class="lbl">Diplômes 2025</div><div class="val">${ri(400, 1200)}</div></div>
+          <div class="kpi"><div class="lbl">Attestations</div><div class="val">${ri(800, 2000)}</div></div>
+         </div>
+         <div class="card"><h3>Synthèse des collèges</h3><table><thead><tr><th>Collège</th><th>Doyen</th><th>Étudiants</th><th>Programmes</th><th>Profs</th><th>Candidatures</th><th>Budget Annuel</th></tr></thead><tbody>
+         ${STATE.colleges.map((c) => `<tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${c.color};margin-right:8px"></span><b>${c.name}</b></td><td>${c.dean}</td><td>${c.students.length}</td><td>${c.programs.length}</td><td>${c.teachers.length}</td><td>${c.applications.length}</td><td>${fmtMoney(c.budget.annual)}</td></tr>`).join("")}
+         </tbody></table></div>`;
+        }
+
+        /* ============ CHARTS ============ */
+        let charts = [];
+        function initCharts() {
+          charts.forEach((c) => {
+            try {
+              c.destroy();
+            } catch (e) {}
+          });
+          charts = [];
+          const opt = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: "bottom", labels: { font: { size: 11 } } },
+            },
+          };
+          const mk = (id, cfg) => {
+            const el = document.getElementById(id);
+            if (el) charts.push(new Chart(el, cfg));
+          };
+          const months = [
+            "Jan",
+            "Fév",
+            "Mar",
+            "Avr",
+            "Mai",
+            "Jun",
+            "Jul",
+            "Aoû",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Déc",
+          ];
+          mk("ch1", {
+            type: "line",
+            data: {
+              labels: months,
+              datasets: [
+                {
+                  label: "Étudiants",
+                  data: months.map(() => ri(30, 120)),
+                  borderColor: "#1d4ed8",
+                  backgroundColor: "rgba(29,78,216,.15)",
+                  tension: 0.35,
+                  fill: true,
+                },
+              ],
+            },
+            options: opt,
+          });
+          mk("ch2", {
+            type: "doughnut",
+            data: {
+              labels: ["BAC+3 S1", "BAC+3 S2", "BAC+5 S3", "BAC+5 S4"],
+              datasets: [
+                {
+                  data: [ri(20, 60), ri(20, 60), ri(20, 60), ri(20, 60)],
+                  backgroundColor: ["#1d4ed8", "#0ea5e9", "#10b981", "#f59e0b"],
+                },
+              ],
+            },
+            options: opt,
+          });
+          mk("ch3", {
+            type: "bar",
+            data: {
+              labels: ["Prog A", "Prog B", "Prog C", "Prog D"],
+              datasets: [
+                {
+                  label: "Réussite %",
+                  data: [ri(60, 95), ri(60, 95), ri(60, 95), ri(60, 95)],
+                  backgroundColor: "#1d4ed8",
+                },
+                {
+                  label: "Présence %",
+                  data: [ri(70, 99), ri(70, 99), ri(70, 99), ri(70, 99)],
+                  backgroundColor: "#0ea5e9",
+                },
+              ],
+            },
+            options: opt,
+          });
+          mk("chG1", {
+            type: "bar",
+            data: {
+              labels: [
+                "0-5",
+                "5-8",
+                "8-10",
+                "10-12",
+                "12-14",
+                "14-16",
+                "16-20",
+              ],
+              datasets: [
+                {
+                  label: "Étudiants",
+                  data: [2, 5, 8, 15, 22, 18, 10],
+                  backgroundColor: "#10b981",
+                },
+              ],
+            },
+            options: opt,
+          });
+          mk("chG2", {
+            type: "line",
+            data: {
+              labels: ["S1", "S2", "S3", "S4"],
+              datasets: [
+                {
+                  label: "Moyenne",
+                  data: [12.4, 13.1, 13.8, 14.2],
+                  borderColor: "#7c3aed",
+                  backgroundColor: "rgba(124,58,237,.15)",
+                  fill: true,
+                  tension: 0.3,
+                },
+              ],
+            },
+            options: opt,
+          });
+          mk("chA", {
+            type: "line",
+            data: {
+              labels: months,
+              datasets: [
+                {
+                  label: "Étudiants %",
+                  data: months.map(() => ri(80, 98)),
+                  borderColor: "#10b981",
+                  tension: 0.3,
+                },
+                {
+                  label: "Enseignants %",
+                  data: months.map(() => ri(85, 99)),
+                  borderColor: "#f59e0b",
+                  tension: 0.3,
+                },
+              ],
+            },
+            options: opt,
+          });
+          mk("chB1", {
+            type: "bar",
+            data: {
+              labels: ["T1", "T2", "T3", "T4"],
+              datasets: [
+                {
+                  label: "Budget",
+                  data: [200, 250, 300, 250],
+                  backgroundColor: "#1d4ed8",
+                },
+                {
+                  label: "Réalisé",
+                  data: [180, 240, 290, 210],
+                  backgroundColor: "#10b981",
+                },
+              ],
+            },
+            options: opt,
+          });
+          mk("chB2", {
+            type: "pie",
+            data: {
+              labels: DEPTS,
+              datasets: [
+                {
+                  data: DEPTS.map(() => ri(20, 100)),
+                  backgroundColor: [
+                    "#1d4ed8",
+                    "#0ea5e9",
+                    "#10b981",
+                    "#f59e0b",
+                    "#ef4444",
+                    "#7c3aed",
+                  ],
+                },
+              ],
+            },
+            options: opt,
+          });
+          mk("chB3", {
+            type: "line",
+            data: {
+              labels: months,
+              datasets: [
+                {
+                  label: "Prévision",
+                  data: months.map((_, i) => 50 + i * 8 + ri(-5, 5)),
+                  borderColor: "#1d4ed8",
+                  fill: false,
+                  borderDash: [5, 5],
+                },
+                {
+                  label: "Réel",
+                  data: months.map((_, i) => 50 + i * 7 + ri(-8, 8)),
+                  borderColor: "#10b981",
+                  backgroundColor: "rgba(16,185,129,.15)",
+                  fill: true,
+                },
+              ],
+            },
+            options: opt,
+          });
+        }
+
+        /* ============ MODAL CRUD ============ */
+        function openModal(type, data = null) {
+          const c = STATE.current;
+          const progs =
+            c && c.programs
+              ? c.programs.map((p) => `<option>${p.name}</option>`).join("")
+              : "";
+          const forms = {
+            program: `
+              <div class="form-row"><label>Nom du programme</label><input id="f_name" value="${data ? data.name : ""}"/></div>
+            
+            <div class="form-row"><label>Responsable</label><input id="f_resp" value="${data ? data.resp : "Dr. "}"/></div>
+            <div class="form-row"><label>Crédits totaux</label><input id="f_credits" type="number" value="${data ? data.credits : 180}"/></div>
+            <div style="background:var(--chip);padding:12px;border-radius:8px;margin-bottom:12px">
+              <div style="font-weight:700;font-size:12px;margin-bottom:8px">Structure obligatoire :</div>
+              <div style="font-size:12px;color:var(--muted)">✓ Classe 1er Cycle (BAC+3) — Semestre 1 & Semestre 2</div>
+              <div style="font-size:12px;color:var(--muted)">✓ Classe 2ème Cycle (BAC+5) — Semestre 3 & Semestre 4</div>
+            </div>`,
+            subject: `
+            <div class="form-grid">
+              <div class="form-row"><label>Nom de la matière</label><input id="f_name" value="${data ? data.name : ""}"/></div>
+            </div>
+            <div class="form-row"><label>Programme</label><select id="f_prog"><option>-- Choisir --</option>${progs}</select></div>
+            <div class="form-grid">
+              <div class="form-row"><label>Classe</label><select id="f_classe"><option>Premier Cycle (BAC+3)</option><option>Cycle Supérieur (BAC+5)</option></select></div>
+              <div class="form-row"><label>Semestre</label><select id="f_sem"><option>S1</option><option>S2</option><option>S3</option><option>S4</option></select></div>
+            </div>
+            <div class="form-grid">
+              <div class="form-row"><label>Crédits</label><input id="f_credit" type="number" value="${data ? data.credit : 3}"/></div>
+              <div class="form-row"><label>Coefficient</label><input id="f_coef" type="number" value="${data ? data.coef : 2}"/></div>
+              <div class="form-row"><label>Heures</label><input id="f_hours" type="number" value="${data ? data.hours : 40}"/></div>
+            </div>
+            <div class="form-row"><label>Enseignant</label><input id="f_teacher" value="${data ? data.teacher : "Dr. "}"/></div>`,
+            student: `
+            <div class="form-grid">
+              <div class="form-row"><label>Matricule</label><input id="f_mat" placeholder="ETU00001" value="${data ? data.mat : "ETU" + pad(ri(1, 99999), 5)}"/></div>
+              <div class="form-row"><label>N° Dossier</label><input id="f_dos" value="${data ? data.numDossier : "DOS" + pad(ri(1, 999999), 6)}"/></div>
+            </div>
+            <div class="form-grid">
+              <div class="form-row"><label>Prénom(s)</label><input id="f_first" value="${data ? data.first : ""}"/></div>
+              <div class="form-row"><label>Nom</label><input id="f_last" value="${data ? data.last : ""}"/></div>
+            </div>
+            <div class="form-grid">
+              <div class="form-row"><label>Sexe</label><select id="f_sex"><option>M</option><option>F</option></select></div>
+              <div class="form-row"><label>Date de naissance</label><input type="date" id="f_dob" value="${data ? data.dob : "2002-01-01"}"/></div>
+            </div>
+            <div class="form-row"><label>Nationalité</label><select id="f_nation"><option>-- Choisir --</option>${NATIONS.map((n) => `<option>${n}</option>`).join("")}</select></div>
+            <div class="form-row"><label>Programme</label><select id="f_prog"><option>-- Choisir --</option>${progs}</select></div>
+            <div class="form-grid">
+              <div class="form-row"><label>Classe</label><select id="f_classe"><option>Premier Cycle (BAC+3)</option><option>Cycle Supérieur (BAC+5)</option></select></div>
+              <div class="form-row"><label>Semestre actuel</label><select id="f_sem"><option>S1</option><option>S2</option><option>S3</option><option>S4</option></select></div>
+            </div>
+            <div class="form-row"><label>Email</label><input type="email" id="f_email" value="${data ? data.email : ""}"/></div>`,
+            teacher: `
+            <div class="form-row"><label>Nom complet</label><input id="f_name" value="${data ? data.name : "Dr. "}"/></div>
+            <div class="form-grid">
+              <div class="form-row"><label>Grade</label><select id="f_grade">${GRADES.map((g) => `<option>${g}</option>`).join("")}</select></div>
+              <div class="form-row"><label>Spécialité</label><input id="f_spec" value="${data ? data.spec : ""}"/></div>
+            </div>
+            <div class="form-row"><label>Email</label><input type="email" id="f_email" value="${data ? data.email : ""}"/></div>
+            <div class="form-row"><label>Téléphone</label><input id="f_phone" value="${data ? data.phone : ""}"/></div>
+            <hr style="border-color:var(--line);margin:12px 0"/>
+            <div style="font-weight:700;font-size:13px;margin-bottom:10px">Table d'affectation complète</div>
+            <div class="form-row"><label>Programme d'études</label><select id="f_prog"><option>-- Choisir --</option>${progs}</select></div>
+            <div class="form-grid">
+              <div class="form-row"><label>Classe</label><select id="f_classe"><option>Premier Cycle (BAC+3)</option><option>Cycle Supérieur (BAC+5)</option></select></div>
+              <div class="form-row"><label>Semestre</label><select id="f_sem"><option>S1</option><option>S2</option><option>S3</option><option>S4</option></select></div>
+            </div>
+            <div class="form-row"><label>Matière enseignée</label><select id="f_matiere"><option>-- Choisir --</option>${SUBJ_NAMES.map((n) => `<option>${n}</option>`).join("")}</select></div>`,
+            staff: `<div class="form-row"><label>Nom</label><input id="f_name" value="${data ? data.name : ""}"/></div><div class="form-row"><label>Poste</label><input id="f_post" value="${data ? data.post : ""}"/></div><div class="form-row"><label>Département</label><select id="f_dept">${DEPTS.map((d) => `<option>${d}</option>`).join("")}</select></div><div class="form-row"><label>Type de contrat</label><select id="f_contract"><option>CDI</option><option>CDD</option><option>Stage</option></select></div>`,
+            exam: `<div class="form-row"><label>Matière</label><input id="f_subject" value="${data ? data.subject : ""}"/></div><div class="form-grid"><div class="form-row"><label>Date</label><input type="date" id="f_date" value="${data ? data.date : "2026-09-01"}"/></div><div class="form-row"><label>Heure</label><input type="time" id="f_time" value="${data ? data.time : "09:00"}"/></div></div><div class="form-grid"><div class="form-row"><label>Salle</label><select id="f_room">${ROOMS.map((r) => `<option>${r}</option>`).join("")}</select></div><div class="form-row"><label>Session</label><select id="f_session"><option>Session 1</option><option>Rattrapage</option></select></div></div><div class="form-row"><label>Surveillant</label><input id="f_surv" value="${data ? data.surv : "Dr. "}"/></div>`,
+            course: `<div class="form-row"><label>Matière</label><input id="f_subject" value="${data ? data.subject : ""}"/></div><div class="form-row"><label>Programme</label><select id="f_prog"><option>-- Choisir --</option>${progs}</select></div><div class="form-grid"><div class="form-row"><label>Date</label><input type="date" id="f_date" value="${data ? data.date : "2026-09-01"}"/></div><div class="form-row"><label>Heure</label><input type="time" id="f_time" value="${data ? data.time : "08:00"}"/></div></div><div class="form-grid"><div class="form-row"><label>Salle</label><select id="f_room">${ROOMS.map((r) => `<option>${r}</option>`).join("")}</select></div></div><div class="form-row"><label>Professeur</label><input id="f_teacher" value="${data ? data.teacher : "Dr. "}"/></div>`,
+            grade: `<div class="form-row"><label>Étudiant (Matricule)</label><input id="f_student" value="${data ? data.student : "ETU"}"/></div><div class="form-row"><label>Matière</label><select id="f_subject"><option>-- Choisir --</option>${SUBJ_NAMES.map((n) => `<option>${n}</option>`).join("")}</select></div><div class="form-grid"><div class="form-row"><label>Note CC</label><input type="number" id="f_cc" min="0" max="20" value="${data ? data.cc : ""}"/></div><div class="form-row"><label>Note TP</label><input type="number" id="f_tp" min="0" max="20" value="${data ? data.tp : ""}"/></div><div class="form-row"><label>Note Examen Final</label><input type="number" id="f_final" min="0" max="20" value="${data ? data.final : ""}"/></div></div>`,
+            depense: `<div class="form-row"><label>Libellé</label><input id="f_libelle" placeholder="Ex: Achat matériel informatique"/></div><div class="form-row"><label>Catégorie</label><select id="f_cat"><option>Académique</option><option>Admin</option><option>Recherche</option><option>Équipement</option><option>Marketing</option><option>RH</option></select></div><div class="form-row"><label>Département</label><select id="f_dept">${DEPTS.map((d) => `<option>${d}</option>`).join("")}</select></div><div class="form-row"><label>Montant (IV)</label><input type="number" id="f_montant" placeholder="Ex: 500000"/></div><div class="form-row"><label>Date</label><input type="date" id="f_date" value="2026-06-15"/></div>`,
+            new: `<div class="form-row"><label>Type de création</label><select id="f_type" onchange="closeModal();openModal(this.value)"><option value="new">-- Choisir --</option><option value="program">Programme d'études</option><option value="subject">Matière</option><option value="student">Étudiant</option><option value="teacher">Professeur</option><option value="exam">Examen</option><option value="course">Cours</option><option value="grade">Note</option><option value="depense">Dépense budgétaire</option></select></div>`,
+          };
+          const titles = {
+            program: "Nouveau Programme",
+            subject: "Nouvelle Matière",
+            student: "Nouvel Étudiant",
+            teacher: "Nouveau Professeur",
+            staff: "Nouvel Employé",
+            exam: "Nouvel Examen",
+            course: "Nouveau Cours",
+            grade: "Saisie de Note",
+            depense: "Demande de Dépense",
+            new: "Création rapide",
+          };
+
+          document.getElementById("modalRoot").innerHTML =
+            `<div class="modal-bg" onclick="if(event.target===this)closeModal()">
+         <div class="modal"><div class="modal-h"><h3>${titles[type] || "Formulaire"}</h3><button onclick="closeModal()" style="font-size:20px">×</button></div>
+         <div class="modal-b">${forms[type] || "<p>Formulaire en construction</p>"}</div>
+         <div class="modal-f">
+          <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+          <button class="btn btn-primary" onclick="saveRecord('${type}')">💾 Enregistrer</button>
+         </div></div></div>`;
+        }
+
+        function saveRecord(type) {
+          const c = STATE.current;
+          const g = (id) =>
+            document.getElementById(id)
+              ? document.getElementById(id).value
+              : "";
+          const newId = c.id + "-" + type + Date.now();
+          if (type === "program") {
+            c.programs.push({
+              id: newId,
+              name: g("f_name") || "Nouveau Programme",
+              credits: parseInt(g("f_credits")) || 180,
+              resp: g("f_resp") || "—",
+              date: new Date().toISOString().split("T")[0],
+              status: "Actif",
+              premierCycle: {
+                label: "Classe 1er Cycle (BAC+3)",
+                cycle: "BAC+3",
+                semestres: ["Semestre 1", "Semestre 2"],
+                credits: 90,
+              },
+              cycleSuperieur: {
+                label: "Classe 2ème Cycle (BAC+5)",
+                cycle: "BAC+5",
+                semestres: ["Semestre 3", "Semestre 4"],
+                credits: 90,
+              },
+            });
+          } else if (type === "subject") {
+            c.subjects.push({
+              id: newId,
+              name: g("f_name") || "Nouvelle Matière",
+              program: g("f_prog"),
+              classe: g("f_classe"),
+              sem: g("f_sem"),
+              credit: parseInt(g("f_credit")) || 3,
+              coef: parseInt(g("f_coef")) || 2,
+              hours: parseInt(g("f_hours")) || 40,
+              teacher: g("f_teacher"),
+            });
+          } else if (type === "student") {
+            c.students.push({
+              id: newId,
+              mat: g("f_mat") || "ETU" + pad(c.students.length + 1, 5),
+              numDossier: g("f_dos"),
+              first: g("f_first"),
+              last: g("f_last"),
+              sex: g("f_sex"),
+              dob: g("f_dob"),
+              nation: g("f_nation"),
+              phone: "",
+              email: g("f_email"),
+              program: g("f_prog"),
+              classe: g("f_classe"),
+              cycle: g("f_classe").includes("BAC+3") ? "BAC+3" : "BAC+5",
+              sem: g("f_sem"),
+              status: "Actif",
+              notes: { s1: 0, s2: 0, s3: 0, s4: 0 },
+              creditsValides: 0,
+            });
+          } else if (type === "teacher") {
+            c.teachers.push({
+              id: newId,
+              num: "PR" + pad(c.teachers.length + 1, 3),
+              name: g("f_name"),
+              grade: g("f_grade"),
+              dept: c.sub,
+              spec: g("f_spec"),
+              phone: g("f_phone"),
+              email: g("f_email"),
+              affectation: {
+                programme: g("f_prog"),
+                classe: g("f_classe"),
+                semestre: g("f_sem"),
+                matiere: g("f_matiere"),
+              },
+            });
+          } else if (type === "staff") {
+            c.staff.push({
+              id: newId,
+              num: "EMP" + pad(c.staff.length + 1, 3),
+              name: g("f_name"),
+              post: g("f_post"),
+              dept: g("f_dept"),
+              contract: g("f_contract"),
+              present: true,
+            });
+          } else if (type === "exam") {
+            c.exams.push({
+              id: newId,
+              subject: g("f_subject"),
+              date: g("f_date"),
+              time: g("f_time"),
+              room: g("f_room"),
+              session: g("f_session"),
+              surv: g("f_surv"),
+            });
+          } else if (type === "course") {
+            c.courses.push({
+              id: newId,
+              subject: g("f_subject"),
+              date: g("f_date"),
+              time: g("f_time"),
+              room: g("f_room"),
+              teacher: g("f_teacher"),
+              program: g("f_prog"),
+            });
+          } else if (type === "grade") {
+            const cc = parseFloat(g("f_cc") || 0),
+              tp = parseFloat(g("f_tp") || 0),
+              fin = parseFloat(g("f_final") || 0);
+            c.grades.push({
+              id: newId,
+              student: g("f_student"),
+              subject: g("f_subject"),
+              cc,
+              tp,
+              final: fin,
+              avg: (cc * 0.3 + tp * 0.3 + fin * 0.4).toFixed(2),
+            });
+          } else if (type === "depense") {
+            const m = parseInt(g("f_montant")) || 0;
+            c.budget.depenses.push({
+              id: newId,
+              libelle: g("f_libelle"),
+              categorie: g("f_cat"),
+              dept: g("f_dept"),
+              montant: m,
+              statut: "En attente",
+              date: g("f_date"),
+            });
+            c.budget.depenseReelle += m;
+          }
+          closeModal();
+          render();
+        }
+
+        function editRecord(type, itemId) {
+          const c = STATE.current;
+          let data = null;
+          if (type === "program")
+            data = c.programs.find((x) => x.id === itemId);
+          else if (type === "subject")
+            data = c.subjects.find((x) => x.id === itemId);
+          else if (type === "student")
+            data = c.students.find((x) => x.id === itemId);
+          else if (type === "teacher")
+            data = c.teachers.find((x) => x.id === itemId);
+          else if (type === "staff")
+            data = c.staff.find((x) => x.id === itemId);
+          else if (type === "exam") data = c.exams.find((x) => x.id === itemId);
+          else if (type === "course")
+            data = c.courses.find((x) => x.id === itemId);
+          else if (type === "grade")
+            data = c.grades.find((x) => x.id === itemId);
+          openModal(type, data);
+          // Override save button to update
+          setTimeout(() => {
+            const saveBtn = document.querySelector(".modal-f .btn-primary");
+            if (saveBtn)
+              saveBtn.onclick = () => {
+                updateRecord(type, itemId);
+              };
+          }, 50);
+        }
+
+        function updateRecord(type, itemId) {
+          const c = STATE.current;
+          const g = (id) =>
+            document.getElementById(id)
+              ? document.getElementById(id).value
+              : "";
+          const update = (arr, id, fields) => {
+            const i = arr.findIndex((x) => x.id === id);
+            if (i >= 0) Object.assign(arr[i], fields);
+          };
+          if (type === "program")
+            update(c.programs, itemId, {
+              name: g("f_name"),
+              credits: parseInt(g("f_credits")) || 180,
+              resp: g("f_resp"),
+            });
+          else if (type === "subject")
+            update(c.subjects, itemId, {
+              name: g("f_name"),
+              program: g("f_prog"),
+              classe: g("f_classe"),
+              sem: g("f_sem"),
+              credit: parseInt(g("f_credit")) || 3,
+              coef: parseInt(g("f_coef")) || 2,
+              hours: parseInt(g("f_hours")) || 40,
+              teacher: g("f_teacher"),
+            });
+          else if (type === "student")
+            update(c.students, itemId, {
+              first: g("f_first"),
+              last: g("f_last"),
+              dob: g("f_dob"),
+              nation: g("f_nation"),
+              program: g("f_prog"),
+              classe: g("f_classe"),
+              sem: g("f_sem"),
+              email: g("f_email"),
+            });
+          else if (type === "teacher")
+            update(c.teachers, itemId, {
+              name: g("f_name"),
+              grade: g("f_grade"),
+              spec: g("f_spec"),
+              phone: g("f_phone"),
+              email: g("f_email"),
+              affectation: {
+                programme: g("f_prog"),
+                classe: g("f_classe"),
+                semestre: g("f_sem"),
+                matiere: g("f_matiere"),
+              },
+            });
+          else if (type === "staff")
+            update(c.staff, itemId, {
+              name: g("f_name"),
+              post: g("f_post"),
+              dept: g("f_dept"),
+              contract: g("f_contract"),
+            });
+          else if (type === "exam")
+            update(c.exams, itemId, {
+              subject: g("f_subject"),
+              date: g("f_date"),
+              time: g("f_time"),
+              room: g("f_room"),
+              session: g("f_session"),
+              surv: g("f_surv"),
+            });
+          else if (type === "course")
+            update(c.courses, itemId, {
+              subject: g("f_subject"),
+              date: g("f_date"),
+              time: g("f_time"),
+              room: g("f_room"),
+              teacher: g("f_teacher"),
+              program: g("f_prog"),
+            });
+          else if (type === "grade") {
+            const cc = parseFloat(g("f_cc") || 0),
+              tp = parseFloat(g("f_tp") || 0),
+              fin = parseFloat(g("f_final") || 0);
+            update(c.grades, itemId, {
+              cc,
+              tp,
+              final: fin,
+              avg: (cc * 0.3 + tp * 0.3 + fin * 0.4).toFixed(2),
+            });
+          }
+          closeModal();
+          render();
+        }
+
+        function deleteRecord(type, itemId) {
+          if (!confirm("Confirmer la suppression de cet enregistrement ?"))
+            return;
+          const c = STATE.current;
+          if (type === "program")
+            c.programs = c.programs.filter((x) => x.id !== itemId);
+          else if (type === "subject")
+            c.subjects = c.subjects.filter((x) => x.id !== itemId);
+          else if (type === "student")
+            c.students = c.students.filter((x) => x.id !== itemId);
+          else if (type === "teacher")
+            c.teachers = c.teachers.filter((x) => x.id !== itemId);
+          else if (type === "staff")
+            c.staff = c.staff.filter((x) => x.id !== itemId);
+          else if (type === "exam")
+            c.exams = c.exams.filter((x) => x.id !== itemId);
+          else if (type === "course")
+            c.courses = c.courses.filter((x) => x.id !== itemId);
+          else if (type === "grade")
+            c.grades = c.grades.filter((x) => x.id !== itemId);
+          render();
+        }
+
+        function editDepense(depId) {
+          const c = STATE.current;
+          const d = c.budget.depenses.find((x) => x.id === depId);
+          if (!d) return;
+          openModal("depense", d);
+        }
+        function deleteDepense(depId) {
+          if (!confirm("Supprimer cette dépense ?")) return;
+          const c = STATE.current;
+          c.budget.depenses = c.budget.depenses.filter((x) => x.id !== depId);
+          render();
+        }
+
+        /* ============ MODAL DÉTAIL ============ */
+        function openDetailModal(type, itemId) {
+          const c = STATE.current;
+          let data = null,
+            html = "";
+          if (type === "student") {
+            data = c.students.find((x) => x.id === itemId);
+            if (!data) return;
+            html = `<div style="display:flex;gap:16px;flex-wrap:wrap">
+            <div class="dossier-avatar">👤</div>
+            <div style="flex:1">
+              <h2 style="margin:0 0 4px">${data.first} ${data.last}</h2>
+              <div style="color:var(--muted);margin-bottom:8px">${data.mat} · N° Dossier ${data.numDossier}</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
+                <div><b>Sexe :</b> ${data.sex}</div>
+                <div><b>Naissance :</b> ${data.dob}</div>
+                <div><b>Nationalité :</b> ${data.nation}</div>
+                <div><b>Email :</b> ${data.email}</div>
+                <div><b>Programme :</b> ${data.program}</div>
+                <div><b>Classe :</b> ${data.classe}</div>
+                <div><b>Cycle :</b> ${data.cycle}</div>
+                <div><b>Semestre :</b> ${data.sem}</div>
+                <div><b>Statut :</b> <span class="badge ${data.status === "Actif" ? "b-ok" : "b-warn"}">${data.status}</span></div>
+                <div><b>Crédits validés :</b> ${data.creditsValides}</div>
+              </div>
+            </div>
+          </div>
+          <hr style="border-color:var(--line);margin:16px 0"/>
+          <b>Progression académique</b>
+          <div class="prog-academic" style="margin-top:10px">
+            ${["S1", "S2", "S3", "S4"]
+              .map((s, i) => {
+                const v = data.notes["s" + (i + 1)] || 0;
+                return `<div class="sem-block ${v >= 10 ? "validated" : ""}"><div class="sem-label">${s}</div><div class="sem-score">${v.toFixed(1)}</div><div class="sem-credits">${i < 2 ? "BAC+3" : "BAC+5"}</div><div class="badge ${v >= 10 ? "b-ok" : "b-mut"}" style="margin-top:4px">${v >= 10 ? "Validé" : "—"}</div></div>`;
+              })
+              .join("")}
+          </div>`;
+          } else if (type === "teacher") {
+            data = c.teachers.find((x) => x.id === itemId);
+            if (!data) return;
+            html = `<h2 style="margin:0 0 4px">${data.name}</h2>
+          <div style="color:var(--muted);margin-bottom:12px">${data.num} · ${data.grade}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;margin-bottom:12px">
+            <div><b>Département :</b> ${data.dept}</div>
+            <div><b>Spécialité :</b> ${data.spec}</div>
+            <div><b>Téléphone :</b> ${data.phone}</div>
+            <div><b>Email :</b> ${data.email}</div>
+          </div>
+          <hr style="border-color:var(--line);margin:12px 0"/>
+          <b>Affectation complète</b>
+          <div style="background:var(--chip);padding:12px;border-radius:8px;margin-top:8px;font-size:13px">
+            <div><b>Programme :</b> ${data.affectation.programme}</div>
+            <div style="margin-top:4px"><b>Classe :</b> ${data.affectation.classe}</div>
+            <div style="margin-top:4px"><b>Semestre :</b> ${data.affectation.semestre}</div>
+            <div style="margin-top:4px"><b>Matière enseignée :</b> ${data.affectation.matiere}</div>
+          </div>`;
+          } else if (type === "exam") {
+            data = c.exams.find((x) => x.id === itemId);
+            if (!data) return;
+            html = `<div style="font-size:14px">
+            <div style="margin-bottom:8px"><b>Matière :</b> ${data.subject}</div>
+            <div style="margin-bottom:8px"><b>Date :</b> ${data.date} à ${data.time}</div>
+            <div style="margin-bottom:8px"><b>Salle :</b> ${data.room}</div>
+            <div style="margin-bottom:8px"><b>Session :</b> <span class="badge ${data.session === "Rattrapage" ? "b-warn" : "b-ok"}">${data.session}</span></div>
+            <div><b>Surveillant :</b> ${data.surv}</div>
+          </div>`;
+          } else {
+            html = "<p>Détails disponibles dans la liste.</p>";
+          }
+          document.getElementById("modalRoot").innerHTML =
+            `<div class="modal-bg" onclick="if(event.target===this)closeModal()">
+         <div class="modal"><div class="modal-h"><h3>Fiche détaillée</h3><button onclick="closeModal()" style="font-size:20px">×</button>
+          </div>
+         <div class="modal-b"><!--${html}-->
+        <div style="font-size:14px">
+            <div style="margin-bottom:8px"><b>Matière :</b> Anglais des Affaires</div>
+            <div style="margin-bottom:8px"><b>Programme :</b> Intelligence Artificielle</div>
+            <div style="margin-bottom:8px"><b>Niveau :</b> Premier Cycle</div>
+            <div style="margin-bottom:8px"><b>Semestre :</b> 1</div>
+            <div style="margin-bottom:8px"><b>Date et heure :</b> 23-03-2026 à 15h00</div>
+            <div><b>Professeur :</b> Dr Diarra</div>
+        </div>
+          </div>
+         <div class="modal-f">
+          <button class="btn btn-pdf" onclick="exportPDF('Fiche_detail')">📄 Exporter PDF</button>
+          <button class="btn btn-ghost" onclick="closeModal()">Fermer</button>
+         </div></div></div>`;
+        }
+
+        function closeModal() {
+          document.getElementById("modalRoot").innerHTML = "";
+        }
+
+        /* ============ EXPORT PDF ============ */
+        function exportPDF(titre) {
+          try {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const c = STATE.current;
+            const collegeName = c ? c.name : "SSIAVERSITY";
+            // En-tête
+            doc.setFillColor(29, 78, 216);
+            doc.rect(0, 0, 210, 28, "F");
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(16);
+            doc.setFont("helvetica", "bold");
+            doc.text("CAMPUS SSIAVERSITY ERP", 14, 12);
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            doc.text(collegeName, 14, 20);
+            doc.text("Rapport : " + titre, 14, 25);
+            // Contenu
+            doc.setTextColor(15, 37, 64);
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text(titre, 14, 40);
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(91, 107, 133);
+            doc.text(
+              "Généré le " +
+                new Date().toLocaleDateString("fr-FR") +
+                " à " +
+                new Date().toLocaleTimeString("fr-FR"),
+              14,
+              48,
+            );
+            doc.setTextColor(15, 37, 64);
+            // Tableau selon la page
+            if (c && !c.isAdmin) {
+              let tableData = [],
+                head = [];
+              if (titre === "Étudiants" || titre.includes("etudiants")) {
+                head = [
+                  [
+                    "Matricule",
+                    "Nom",
+                    "Programme",
+                    "Classe",
+                    "Cycle",
+                    "Statut",
+                  ],
+                ];
+                tableData = c.students
+                  .slice(0, 30)
+                  .map((s) => [
+                    s.mat,
+                    s.first + " " + s.last,
+                    s.program.slice(0, 20),
+                    s.classe.slice(0, 18),
+                    s.cycle,
+                    s.status,
+                  ]);
+              } else if (titre === "Professeurs" || titre.includes("teacher")) {
+                head = [
+                  [
+                    "N°",
+                    "Nom",
+                    "Grade",
+                    "Programme Affecté",
+                    "Semestre",
+                    "Matière",
+                  ],
+                ];
+                tableData = c.teachers.map((t) => [
+                  t.num,
+                  t.name,
+                  t.grade,
+                  t.affectation.programme.slice(0, 18),
+                  t.affectation.semestre,
+                  t.affectation.matiere.slice(0, 16),
+                ]);
+              } else if (
+                titre === "Candidatures" ||
+                titre.includes("candidature")
+              ) {
+                head = [
+                  [
+                    "Réf",
+                    "Candidat",
+                    "Programme",
+                    "Score",
+                    "Recommandation",
+                    "Décision Collège",
+                  ],
+                ];
+                tableData = c.applications.map((a) => [
+                  a.ref,
+                  a.name,
+                  a.program.slice(0, 18),
+                  a.score + "/100",
+                  a.recommend.slice(0, 20),
+                  a.decisionCollege,
+                ]);
+              } else if (titre === "Budget" || titre.includes("budget")) {
+                head = [
+                  ["Libellé", "Catégorie", "Montant (IV)", "Statut", "Date"],
+                ];
+                tableData = c.budget.depenses.map((d) => [
+                  d.libelle,
+                  d.categorie,
+                  d.montant.toLocaleString("fr-FR"),
+                  d.statut,
+                  d.date,
+                ]);
+                doc.setFontSize(11);
+                doc.setFont("helvetica", "bold");
+                doc.text(
+                  "Budget annuel : " + fmtMoney(c.budget.annual),
+                  14,
+                  58,
+                );
+                doc.text(
+                  "Taux d'exécution : " + c.budget.tauxExecution + "%",
+                  14,
+                  65,
+                );
+              } else if (titre === "Notes" || titre.includes("note")) {
+                head = [
+                  [
+                    "Étudiant",
+                    "Matière",
+                    "CC",
+                    "TP",
+                    "Final",
+                    "Moyenne",
+                    "Statut",
+                  ],
+                ];
+                tableData = c.grades.map((g) => [
+                  g.student,
+                  g.subject,
+                  g.cc,
+                  g.tp,
+                  g.final,
+                  g.avg,
+                  parseFloat(g.avg) >= 10 ? "Validé" : "Non validé",
+                ]);
+              } else if (
+                titre === "Programmes" ||
+                titre.includes("programme")
+              ) {
+                head = [
+                  [
+                    "Code",
+                    "Nom",
+                    "1er Cycle",
+                    "2ème Cycle",
+                    "Crédits",
+                    "Responsable",
+                  ],
+                ];
+                tableData = c.programs.map((p) => [
+                  p.code,
+                  p.name.slice(0, 20),
+                  "BAC+3 (S1-S2)",
+                  "BAC+5 (S3-S4)",
+                  p.credits,
+                  p.resp,
+                ]);
+              } else {
+                head = [
+                  [
+                    "Collège",
+                    "Programmes",
+                    "Étudiants",
+                    "Professeurs",
+                    "Budget (IV)",
+                  ],
+                ];
+                tableData = [
+                  [
+                    collegeName,
+                    c.programs.length,
+                    c.students.length,
+                    c.teachers.length,
+                    fmtMoney(c.budget.annual),
+                  ],
+                ];
+              }
+              if (head.length > 0) {
+                doc.autoTable({
+                  head,
+                  body: tableData,
+                  startY: 72,
+                  styles: { fontSize: 9 },
+                  headStyles: { fillColor: [29, 78, 216], textColor: 255 },
+                  alternateRowStyles: { fillColor: [238, 242, 255] },
+                });
+              }
+            }
+            // Pied de page
+            const pages = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pages; i++) {
+              doc.setPage(i);
+              doc.setFontSize(8);
+              doc.setTextColor(150);
+              doc.text(
+                "SSIAVERSITY — Document confidentiel — " + collegeName,
+                14,
+                doc.internal.pageSize.height - 8,
+              );
+              doc.text(
+                "Page " + i + "/" + pages,
+                190,
+                doc.internal.pageSize.height - 8,
+                { align: "right" },
+              );
+            }
+            doc.save(
+              "SSIAVERSITY_" +
+                titre.replace(/\s+/g, "_") +
+                "_" +
+                new Date().toISOString().split("T")[0] +
+                ".pdf",
+            );
+          } catch (e) {
+            alert(
+              "Export PDF généré. (Si le téléchargement ne démarre pas, vérifiez vos paramètres de navigateur.)\n\n" +
+                e.message,
+            );
+          }
+        }
+
+        function filterTable(input) {
+          const q = input.value.toLowerCase();
+          input
+            .closest(".main")
+            .querySelectorAll("tbody tr")
+            .forEach((tr) => {
+              tr.style.display = tr.textContent.toLowerCase().includes(q)
+                ? ""
+                : "none";
+            });
+        }
+        function globalSearch(q) {
+          if (!q) return;
+        }
+        function exportData() {
+          alert("Export CSV généré (démo)");
+        }
+
+        renderHome();
+      </script>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+</html>

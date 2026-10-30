@@ -1,0 +1,1705 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pilotage Budgétaire — Contrôle des engagements</title>
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/prevision-budgetaire.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <div class="budget-set">
+      <div class="app">
+        <aside class="sidebar">
+          <div class="brand">
+            <div class="mark">
+              <img src="../../assets/img/logoci.jpg" alt="" srcset="" />Pilotage
+              Budgétaire
+            </div>
+            <div class="sub">Engagement &amp; suivi des dépenses</div>
+          </div>
+          <nav class="primary-nav">
+            <button data-view="dashboard" class="active">
+              <span class="num">01</span>Tableau de bord
+            </button>
+            <button data-view="lignes">
+              <span class="num">02</span>Lignes budgétaires
+            </button>
+            <button data-view="engager">
+              <span class="num">03</span>Engager une dépense
+            </button>
+            <button data-view="suivi">
+              <span class="num">04</span>Suivi des engagements
+            </button>
+          </nav>
+          <div class="sidebar-foot">
+            <label for="exerciceSelect">Exercice</label>
+            <select id="exerciceSelect">
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+            </select>
+            <span class="reset-link" id="resetData"
+              >Réinitialiser les données de démonstration</span
+            >
+          </div>
+        </aside>
+
+        <div class="main">
+          <div class="topbar">
+            <div>
+              <h1 id="viewTitle">Tableau de bord</h1>
+              <div class="desc" id="viewDesc">
+                Vue d'ensemble de la consommation budgétaire de l'exercice
+              </div>
+            </div>
+            <div class="topbar-actions" id="topbarActions"></div>
+          </div>
+
+          <div class="content">
+            <!-- DASHBOARD -->
+            <section class="view active" id="view-dashboard">
+              <div class="kpi-row">
+                <div class="kpi">
+                  <div class="label">Budget alloué</div>
+                  <div class="value" id="kpiAlloue">—</div>
+                  <div class="sub" id="kpiAlloueSub">&nbsp;</div>
+                </div>
+                <div class="kpi gold">
+                  <div class="label">Engagé (consommé)</div>
+                  <div class="value" id="kpiEngage">—</div>
+                  <div class="sub" id="kpiEngageSub">&nbsp;</div>
+                </div>
+                <div class="kpi">
+                  <div class="label">Payé / réalisé</div>
+                  <div class="value" id="kpiPaye">—</div>
+                  <div class="sub" id="kpiPayeSub">&nbsp;</div>
+                </div>
+                <div class="kpi forest" id="kpiDispoCard">
+                  <div class="label">Disponible</div>
+                  <div class="value" id="kpiDispo">—</div>
+                  <div class="sub" id="kpiDispoSub">&nbsp;</div>
+                </div>
+              </div>
+
+              <div class="grid-2">
+                <div class="panel">
+                  <div class="panel-head">
+                    <h2>Répartition du budget par catégorie</h2>
+                    <span class="hint">Montants alloués</span>
+                  </div>
+                  <div class="panel-body">
+                    <canvas id="chartRepartition" height="230"></canvas>
+                  </div>
+                </div>
+                <div class="panel">
+                  <div class="panel-head">
+                    <h2>Taux de consommation par ligne</h2>
+                    <span class="hint">% de l'alloué engagé</span>
+                  </div>
+                  <div class="panel-body">
+                    <canvas id="chartConsommation" height="230"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-head">
+                  <h2>Lignes sous surveillance</h2>
+                  <span class="hint">Seuil d'alerte à 85 %</span>
+                </div>
+                <div class="panel-body" style="padding: 0">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Ligne budgétaire</th>
+                        <th>Catégorie</th>
+                        <th class="num">Alloué</th>
+                        <th class="num">Engagé</th>
+                        <th class="num">Taux</th>
+                        <th>Statut</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tblAlertes"></tbody>
+                  </table>
+                  <div
+                    class="empty-state"
+                    id="emptyAlertes"
+                    style="display: none"
+                  >
+                    <div class="t">Aucune ligne en alerte</div>
+                    Toutes les lignes budgétaires sont sous le seuil de
+                    vigilance.
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- LIGNES BUDGETAIRES -->
+            <section class="view" id="view-lignes">
+              <div class="panel">
+                <div class="panel-head">
+                  <h2>
+                    Lignes budgétaires — exercice
+                    <span id="lignesExerciceLabel"></span>
+                  </h2>
+                  <span class="hint" id="lignesCount"></span>
+                </div>
+                <div class="panel-body" style="padding: 0">
+                  <div class="budget-line-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Ligne</th>
+                          <th class="num">Alloué</th>
+                          <th class="num">Engagé</th>
+                          <th class="num">Payé</th>
+                          <th class="num">Disponible</th>
+                          <th style="width: 160px">Consommation</th>
+                          <th>Statut</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="tblLignes"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ENGAGER UNE DEPENSE -->
+            <section class="view" id="view-engager">
+              <div class="engager-layout">
+                <div class="panel">
+                  <div class="panel-head">
+                    <h2>Nouvel engagement de dépense</h2>
+                    <span class="hint"
+                      >Réserve les fonds sur la ligne sélectionnée</span
+                    >
+                  </div>
+                  <div class="panel-body">
+                    <div class="alert-banner" id="engagerAlert">
+                      <span>⚠</span>
+                      <div>
+                        <strong>Dépassement de la ligne budgétaire</strong>
+                        <span id="engagerAlertText"></span>
+                        <label
+                          class="confirm-override"
+                          id="confirmOverrideWrap"
+                        >
+                          <input type="checkbox" id="confirmOverride" />
+                          Je confirme l'engagement malgré le dépassement
+                        </label>
+                      </div>
+                    </div>
+
+                    <form id="formEngager">
+                      <div class="field">
+                        <label for="engLigne"
+                          >Ligne budgétaire <span class="req">*</span></label
+                        >
+                        <select id="engLigne" required="">
+                          <option value="L1">
+                            Maintenance équipements miniers
+                          </option>
+                          <option value="L2">
+                            Transport &amp; logistique intersites
+                          </option>
+                          <option value="L3">
+                            Travaux BTP — Site Yamoussoukro
+                          </option>
+                          <option value="L4">
+                            Prestations sous-traitance industrielle
+                          </option>
+                          <option value="L5">
+                            Prospection &amp; développement commercial
+                          </option>
+                          <option value="L6">
+                            Fonctionnement administratif
+                          </option>
+                          <option value="L7">
+                            Formation &amp; recrutement
+                          </option>
+                          <option value="L8">
+                            Infrastructure IT &amp; licences
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="avail-box">
+                        <div class="top">
+                          <span class="hint">Disponible sur cette ligne</span>
+                          <span
+                            class="figure"
+                            id="engDispoAffiche"
+                            style="color: var(--forest)"
+                            >28 000 000 FCFA</span
+                          >
+                        </div>
+                        <div class="bar-track">
+                          <div
+                            class="bar-fill"
+                            id="engDispoBar"
+                            style="width: 67.0588%; background: var(--forest)"
+                          ></div>
+                        </div>
+                      </div>
+
+                      <div class="field-row">
+                        <div class="field">
+                          <label for="engBeneficiaire"
+                            >Bénéficiaire / Fournisseur
+                            <span class="req">*</span></label
+                          >
+                          <input
+                            type="text"
+                            id="engBeneficiaire"
+                            placeholder="Ex : Groupe BTP Ivoire"
+                            required=""
+                          />
+                        </div>
+                        <div class="field">
+                          <label for="engMontant"
+                            >Montant (FCFA) <span class="req">*</span></label
+                          >
+                          <input
+                            type="number"
+                            id="engMontant"
+                            min="1"
+                            step="1"
+                            placeholder="0"
+                            required=""
+                          />
+                        </div>
+                      </div>
+
+                      <div class="field">
+                        <label for="engObjet"
+                          >Objet de la dépense <span class="req">*</span></label
+                        >
+                        <textarea
+                          id="engObjet"
+                          rows="2"
+                          placeholder="Description de la prestation, du bien ou du service engagé"
+                          required=""
+                        ></textarea>
+                      </div>
+
+                      <div class="field-row">
+                        <div class="field">
+                          <label for="engDate"
+                            >Date d'engagement <span class="req">*</span></label
+                          >
+                          <input type="date" id="engDate" required="" />
+                        </div>
+                        <div class="field">
+                          <label for="engStatut">Statut initial</label>
+                          <select id="engStatut">
+                            <option value="Engagé">Engagé</option>
+                            <option value="Ordonnancé">Ordonnancé</option>
+                            <option value="Payé">Payé</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        class="btn btn-gold"
+                        style="width: 100%; padding: 11px"
+                      >
+                        Enregistrer l'engagement
+                      </button>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="panel">
+                  <div class="panel-head">
+                    <h2>Derniers engagements</h2>
+                    <span class="hint">Toutes lignes confondues</span>
+                  </div>
+                  <div class="panel-body" style="padding: 0">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Bénéficiaire</th>
+                          <th class="num">Montant</th>
+                          <th>Statut</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tblRecents"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- SUIVI -->
+            <section class="view" id="view-suivi">
+              <div class="panel">
+                <div class="panel-head">
+                  <h2>Journal des engagements</h2>
+                  <span class="hint" id="suiviCount"></span>
+                </div>
+                <div class="panel-body">
+                  <div class="filters">
+                    <select id="filtreLigne">
+                      <option value="">Toutes les lignes</option>
+                    </select>
+                    <select id="filtreStatut">
+                      <option value="">Tous les statuts</option>
+                      <option value="Engagé">Engagé</option>
+                      <option value="Ordonnancé">Ordonnancé</option>
+                      <option value="Payé">Payé</option>
+                      <option value="Annulé">Annulé</option>
+                    </select>
+                    <input
+                      type="text"
+                      id="filtreRecherche"
+                      placeholder="Rechercher un bénéficiaire, une référence…"
+                    />
+                  </div>
+                </div>
+                <div style="overflow-x: auto">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Référence</th>
+                        <th>Ligne budgétaire</th>
+                        <th>Bénéficiaire</th>
+                        <th class="num">Montant</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="tblSuivi"></tbody>
+                  </table>
+                </div>
+                <div class="empty-state" id="emptySuivi" style="display: none">
+                  <div class="t">Aucun engagement ne correspond</div>
+                  Ajustez les filtres ou créez un nouvel engagement.
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal ligne budgétaire -->
+      <dialog id="modalLigne">
+        <div class="modal-head">
+          <h2 id="modalLigneTitle">Nouvelle ligne budgétaire</h2>
+          <button class="modal-close" data-close="modalLigne">✕</button>
+        </div>
+        <form id="formLigne">
+          <div class="modal-body">
+            <input type="hidden" id="ligneId" />
+            <div class="field">
+              <label for="ligneNom"
+                >Intitulé de la ligne <span class="req">*</span></label
+              >
+              <input type="text" id="ligneNom" required />
+            </div>
+            <div class="field">
+              <label for="ligneCategorie"
+                >Catégorie / Département <span class="req">*</span></label
+              >
+              <select id="ligneCategorie" required>
+                <option>Exploitation &amp; Production</option>
+                <option>BTP &amp; Infrastructures</option>
+                <option>Logistique &amp; Transport</option>
+                <option>Services Industriels</option>
+                <option>Commercial &amp; Développement</option>
+                <option>Administration &amp; Finance</option>
+                <option>Ressources Humaines</option>
+                <option>Systèmes d'Information</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ligneAlloue"
+                >Montant alloué (IV) <span class="req">*</span></label
+              >
+              <input type="number" id="ligneAlloue" min="1" step="1" required />
+            </div>
+          </div>
+          <div class="modal-foot">
+            <button type="button" class="btn btn-ghost" data-close="modalLigne">
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </form>
+      </dialog>
+
+      <div class="toast" id="toast"></div>
+    </div>
+
+    <script>
+      (function () {
+        /* ============ Données de référence ============ */
+        var CATEGORIES = [
+          "Exploitation & Production",
+          "BTP & Infrastructures",
+          "Logistique & Transport",
+          "Services Industriels",
+          "Commercial & Développement",
+          "Administration & Finance",
+          "Ressources Humaines",
+          "Systèmes d'Information",
+        ];
+        var STORE_KEY = "pilotageBudgetaire_v1";
+        var SEUIL_ALERTE = 85;
+
+        function uid(prefix) {
+          return (
+            prefix + "-" + Math.random().toString(36).slice(2, 8).toUpperCase()
+          );
+        }
+
+        function seedData() {
+          var lignes = [
+            {
+              id: "L1",
+              nom: "Maintenance équipements miniers",
+              categorie: "Exploitation & Production",
+              alloue: 800000,
+              exercice: 2026,
+            },
+            {
+              id: "L2",
+              nom: "Transport & logistique intersites",
+              categorie: "Logistique & Transport",
+              alloue: 40000,
+              exercice: 2026,
+            },
+            {
+              id: "L3",
+              nom: "Travaux BTP — Site Yamoussoukro",
+              categorie: "BTP & Infrastructures",
+              alloue: 1200000,
+              exercice: 2026,
+            },
+            {
+              id: "L4",
+              nom: "Prestations sous-traitance industrielle",
+              categorie: "Services Industriels",
+              alloue: 580000,
+              exercice: 2026,
+            },
+            {
+              id: "L5",
+              nom: "Prospection & développement commercial",
+              categorie: "Commercial & Développement",
+              alloue: 20000,
+              exercice: 2026,
+            },
+            {
+              id: "L6",
+              nom: "Fonctionnement administratif",
+              categorie: "Administration & Finance",
+              alloue: 30000,
+              exercice: 2026,
+            },
+            {
+              id: "L7",
+              nom: "Formation & recrutement",
+              categorie: "Ressources Humaines",
+              alloue: 120000,
+              exercice: 2026,
+            },
+            {
+              id: "L8",
+              nom: "Infrastructure IT & licences",
+              categorie: "Systèmes d'Information",
+              alloue: 180000,
+              exercice: 2026,
+            },
+          ];
+          var engagements = [
+            {
+              id: "ENG-2026-001",
+              ligneId: "L1",
+              beneficiaire: "AfricaTech Mining Services",
+              objet: "Révision semestrielle des foreuses",
+              montant: 2000,
+              date: "2026-02-10",
+              statut: "Payé",
+            },
+            {
+              id: "ENG-2026-002",
+              ligneId: "L1",
+              beneficiaire: "Somin Équipements",
+              objet: "Pièces détachées — convoyeurs",
+              montant: 1000,
+              date: "2026-04-18",
+              statut: "Ordonnancé",
+            },
+            {
+              id: "ENG-2026-003",
+              ligneId: "L1",
+              beneficiaire: "AfricaTech Mining Services",
+              objet: "Contrat de maintenance T3",
+              montant: 2000,
+              date: "2026-06-05",
+              statut: "Engagé",
+            },
+            {
+              id: "ENG-2026-004",
+              ligneId: "L2",
+              beneficiaire: "TransCI Logistique",
+              objet: "Affrètement camions — 1er semestre",
+              montant: 18500,
+              date: "2026-01-22",
+              statut: "Payé",
+            },
+            {
+              id: "ENG-2026-005",
+              ligneId: "L2",
+              beneficiaire: "TransCI Logistique",
+              objet: "Navette inter-sites juin-août",
+              montant: 1200,
+              date: "2026-05-09",
+              statut: "Ordonnancé",
+            },
+            {
+              id: "ENG-2026-006",
+              ligneId: "L3",
+              beneficiaire: "Groupe BTP Ivoire",
+              objet: "Terrassement et fondations",
+              montant: 45000,
+              date: "2026-01-15",
+              statut: "Payé",
+            },
+            {
+              id: "ENG-2026-007",
+              ligneId: "L3",
+              beneficiaire: "Groupe BTP Ivoire",
+              objet: "Gros œuvre — bâtiment technique",
+              montant: 40000,
+              date: "2026-03-30",
+              statut: "Ordonnancé",
+            },
+            {
+              id: "ENG-2026-008",
+              ligneId: "L3",
+              beneficiaire: "Sud Construction SA",
+              objet: "Voirie et réseaux divers",
+              montant: 20000,
+              date: "2026-06-20",
+              statut: "Engagé",
+            },
+            {
+              id: "ENG-2026-009",
+              ligneId: "L3",
+              beneficiaire: "Sud Construction SA",
+              objet: "Second œuvre complémentaire",
+              montant: 15000,
+              date: "2026-07-11",
+              statut: "Engagé",
+            },
+            {
+              id: "ENG-2026-010",
+              ligneId: "L4",
+              beneficiaire: "SIGEX Services Industriels",
+              objet: "Externalisation maintenance sites",
+              montant: 20000,
+              date: "2026-02-28",
+              statut: "Payé",
+            },
+            {
+              id: "ENG-2026-011",
+              ligneId: "L4",
+              beneficiaire: "SIGEX Services Industriels",
+              objet: "Prestation d'appui technique",
+              montant: 10000,
+              date: "2026-05-14",
+              statut: "Engagé",
+            },
+            {
+              id: "ENG-2026-012",
+              ligneId: "L5",
+              beneficiaire: "Cabinet ProDev Afrique",
+              objet: "Étude de marché sous-région",
+              montant: 10000,
+              date: "2026-03-03",
+              statut: "Payé",
+            },
+            {
+              id: "ENG-2026-013",
+              ligneId: "L5",
+              beneficiaire: "Cabinet ProDev Afrique",
+              objet: "Accompagnement prospection clients",
+              montant: 5000,
+              date: "2026-06-25",
+              statut: "Engagé",
+            },
+            {
+              id: "ENG-2026-014",
+              ligneId: "L6",
+              beneficiaire: "Divers fournisseurs",
+              objet: "Fournitures et services généraux",
+              montant: 9000,
+              date: "2026-01-31",
+              statut: "Payé",
+            },
+            {
+              id: "ENG-2026-015",
+              ligneId: "L6",
+              beneficiaire: "Divers fournisseurs",
+              objet: "Entretien locaux administratifs",
+              montant: 6500,
+              date: "2026-04-30",
+              statut: "Ordonnancé",
+            },
+            {
+              id: "ENG-2026-016",
+              ligneId: "L7",
+              beneficiaire: "Institut de Formation Continue",
+              objet: "Cycle de formation encadrement",
+              montant: 11000,
+              date: "2026-02-14",
+              statut: "Payé",
+            },
+            {
+              id: "ENG-2026-017",
+              ligneId: "L8",
+              beneficiaire: "DataCorp Solutions",
+              objet: "Licences ERP — renouvellement",
+              montant: 7200,
+              date: "2026-01-20",
+              statut: "Payé",
+            },
+            {
+              id: "ENG-2026-018",
+              ligneId: "L8",
+              beneficiaire: "DataCorp Solutions",
+              objet: "Module analytique additionnel",
+              montant: 4000,
+              date: "2026-03-15",
+              statut: "Annulé",
+            },
+            {
+              id: "ENG-2026-019",
+              ligneId: "L8",
+              beneficiaire: "NetSecure Afrique",
+              objet: "Audit et renforcement cybersécurité",
+              montant: 6000,
+              date: "2026-06-01",
+              statut: "Engagé",
+            },
+          ];
+          return { lignes: lignes, engagements: engagements, refCounter: 20 };
+        }
+
+        function loadState() {
+          try {
+            var raw = localStorage.getItem(STORE_KEY);
+            if (raw) return JSON.parse(raw);
+          } catch (e) {}
+          var s = seedData();
+          saveState(s);
+          return s;
+        }
+        function saveState(s) {
+          localStorage.setItem(STORE_KEY, JSON.stringify(s));
+        }
+
+        var state = loadState();
+        var currentExercice = 2026;
+        var currentView = "dashboard";
+        var charts = {};
+
+        /* ============ Utilitaires ============ */
+        function fmt(n) {
+          n = Math.round(n || 0);
+          return n.toLocaleString("fr-FR") + " IV";
+        }
+        function fmtShort(n) {
+          return Math.round(n || 0).toLocaleString("fr-FR");
+        }
+        function todayISO() {
+          var d = new Date();
+          return d.toISOString().slice(0, 10);
+        }
+        function toast(msg) {
+          var t = document.getElementById("toast");
+          t.textContent = msg;
+          t.classList.add("show");
+          clearTimeout(toast._h);
+          toast._h = setTimeout(function () {
+            t.classList.remove("show");
+          }, 2600);
+        }
+
+        function lignesExercice() {
+          return state.lignes.filter(function (l) {
+            return l.exercice == currentExercice;
+          });
+        }
+
+        function ligneStats(ligne) {
+          var eng = state.engagements.filter(function (e) {
+            return e.ligneId === ligne.id;
+          });
+          var consomme = 0,
+            paye = 0;
+          eng.forEach(function (e) {
+            if (e.statut !== "Annulé") {
+              consomme += e.montant;
+            }
+            if (e.statut === "Payé") {
+              paye += e.montant;
+            }
+          });
+          var dispo = ligne.alloue - consomme;
+          var taux = ligne.alloue > 0 ? (consomme / ligne.alloue) * 100 : 0;
+          var statut = "normal";
+          if (taux >= 100) statut = "depassement";
+          else if (taux >= SEUIL_ALERTE) statut = "alerte";
+          return {
+            consomme: consomme,
+            paye: paye,
+            dispo: dispo,
+            taux: taux,
+            statut: statut,
+            count: eng.length,
+          };
+        }
+
+        function badgeFor(statut) {
+          if (statut === "depassement")
+            return '<span class="badge badge-depassement">Dépassement</span>';
+          if (statut === "alerte")
+            return '<span class="badge badge-alerte">Alerte</span>';
+          return '<span class="badge badge-normal">Normal</span>';
+        }
+        function barColor(statut) {
+          if (statut === "depassement") return "var(--brick)";
+          if (statut === "alerte") return "var(--amber)";
+          return "var(--forest)";
+        }
+
+        function statutBadgeEngagement(s) {
+          if (s === "Payé")
+            return '<span class="badge badge-normal">Payé</span>';
+          if (s === "Ordonnancé")
+            return '<span class="badge badge-alerte">Ordonnancé</span>';
+          if (s === "Annulé")
+            return '<span class="badge badge-annule">Annulé</span>';
+          return '<span class="badge" style="background:var(--gold-soft); color:var(--gold);">Engagé</span>';
+        }
+
+        /* ============ Navigation ============ */
+        var VIEW_META = {
+          dashboard: {
+            title: "Tableau de bord",
+            desc: "Vue d'ensemble de la consommation budgétaire de l'exercice",
+          },
+          lignes: {
+            title: "Lignes budgétaires",
+            desc: "Allocation, consommation et disponibilité par ligne",
+          },
+          engager: {
+            title: "Engager une dépense",
+            desc: "Créer un engagement et réserver les fonds sur une ligne",
+          },
+          suivi: {
+            title: "Suivi des engagements",
+            desc: "Journal complet des dépenses engagées, ordonnancées et payées",
+          },
+        };
+
+        function setView(v) {
+          currentView = v;
+          document.querySelectorAll(".view").forEach(function (el) {
+            el.classList.remove("active");
+          });
+          document.getElementById("view-" + v).classList.add("active");
+          document
+            .querySelectorAll(".primary-nav button")
+            .forEach(function (b) {
+              b.classList.toggle("active", b.dataset.view === v);
+            });
+          document.getElementById("viewTitle").textContent = VIEW_META[v].title;
+          document.getElementById("viewDesc").textContent = VIEW_META[v].desc;
+          renderTopbarActions(v);
+          renderAll();
+        }
+
+        function renderTopbarActions(v) {
+          var el = document.getElementById("topbarActions");
+          el.innerHTML = "";
+          if (v === "lignes") {
+            var b1 = document.createElement("button");
+            b1.className = "btn btn-primary";
+            b1.textContent = "+ Nouvelle ligne";
+            b1.onclick = function () {
+              openLigneModal();
+            };
+            var b2 = document.createElement("button");
+            b2.className = "btn";
+            b2.textContent = "Exporter CSV";
+            b2.onclick = function () {
+              exportCSV("lignes");
+            };
+            el.appendChild(b2);
+            el.appendChild(b1);
+          } else if (v === "suivi") {
+            var b3 = document.createElement("button");
+            b3.className = "btn";
+            b3.textContent = "Exporter CSV";
+            b3.onclick = function () {
+              exportCSV("engagements");
+            };
+            el.appendChild(b3);
+          } else if (v === "dashboard") {
+            var b4 = document.createElement("button");
+            b4.className = "btn";
+            b4.textContent = "Exporter CSV";
+            b4.onclick = function () {
+              exportCSV("lignes");
+            };
+            el.appendChild(b4);
+          }
+        }
+
+        document.querySelectorAll(".primary-nav button").forEach(function (b) {
+          b.addEventListener("click", function () {
+            setView(b.dataset.view);
+          });
+        });
+
+        /* ============ Rendu : Dashboard ============ */
+        function renderDashboard() {
+          var lignes = lignesExercice();
+          var totalAlloue = 0,
+            totalConsomme = 0,
+            totalPaye = 0;
+          var rows = lignes.map(function (l) {
+            var s = ligneStats(l);
+            totalAlloue += l.alloue;
+            totalConsomme += s.consomme;
+            totalPaye += s.paye;
+            return { ligne: l, stats: s };
+          });
+          var totalDispo = totalAlloue - totalConsomme;
+          var tauxGlobal =
+            totalAlloue > 0 ? (totalConsomme / totalAlloue) * 100 : 0;
+
+          document.getElementById("kpiAlloue").textContent = fmt(totalAlloue);
+          document.getElementById("kpiAlloueSub").textContent =
+            lignes.length + " lignes budgétaires";
+          document.getElementById("kpiEngage").textContent = fmt(totalConsomme);
+          document.getElementById("kpiEngageSub").textContent =
+            tauxGlobal.toFixed(1) + " % de l'alloué";
+          document.getElementById("kpiPaye").textContent = fmt(totalPaye);
+          document.getElementById("kpiPayeSub").textContent =
+            (totalConsomme > 0
+              ? ((totalPaye / totalConsomme) * 100).toFixed(1)
+              : "0.0") + " % de l'engagé décaissé";
+          document.getElementById("kpiDispo").textContent = fmt(totalDispo);
+          document.getElementById("kpiDispoSub").textContent =
+            totalDispo < 0 ? "Dépassement global" : "Marge disponible";
+          document.getElementById("kpiDispoCard").className =
+            "kpi " + (totalDispo < 0 ? "brick" : "forest");
+
+          // Alertes
+          var alertRows = rows
+            .filter(function (r) {
+              return r.stats.statut !== "normal";
+            })
+            .sort(function (a, b) {
+              return b.stats.taux - a.stats.taux;
+            });
+          var tbody = document.getElementById("tblAlertes");
+          tbody.innerHTML = alertRows
+            .map(function (r) {
+              return (
+                "<tr>" +
+                '<td class="row-title">' +
+                esc(r.ligne.nom) +
+                "</td>" +
+                "<td>" +
+                esc(r.ligne.categorie) +
+                "</td>" +
+                '<td class="num figures">' +
+                fmtShort(r.ligne.alloue) +
+                "</td>" +
+                '<td class="num figures">' +
+                fmtShort(r.stats.consomme) +
+                "</td>" +
+                '<td class="num figures">' +
+                r.stats.taux.toFixed(1) +
+                " %</td>" +
+                "<td>" +
+                badgeFor(r.stats.statut) +
+                "</td>" +
+                "</tr>"
+              );
+            })
+            .join("");
+          document.getElementById("emptyAlertes").style.display =
+            alertRows.length ? "none" : "block";
+
+          renderCharts(rows);
+        }
+
+        function renderCharts(rows) {
+          var ctx1 = document.getElementById("chartRepartition");
+          var ctx2 = document.getElementById("chartConsommation");
+          if (charts.rep) charts.rep.destroy();
+          if (charts.cons) charts.cons.destroy();
+
+          var palette = [
+            "#14213D",
+            "#96702E",
+            "#1E6E56",
+            "#A23E33",
+            "#5C6C90",
+            "#AD7A22",
+            "#28375A",
+            "#7C8B6C",
+          ];
+
+          charts.rep = new Chart(ctx1, {
+            type: "doughnut",
+            data: {
+              labels: rows.map(function (r) {
+                return r.ligne.categorie;
+              }),
+              datasets: [
+                {
+                  data: rows.map(function (r) {
+                    return r.ligne.alloue;
+                  }),
+                  backgroundColor: rows.map(function (_, i) {
+                    return palette[i % palette.length];
+                  }),
+                  borderColor: "#FFFFFF",
+                  borderWidth: 2,
+                },
+              ],
+            },
+            options: {
+              plugins: {
+                legend: {
+                  position: "right",
+                  labels: {
+                    boxWidth: 11,
+                    font: { family: "IBM Plex Sans", size: 11 },
+                    color: "#28375A",
+                  },
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function (c) {
+                      return c.label + " : " + fmt(c.raw);
+                    },
+                  },
+                },
+              },
+              cutout: "62%",
+            },
+          });
+
+          var sorted = rows.slice().sort(function (a, b) {
+            return b.stats.taux - a.stats.taux;
+          });
+          charts.cons = new Chart(ctx2, {
+            type: "bar",
+            data: {
+              labels: sorted.map(function (r) {
+                return r.ligne.nom.length > 22
+                  ? r.ligne.nom.slice(0, 20) + "…"
+                  : r.ligne.nom;
+              }),
+              datasets: [
+                {
+                  data: sorted.map(function (r) {
+                    return r.stats.taux;
+                  }),
+                  backgroundColor: sorted.map(function (r) {
+                    return r.stats.statut === "depassement"
+                      ? "#A23E33"
+                      : r.stats.statut === "alerte"
+                        ? "#AD7A22"
+                        : "#1E6E56";
+                  }),
+                  borderRadius: 2,
+                  maxBarThickness: 16,
+                },
+              ],
+            },
+            options: {
+              indexAxis: "y",
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: function (c) {
+                      return c.raw.toFixed(1) + " % engagé";
+                    },
+                  },
+                },
+              },
+              scales: {
+                x: {
+                  ticks: {
+                    callback: function (v) {
+                      return v + "%";
+                    },
+                    font: { size: 10.5 },
+                  },
+                  grid: { color: "#EDEAE0" },
+                },
+                y: {
+                  ticks: { font: { size: 10.5 } },
+                  grid: { display: false },
+                },
+              },
+            },
+          });
+        }
+
+        /* ============ Rendu : Lignes budgétaires ============ */
+        function renderLignes() {
+          var lignes = lignesExercice();
+          document.getElementById("lignesExerciceLabel").textContent =
+            currentExercice;
+          document.getElementById("lignesCount").textContent =
+            lignes.length + " ligne(s)";
+          var tbody = document.getElementById("tblLignes");
+          if (!lignes.length) {
+            tbody.innerHTML =
+              '<tr><td colspan="8"><div class="empty-state"><div class="t">Aucune ligne budgétaire</div>Créez la première ligne de l\'exercice ' +
+              currentExercice +
+              ".</div></td></tr>";
+            return;
+          }
+          tbody.innerHTML = lignes
+            .map(function (l) {
+              var s = ligneStats(l);
+              var pct = Math.min(s.taux, 100);
+              return (
+                "<tr>" +
+                '<td><div class="row-title">' +
+                esc(l.nom) +
+                '</div><div class="row-sub">' +
+                esc(l.categorie) +
+                "</div></td>" +
+                '<td class="num figures">' +
+                fmtShort(l.alloue) +
+                "</td>" +
+                '<td class="num figures">' +
+                fmtShort(s.consomme) +
+                "</td>" +
+                '<td class="num figures">' +
+                fmtShort(s.paye) +
+                "</td>" +
+                '<td class="num figures" style="color:' +
+                (s.dispo < 0 ? "var(--brick)" : "inherit") +
+                ';">' +
+                fmtShort(s.dispo) +
+                "</td>" +
+                '<td><div class="bar-track"><div class="bar-fill" style="width:' +
+                pct +
+                "%; background:" +
+                barColor(s.statut) +
+                ';"></div></div>' +
+                '<div class="row-sub">' +
+                s.taux.toFixed(1) +
+                " %</div></td>" +
+                "<td>" +
+                badgeFor(s.statut) +
+                "</td>" +
+                '<td style="white-space:nowrap;">' +
+                '<button class="icon-btn" data-edit-ligne="' +
+                l.id +
+                '" title="Modifier">✎</button>' +
+                '<button class="icon-btn" data-del-ligne="' +
+                l.id +
+                '" title="Supprimer">✕</button>' +
+                "</td>" +
+                "</tr>"
+              );
+            })
+            .join("");
+
+          tbody.querySelectorAll("[data-edit-ligne]").forEach(function (btn) {
+            btn.onclick = function () {
+              openLigneModal(btn.dataset.editLigne);
+            };
+          });
+          tbody.querySelectorAll("[data-del-ligne]").forEach(function (btn) {
+            btn.onclick = function () {
+              deleteLigne(btn.dataset.delLigne);
+            };
+          });
+        }
+
+        function deleteLigne(id) {
+          var hasEng = state.engagements.some(function (e) {
+            return e.ligneId === id;
+          });
+          if (hasEng) {
+            if (
+              !confirm(
+                "Cette ligne contient des engagements. Les supprimer également ?",
+              )
+            )
+              return;
+            state.engagements = state.engagements.filter(function (e) {
+              return e.ligneId !== id;
+            });
+          }
+          state.lignes = state.lignes.filter(function (l) {
+            return l.id !== id;
+          });
+          saveState(state);
+          toast("Ligne budgétaire supprimée");
+          renderAll();
+        }
+
+        /* ============ Modal ligne ============ */
+        var modalLigne = document.getElementById("modalLigne");
+        function openLigneModal(id) {
+          document.getElementById("formLigne").reset();
+          document.getElementById("ligneId").value = id || "";
+          if (id) {
+            var l = state.lignes.find(function (x) {
+              return x.id === id;
+            });
+            document.getElementById("modalLigneTitle").textContent =
+              "Modifier la ligne";
+            document.getElementById("ligneNom").value = l.nom;
+            document.getElementById("ligneCategorie").value = l.categorie;
+            document.getElementById("ligneAlloue").value = l.alloue;
+          } else {
+            document.getElementById("modalLigneTitle").textContent =
+              "Nouvelle ligne budgétaire";
+          }
+          modalLigne.showModal();
+        }
+        document
+          .querySelectorAll('[data-close="modalLigne"]')
+          .forEach(function (b) {
+            b.onclick = function () {
+              modalLigne.close();
+            };
+          });
+
+        document
+          .getElementById("formLigne")
+          .addEventListener("submit", function (ev) {
+            ev.preventDefault();
+            var id = document.getElementById("ligneId").value;
+            var nom = document.getElementById("ligneNom").value.trim();
+            var categorie = document.getElementById("ligneCategorie").value;
+            var alloue = parseFloat(
+              document.getElementById("ligneAlloue").value,
+            );
+            if (id) {
+              var l = state.lignes.find(function (x) {
+                return x.id === id;
+              });
+              l.nom = nom;
+              l.categorie = categorie;
+              l.alloue = alloue;
+              toast("Ligne budgétaire mise à jour");
+            } else {
+              state.lignes.push({
+                id: uid("L"),
+                nom: nom,
+                categorie: categorie,
+                alloue: alloue,
+                exercice: currentExercice,
+              });
+              toast("Ligne budgétaire créée");
+            }
+            saveState(state);
+            modalLigne.close();
+            renderAll();
+          });
+
+        /* ============ Rendu : Engager une dépense ============ */
+        function renderEngagerForm() {
+          var sel = document.getElementById("engLigne");
+          var lignes = lignesExercice();
+          var prevVal = sel.value;
+          sel.innerHTML = lignes
+            .map(function (l) {
+              return '<option value="' + l.id + '">' + esc(l.nom) + "</option>";
+            })
+            .join("");
+          if (
+            prevVal &&
+            lignes.some(function (l) {
+              return l.id === prevVal;
+            })
+          )
+            sel.value = prevVal;
+          document.getElementById("engDate").value =
+            document.getElementById("engDate").value || todayISO();
+          updateAvailBox();
+          renderRecents();
+        }
+
+        function updateAvailBox() {
+          var lid = document.getElementById("engLigne").value;
+          var l = state.lignes.find(function (x) {
+            return x.id === lid;
+          });
+          if (!l) return;
+          var s = ligneStats(l);
+          document.getElementById("engDispoAffiche").textContent = fmt(s.dispo);
+          document.getElementById("engDispoAffiche").style.color =
+            s.dispo < 0 ? "var(--brick)" : "var(--forest)";
+          var pct = Math.min(Math.max(s.taux, 0), 100);
+          var bar = document.getElementById("engDispoBar");
+          bar.style.width = pct + "%";
+          bar.style.background = barColor(s.statut);
+          checkOverBudget();
+        }
+
+        function checkOverBudget() {
+          var lid = document.getElementById("engLigne").value;
+          var l = state.lignes.find(function (x) {
+            return x.id === lid;
+          });
+          var montant =
+            parseFloat(document.getElementById("engMontant").value) || 0;
+          var banner = document.getElementById("engagerAlert");
+          var wrap = document.getElementById("confirmOverrideWrap");
+          if (!l) {
+            banner.classList.remove("show");
+            return false;
+          }
+          var s = ligneStats(l);
+          var futurTaux =
+            l.alloue > 0 ? ((s.consomme + montant) / l.alloue) * 100 : 0;
+          if (montant > 0 && s.consomme + montant > l.alloue) {
+            var depassement = s.consomme + montant - l.alloue;
+            document.getElementById("engagerAlertText").textContent =
+              "Cet engagement porterait la consommation à " +
+              fmtShort(s.consomme + montant) +
+              " IV, soit un dépassement de " +
+              fmtShort(depassement) +
+              " IV (" +
+              futurTaux.toFixed(1) +
+              " % de l'alloué).";
+            banner.classList.add("show");
+            wrap.classList.add("show");
+            return true;
+          } else {
+            banner.classList.remove("show");
+            wrap.classList.remove("show");
+            document.getElementById("confirmOverride").checked = false;
+            return false;
+          }
+        }
+
+        document
+          .getElementById("engLigne")
+          .addEventListener("change", updateAvailBox);
+        document
+          .getElementById("engMontant")
+          .addEventListener("input", checkOverBudget);
+
+        document
+          .getElementById("formEngager")
+          .addEventListener("submit", function (ev) {
+            ev.preventDefault();
+            var isOver = checkOverBudget();
+            if (isOver && !document.getElementById("confirmOverride").checked) {
+              toast("Confirmez le dépassement pour poursuivre");
+              return;
+            }
+            var ligneId = document.getElementById("engLigne").value;
+            if (!ligneId) {
+              toast("Sélectionnez une ligne budgétaire");
+              return;
+            }
+            state.refCounter = (state.refCounter || 0) + 1;
+            var ref =
+              "ENG-" +
+              currentExercice +
+              "-" +
+              String(state.refCounter).padStart(3, "0");
+            state.engagements.push({
+              id: ref,
+              ligneId: ligneId,
+              beneficiaire: document
+                .getElementById("engBeneficiaire")
+                .value.trim(),
+              objet: document.getElementById("engObjet").value.trim(),
+              montant: parseFloat(document.getElementById("engMontant").value),
+              date: document.getElementById("engDate").value,
+              statut: document.getElementById("engStatut").value,
+            });
+            saveState(state);
+            toast("Engagement " + ref + " enregistré");
+            document.getElementById("formEngager").reset();
+            document.getElementById("engDate").value = todayISO();
+            document.getElementById("engagerAlert").classList.remove("show");
+            document
+              .getElementById("confirmOverrideWrap")
+              .classList.remove("show");
+            renderAll();
+          });
+
+        function renderRecents() {
+          var list = state.engagements
+            .slice()
+            .sort(function (a, b) {
+              return a.date < b.date ? 1 : -1;
+            })
+            .slice(0, 8);
+          document.getElementById("tblRecents").innerHTML =
+            list
+              .map(function (e) {
+                return (
+                  "<tr><td>" +
+                  esc(e.beneficiaire) +
+                  '</td><td class="num figures">' +
+                  fmtShort(e.montant) +
+                  "</td><td>" +
+                  statutBadgeEngagement(e.statut) +
+                  "</td></tr>"
+                );
+              })
+              .join("") ||
+            '<tr><td colspan="3" style="color:var(--muted); padding:16px 12px;">Aucun engagement enregistré</td></tr>';
+        }
+
+        /* ============ Rendu : Suivi ============ */
+        function renderSuiviFilters() {
+          var sel = document.getElementById("filtreLigne");
+          var prevVal = sel.value;
+          sel.innerHTML =
+            '<option value="">Toutes les lignes</option>' +
+            lignesExercice()
+              .map(function (l) {
+                return (
+                  '<option value="' + l.id + '">' + esc(l.nom) + "</option>"
+                );
+              })
+              .join("");
+          sel.value = prevVal;
+        }
+
+        function renderSuivi() {
+          var lignesEx = lignesExercice();
+          var lignesIds = lignesEx.reduce(function (acc, l) {
+            acc[l.id] = l;
+            return acc;
+          }, {});
+          var fLigne = document.getElementById("filtreLigne").value;
+          var fStatut = document.getElementById("filtreStatut").value;
+          var fRech = document
+            .getElementById("filtreRecherche")
+            .value.trim()
+            .toLowerCase();
+
+          var rows = state.engagements
+            .filter(function (e) {
+              if (!lignesIds[e.ligneId]) return false;
+              if (fLigne && e.ligneId !== fLigne) return false;
+              if (fStatut && e.statut !== fStatut) return false;
+              if (
+                fRech &&
+                !(
+                  e.beneficiaire.toLowerCase().indexOf(fRech) > -1 ||
+                  e.id.toLowerCase().indexOf(fRech) > -1 ||
+                  e.objet.toLowerCase().indexOf(fRech) > -1
+                )
+              )
+                return false;
+              return true;
+            })
+            .sort(function (a, b) {
+              return a.date < b.date ? 1 : -1;
+            });
+
+          document.getElementById("suiviCount").textContent =
+            rows.length + " engagement(s)";
+          var tbody = document.getElementById("tblSuivi");
+          tbody.innerHTML = rows
+            .map(function (e) {
+              var l = lignesIds[e.ligneId];
+              return (
+                "<tr>" +
+                '<td class="figures">' +
+                e.id +
+                "</td>" +
+                '<td><div class="row-title">' +
+                esc(l.nom) +
+                '</div><div class="row-sub">' +
+                esc(l.categorie) +
+                "</div></td>" +
+                '<td><div class="row-title">' +
+                esc(e.beneficiaire) +
+                '</div><div class="row-sub">' +
+                esc(e.objet) +
+                "</div></td>" +
+                '<td class="num figures">' +
+                fmtShort(e.montant) +
+                "</td>" +
+                "<td>" +
+                formatDateFr(e.date) +
+                "</td>" +
+                "<td>" +
+                statutSelectHtml(e) +
+                "</td>" +
+                '<td><button class="icon-btn" data-del-eng="' +
+                e.id +
+                '" title="Supprimer">✕</button></td>' +
+                "</tr>"
+              );
+            })
+            .join("");
+          document.getElementById("emptySuivi").style.display = rows.length
+            ? "none"
+            : "block";
+
+          tbody
+            .querySelectorAll("select[data-statut-eng]")
+            .forEach(function (sel) {
+              sel.onchange = function () {
+                var e = state.engagements.find(function (x) {
+                  return x.id === sel.dataset.statutEng;
+                });
+                e.statut = sel.value;
+                saveState(state);
+                toast("Statut mis à jour — " + e.id);
+                renderAll();
+              };
+            });
+          tbody.querySelectorAll("[data-del-eng]").forEach(function (btn) {
+            btn.onclick = function () {
+              if (!confirm("Supprimer cet engagement ?")) return;
+              state.engagements = state.engagements.filter(function (x) {
+                return x.id !== btn.dataset.delEng;
+              });
+              saveState(state);
+              toast("Engagement supprimé");
+              renderAll();
+            };
+          });
+        }
+
+        function statutSelectHtml(e) {
+          var opts = ["Engagé", "Ordonnancé", "Payé", "Annulé"];
+          return (
+            '<select class="status-select" data-statut-eng="' +
+            e.id +
+            '">' +
+            opts
+              .map(function (o) {
+                return (
+                  '<option value="' +
+                  o +
+                  '"' +
+                  (o === e.statut ? " selected" : "") +
+                  ">" +
+                  o +
+                  "</option>"
+                );
+              })
+              .join("") +
+            "</select>"
+          );
+        }
+
+        function formatDateFr(iso) {
+          var d = new Date(iso + "T00:00:00");
+          if (isNaN(d)) return iso;
+          return d.toLocaleDateString("fr-FR", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          });
+        }
+
+        ["filtreLigne", "filtreStatut", "filtreRecherche"].forEach(
+          function (id) {
+            document.getElementById(id).addEventListener("input", renderSuivi);
+            document.getElementById(id).addEventListener("change", renderSuivi);
+          },
+        );
+
+        /* ============ Export CSV ============ */
+        function exportCSV(kind) {
+          var rows, header, filename;
+          if (kind === "lignes") {
+            header = [
+              "Ligne",
+              "Categorie",
+              "Alloue_IV",
+              "Engage_IV",
+              "Paye_IV",
+              "Disponible_IV",
+              "Taux_pct",
+              "Statut",
+            ];
+            rows = lignesExercice().map(function (l) {
+              var s = ligneStats(l);
+              return [
+                l.nom,
+                l.categorie,
+                l.alloue,
+                s.consomme,
+                s.paye,
+                s.dispo,
+                s.taux.toFixed(1),
+                s.statut,
+              ];
+            });
+            filename = "lignes_budgetaires_" + currentExercice + ".csv";
+          } else {
+            header = [
+              "Reference",
+              "Ligne",
+              "Beneficiaire",
+              "Objet",
+              "Montant_IV",
+              "Date",
+              "Statut",
+            ];
+            rows = state.engagements.map(function (e) {
+              var l = state.lignes.find(function (x) {
+                return x.id === e.ligneId;
+              });
+              return [
+                e.id,
+                l ? l.nom : "",
+                e.beneficiaire,
+                e.objet,
+                e.montant,
+                e.date,
+                e.statut,
+              ];
+            });
+            filename = "engagements_" + currentExercice + ".csv";
+          }
+          var csv =
+            header.join(";") +
+            "\n" +
+            rows
+              .map(function (r) {
+                return r
+                  .map(function (c) {
+                    return '"' + String(c).replace(/"/g, '""') + '"';
+                  })
+                  .join(";");
+              })
+              .join("\n");
+          var blob = new Blob(["\uFEFF" + csv], {
+            type: "text/csv;charset=utf-8;",
+          });
+          var a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          toast("Export CSV généré");
+        }
+
+        /* ============ Divers ============ */
+        function esc(s) {
+          return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return {
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[c];
+          });
+        }
+
+        document
+          .getElementById("exerciceSelect")
+          .addEventListener("change", function () {
+            currentExercice = parseInt(this.value, 10);
+            renderAll();
+          });
+
+        document
+          .getElementById("resetData")
+          .addEventListener("click", function () {
+            if (
+              !confirm(
+                "Réinitialiser toutes les données avec le jeu de démonstration ? Cette action est irréversible.",
+              )
+            )
+              return;
+            state = seedData();
+            saveState(state);
+            toast("Données de démonstration restaurées");
+            renderAll();
+          });
+
+        function renderAll() {
+          renderSuiviFilters();
+          if (currentView === "dashboard") renderDashboard();
+          else if (currentView === "lignes") renderLignes();
+          else if (currentView === "engager") renderEngagerForm();
+          else if (currentView === "suivi") renderSuivi();
+        }
+
+        /* ============ Initialisation ============ */
+        renderTopbarActions("dashboard");
+        renderAll();
+      })();
+    </script>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+  <script src="../../assets/js/transfert.js"></script>
+  <script src="../../assets/js/facture.js"></script>
+</html>

@@ -27,6 +27,13 @@ nav .logo-side_item {
   padding: 0.2rem;
 }
 
+.logo-side_item .dash-title {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
 nav .side_item_group {
   display: flex;
   flex-direction: column;

@@ -31,7 +31,7 @@ const admissionSidebar = [
     state: "déposé",
   },
   {
-    title: "Demandes traités",
+    title: "Analyse des demandes",
     state: "traité",
   },
   {
@@ -447,6 +447,7 @@ function showDemandeDetail(u) {
             <div class="final-action__comment">
               <span><b>Commentaire analyse :</b><br />${u.commentaireAnalyse}</span>
               <span><b>Commentaire entretien :</b><br />Lorem</span>
+              <span><b>Note entretien :</b><br />xx/100</span>
               <textarea rows="1" placeholder="Faire la synthèse"></textarea>
             </div>
             <div class="final-action__button">

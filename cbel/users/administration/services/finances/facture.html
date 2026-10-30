@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pédagogie - SSIAVERSITY | Analyse des demandes d'admission</title>
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/facture.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <div class="facture-set">
+      <div class="solde__save-facture">
+        <div class="solde">
+          <span>Solde alloué</span>
+          <span>42 483 Ivoire</span>
+          <div class="value">
+            <div class="value-details">
+              <span>Ivoire</span>
+              <span>8,88 €</span>
+            </div>
+            <div class="indice-details">
+              <span>Indice(%)</span>
+              <span>+0,0415 %</span>
+            </div>
+          </div>
+          <div class="account_num">
+            <span>N° du compte:</span>
+            <span class="account-number">●●●● ●●●● ●●●● 8495</span>
+            <i class="fa-solid fa-eye toggle-account"></i>
+          </div>
+        </div>
+        <div class="total-regle">
+          <span>Total factures réglées</span>
+          <span>483 Ivoire</span>
+          <div class="value">
+            <div class="value-details">
+              <span>Ivoire</span>
+              <span>8,88 €</span>
+            </div>
+            <div class="indice-details">
+              <span>Indice(%)</span>
+              <span>+0,0415 %</span>
+            </div>
+          </div>
+        </div>
+        <div class="recent-regle">
+          <span>Factures récemment réglées</span>
+          <div class="recent-group">
+            <div class="recent-item">
+              <span>1</span>
+              <span>#0001-FAC</span>
+              <span>02-05-2026 16:38</span>
+              <span>Pédagogie</span>
+              <span>100 Ivoire</span>
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <div class="recent-item">
+              <span>1</span>
+              <span>#0001-FAC</span>
+              <span>02-05-2026 16:38</span>
+              <span>Pédagogie</span>
+              <span>100 Ivoire</span>
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <div class="recent-item">
+              <span>1</span>
+              <span>#0001-FAC</span>
+              <span>02-05-2026 16:38</span>
+              <span>Pédagogie</span>
+              <span>100 Ivoire</span>
+              <i class="fa-solid fa-check"></i>
+            </div>
+          </div>
+        </div>
+        <div class="create-facture-form">
+          <span>Soumettre la facture</span>
+          <form action="">
+            <div class="input_group">
+              <label for="">Titre du motif</label>
+              <select name="" id="">
+                <option value="">Motifs liés aux paiements</option>
+                <option value="">Motifs liés aux revenus</option>
+                <option value="">Motifs internes</option>
+                <option value="">Motifs liés aux dépenses</option>
+                <option value="">Motifs financiers spécifiques</option>
+                <option value="">Motifs exceptionnels</option>
+                <option value="">Motifs liés aux événements</option>
+              </select>
+            </div>
+            <div class="input_group">
+              <label for="">Motif de la facture</label>
+              <select name="" id="">
+                <option value="">Paiement de facture</option>
+                <option value="">Paiement de service</option>
+                <option value="">Paiement de commande</option>
+                <option value="">Paiement de frais d'inscription</option>
+                <option value="">Paiement de frais d'adhésion</option>
+              </select>
+            </div>
+            <div class="input_group">
+              <label for="">ID de l'entité</label>
+              <input type="text" placeholder="Saisissez l'ID de l'entité" />
+            </div>
+            <div class="input_group">
+              <label for="">Montant</label>
+              <input
+                type="text"
+                placeholder="Saisissez le montant de la facture"
+              />
+            </div>
+            <div class="input_group">
+              <label for="">Echélonnement</label>
+              <input
+                type="text"
+                placeholder="Saisissez l'échelonnement de la facture"
+              />
+            </div>
+            <div class="input_group">
+              <label for="">Echéance</label>
+              <input type="date" />
+            </div>
+          </form>
+          <div class="form_btn">
+            <button type="button" class="send_btn">
+              Enregistrer la facture
+            </button>
+          </div>
+        </div>
+        <!--
+        <div class="pay-facture">
+          <span>Régler une facture</span>
+          <form action="">
+            <div class="input_group">
+              <label for="">Reférence de la facture</label>
+              <input
+                type="text"
+                placeholder="Saisissez la reférence de la facture"
+              />
+            </div>
+            <div class="input_group">
+              <label for="">Montant</label>
+              <input
+                type="text"
+                placeholder="Saisissez le montant que vous souhaiter régler"
+              />
+            </div>
+          </form>
+          <div class="form_btn">
+            <button type="button" class="send_btn">Régler la facture</button>
+          </div>
+        </div>-->
+        <div class="send-facture">
+          <span>Régler une facture</span>
+          <form action="">
+            <div class="input_group">
+              <label for="">ID de l'entité</label>
+              <input type="text" placeholder="Saisissez l'ID de l'entité" />
+            </div>
+            <div class="input_group">
+              <label for="">Reférence de la facture</label>
+              <input
+                type="text"
+                placeholder="Saisissez la reférence de la facture"
+              />
+            </div>
+            <div class="input_group">
+              <label for="">Motif de la facture</label>
+              <select name="" id="">
+                <option value="">Paiement de facture</option>
+                <option value="">Paiement de service</option>
+                <option value="">Paiement de commande</option>
+                <option value="">Paiement de frais d'inscription</option>
+                <option value="">Paiement de frais d'adhésion</option>
+              </select>
+            </div>
+            <div class="input_group">
+              <label for="">Montant</label>
+              <input
+                type="text"
+                placeholder="Saisissez le montant de la facture"
+              />
+            </div>
+          </form>
+          <div class="form_btn">
+            <button type="button" class="send_btn">Régler la facture</button>
+          </div>
+        </div>
+      </div>
+      <div class="facture-list">
+        <div class="facture-list__nav">
+          <div class="nav-item">
+            <span>Factures envoyées</span>
+            <div class="active-line"></div>
+          </div>
+          <div class="nav-item">
+            <span>Factures reçues</span>
+            <div class="active-line"></div>
+          </div>
+          <div class="nav-item">
+            <span>Factures réglées</span>
+            <div class="active-line"></div>
+          </div>
+        </div>
+        <div class="historique_table">
+          <table>
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+  <script src="../../assets/js/transfert.js"></script>
+  <script src="../../assets/js/facture.js"></script>
+</html>

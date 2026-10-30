@@ -1,0 +1,192 @@
+.services-professeur__set {
+  background: #edf7fd;
+  width: 85%;
+  height: 100%;
+  padding: 1rem 0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  border: solid;
+}
+
+.professeur-set__college-nav {
+  background: var(--versity-blue);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 0.5rem;
+  height: max-content;
+  width: 13%;
+}
+
+.professeur-set__college-nav span {
+  color: #629bbe;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.professeur-set__college-nav span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.professeur-set__college-nav .college-nav__active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.mail-set {
+  border: solid #629bbe 1px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  height: 100%;
+  width: 87%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.mail-set__nav {
+  background: var(--versity-blue);
+  padding: 0.5rem;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  height: 40%;
+  width: 13%;
+}
+
+.mail-set__nav span {
+  color: #629bbe;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.mail-set__nav .mail-set__nav-active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.mail-set__nav span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.mail-set__content {
+  border: solid #629bbe 1px;
+  background: var(--white);
+  padding: 0.5rem;
+  border-radius: 3px;
+  width: 87%;
+}
+
+.mail-content__new-mesage {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mail-content__new-mesage .form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 60%;
+}
+
+.mail-content__new-mesage .form input,
+.mail-content__new-mesage .form textarea {
+  border: solid #afe0ff 1px;
+  color: var(--versity-blue);
+  font-size: 0.7rem;
+  padding: 0.3rem;
+  border-radius: 3px;
+  outline: none;
+}
+
+.mail-content__new-mesage button {
+  font-size: 0.6rem;
+  padding: 0.5rem;
+  border: none;
+  background: var(--versity-blue);
+  color: var(--white);
+  border-radius: 3px;
+  width: max-content;
+}
+
+.mail-content__reception {
+  width: 100%;
+  height: 100%;
+}
+
+.mail-content__received-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.received-list__item {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.6rem;
+  gap: 0.5rem;
+  justify-content: space-between;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  padding: 0.3rem;
+  width: 100%;
+  cursor: pointer;
+  transition: all ease 0.3s;
+}
+
+.received-list__item:hover {
+  background: #edf7fd;
+}
+
+.received-list__item > span {
+  width: 20%;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.6rem;
+  color: black;
+  font-weight: 500;
+}
+
+.message-preview_hour {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: space-between;
+  color: rgb(119, 119, 119);
+}
+
+.message-preview_hour > span:first-of-type {
+  width: 85%;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.message-preview_hour > span:nth-of-type(2) {
+  max-width: 14%;
+}
+
+.hide {
+  display: none !important;
+}

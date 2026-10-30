@@ -1,0 +1,245 @@
+.reclamations {
+  background: #edf7fd;
+  width: 85%;
+  height: 100%;
+  padding: 1rem 0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+/*Reclamations sidebar*/
+.reclamations-sidebar {
+  background: var(--versity-blue);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 0.5rem;
+  height: max-content;
+  width: 13%;
+}
+
+.reclamations-sidebar span {
+  color: #629bbe;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.reclamations-sidebar span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.reclamations-sidebar .reclamations-nav__active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+/*Réclamations table group*/
+
+.reclamations-table-set {
+  width: 85%;
+  height: 100%;
+}
+
+/*Table réclamations en attentes*/
+
+.reclamations-pending-table {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+.reclamations-pending-table table {
+  width: max-content;
+  background: var(--white);
+}
+
+.reclamations-pending-table thead {
+  background: var(--versity-blue);
+}
+
+.reclamations-pending-table thead tr th {
+  border: solid rgba(255, 255, 255, 0.2) 1px;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--white);
+  text-align: center;
+}
+
+.reclamations-pending-table tbody tr > td:first-of-type {
+  text-align: left;
+}
+
+.reclamations-pending-table tbody tr td {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  color: black;
+  text-align: center;
+  cursor: pointer;
+}
+
+.reclamations-pending-table tbody tr:hover {
+  background: #c7e2f5;
+}
+
+.reclamations-pending-table tbody tr .action > button:first-of-type {
+  background: var(--white);
+  border: #50b150 solid 1px;
+  color: #50b150;
+  font-size: 0.5rem;
+  font-weight: 600;
+  padding: 0.1rem 0.3rem;
+  margin-right: 0.5rem;
+  border-radius: 3px;
+  transition: 0.3s ease;
+}
+
+.reclamations-pending-table tbody tr .action > button:first-of-type:hover {
+  background: #50b150;
+  color: var(--white);
+}
+
+.reclamations-pending-table tbody tr .action > button:nth-child(2) {
+  background: var(--white);
+  border: var(--primary) 1px solid;
+  color: var(--primary);
+  font-size: 0.5rem;
+  font-weight: 600;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  transition: 0.3s ease;
+}
+
+.reclamations-pending-table tbody tr .action > button:nth-child(2):hover {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/*Table réclamations acceptées*/
+
+.reclamations-accepted-table {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+.reclamations-accepted-table table {
+  width: max-content;
+  background: var(--white);
+}
+
+.reclamations-accepted-table thead {
+  background: var(--versity-blue);
+}
+
+.reclamations-accepted-table thead tr th {
+  border: solid rgba(255, 255, 255, 0.2) 1px;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--white);
+  text-align: center;
+}
+
+.reclamations-accepted-table tbody tr > td:first-of-type {
+  text-align: left;
+}
+
+.reclamations-accepted-table tbody tr td {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  color: black;
+  text-align: center;
+  cursor: pointer;
+}
+
+.reclamations-accepted-table tbody tr:hover {
+  background: #c7e2f5;
+}
+
+.reclamations-accepted-table tbody tr .statut > .accepted {
+  color: #50b150;
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+.reclamations-accepted-table tbody tr .statut > .refused {
+  color: var(--primary);
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+/*Table réclamations refusées*/
+
+.reclamations-refused-table {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+.reclamations-refused-table table {
+  width: max-content;
+  background: var(--white);
+}
+
+.reclamations-refused-table thead {
+  background: var(--versity-blue);
+}
+
+.reclamations-refused-table thead tr th {
+  border: solid rgba(255, 255, 255, 0.2) 1px;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--white);
+  text-align: center;
+}
+
+.reclamations-refused-table tbody tr > td:first-of-type {
+  text-align: left;
+}
+
+.reclamations-refused-table tbody tr td {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  color: black;
+  text-align: center;
+  cursor: pointer;
+}
+
+.reclamations-refused-table tbody tr:hover {
+  background: #c7e2f5;
+}
+
+.reclamations-refused-table tbody tr .statut > .accepted {
+  color: #50b150;
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+.reclamations-refused-table tbody tr .statut > .refused {
+  color: var(--primary);
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+/*Hide set*/
+.hide {
+  display: none !important;
+}

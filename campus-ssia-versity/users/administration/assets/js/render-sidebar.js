@@ -33,14 +33,23 @@ const navlinksTab = [
     href: "reporting.html",
   },
   {
-    titre: "Bureau d'étude",
+    titre: "Gestion budgétaire",
+    icon: "fa-solid fa-wallet",
+    folder: "services/gestion-budgetaire/",
+    dropdown: [
+      { titre: "Facture", href: "gestion-budget.html" },
+      /*{ titre: "Facture", href: "budget-facture.html" },*/
+      { titre: "Pilotage Budgétaire", href: "prevision-budgetaire.html" },
+    ],
+  },
+  {
+    titre: "Bureau d'études & collèges",
     icon: "fa-solid fa-user-graduate",
     folder: "services/pedagogie/",
     dropdown: [
       { titre: "Pédagogie", href: "pedagogie.html" },
       { titre: "Liste étudiants", href: "liste-etudiants.html" },
       { titre: "Liste professeurs", href: "liste-professeurs.html" },
-      { titre: "Collèges", href: "colleges.html" },
       { titre: "Suspension", href: "etudiants-suspendus.html" },
     ],
   },
@@ -52,19 +61,21 @@ const navlinksTab = [
       { titre: "Ecriture du journal", href: "releves.html" },
       { titre: "Transfert", href: "transfert.html" },
       { titre: "Facture", href: "facture.html" },
-      { titre: "Vue d'ensemble", href: "vue.html" },
+      { titre: "Dashboard", href: "vue.html" },
       { titre: "Etat financier", href: "ssia_financial_report.html" },
     ],
   },
   {
-    titre: "Admission centrale",
+    titre: "Administration centrale",
     icon: "fa-solid fa-graduation-cap",
     folder: "services/admissions/",
     dropdown: [
       { titre: "Analyse demandes", href: "demandes-admission.html" },
       { titre: "Entretiens", href: "entretiens.html" },
-      { titre: "Administration & collèges", href: "college.html" },
       { titre: "Soutenances", href: "soutenances.html" },
+      { titre: "Collèges & Management", href: "gestion-colleges.html" },
+      { titre: "Liste des admis", href: "admis-list.html" },
+      { titre: "Ordre de paiement", href: "pay-order.html" },
     ],
   },
   {
@@ -73,19 +84,17 @@ const navlinksTab = [
     folder: "services/vie-estudiantine/",
     dropdown: [
       { titre: "Vie étudiante", href: "vie-etudiante.html" },
-      { titre: "Club-estudiantine", href: "chat.html" },
-      { titre: "Chat-box-étudiants", href: "services-etudiants.html" },
-      { titre: "Mail-box-professeurs", href: "services-professeur.html" },
+      { titre: "Forum étudiant", href: "chat.html" },
+      { titre: "Messagérie-étudiants", href: "services-etudiants.html" },
+      { titre: "Messagérie-professeurs", href: "services-professeur.html" },
+      { titre: "Blog et actualités", href: "blog.html" },
     ],
   },
   {
     titre: "Communication",
     icon: "fa-solid fa-bullhorn",
     folder: "services/communication/",
-    dropdown: [
-      { titre: "Marketing", href: "communication.html" },
-      { titre: "Com", href: "com.html" },
-    ],
+    href: "com.html",
   },
   {
     titre: "Partenariats & Affaires",
@@ -116,6 +125,15 @@ const navlinksTab = [
       { titre: "Personnel complet", href: "personnels-complet.html" },
       { titre: "Stagiaires", href: "personnels-stagiaires.html" },
       { titre: "Professeurs", href: "personnels-professeurs.html" },
+    ],
+  },
+
+  {
+    titre: "Support technique",
+    icon: "fa-solid fa-headset",
+    folder: "services/support/",
+    dropdown: [
+      { titre: "Gestion de documents", href: "gestion-documents.html" },
     ],
   },
 ];

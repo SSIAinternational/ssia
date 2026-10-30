@@ -1,0 +1,165 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: min(100vh, 600px);
+  display: flex;
+  flex-direction: row;
+}
+
+.navbar {
+  background: var(--white);
+  border-right: 1px solid var(--bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 15%;
+  height: 100%;
+  padding: 0.8rem 0.5rem;
+}
+
+.logo-navlinks {
+  width: 100%;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.logo-navlinks .logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: #efeae4;
+  border-radius: 7px;
+}
+
+.logo-navlinks .logo img {
+  width: 65px;
+  background: var(--white);
+}
+
+.navlinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navlinks__links-group .link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--black);
+  font-size: 0.7rem;
+  font-weight: 400;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  overflow-x: hidden;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.navlinks__links-group .link a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  color: #94bdd8;
+  font-size: 0.7rem;
+  font-weight: 400;
+  border-radius: 3px;
+  overflow-x: hidden;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.navlinks__links-group .link-active {
+  color: var(--white);
+  background: var(--versity-blue);
+}
+
+.navlinks__links-group:hover {
+  color: var(--white);
+  background: var(--cbel-primary);
+  transition: 0.3s ease;
+  border-radius: 3px;
+  height: max-content;
+  transition: height 0.5s ease-in-out;
+}
+
+.navlinks__links-group:hover .link,
+.navlinks__links-group .link:hover a {
+  color: var(--white);
+}
+
+.navlinks__links-group .link span {
+  flex: 1;
+  text-wrap: nowrap;
+  overflow-x: hidden;
+}
+
+.navlinks__links-group a {
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+
+.navlinks__links-group a:hover {
+  text-decoration: none;
+}
+
+.navlinks__links-group .link-group__dropdown {
+  display: none;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.2rem 0.5rem 0.3rem 0.8rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 0;
+}
+
+.navlinks__links-group .link-group__dropdown a {
+  color: var(--white);
+  font-size: 0.65rem;
+  flex: 1;
+  text-wrap: nowrap;
+  overflow-x: hidden;
+  padding: 0.1rem 0.2rem;
+  border-radius: 2px;
+}
+
+.navlinks__links-group .link-group__dropdown a:hover {
+  background: var(--white);
+  color: var(--cbel-primary);
+  transition: 0.3s ease;
+}
+
+.navlinks__links-group .link-group__dropdown .sub-link-active {
+  background: var(--white);
+  color: var(--versity-blue);
+}
+
+.navlinks__links-group:hover .link-group__dropdown {
+  display: flex;
+  opacity: 1;
+  transition: 0.3s ease 0.2s;
+}
+
+.navbar .logout {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.navbar .logout .logout-btn {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  font-size: 0.7rem;
+  color: var(--white);
+  background: var(--primary) !important;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  gap: 0.5rem;
+  cursor: pointer;
+}

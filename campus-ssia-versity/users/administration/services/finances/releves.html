@@ -84,12 +84,108 @@
           </div>
           <button class="disabled"><i class="fa-solid fa-download"></i></button>
         </div>
+        <div class="balance-content">
+          <button class="balance-btn">Balance</button>
+          <div class="balance-items hide">
+            <table>
+              <thead>
+                <tr>
+                  <th colspan="6" class="main-header">Compte Débiteur</th>
+                </tr>
+                <tr>
+                  <th>Code</th>
+                  <th>Compte</th>
+                  <th>Solde débiteur</th>
+                  <th>Balance SSIA</th>
+                  <th>Date & heure</th>
+                  <th>Statut</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>100</td>
+                  <td>Portefeuille client</td>
+                  <td>150 IV</td>
+                  <td>100 Portefeuille client</td>
+                  <td>02/10/2026 14:30</td>
+                  <td>
+                    <span class="on-hold">En cours</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>100</td>
+                  <td>Portefeuille client</td>
+                  <td>150 IV</td>
+                  <td>100 Portefeuille client</td>
+                  <td>02/10/2026 14:30</td>
+                  <td>
+                    <span class="on-hold">En cours</span>
+                  </td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th colspan="6" class="main-header">Compte Créditeur</th>
+                </tr>
+                <tr>
+                  <th>Code</th>
+                  <th>Compte</th>
+                  <th>Solde créditeur</th>
+                  <th>Balance SSIA</th>
+                  <th>Date & heure</th>
+                  <th>Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>100</td>
+                  <td>Portefeuille client</td>
+                  <td>150 IV</td>
+                  <td>100 Portefeuille client</td>
+                  <td>02/10/2026 14:30</td>
+                  <td>
+                    <span class="on-hold">En cours</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>100</td>
+                  <td>Portefeuille client</td>
+                  <td>150 IV</td>
+                  <td>100 Portefeuille client</td>
+                  <td>02/10/2026 14:30</td>
+                  <td>
+                    <span class="on-hold">En cours</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="balance-cloture">
+              <form action="">
+                <div class="input-group">
+                  <label for="">De</label>
+                  <input type="date" />
+                </div>
+                <div class="input-group">
+                  <label for="">à</label>
+                  <input type="date" />
+                </div>
+              </form>
+              <button class="balance-cloture-btn">Cloturer la balance</button>
+            </div>
+          </div>
+        </div>
         <div class="new-transaction-content">
           <button class="new-transaction-btn">Nouvelle transaction</button>
-          <div class="new-transaction-form">
+          <div class="new-transaction-form hide">
             <div class="input-group">
               <label for="">Code</label>
               <input type="text" />
+            </div>
+            <div class="input-group">
+              <label for="">Protefeuille SSIA</label>
+              <input type="text" value="100 Protefeuille client" disabled />
             </div>
             <div class="input-group">
               <label for="">Libéllé</label>
@@ -105,6 +201,9 @@
             <div class="input-group">
               <label for="">Montant</label>
               <input type="text" />
+            </div>
+            <div class="save">
+              <button>Enregistrer</button>
             </div>
           </div>
         </div>
@@ -124,6 +223,7 @@
               <th>Balance SSIA</th>
               <th>Solde</th>
               <th>Statut</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -138,9 +238,12 @@
               <td>-</td>
               <td>100 Portefeuille client</td>
               <td>
-                <span class="debit">100 <img src="" alt="" srcset="" /></span>
+                <span><b>100</b> <img src="" alt="" srcset="" /></span>
               </td>
               <td><span class="on-hold">En cours</span></td>
+              <td>
+                <button><i class="fa-solid fa-trash"></i></button>
+              </td>
             </tr>
             <tr>
               <td>2</td>
@@ -153,15 +256,34 @@
               <td>100</td>
               <td>110 Banque entité</td>
               <td>
-                <span class="credit">100 <img src="" alt="" srcset="" /></span>
+                <span><b>100</b> <img src="" alt="" srcset="" /></span>
               </td>
               <td><span class="on-hold">En cours</span></td>
+              <td>
+                <button><i class="fa-solid fa-trash"></i></button>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <div class="cloture">
+        <button class="cloture-btn">Cloturer</button>
+        <form action="" class="cloture-form hide">
+          <div class="input-group">
+            <label for="">De</label>
+            <input type="date" />
+          </div>
+          <div class="input-group">
+            <label for="">à</label>
+            <input type="date" />
+          </div>
+        </form>
+      </div>
+      <div class="new-transaction"></div>
     </section>
   </body>
   <script src="../../assets/js/render-sidebar.js"></script>
   <script src="../../assets/js/download-ecriture.js"></script>
+  <script src="../../assets/js/cloture.js"></script>
+  <script src="../../assets/js/new-transaction.js"></script>
 </html>

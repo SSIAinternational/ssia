@@ -1,0 +1,242 @@
+.vie-estudiantine__chat {
+  background: #edf7fd;
+  width: 85%;
+  height: 100%;
+  padding: 1rem 0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.chat__sidebar {
+  background: var(--versity-blue);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 0.5rem;
+  height: max-content;
+  width: 13%;
+}
+
+.chat__sidebar span {
+  color: #629bbe;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.chat__sidebar span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.chat__sidebar .chat-nav__active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.chat-set {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.chat-set__sidebar {
+  background: var(--versity-blue);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 0.5rem;
+  height: max-content;
+  width: 15%;
+}
+
+.chat-set__sidebar span {
+  color: #629bbe;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.chat-set__sidebar span:hover {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.chat-set__sidebar .chat-sidebar__nav-active {
+  background: #0a5888;
+  color: var(--white);
+}
+
+.chat-set__content {
+  background: var(--white);
+  border: solid #629bbe 1px;
+
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.chat-set__content h5 {
+  font-size: 1rem;
+  color: var(--versity-blue);
+  margin: 0;
+}
+
+.conversation-set {
+  border: solid #9ecae4 1px;
+  border-radius: 3px;
+  padding: 0.5rem;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+
+.conversation-set__me {
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 0.3rem;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.conversation-set__me img {
+  width: 20px;
+  height: 20px;
+  background: var(--versity-blue);
+  border-radius: 100%;
+}
+
+.conversation-set__me .message {
+  background: #c4e1f3;
+  padding: 0.3rem;
+  border-radius: 0 7px 7px 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: max-content;
+  max-width: 90%;
+}
+
+.conversation-set__me .message span:first-of-type {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--versity-blue);
+  background: #9ecae4;
+  padding: 0.1rem 0.2rem;
+  border-radius: 2px;
+  width: max-content;
+}
+
+.conversation-set__me .message span:nth-of-type(2) {
+  font-size: 0.6rem;
+  color: black;
+  margin-left: 0.2rem;
+}
+
+.conversation-set__them {
+  max-width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: start;
+  gap: 0.3rem;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.conversation-set__them img {
+  width: 20px;
+  height: 20px;
+  background: var(--versity-blue);
+  border-radius: 100%;
+}
+
+.conversation-set__them .message {
+  background: var(--versity-blue);
+  padding: 0.3rem;
+  border-radius: 7px 0 7px 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 0.3rem;
+  width: max-content;
+  max-width: 90%;
+}
+
+.conversation-set__them .message span:first-of-type {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--white);
+  background: #0a5888;
+  padding: 0.1rem 0.2rem;
+  border-radius: 2px;
+  width: max-content;
+}
+
+.conversation-set__them .message span:nth-of-type(2) {
+  font-size: 0.6rem;
+  color: var(--white);
+  margin-right: 0.2rem;
+}
+
+.sender {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  width: 60%;
+  justify-content: space-between;
+}
+
+.sender input {
+  border: solid #629bbe 1px;
+  font-size: 0.6rem;
+  color: var(--versity-blue);
+  border-radius: 30px;
+  outline: none;
+  padding: 0.4rem 0.5rem;
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.actions i {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  background: var(--versity-blue);
+  border-radius: 100%;
+  color: var(--white);
+  cursor: pointer;
+}

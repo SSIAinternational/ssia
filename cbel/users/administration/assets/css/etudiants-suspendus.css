@@ -1,0 +1,262 @@
+body {
+  background: #edf7fd;
+}
+
+.student-suspended-list {
+  padding: 2rem 1rem 1rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.student-suspended-list__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4rem;
+}
+
+.student-suspended-list__header h5 {
+  color: var(--versity-blue);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.student-suspended-list__header-search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 20%;
+  gap: 0.5rem;
+  animation: search-bar-width 2.5s 0.2s ease-in-out;
+  transition: width 1s ease;
+}
+
+.student-suspended-list__header-search input {
+  background: var(--white);
+  font-size: 0.7rem;
+  flex: 1;
+  padding: 0.3rem 0.5rem;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  color: var(--versity-blue);
+}
+
+.student-suspended-list__header-search:hover {
+  width: 40%;
+}
+
+@keyframes search-bar-width {
+  0% {
+    width: 20%;
+  }
+
+  50% {
+    width: 40%;
+  }
+
+  100% {
+    width: 20%;
+  }
+}
+
+.student-suspended-list__header-search i {
+  color: var(--white);
+  background: var(--versity-blue);
+  padding: 0.5rem;
+  border-radius: 100%;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: transform 1s ease-in-out;
+  animation: search-sign 2.5s ease-in-out;
+}
+
+.student-suspended-list__header-search:hover i {
+  transform: rotate(360deg);
+}
+
+@keyframes search-sign {
+  0% {
+    transform: rotate(0);
+  }
+
+  50% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
+}
+
+.student-suspended-list__total-student {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.student-suspended-list__total-student span {
+  font-size: 0.7rem;
+  color: var(--versity-blue);
+}
+
+.student-suspended-list__table {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  height: 90%;
+  overflow-y: auto;
+  border-radius: 6px;
+}
+
+.student-suspended-list__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.1rem 0.5rem;
+  border-bottom: solid 1px rgba(166, 166, 166, 0.242);
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.student-suspended-list__item:hover {
+  background: #f8fcff;
+  transform: scale(1.01);
+  box-shadow: 1px 10px 10px rgba(0, 0, 0, 0.136);
+}
+
+.student-suspended-list__item-detail {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.student-suspended-list__item-detail img {
+  height: 25px;
+  width: 25px;
+  background: var(--versity-blue);
+  border-radius: 100%;
+}
+
+.student-suspended-list__item span {
+  font-size: 0.7rem;
+  color: black;
+}
+
+.student-suspended-list__item-detail span:not(:last-child) {
+  border-right: solid 1px rgba(166, 166, 166, 0.441);
+  padding-right: 0.5rem;
+}
+
+.student-suspended-list__item-detail span:nth-child(2) .fa-mars {
+  color: rgb(35, 89, 189);
+}
+
+.student-suspended-list__item-detail span:nth-child(2) .fa-venus {
+  color: rgb(189, 35, 166);
+}
+
+.student-suspended-list__item-action span {
+  color: var(--primary);
+  border: solid 1px var(--primary);
+  padding: 0.1rem 0.3rem;
+  border-radius: 2px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.student-suspended-list__item-action span:hover {
+  background: var(--primary);
+  color: var(--white);
+}
+
+table {
+  overflow-y: auto;
+  max-height: 100%;
+  position: relative;
+}
+
+thead {
+  background: var(--white);
+  position: sticky;
+  top: 0;
+}
+
+thead tr {
+  border-bottom: solid 1px rgba(166, 166, 166, 0.242);
+}
+
+thead tr th {
+  padding: 0.3rem 0;
+}
+
+th {
+  font-size: 0.7rem;
+  color: rgb(147, 147, 147);
+  font-weight: 600;
+}
+
+td {
+  padding: 0.1rem 0.3rem;
+  font-size: 0.7rem;
+  color: black;
+  cursor: pointer;
+}
+
+tbody tr {
+  transition: 0.3s ease;
+  border-bottom: solid 1px rgba(166, 166, 166, 0.242);
+}
+
+tbody tr:hover {
+  background: #f8fcff;
+  transform: scale(1.01);
+  box-shadow: 1px 10px 10px rgba(0, 0, 0, 0.136);
+}
+
+td.detail__name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+td.detail__name .fa-mars {
+  color: rgb(35, 89, 189);
+}
+
+td.detail__name .fa-venus {
+  color: rgb(189, 35, 166);
+}
+
+td.detail__name img {
+  height: 25px;
+  width: 25px;
+  background: var(--versity-blue);
+  border-radius: 100%;
+}
+.action {
+  text-align: right;
+}
+
+.action span {
+  color: #50b150;
+  border: solid 1px #50b150;
+  padding: 0.1rem 0.3rem;
+  border-radius: 2px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.action span:hover {
+  background: #50b150;
+  color: var(--white);
+}

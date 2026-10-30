@@ -1,0 +1,4269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSIA HRMS Enterprise — Financial Intelligence Platform</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/gestion-rh.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="rh-set">
+      <!-- TOAST WRAPPER -->
+      <div class="toast-wrap" id="toastWrap"></div>
+
+      <!-- SIDEBAR -->
+      <nav class="sidebar">
+        <div class="sb-logo">
+          <div class="sb-logo-icon">
+            <img src="../../../../../img/logoci.jpg" alt="" srcset="" />
+          </div>
+          <div class="sb-logo-text">
+            <div class="brand">SSIA HRMS</div>
+            <div class="sub">Enterprise Edition</div>
+          </div>
+        </div>
+        <div class="sb-body">
+          <div class="sb-section">Principal</div>
+          <div class="sb-item active" data-page="dashboard">
+            <i class="fa-solid fa-gauge-high"></i>Tableau de bord
+          </div>
+          <div class="sb-section">Ressources Humaines</div>
+          <div class="sb-item" data-page="personnel">
+            <i class="fa-solid fa-users"></i>Personnel<span
+              class="badge-sb green"
+              id="sbCountPersonnel"
+              >0</span
+            >
+          </div>
+          <div class="sb-item" data-page="temps">
+            <i class="fa-solid fa-clock"></i>Temps & Absences
+          </div>
+          <div class="sb-item" data-page="talents">
+            <i class="fa-solid fa-star"></i>Talents & Perf.
+          </div>
+          <div class="sb-section">Finance</div>
+          <div class="sb-item" data-page="paie">
+            <i class="fa-solid fa-money-bill-wave"></i>Paie & Rémunération<span
+              class="badge-sb"
+              id="sbBulletins"
+              >0</span
+            >
+          </div>
+          <div class="sb-item" data-page="analytics">
+            <i class="fa-solid fa-chart-line"></i>RH Analytics
+          </div>
+          <div class="sb-section">Système</div>
+          <div class="sb-item" data-page="admin">
+            <i class="fa-solid fa-shield-halved"></i>Administration RH
+          </div>
+        </div>
+        <div class="sb-bottom">
+          <div class="sb-user">
+            <div class="sb-avatar">AR</div>
+            <div class="sb-user-info">
+              <div class="name">Admin RH</div>
+              <div class="role">Responsable Paie</div>
+            </div>
+          </div>
+          <div class="wallet-badge">
+            <div class="wlabel">
+              <span class="wallet-dot"></span>Wallet SSIA
+            </div>
+            <div class="wval" id="sbWallet">0x8B4e...F3c1</div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- MAIN -->
+      <div class="main-wrap">
+        <div class="topbar">
+          <span class="topbar-title" id="topbarTitle">Tableau de bord</span>
+          <span class="topbar-sub" id="topbarSub">— Vue globale RH</span>
+          <div class="topbar-spacer"></div>
+          <div class="topbar-search">
+            <i class="fa-solid fa-magnifying-glass"></i
+            ><input
+              type="text"
+              placeholder="Rechercher employé, matricule..."
+            />
+          </div>
+          <button class="topbar-btn" onclick="toggleTheme()" title="Thème">
+            <i class="fa-solid fa-circle-half-stroke"></i>
+          </button>
+          <button class="topbar-btn" title="Notifications">
+            <i class="fa-solid fa-bell"></i><span class="notif-dot"></span>
+          </button>
+          <button class="topbar-btn" title="Aide">
+            <i class="fa-solid fa-circle-question"></i>
+          </button>
+        </div>
+        <div class="content" id="mainContent">
+          <!-- ========== PAGE DASHBOARD ========== -->
+          <div class="page active" id="page-dashboard">
+            <div class="page-header">
+              <div class="page-header-top">
+                <h1>Tableau de bord RH</h1>
+                <div class="period-btns">
+                  <button class="period-btn">Jour</button
+                  ><button class="period-btn">Semaine</button>
+                  <button class="period-btn active">Mois</button
+                  ><button class="period-btn">Année</button>
+                </div>
+              </div>
+              <p>Vue consolidée — SSIA Financial Intelligence Platform</p>
+            </div>
+            <div class="kpi-grid" id="dashKpi1"></div>
+            <div
+              class="kpi-grid"
+              id="dashKpi2"
+              style="margin-bottom: 20px"
+            ></div>
+            <div class="grid-2" style="margin-bottom: 16px">
+              <div class="card">
+                <div class="card-header">
+                  <i
+                    class="fa-solid fa-chart-bar"
+                    style="color: var(--info)"
+                  ></i
+                  ><span class="card-title">Effectifs par département</span
+                  ><span class="card-sub">Dynamique</span>
+                </div>
+                <div class="card-body">
+                  <div class="chart-wrap" style="height: 200px">
+                    <canvas id="chartDepts"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <i
+                    class="fa-solid fa-chart-line"
+                    style="color: var(--gold)"
+                  ></i
+                  ><span class="card-title">Évolution masse salariale</span
+                  ><span class="card-sub">IVR Millions</span>
+                </div>
+                <div class="card-body">
+                  <div class="chart-wrap" style="height: 200px">
+                    <canvas id="chartSalaire"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <i
+                  class="fa-solid fa-triangle-exclamation"
+                  style="color: var(--warn)"
+                ></i
+                ><span class="card-title">Alertes RH</span>
+              </div>
+              <div
+                class="card-body"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px"
+                id="dashAlertes"
+              ></div>
+            </div>
+          </div>
+
+          <!-- ========== PAGE PERSONNEL ========== -->
+          <div class="page" id="page-personnel">
+            <div class="page-header">
+              <div class="page-header-top"><h1>Gestion du Personnel</h1></div>
+              <p>Employés · Départements · Postes · Organigramme · Contrats</p>
+            </div>
+            <div class="tabs" id="tabsPersonnel">
+              <div class="tab active" data-target="sub-employes">
+                Employés <span class="tab-count" id="tcEmployes">0</span>
+              </div>
+              <div class="tab" data-target="sub-departements">
+                Départements <span class="tab-count" id="tcDepts">0</span>
+              </div>
+              <div class="tab" data-target="sub-postes">
+                Postes <span class="tab-count" id="tcPostes">0</span>
+              </div>
+              <div class="tab" data-target="sub-organigramme">Organigramme</div>
+              <div class="tab" data-target="sub-contrats">Contrats</div>
+            </div>
+
+            <!-- EMPLOYÉS -->
+            <div class="subtab-panel active" id="sub-employes">
+              <div class="toolbar">
+                <button
+                  class="btn btn-primary"
+                  onclick="openModal('modalEmp', 'new')"
+                >
+                  <i class="fa-solid fa-plus"></i>Nouvel employé
+                </button>
+                <button class="btn btn-secondary" onclick="editSelectedEmp()">
+                  <i class="fa-solid fa-pen-to-square"></i>Modifier
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  style="color: var(--danger)"
+                  onclick="deleteSelectedEmp()"
+                >
+                  <i class="fa-solid fa-trash"></i>Supprimer
+                </button>
+                <div class="toolbar-sep"></div>
+                <button
+                  class="btn btn-secondary"
+                  onclick="
+                    showToast('Export', 'Export Excel simulé.', 'success')
+                  "
+                >
+                  <i class="fa-solid fa-file-excel" style="color: #217346"></i
+                  >Excel
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  onclick="showToast('Export', 'Export PDF simulé.', 'success')"
+                >
+                  <i class="fa-solid fa-file-pdf" style="color: #e53e3e"></i>PDF
+                </button>
+                <div class="toolbar-sep"></div>
+                <div class="filters" style="padding: 0; margin: 0">
+                  <select
+                    class="filter-control"
+                    id="filterStatut"
+                    onchange="renderEmployes()"
+                  >
+                    <option value="">Tous statuts</option>
+                    <option>Présent</option>
+                    <option>Absent</option>
+                    <option>Congé</option>
+                    <option>Mission</option>
+                  </select>
+                  <select
+                    class="filter-control"
+                    id="filterDept"
+                    onchange="renderEmployes()"
+                  >
+                    <option value="">Tous depts.</option>
+                  </select>
+                  <input
+                    type="text"
+                    class="filter-control"
+                    id="searchEmp"
+                    placeholder="Recherche..."
+                    oninput="renderEmployes()"
+                    style="min-width: 180px"
+                  />
+                </div>
+              </div>
+              <div class="card">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style="width: 36px">
+                          <input
+                            type="checkbox"
+                            id="checkAllEmp"
+                            onchange="toggleAllEmp(this)"
+                          />
+                        </th>
+                        <th>Matricule</th>
+                        <th>Employé</th>
+                        <th>Département</th>
+                        <th>Poste</th>
+                        <th>Contrat</th>
+                        <th>Embauche</th>
+                        <th>Statut</th>
+                        <th>Salaire base</th>
+                        <th style="width: 110px">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyEmployes"></tbody>
+                  </table>
+                </div>
+                <div
+                  class="card-footer"
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                  "
+                >
+                  <span
+                    style="font-size: 11px; color: var(--txt3)"
+                    id="empCount"
+                  ></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- DÉPARTEMENTS -->
+            <div class="subtab-panel" id="sub-departements">
+              <div class="toolbar">
+                <button
+                  class="btn btn-primary"
+                  onclick="openModal('modalDept', 'new')"
+                >
+                  <i class="fa-solid fa-plus"></i>Nouveau département
+                </button>
+              </div>
+              <div class="card">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Département</th>
+                        <th>Code</th>
+                        <th>Responsable</th>
+                        <th>Effectif</th>
+                        <th>Budget masse sal.</th>
+                        <th style="width: 110px">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyDepts"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- POSTES -->
+            <div class="subtab-panel" id="sub-postes">
+              <div class="toolbar">
+                <button
+                  class="btn btn-primary"
+                  onclick="openModal('modalPoste', 'new')"
+                >
+                  <i class="fa-solid fa-plus"></i>Nouveau poste
+                </button>
+              </div>
+              <div class="card">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Intitulé du poste</th>
+                        <th>Département</th>
+                        <th>Niveau</th>
+                        <th>Salaire min</th>
+                        <th>Salaire max</th>
+                        <th>Nb. occupants</th>
+                        <th style="width: 110px">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyPostes"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- ORGANIGRAMME -->
+            <div class="subtab-panel" id="sub-organigramme">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Organigramme SSIA</span>
+                </div>
+                <div
+                  class="card-body"
+                  id="orgContainer"
+                  style="overflow-x: auto; padding: 24px"
+                ></div>
+              </div>
+            </div>
+
+            <!-- CONTRATS -->
+            <div class="subtab-panel" id="sub-contrats">
+              <div class="toolbar">
+                <button
+                  class="btn btn-primary"
+                  onclick="openModal('modalContrat', 'new')"
+                >
+                  <i class="fa-solid fa-plus"></i>Nouveau contrat
+                </button>
+              </div>
+              <div class="card">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Employé</th>
+                        <th>Type</th>
+                        <th>Date début</th>
+                        <th>Date fin</th>
+                        <th>Durée</th>
+                        <th>Statut</th>
+                        <th style="width: 110px">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyContrats"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== PAGE TEMPS ========== -->
+          <div class="page" id="page-temps">
+            <div class="page-header">
+              <div class="page-header-top"><h1>Temps & Absences</h1></div>
+              <p>Présences · Congés · Calendrier</p>
+            </div>
+            <div class="tabs" id="tabsTemps">
+              <div class="tab active" data-target="sub-presences">
+                Présences
+              </div>
+              <div class="tab" data-target="sub-conges">
+                Congés <span class="tab-count" id="tcConges">0</span>
+              </div>
+              <div class="tab" data-target="sub-calendrier">Calendrier</div>
+            </div>
+            <div class="subtab-panel active" id="sub-presences">
+              <div class="grid-2">
+                <div class="card">
+                  <div class="card-header">
+                    <span class="card-title">Présences du jour</span>
+                  </div>
+                  <div class="card-body">
+                    <div id="presencesStats"></div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <span class="card-title">Répartition</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-wrap" style="height: 200px">
+                      <canvas id="chartPresences"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="subtab-panel" id="sub-conges">
+              <div class="toolbar">
+                <button
+                  class="btn btn-primary"
+                  onclick="openModal('modalConge', 'new')"
+                >
+                  <i class="fa-solid fa-plus"></i>Nouvelle demande
+                </button>
+              </div>
+              <div class="card">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Employé</th>
+                        <th>Type</th>
+                        <th>Du</th>
+                        <th>Au</th>
+                        <th>Jours</th>
+                        <th>Motif</th>
+                        <th>Statut</th>
+                        <th style="width: 140px">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyConges"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="subtab-panel" id="sub-calendrier">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Juin 2025</span>
+                </div>
+                <div class="card-body">
+                  <div class="cal-headers">
+                    <div class="cal-header">Lun</div>
+                    <div class="cal-header">Mar</div>
+                    <div class="cal-header">Mer</div>
+                    <div class="cal-header">Jeu</div>
+                    <div class="cal-header">Ven</div>
+                    <div class="cal-header">Sam</div>
+                    <div class="cal-header">Dim</div>
+                  </div>
+                  <div class="cal-grid" id="calGrid"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== PAGE TALENTS ========== -->
+          <div class="page" id="page-talents">
+            <div class="page-header">
+              <div class="page-header-top"><h1>Talents & Performance</h1></div>
+              <p>Recrutement · Évaluations · Promotions · Formations</p>
+            </div>
+            <div class="tabs" id="tabsTalents">
+              <div class="tab active" data-target="sub-recrutement">
+                Recrutement <span class="tab-count" id="tcCandidats">0</span>
+              </div>
+              <div class="tab" data-target="sub-evaluations">Évaluations</div>
+              <div class="tab" data-target="sub-promotions">Promotions</div>
+            </div>
+            <div class="subtab-panel active" id="sub-recrutement">
+              <div class="toolbar">
+                <button
+                  class="btn btn-primary"
+                  onclick="openModal('modalCandidat', 'new')"
+                >
+                  <i class="fa-solid fa-plus"></i>Ajouter candidat
+                </button>
+              </div>
+              <div class="card">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Candidat</th>
+                        <th>Poste visé</th>
+                        <th>Source</th>
+                        <th>Date candidature</th>
+                        <th>Score</th>
+                        <th>Statut</th>
+                        <th style="width: 110px">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyCandidats"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="subtab-panel" id="sub-evaluations">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Évaluations S1 2025</span>
+                </div>
+                <div class="card-body" id="evalContent"></div>
+              </div>
+            </div>
+            <div class="subtab-panel" id="sub-promotions">
+              <div class="toolbar">
+                <button
+                  class="btn btn-primary"
+                  onclick="openModal('modalPromo', 'new')"
+                >
+                  <i class="fa-solid fa-plus"></i>Proposer promotion
+                </button>
+              </div>
+              <div class="card">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Employé</th>
+                        <th>Poste actuel</th>
+                        <th>Nouveau poste</th>
+                        <th>Ancien salaire</th>
+                        <th>Nouveau salaire</th>
+                        <th>Date effet</th>
+                        <th>Statut</th>
+                        <th style="width: 110px">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyPromos"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== PAGE PAIE ========== -->
+          <div class="page" id="page-paie">
+            <div class="page-header">
+              <div class="page-header-top"><h1>Paie & Rémunération</h1></div>
+              <p>
+                Moteur de paie · Bulletins · Configuration · Formules — Devise :
+                IVR
+              </p>
+            </div>
+            <div class="tabs" id="tabsPaie">
+              <div class="tab active" data-target="sub-pperiode">
+                Période de paie
+              </div>
+              <div class="tab" data-target="sub-pbulletin">
+                Bulletins <span class="tab-count" id="tcBulletins">0</span>
+              </div>
+              <div class="tab" data-target="sub-pconfig">Configuration</div>
+              <div class="tab" data-target="sub-pformules">
+                Éditeur de formules
+              </div>
+            </div>
+
+            <!-- PÉRIODE -->
+            <div class="subtab-panel active" id="sub-pperiode">
+              <div class="alert alert-warn">
+                <i class="fa-solid fa-circle-info"></i>
+                <div class="alert-content">
+                  <strong>Période active : Juin 2025</strong> · Échéance :
+                  30/06/2025
+                </div>
+              </div>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(4, 1fr);
+                  gap: 12px;
+                  margin-bottom: 16px;
+                "
+                id="paieKpis"
+              ></div>
+              <div class="grid-2-1">
+                <div class="card">
+                  <div class="card-header">
+                    <span class="card-title">Calcul des salaires</span>
+                    <div class="btn-group" style="margin-left: auto">
+                      <button
+                        class="btn btn-sm btn-secondary"
+                        onclick="
+                          showToast('Simulation', 'Calcul en cours...', 'info')
+                        "
+                      >
+                        <i class="fa-solid fa-calculator"></i>Simuler
+                      </button>
+                      <button
+                        class="btn btn-sm btn-primary
+                        onclick="calculerTous()"
+                      >
+                        <i class="fa-solid fa-bolt"></i>Calculer tous
+                      </button>
+                    </div>
+                  </div>
+                  <div class="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th><input type="checkbox" /></th>
+                          <th>Matricule</th>
+                          <th>Employé</th>
+                          <th>Salaire base</th>
+                          <th>Primes</th>
+                          <th>Retenues</th>
+                          <th>Net IVR</th>
+                          <th>Statut</th>
+                          <th>Bulletin</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tbodyPaie"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <span class="card-title">Validation & Blockchain</span>
+                  </div>
+                  <div class="card-body">
+                    <div
+                      id="blockchainStatus"
+                      style="margin-bottom: 16px"
+                    ></div>
+                    <button
+                      class="btn btn-primary"
+                      style="
+                        width: 100%;
+                        justify-content: center;
+                        margin-bottom: 8px;
+                      "
+                      onclick="
+                        showToast(
+                          'Blockchain',
+                          'Paiements SSIA initiés.',
+                          'info',
+                        )
+                      "
+                    >
+                      <i class="fa-solid fa-link"></i>Déclencher paiements
+                    </button>
+                    <button
+                      class="btn btn-secondary"
+                      style="width: 100%; justify-content: center"
+                      onclick="showToast('PDF', 'Rapport généré.', 'success')"
+                    >
+                      <i class="fa-solid fa-file-pdf"></i>Rapport PDF
+                    </button>
+                    <div
+                      style="
+                        margin-top: 16px;
+                        padding: 10px;
+                        background: var(--teal-bg);
+                        border: 1px solid rgba(30, 110, 110, 0.2);
+                        border-radius: var(--radius);
+                      "
+                    >
+                      <div
+                        style="
+                          font-size: 10px;
+                          color: var(--teal);
+                          font-weight: 600;
+                          margin-bottom: 4px;
+                        "
+                      >
+                        SMART CONTRACT SSIA
+                      </div>
+                      <code style="font-size: 9px; color: var(--teal-light)"
+                        >0x8B4e2A6D...F3c1</code
+                      >
+                      <div
+                        style="
+                          font-size: 10px;
+                          color: var(--txt3);
+                          margin-top: 4px;
+                        "
+                      >
+                        Réseau SSIA Chain · Gas : 0.042 IVR/tx
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BULLETINS -->
+            <div class="subtab-panel" id="sub-pbulletin">
+              <div class="toolbar">
+                <button class="btn btn-primary" onclick="openBulletinModal()">
+                  <i class="fa-solid fa-eye"></i>Visualiser bulletin
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  onclick="
+                    showToast('PDF', 'Bulletins PDF générés.', 'success')
+                  "
+                >
+                  <i class="fa-solid fa-file-pdf"></i>Tous les PDF
+                </button>
+                <div class="toolbar-sep"></div>
+                <select
+                  class="filter-control"
+                  id="selectBulletinEmp"
+                  style="min-width: 220px"
+                >
+                  <option value="">— Choisir un employé —</option>
+                </select>
+              </div>
+              <div id="bulletinPreviewArea"></div>
+            </div>
+
+            <!-- CONFIGURATION ÉLÉMENTS DE PAIE -->
+            <div class="subtab-panel" id="sub-pconfig">
+              <div class="grid-2">
+                <div class="card">
+                  <div class="card-header">
+                    <i
+                      class="fa-solid fa-sliders"
+                      style="color: var(--info)"
+                    ></i>
+                    <span class="card-title">Éléments de rémunération</span>
+                    <button
+                      class="btn btn-sm btn-primary"
+                      style="margin-left: auto"
+                      onclick="openModal('modalElemPaie', 'new')"
+                    >
+                      <i class="fa-solid fa-plus"></i>Ajouter
+                    </button>
+                  </div>
+                  <div class="card-body" id="configGains"></div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <i
+                      class="fa-solid fa-minus-circle"
+                      style="color: var(--danger)"
+                    ></i>
+                    <span class="card-title">Retenues & Cotisations</span>
+                    <button
+                      class="btn btn-sm btn-primary"
+                      style="margin-left: auto"
+                      onclick="openModal('modalElemPaie', 'new-retenue')"
+                    >
+                      <i class="fa-solid fa-plus"></i>Ajouter
+                    </button>
+                  </div>
+                  <div class="card-body" id="configRetenues"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ÉDITEUR FORMULES -->
+            <div class="subtab-panel" id="sub-pformules">
+              <div class="grid-2">
+                <div class="card">
+                  <div class="card-header">
+                    <span class="card-title">Éditeur de formules</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group" style="margin-bottom: 12px">
+                      <label class="form-label">Formule</label>
+                      <select
+                        class="form-control"
+                        onchange="loadFormula(this.value)"
+                        id="formulaSelect"
+                      >
+                        <option value="">— Choisir —</option>
+                      </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px">
+                      <label class="form-label">Nom</label>
+                      <input
+                        class="form-control"
+                        id="formulaName"
+                        placeholder="Nom de la formule"
+                      />
+                    </div>
+                    <div class="form-group" style="margin-bottom: 10px">
+                      <label class="form-label">Variables disponibles</label>
+                      <div class="formula-vars" id="formulaVars"></div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px">
+                      <label class="form-label">Expression</label>
+                      <textarea
+                        class="form-control"
+                        id="formulaExpr"
+                        rows="4"
+                        placeholder="Ex: Salaire_Base * 0.10"
+                        style="font-family: var(--mono)"
+                      ></textarea>
+                    </div>
+                    <div class="formula-result" id="formulaResult"></div>
+                    <div class="btn-group" style="margin-top: 12px">
+                      <button class="btn btn-secondary" onclick="testFormula()">
+                        <i class="fa-solid fa-play"></i>Tester
+                      </button>
+                      <button class="btn btn-primary" onclick="saveFormula()">
+                        <i class="fa-solid fa-floppy-disk"></i>Enregistrer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <span class="card-title">Prévision masse salariale</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group" style="margin-bottom: 12px">
+                      <label class="form-label"
+                        >Variation % par rapport à la période actuelle</label
+                      >
+                      <div style="display: flex; gap: 8px">
+                        <input
+                          class="form-control"
+                          id="forecastInput"
+                          type="number"
+                          step="0.5"
+                          placeholder="+5.0"
+                          style="font-family: var(--mono)"
+                        />
+                        <button class="btn btn-teal" onclick="calcForecast()">
+                          <i class="fa-solid fa-calculator"></i>Calculer
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      id="forecastResult"
+                      style="
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: var(--navy);
+                        font-family: var(--mono);
+                        padding: 12px;
+                        background: var(--surface2);
+                        border-radius: var(--radius);
+                        margin-top: 8px;
+                        display: none;
+                      "
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== PAGE ANALYTICS ========== -->
+          <div class="page" id="page-analytics">
+            <div class="page-header">
+              <div class="page-header-top"><h1>RH Analytics</h1></div>
+              <p>Analyses avancées · Tableaux de bord BI · Indicateurs RH</p>
+            </div>
+            <div class="grid-2" style="margin-bottom: 16px">
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title"
+                    >Masse salariale par département</span
+                  >
+                </div>
+                <div class="card-body">
+                  <div class="chart-wrap" style="height: 220px">
+                    <canvas id="chartAnalSalaire"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Taux de turnover</span>
+                </div>
+                <div class="card-body">
+                  <div class="chart-wrap" style="height: 220px">
+                    <canvas id="chartTurnover"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Effectifs par département</span>
+              </div>
+              <div class="card-body">
+                <div class="chart-wrap" style="height: 260px">
+                  <canvas id="chartDeptsPersonnel"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== PAGE ADMIN ========== -->
+          <div class="page" id="page-admin">
+            <div class="page-header">
+              <div class="page-header-top"><h1>Administration RH</h1></div>
+              <p>Paramètres système · Utilisateurs · Audit · Sécurité</p>
+            </div>
+            <div class="tabs" id="tabsAdmin">
+              <div class="tab active" data-target="sub-utilisateurs">
+                Utilisateurs <span class="tab-count" id="tcUsers">0</span>
+              </div>
+              <div class="tab" data-target="sub-audit">Journal d'audit</div>
+              <div class="tab" data-target="sub-systeme">Paramètres</div>
+            </div>
+            <div class="subtab-panel active" id="sub-utilisateurs">
+              <div class="toolbar">
+                <button
+                  class="btn btn-primary"
+                  onclick="openModal('modalUser', 'new')"
+                >
+                  <i class="fa-solid fa-plus"></i>Nouvel utilisateur
+                </button>
+              </div>
+              <div class="card">
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Utilisateur</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th>Statut</th>
+                        <th style="width: 110px">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyUsers"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="subtab-panel" id="sub-audit">
+              <div class="card">
+                <div
+                  class="card-body"
+                  id="auditLog"
+                  style="max-height: 400px; overflow-y: auto; font-size: 12px"
+                ></div>
+              </div>
+            </div>
+            <div class="subtab-panel" id="sub-systeme">
+              <div class="card">
+                <div class="card-body">
+                  <p style="color: var(--txt2)">
+                    Paramètres système — version 2.4.1
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /content -->
+      </div>
+      <!-- /main-wrap -->
+
+      <!-- ========== MODALS ========== -->
+
+      <!-- MODAL EMPLOYÉ (create/edit) -->
+      <div class="modal-backdrop" id="modalEmp">
+        <div class="modal modal-lg">
+          <div class="modal-header">
+            <i class="fa-solid fa-user" style="color: var(--navy)"></i>
+            <span class="modal-title" id="modalEmpTitle">Nouvel employé</span>
+            <button class="modal-close" onclick="closeModal('modalEmp')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="empEditId" />
+            <div class="form-section">
+              <div class="form-section-header">
+                <i class="fa-solid fa-id-card" style="color: var(--info)"></i
+                ><span class="form-section-title"
+                  >Informations personnelles</span
+                >
+              </div>
+              <div class="form-section-body">
+                <div class="form-grid form-grid-4">
+                  <div class="form-group">
+                    <label class="form-label">Matricule</label
+                    ><input
+                      class="form-control"
+                      id="empMatricule"
+                      disabled
+                      style="
+                        font-family: var(--mono);
+                        background: var(--surface2);
+                      "
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Nom <span class="req">*</span></label
+                    ><input
+                      class="form-control"
+                      id="empNom"
+                      placeholder="Nom de famille"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Prénom <span class="req">*</span></label
+                    ><input
+                      class="form-control"
+                      id="empPrenom"
+                      placeholder="Prénom"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Sexe <span class="req">*</span></label
+                    ><select class="form-control" id="empSexe">
+                      <option value="">— Sélect. —</option>
+                      <option>Masculin</option>
+                      <option>Féminin</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Date de naissance</label
+                    ><input
+                      class="form-control"
+                      id="empNaissance"
+                      type="date"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Nationalité</label
+                    ><input
+                      class="form-control"
+                      id="empNationalite"
+                      placeholder="Ex: Ivoirienne"
+                    />
+                  </div>
+                  <div class="form-group col-span-2">
+                    <label class="form-label">Adresse</label
+                    ><input
+                      class="form-control"
+                      id="empAdresse"
+                      placeholder="Adresse complète"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Téléphone</label
+                    ><input
+                      class="form-control"
+                      id="empTel"
+                      placeholder="+225 07..."
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Email professionnel <span class="req">*</span></label
+                    ><input
+                      class="form-control"
+                      id="empEmail"
+                      type="email"
+                      placeholder="prenom.nom@ssia.ci"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">N° CNI</label
+                    ><input
+                      class="form-control"
+                      id="empCni"
+                      placeholder="CI-XXXXXXXX"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">N° Sécurité sociale</label
+                    ><input
+                      class="form-control"
+                      id="empCnps"
+                      placeholder="CNPS"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-section">
+              <div class="form-section-header">
+                <i class="fa-solid fa-briefcase" style="color: var(--gold2)"></i
+                ><span class="form-section-title"
+                  >Informations professionnelles</span
+                >
+              </div>
+              <div class="form-section-body">
+                <div class="form-grid form-grid-4">
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Département <span class="req">*</span></label
+                    ><select class="form-control" id="empDept">
+                      <option value="">— Sélect. —</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Poste <span class="req">*</span></label
+                    ><select class="form-control" id="empPoste">
+                      <option value="">— Sélect. —</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Date d'embauche <span class="req">*</span></label
+                    ><input class="form-control" id="empEmbauche" type="date" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Type de contrat <span class="req">*</span></label
+                    ><select class="form-control" id="empContrat">
+                      <option>CDI</option>
+                      <option>CDD</option>
+                      <option>Stage</option>
+                      <option>Consultant</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Statut <span class="req">*</span></label
+                    ><select class="form-control" id="empStatut">
+                      <option>Présent</option>
+                      <option>Absent</option>
+                      <option>Congé</option>
+                      <option>Mission</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"
+                      >Salaire de base (IVR) <span class="req">*</span></label
+                    ><input
+                      class="form-control"
+                      id="empSalaire"
+                      type="number"
+                      placeholder="840000"
+                      style="font-family: var(--mono)"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Mode de paiement</label
+                    ><select class="form-control" id="empPaiement">
+                      <option>Virement bancaire</option>
+                      <option>Blockchain SSIA</option>
+                      <option>Espèces</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">RIB / Wallet</label
+                    ><input
+                      class="form-control"
+                      id="empRib"
+                      placeholder="IBAN ou 0x..."
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalEmp')">
+              <i class="fa-solid fa-xmark"></i>Annuler
+            </button>
+            <button class="btn btn-primary" onclick="saveEmp()">
+              <i class="fa-solid fa-check"></i>Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL DÉPARTEMENT -->
+      <div class="modal-backdrop" id="modalDept">
+        <div class="modal modal-sm">
+          <div class="modal-header">
+            <i class="fa-solid fa-building" style="color: var(--navy)"></i>
+            <span class="modal-title" id="modalDeptTitle"
+              >Nouveau département</span
+            >
+            <button class="modal-close" onclick="closeModal('modalDept')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="deptEditId" />
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Nom <span class="req">*</span></label
+              ><input
+                class="form-control"
+                id="deptNom"
+                placeholder="Ex: Finance"
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Code</label
+              ><input
+                class="form-control"
+                id="deptCode"
+                placeholder="Ex: FIN"
+                style="font-family: var(--mono)"
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Responsable</label
+              ><input
+                class="form-control"
+                id="deptResponsable"
+                placeholder="Nom du responsable"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Budget masse sal. (IVR)</label
+              ><input
+                class="form-control"
+                id="deptBudget"
+                type="number"
+                placeholder="Ex: 150000000"
+                style="font-family: var(--mono)"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalDept')">
+              Annuler
+            </button>
+            <button class="btn btn-primary" onclick="saveDept()">
+              <i class="fa-solid fa-check"></i>Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL POSTE -->
+      <div class="modal-backdrop" id="modalPoste">
+        <div class="modal modal-sm">
+          <div class="modal-header">
+            <i class="fa-solid fa-id-badge" style="color: var(--navy)"></i>
+            <span class="modal-title" id="modalPosteTitle">Nouveau poste</span>
+            <button class="modal-close" onclick="closeModal('modalPoste')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="posteEditId" />
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label"
+                >Intitulé <span class="req">*</span></label
+              ><input
+                class="form-control"
+                id="posteNom"
+                placeholder="Ex: Analyste Financier"
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label"
+                >Département <span class="req">*</span></label
+              ><select class="form-control" id="posteDept">
+                <option value="">— Sélect. —</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Niveau</label
+              ><select class="form-control" id="posteNiveau">
+                <option>N1 — Direction</option>
+                <option>N2 — Cadre sup.</option>
+                <option>N3 — Cadre</option>
+                <option>N4 — Agent maîtrise</option>
+                <option>N5 — Employé</option>
+              </select>
+            </div>
+            <div class="form-grid form-grid-2" style="margin-bottom: 0">
+              <div class="form-group">
+                <label class="form-label">Sal. min (IVR)</label
+                ><input
+                  class="form-control"
+                  id="posteSalMin"
+                  type="number"
+                  placeholder="500000"
+                  style="font-family: var(--mono)"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Sal. max (IVR)</label
+                ><input
+                  class="form-control"
+                  id="posteSalMax"
+                  type="number"
+                  placeholder="2000000"
+                  style="font-family: var(--mono)"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalPoste')">
+              Annuler
+            </button>
+            <button class="btn btn-primary" onclick="savePoste()">
+              <i class="fa-solid fa-check"></i>Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL CONTRAT -->
+      <div class="modal-backdrop" id="modalContrat">
+        <div class="modal modal-sm">
+          <div class="modal-header">
+            <i class="fa-solid fa-file-contract" style="color: var(--navy)"></i>
+            <span class="modal-title" id="modalContratTitle"
+              >Nouveau contrat</span
+            >
+            <button class="modal-close" onclick="closeModal('modalContrat')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="contratEditId" />
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label"
+                >Employé <span class="req">*</span></label
+              ><select class="form-control" id="contratEmp">
+                <option value="">— Sélect. —</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Type <span class="req">*</span></label
+              ><select class="form-control" id="contratType">
+                <option>CDI</option>
+                <option>CDD</option>
+                <option>Stage</option>
+                <option>Consultant</option>
+              </select>
+            </div>
+            <div class="form-grid form-grid-2" style="margin-bottom: 12px">
+              <div class="form-group">
+                <label class="form-label">Date début</label
+                ><input class="form-control" id="contratDebut" type="date" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date fin</label
+                ><input class="form-control" id="contratFin" type="date" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Statut</label
+              ><select class="form-control" id="contratStatut">
+                <option>Actif</option>
+                <option>Expirant</option>
+                <option>Expiré</option>
+                <option>Résilié</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalContrat')">
+              Annuler
+            </button>
+            <button class="btn btn-primary" onclick="saveContrat()">
+              <i class="fa-solid fa-check"></i>Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL CONGÉ -->
+      <div class="modal-backdrop" id="modalConge">
+        <div class="modal modal-sm">
+          <div class="modal-header">
+            <i
+              class="fa-solid fa-umbrella-beach"
+              style="color: var(--info)"
+            ></i>
+            <span class="modal-title" id="modalCongeTitle"
+              >Demande de congé</span
+            >
+            <button class="modal-close" onclick="closeModal('modalConge')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="congeEditId" />
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label"
+                >Employé <span class="req">*</span></label
+              ><select class="form-control" id="congeEmp">
+                <option value="">— Sélect. —</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Type</label
+              ><select class="form-control" id="congeType">
+                <option>Congé annuel</option>
+                <option>Congé maladie</option>
+                <option>Congé maternité</option>
+                <option>Congé exceptionnel</option>
+                <option>RTT</option>
+              </select>
+            </div>
+            <div class="form-grid form-grid-2" style="margin-bottom: 12px">
+              <div class="form-group">
+                <label class="form-label">Du</label
+                ><input class="form-control" id="congeDebut" type="date" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Au</label
+                ><input class="form-control" id="congeFin" type="date" />
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Motif</label
+              ><textarea
+                class="form-control"
+                id="congeMotif"
+                rows="2"
+                placeholder="Motif du congé"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Statut</label
+              ><select class="form-control" id="congeStatut">
+                <option>En attente</option>
+                <option>Approuvé</option>
+                <option>Refusé</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalConge')">
+              Annuler
+            </button>
+            <button class="btn btn-primary" onclick="saveConge()">
+              <i class="fa-solid fa-check"></i>Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL CANDIDAT -->
+      <div class="modal-backdrop" id="modalCandidat">
+        <div class="modal modal-md">
+          <div class="modal-header">
+            <i class="fa-solid fa-user-plus" style="color: var(--success)"></i>
+            <span class="modal-title" id="modalCandidatTitle"
+              >Nouveau candidat</span
+            >
+            <button class="modal-close" onclick="closeModal('modalCandidat')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="candidatEditId" />
+            <div class="form-grid form-grid-2" style="margin-bottom: 12px">
+              <div class="form-group">
+                <label class="form-label"
+                  >Nom complet <span class="req">*</span></label
+                ><input
+                  class="form-control"
+                  id="candidatNom"
+                  placeholder="Nom Prénom"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label"
+                  >Poste visé <span class="req">*</span></label
+                ><select class="form-control" id="candidatPoste">
+                  <option value="">— Sélect. —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Source</label
+                ><select class="form-control" id="candidatSource">
+                  <option>LinkedIn</option>
+                  <option>Recommandation</option>
+                  <option>Site web</option>
+                  <option>Agence</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date candidature</label
+                ><input class="form-control" id="candidatDate" type="date" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Score (/100)</label
+                ><input
+                  class="form-control"
+                  id="candidatScore"
+                  type="number"
+                  min="0"
+                  max="100"
+                  placeholder="75"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Statut</label
+                ><select class="form-control" id="candidatStatut">
+                  <option>Nouveau</option>
+                  <option>Présélectionné</option>
+                  <option>Entretien</option>
+                  <option>Offre envoyée</option>
+                  <option>Embauché</option>
+                  <option>Refusé</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Notes</label
+              ><textarea
+                class="form-control"
+                id="candidatNotes"
+                rows="3"
+                placeholder="Notes sur le candidat"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalCandidat')">
+              Annuler
+            </button>
+            <button class="btn btn-primary" onclick="saveCandidat()">
+              <i class="fa-solid fa-check"></i>Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL PROMOTION -->
+      <div class="modal-backdrop" id="modalPromo">
+        <div class="modal modal-md">
+          <div class="modal-header">
+            <i
+              class="fa-solid fa-arrow-trend-up"
+              style="color: var(--success)"
+            ></i>
+            <span class="modal-title" id="modalPromoTitle"
+              >Proposer une promotion</span
+            >
+            <button class="modal-close" onclick="closeModal('modalPromo')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="promoEditId" />
+            <div class="form-grid form-grid-2" style="margin-bottom: 12px">
+              <div class="form-group">
+                <label class="form-label"
+                  >Employé <span class="req">*</span></label
+                ><select class="form-control" id="promoEmp">
+                  <option value="">— Sélect. —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Poste actuel</label
+                ><input
+                  class="form-control"
+                  id="promoPosteActuel"
+                  placeholder="Poste actuel"
+                  disabled
+                  style="background: var(--surface2)"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label"
+                  >Nouveau poste <span class="req">*</span></label
+                ><select class="form-control" id="promoNouveauPoste">
+                  <option value="">— Sélect. —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date d'effet</label
+                ><input class="form-control" id="promoDate" type="date" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Ancien salaire (IVR)</label
+                ><input
+                  class="form-control"
+                  id="promoAncienSal"
+                  type="number"
+                  disabled
+                  style="font-family: var(--mono); background: var(--surface2)"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label"
+                  >Nouveau salaire (IVR) <span class="req">*</span></label
+                ><input
+                  class="form-control"
+                  id="promoNouveauSal"
+                  type="number"
+                  placeholder="1200000"
+                  style="font-family: var(--mono)"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Statut</label
+              ><select class="form-control" id="promoStatut">
+                <option>En attente</option>
+                <option>Approuvé</option>
+                <option>Refusé</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalPromo')">
+              Annuler
+            </button>
+            <button class="btn btn-primary" onclick="savePromo()">
+              <i class="fa-solid fa-check"></i>Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL ÉLÉMENT DE PAIE -->
+      <div class="modal-backdrop" id="modalElemPaie">
+        <div class="modal modal-sm">
+          <div class="modal-header">
+            <i class="fa-solid fa-sliders" style="color: var(--gold2)"></i>
+            <span class="modal-title" id="modalElemPaieTitle"
+              >Nouvel élément de paie</span
+            >
+            <button class="modal-close" onclick="closeModal('modalElemPaie')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="elemPaieEditId" />
+            <input type="hidden" id="elemPaieTypeSection" />
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label"
+                >Libellé <span class="req">*</span></label
+              ><input
+                class="form-control"
+                id="elemPaieNom"
+                placeholder="Ex: Prime de transport"
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Description</label
+              ><input
+                class="form-control"
+                id="elemPaieDesc"
+                placeholder="Description courte"
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Type de calcul</label>
+              <select
+                class="form-control"
+                id="elemPaieCalcType"
+                onchange="toggleElemPaieMode()"
+              >
+                <option value="pct">Pourcentage du salaire base</option>
+                <option value="fixe">Montant fixe (IVR)</option>
+                <option value="formule">Formule personnalisée</option>
+              </select>
+            </div>
+            <div
+              class="form-group"
+              style="margin-bottom: 12px"
+              id="elemPaieValGrp"
+            >
+              <label class="form-label" id="elemPaieValLabel">Valeur (%)</label>
+              <input
+                class="form-control"
+                id="elemPaieVal"
+                type="number"
+                step="0.01"
+                placeholder="Ex: 10"
+                style="font-family: var(--mono)"
+              />
+            </div>
+            <div
+              class="form-group"
+              id="elemPaieFormGrp"
+              style="display: none; margin-bottom: 12px"
+            >
+              <label class="form-label">Expression de formule</label>
+              <input
+                class="form-control"
+                id="elemPaieFormule"
+                placeholder="Ex: Salaire_Base * 0.10"
+                style="font-family: var(--mono)"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Catégorie</label>
+              <select class="form-control" id="elemPaieCateg">
+                <option value="gain">Gain / Prime</option>
+                <option value="retenue">Retenue / Cotisation</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalElemPaie')">
+              Annuler
+            </button>
+            <button class="btn btn-primary" onclick="saveElemPaie()">
+              <i class="fa-solid fa-check"></i>Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL BULLETIN -->
+      <div class="modal-backdrop" id="modalBulletin">
+        <div class="modal modal-lg">
+          <div class="modal-header">
+            <i
+              class="fa-solid fa-file-invoice"
+              style="color: var(--teal); font-size: 18px"
+            ></i>
+            <span class="modal-title" id="bulletinTitle">Bulletin de paie</span>
+            <div class="btn-group" style="margin-right: 8px">
+              <button class="btn btn-sm btn-secondary" onclick="window.print()">
+                <i class="fa-solid fa-print"></i>Imprimer
+              </button>
+              <button
+                class="btn btn-sm btn-gold"
+                onclick="
+                  showToast(
+                    'PDF',
+                    'Bulletin PDF généré avec QR Code.',
+                    'success',
+                  )
+                "
+              >
+                <i class="fa-solid fa-file-pdf"></i>PDF
+              </button>
+            </div>
+            <button class="modal-close" onclick="closeModal('modalBulletin')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body" style="padding: 0">
+            <div id="bulletinContent"></div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalBulletin')">
+              Fermer
+            </button>
+            <button
+              class="btn btn-secondary"
+              onclick="
+                showToast('Email', 'Bulletin envoyé par email.', 'success')
+              "
+            >
+              <i class="fa-solid fa-paper-plane"></i>Envoyer par email
+            </button>
+            <button
+              class="btn btn-teal"
+              onclick="
+                showToast(
+                  'Blockchain',
+                  'Paiement blockchain initié.',
+                  'success',
+                )
+              "
+            >
+              <i class="fa-solid fa-link"></i>Payer via blockchain
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL UTILISATEUR -->
+      <div class="modal-backdrop" id="modalUser">
+        <div class="modal modal-sm">
+          <div class="modal-header">
+            <i class="fa-solid fa-user-shield" style="color: var(--navy)"></i>
+            <span class="modal-title" id="modalUserTitle"
+              >Nouvel utilisateur</span
+            >
+            <button class="modal-close" onclick="closeModal('modalUser')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="userEditId" />
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label"
+                >Nom complet <span class="req">*</span></label
+              ><input
+                class="form-control"
+                id="userName"
+                placeholder="Nom Prénom"
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Email <span class="req">*</span></label
+              ><input
+                class="form-control"
+                id="userEmail"
+                type="email"
+                placeholder="email@ssia.ci"
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 12px">
+              <label class="form-label">Rôle</label
+              ><select class="form-control" id="userRole">
+                <option>Admin RH</option>
+                <option>Responsable Paie</option>
+                <option>Manager</option>
+                <option>Consultant</option>
+                <option>Lecteur</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Statut</label
+              ><select class="form-control" id="userStatut">
+                <option>Actif</option>
+                <option>Inactif</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalUser')">
+              Annuler
+            </button>
+            <button class="btn btn-primary" onclick="saveUser()">
+              <i class="fa-solid fa-check"></i>Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL CONFIRM SUPPRESSION -->
+      <div class="modal-backdrop" id="modalConfirm">
+        <div class="modal modal-sm">
+          <div class="modal-header">
+            <i
+              class="fa-solid fa-triangle-exclamation"
+              style="color: var(--danger)"
+            ></i>
+            <span class="modal-title">Confirmer la suppression</span>
+            <button class="modal-close" onclick="closeModal('modalConfirm')">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p
+              id="confirmMsg"
+              style="color: var(--txt2); margin-bottom: 12px; font-size: 13px"
+            ></p>
+            <div class="confirm-badge">
+              <i class="fa-solid fa-circle-exclamation"></i>Cette action est
+              irréversible.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modalConfirm')">
+              Annuler
+            </button>
+            <button class="btn btn-danger" id="confirmBtn">
+              <i class="fa-solid fa-trash"></i>Supprimer définitivement
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // ============================================================
+        //  ÉTAT GLOBAL — TOUTES LES DONNÉES SONT DYNAMIQUES
+        // ============================================================
+        let db = {
+          employees: [],
+          departements: [],
+          postes: [],
+          contrats: [],
+          conges: [],
+          candidats: [],
+          promotions: [],
+          users: [],
+          gains: [], // éléments de paie positifs
+          retenues: [], // éléments de paie négatifs
+          audit: [],
+          nextId: {
+            emp: 1842,
+            dept: 1,
+            poste: 1,
+            contrat: 1,
+            conge: 1,
+            candidat: 1,
+            promo: 1,
+            user: 1,
+            elem: 1,
+          },
+        };
+
+        function getNextId(key) {
+          const v = db.nextId[key]++;
+          return v;
+        }
+
+        // ============================================================
+        //  NAVIGATION
+        // ============================================================
+        const pageInfo = {
+          dashboard: ["Tableau de bord", "— Vue globale RH"],
+          personnel: ["Personnel", "— Gestion des employés"],
+          temps: ["Temps & Absences", "— Présences & Congés"],
+          talents: ["Talents & Performance", "— Recrutement & Performance"],
+          paie: ["Paie & Rémunération", "— Moteur de paie IVR"],
+          analytics: ["RH Analytics", "— Indicateurs BI"],
+          admin: ["Administration RH", "— Système & Sécurité"],
+        };
+
+        document.querySelectorAll(".sb-item[data-page]").forEach((item) => {
+          item.addEventListener("click", () => {
+            document
+              .querySelectorAll(".sb-item")
+              .forEach((i) => i.classList.remove("active"));
+            item.classList.add("active");
+            const page = item.dataset.page;
+            document
+              .querySelectorAll(".page")
+              .forEach((p) => p.classList.remove("active"));
+            const el = document.getElementById("page-" + page);
+            if (el) el.classList.add("active");
+            const info = pageInfo[page] || [page, ""];
+            document.getElementById("topbarTitle").textContent = info[0];
+            document.getElementById("topbarSub").textContent = info[1];
+            if (page === "dashboard") refreshDashboard();
+            if (page === "analytics") initAnalyticsCharts();
+            if (page === "paie") refreshPaie();
+          });
+        });
+
+        // Tabs (subtabs)
+        document.querySelectorAll(".tabs").forEach((tabsEl) => {
+          tabsEl.querySelectorAll(".tab").forEach((tab) => {
+            tab.addEventListener("click", () => {
+              tabsEl
+                .querySelectorAll(".tab")
+                .forEach((t) => t.classList.remove("active"));
+              tab.classList.add("active");
+              const target = tab.dataset.target;
+              const parent = tabsEl.closest(".page, .content");
+              (parent || document)
+                .querySelectorAll(".subtab-panel")
+                .forEach((p) => p.classList.remove("active"));
+              const panel = document.getElementById(target);
+              if (panel) panel.classList.add("active");
+              if (target === "sub-calendrier") renderCalendar();
+            });
+          });
+        });
+
+        // Period buttons
+        document.querySelectorAll(".period-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            btn
+              .closest(".period-btns")
+              .querySelectorAll(".period-btn")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+          });
+        });
+
+        // Backdrop click close
+        document.querySelectorAll(".modal-backdrop").forEach((bd) => {
+          bd.addEventListener("click", (e) => {
+            if (e.target === bd) bd.classList.remove("open");
+          });
+        });
+
+        // ============================================================
+        //  MODALS
+        // ============================================================
+        function openModal(id, mode) {
+          const m = document.getElementById(id);
+          if (m) m.classList.add("open");
+          if (mode === "new") resetModal(id);
+        }
+        function closeModal(id) {
+          const m = document.getElementById(id);
+          if (m) m.classList.remove("open");
+        }
+        function resetModal(id) {
+          const m = document.getElementById(id);
+          if (!m) return;
+          m.querySelectorAll(
+            'input:not([disabled]):not([type="hidden"]), textarea, select:not([disabled])',
+          ).forEach((f) => {
+            f.value = "";
+          });
+        }
+
+        // ============================================================
+        //  TOAST
+        // ============================================================
+        function showToast(title, msg, type = "info") {
+          const wrap = document.getElementById("toastWrap");
+          const t = document.createElement("div");
+          const icons = {
+            success: "fa-check-circle",
+            error: "fa-times-circle",
+            warn: "fa-exclamation-triangle",
+            info: "fa-info-circle",
+          };
+          t.className = `toast${type !== "info" ? " toast-" + type : ""}`;
+          t.innerHTML = `<i class="fa-solid ${icons[type] || icons.info}"></i><div><strong>${title}</strong><br><span style="font-size:11px;opacity:.8">${msg}</span></div>`;
+          wrap.appendChild(t);
+          setTimeout(() => {
+            t.style.transition = "opacity .3s";
+            t.style.opacity = "0";
+            setTimeout(() => t.remove(), 300);
+          }, 3500);
+        }
+
+        // ============================================================
+        //  AUDIT LOG
+        // ============================================================
+        function logAudit(action, detail) {
+          const now = new Date();
+          db.audit.unshift({ ts: now.toLocaleString("fr-FR"), action, detail });
+          renderAudit();
+        }
+        function renderAudit() {
+          const el = document.getElementById("auditLog");
+          if (!el) return;
+          if (!db.audit.length) {
+            el.innerHTML =
+              '<div class="empty-state"><i class="fa-solid fa-scroll"></i><p>Aucune entrée</p></div>';
+            return;
+          }
+          el.innerHTML = db.audit
+            .map(
+              (e) =>
+                `<div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="color:var(--txt3);white-space:nowrap;font-family:var(--mono);font-size:11px">${e.ts}</span>
+      <span style="color:var(--navy);font-weight:600">${e.action}</span>
+      <span style="color:var(--txt2)">${e.detail}</span>
+    </div>`,
+            )
+            .join("");
+        }
+
+        // ============================================================
+        //  DARK MODE
+        // ============================================================
+        function toggleTheme() {
+          const h = document.documentElement;
+          h.dataset.theme = h.dataset.theme === "dark" ? "" : "dark";
+        }
+
+        // ============================================================
+        //  HELPERS
+        // ============================================================
+        const initials = (n) =>
+          (n || "?")
+            .split(" ")
+            .map((w) => w[0])
+            .join("")
+            .substring(0, 2)
+            .toUpperCase();
+        const avatarColors = ["avatar-teal", "avatar-navy", "avatar-gold"];
+        const fmtIVR = (n) => (n ? parseInt(n).toLocaleString("fr-FR") : "0");
+
+        function statusBadge(s) {
+          const m = {
+            Présent: "badge-success",
+            Absent: "badge-danger",
+            Congé: "badge-info",
+            Mission: "badge-warn",
+          };
+          return `<span class="badge ${m[s] || "badge-gray"}">${s}</span>`;
+        }
+        function contratBadge(c) {
+          const m = {
+            CDI: "badge-navy",
+            CDD: "badge-warn",
+            Stage: "badge-purple",
+            Consultant: "badge-teal",
+          };
+          return `<span class="badge ${m[c] || "badge-gray"}">${c}</span>`;
+        }
+        function staticBadge(s, map) {
+          return `<span class="badge ${map[s] || "badge-gray"}">${s}</span>`;
+        }
+
+        function confirmDelete(msg, callback) {
+          document.getElementById("confirmMsg").textContent = msg;
+          document.getElementById("confirmBtn").onclick = () => {
+            callback();
+            closeModal("modalConfirm");
+          };
+          openModal("modalConfirm");
+        }
+
+        // ============================================================
+        //  EMPLOYÉS
+        // ============================================================
+        function getEmpFullName(e) {
+          return (e.prenom ? e.prenom + " " : "") + (e.nom || "");
+        }
+
+        function renderEmployes() {
+          const tbody = document.getElementById("tbodyEmployes");
+          if (!tbody) return;
+          const filterStatut =
+            document.getElementById("filterStatut")?.value || "";
+          const filterDept = document.getElementById("filterDept")?.value || "";
+          const search = (
+            document.getElementById("searchEmp")?.value || ""
+          ).toLowerCase();
+
+          let list = db.employees.filter((e) => {
+            const name = getEmpFullName(e).toLowerCase();
+            return (
+              (!filterStatut || e.statut === filterStatut) &&
+              (!filterDept || e.dept === filterDept) &&
+              (!search ||
+                name.includes(search) ||
+                e.id.toLowerCase().includes(search))
+            );
+          });
+
+          if (!list.length) {
+            tbody.innerHTML = `<tr><td colspan="10"><div class="empty-state" style="padding:32px"><i class="fa-solid fa-users-slash"></i><p>Aucun employé trouvé</p><span>Ajoutez un employé avec le bouton "Nouvel employé"</span></div></td></tr>`;
+          } else {
+            tbody.innerHTML = list
+              .map((e, i) => {
+                const name = getEmpFullName(e);
+                return `<tr>
+        <td><input type="checkbox" class="emp-check" value="${e.id}"></td>
+        <td><code style="font-size:10px;color:var(--txt3)">${e.id}</code></td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <div class="avatar avatar-sm ${avatarColors[i % 3]}">${initials(name)}</div>
+          <span style="font-weight:500;color:var(--txt)">${name}</span>
+        </div></td>
+        <td>${e.dept || "—"}</td><td>${e.poste || "—"}</td>
+        <td>${contratBadge(e.contrat || "CDI")}</td>
+        <td style="color:var(--txt3)">${e.embauche || "—"}</td>
+        <td>${statusBadge(e.statut || "Présent")}</td>
+        <td><span class="ivr">${fmtIVR(e.salaire)}</span></td>
+        <td>
+          <button class="btn btn-sm btn-ghost" title="Modifier" onclick="editEmp('${e.id}')"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn btn-sm btn-ghost" title="Bulletin" onclick="viewBulletin('${e.id}')"><i class="fa-solid fa-file-invoice"></i></button>
+          <button class="btn btn-sm btn-ghost" style="color:var(--danger)" title="Supprimer" onclick="deleteEmp('${e.id}')"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>`;
+              })
+              .join("");
+          }
+          const cnt = document.getElementById("empCount");
+          if (cnt)
+            cnt.textContent = `${list.length} employé(s) affiché(s) sur ${db.employees.length}`;
+          document.getElementById("tcEmployes").textContent =
+            db.employees.length;
+          document.getElementById("sbCountPersonnel").textContent =
+            db.employees.length;
+          updateEmpDropdowns();
+        }
+
+        function openModal_emp(id) {
+          // fill dept dropdown
+          const sel = document.getElementById("empDept");
+          if (sel) {
+            sel.innerHTML =
+              '<option value="">— Sélect. —</option>' +
+              db.departements.map((d) => `<option>${d.nom}</option>`).join("");
+          }
+          const selP = document.getElementById("empPoste");
+          if (selP) {
+            selP.innerHTML =
+              '<option value="">— Sélect. —</option>' +
+              db.postes.map((p) => `<option>${p.nom}</option>`).join("");
+          }
+          document.getElementById("empMatricule").value =
+            "SSIA-" + db.nextId.emp;
+          document.getElementById("modalEmpTitle").textContent =
+            "Nouvel employé";
+          document.getElementById("empEditId").value = "";
+          openModal("modalEmp");
+        }
+
+        // Override openModal pour modalEmp
+        const _origOpenModal = openModal;
+        window.openModal = function (id, mode) {
+          if (id === "modalEmp" && mode === "new") {
+            openModal_emp();
+            return;
+          }
+          _origOpenModal(id, mode);
+        };
+
+        function editEmp(empId) {
+          const e = db.employees.find((x) => x.id === empId);
+          if (!e) return;
+          // fill dropdowns first
+          const selD = document.getElementById("empDept");
+          selD.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.departements.map((d) => `<option>${d.nom}</option>`).join("");
+          const selP = document.getElementById("empPoste");
+          selP.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.postes.map((p) => `<option>${p.nom}</option>`).join("");
+
+          document.getElementById("empEditId").value = e.id;
+          document.getElementById("empMatricule").value = e.id;
+          document.getElementById("empNom").value = e.nom || "";
+          document.getElementById("empPrenom").value = e.prenom || "";
+          document.getElementById("empSexe").value = e.sexe || "";
+          document.getElementById("empNaissance").value = e.naissance || "";
+          document.getElementById("empNationalite").value = e.nationalite || "";
+          document.getElementById("empAdresse").value = e.adresse || "";
+          document.getElementById("empTel").value = e.tel || "";
+          document.getElementById("empEmail").value = e.email || "";
+          document.getElementById("empCni").value = e.cni || "";
+          document.getElementById("empCnps").value = e.cnps || "";
+          document.getElementById("empDept").value = e.dept || "";
+          document.getElementById("empPoste").value = e.poste || "";
+          document.getElementById("empEmbauche").value = e.embauche || "";
+          document.getElementById("empContrat").value = e.contrat || "CDI";
+          document.getElementById("empStatut").value = e.statut || "Présent";
+          document.getElementById("empSalaire").value = e.salaire || "";
+          document.getElementById("empPaiement").value =
+            e.paiement || "Virement bancaire";
+          document.getElementById("empRib").value = e.rib || "";
+          document.getElementById("modalEmpTitle").textContent =
+            "Modifier — " + getEmpFullName(e);
+          document.getElementById("modalEmp").classList.add("open");
+        }
+
+        function saveEmp() {
+          const nom = document.getElementById("empNom").value.trim();
+          const prenom = document.getElementById("empPrenom").value.trim();
+          const email = document.getElementById("empEmail").value.trim();
+          const dept = document.getElementById("empDept").value;
+          const poste = document.getElementById("empPoste").value;
+          const salaire = document.getElementById("empSalaire").value;
+          const embauche = document.getElementById("empEmbauche").value;
+          if (!nom || !email || !dept || !salaire) {
+            showToast(
+              "Champs requis",
+              "Veuillez remplir tous les champs obligatoires.",
+              "error",
+            );
+            return;
+          }
+          const editId = document.getElementById("empEditId").value;
+          const empData = {
+            nom,
+            prenom,
+            sexe: document.getElementById("empSexe").value,
+            naissance: document.getElementById("empNaissance").value,
+            nationalite: document.getElementById("empNationalite").value,
+            adresse: document.getElementById("empAdresse").value,
+            tel: document.getElementById("empTel").value,
+            email,
+            cni: document.getElementById("empCni").value,
+            cnps: document.getElementById("empCnps").value,
+            dept,
+            poste: document.getElementById("empPoste").value,
+            embauche,
+            contrat: document.getElementById("empContrat").value,
+            statut: document.getElementById("empStatut").value,
+            salaire: parseInt(salaire),
+            paiement: document.getElementById("empPaiement").value,
+            rib: document.getElementById("empRib").value,
+          };
+
+          if (editId) {
+            const idx = db.employees.findIndex((e) => e.id === editId);
+            if (idx !== -1) {
+              db.employees[idx] = { ...db.employees[idx], ...empData };
+            }
+            showToast(
+              "Employé modifié",
+              `${getEmpFullName(empData)} — ${editId}`,
+              "success",
+            );
+            logAudit(
+              "MODIFIER EMPLOYÉ",
+              `${editId} — ${getEmpFullName(empData)}`,
+            );
+          } else {
+            const id = "SSIA-" + String(getNextId("emp")).padStart(6, "0");
+            db.employees.push({ id, ...empData });
+            showToast(
+              "Employé créé",
+              `${id} — ${getEmpFullName(empData)} — Dossier initialisé`,
+              "success",
+            );
+            logAudit("CRÉER EMPLOYÉ", `${id} — ${getEmpFullName(empData)}`);
+          }
+          closeModal("modalEmp");
+          renderEmployes();
+          renderPaieTable();
+          updateSbBulletins();
+        }
+
+        function editSelectedEmp() {
+          const checked = document.querySelectorAll(".emp-check:checked");
+          if (checked.length === 0) {
+            showToast("Sélection", "Veuillez sélectionner un employé.", "warn");
+            return;
+          }
+          if (checked.length > 1) {
+            showToast(
+              "Sélection",
+              "Sélectionnez un seul employé pour modifier.",
+              "warn",
+            );
+            return;
+          }
+          editEmp(checked[0].value);
+        }
+
+        function deleteEmp(id) {
+          const e = db.employees.find((x) => x.id === id);
+          if (!e) return;
+          confirmDelete(
+            `Supprimer l'employé ${getEmpFullName(e)} (${id}) ?`,
+            () => {
+              db.employees = db.employees.filter((x) => x.id !== id);
+              showToast("Supprimé", `Employé ${id} supprimé.`, "success");
+              logAudit("SUPPRIMER EMPLOYÉ", `${id} — ${getEmpFullName(e)}`);
+              renderEmployes();
+              renderPaieTable();
+              updateSbBulletins();
+            },
+          );
+        }
+
+        function deleteSelectedEmp() {
+          const checked = [...document.querySelectorAll(".emp-check:checked")];
+          if (!checked.length) {
+            showToast("Sélection", "Sélectionnez au moins un employé.", "warn");
+            return;
+          }
+          confirmDelete(
+            `Supprimer ${checked.length} employé(s) sélectionné(s) ?`,
+            () => {
+              const ids = checked.map((c) => c.value);
+              db.employees = db.employees.filter((e) => !ids.includes(e.id));
+              showToast(
+                "Supprimé",
+                `${ids.length} employé(s) supprimé(s).`,
+                "success",
+              );
+              logAudit("SUPPRIMER EMPLOYÉS", `${ids.join(", ")}`);
+              renderEmployes();
+              renderPaieTable();
+              updateSbBulletins();
+            },
+          );
+        }
+
+        function toggleAllEmp(el) {
+          document
+            .querySelectorAll(".emp-check")
+            .forEach((c) => (c.checked = el.checked));
+        }
+
+        // ============================================================
+        //  DÉPARTEMENTS
+        // ============================================================
+        function renderDepts() {
+          const tbody = document.getElementById("tbodyDepts");
+          if (!tbody) return;
+          if (!db.departements.length) {
+            tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state" style="padding:24px"><i class="fa-solid fa-building"></i><p>Aucun département</p><span>Créez votre premier département</span></div></td></tr>`;
+            document.getElementById("tcDepts").textContent = "0";
+            return;
+          }
+          tbody.innerHTML = db.departements
+            .map((d) => {
+              const effectif = db.employees.filter(
+                (e) => e.dept === d.nom,
+              ).length;
+              return `<tr>
+      <td style="font-weight:600;color:var(--txt)">${d.nom}</td>
+      <td><code style="font-size:10px">${d.code || "—"}</code></td>
+      <td>${d.responsable || "—"}</td>
+      <td><strong>${effectif}</strong></td>
+      <td><span class="ivr">${fmtIVR(d.budget)}</span></td>
+      <td>
+        <button class="btn btn-sm btn-ghost" onclick="editDept(${d.id})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="deleteDept(${d.id})"><i class="fa-solid fa-trash"></i></button>
+      </td>
+    </tr>`;
+            })
+            .join("");
+          document.getElementById("tcDepts").textContent =
+            db.departements.length;
+          // update filter
+          const f = document.getElementById("filterDept");
+          if (f) {
+            const v = f.value;
+            f.innerHTML =
+              '<option value="">Tous depts.</option>' +
+              db.departements.map((d) => `<option>${d.nom}</option>`).join("");
+            f.value = v;
+          }
+        }
+
+        function saveDept() {
+          const nom = document.getElementById("deptNom").value.trim();
+          if (!nom) {
+            showToast("Requis", "Le nom est obligatoire.", "error");
+            return;
+          }
+          const editId = parseInt(document.getElementById("deptEditId").value);
+          const data = {
+            nom,
+            code: document
+              .getElementById("deptCode")
+              .value.trim()
+              .toUpperCase(),
+            responsable: document
+              .getElementById("deptResponsable")
+              .value.trim(),
+            budget: parseInt(document.getElementById("deptBudget").value) || 0,
+          };
+          if (editId) {
+            const idx = db.departements.findIndex((d) => d.id === editId);
+            if (idx !== -1)
+              db.departements[idx] = { ...db.departements[idx], ...data };
+            showToast("Département", `${nom} modifié.`, "success");
+            logAudit("MODIFIER DÉPARTEMENT", nom);
+          } else {
+            db.departements.push({ id: getNextId("dept"), ...data });
+            showToast("Département", `${nom} créé.`, "success");
+            logAudit("CRÉER DÉPARTEMENT", nom);
+          }
+          closeModal("modalDept");
+          renderDepts();
+          updateEmpDropdowns();
+        }
+
+        function editDept(id) {
+          const d = db.departements.find((x) => x.id === id);
+          if (!d) return;
+          document.getElementById("deptEditId").value = d.id;
+          document.getElementById("deptNom").value = d.nom;
+          document.getElementById("deptCode").value = d.code || "";
+          document.getElementById("deptResponsable").value =
+            d.responsable || "";
+          document.getElementById("deptBudget").value = d.budget || "";
+          document.getElementById("modalDeptTitle").textContent =
+            "Modifier — " + d.nom;
+          document.getElementById("modalDept").classList.add("open");
+        }
+
+        function deleteDept(id) {
+          const d = db.departements.find((x) => x.id === id);
+          if (!d) return;
+          confirmDelete(`Supprimer le département "${d.nom}" ?`, () => {
+            db.departements = db.departements.filter((x) => x.id !== id);
+            showToast("Supprimé", `Département ${d.nom} supprimé.`, "success");
+            logAudit("SUPPRIMER DÉPARTEMENT", d.nom);
+            renderDepts();
+            updateEmpDropdowns();
+          });
+        }
+
+        // ============================================================
+        //  POSTES
+        // ============================================================
+        function renderPostes() {
+          const tbody = document.getElementById("tbodyPostes");
+          if (!tbody) return;
+          if (!db.postes.length) {
+            tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state" style="padding:24px"><i class="fa-solid fa-id-badge"></i><p>Aucun poste défini</p><span>Créez votre premier poste</span></div></td></tr>`;
+            document.getElementById("tcPostes").textContent = "0";
+            return;
+          }
+          tbody.innerHTML = db.postes
+            .map((p) => {
+              const nb = db.employees.filter((e) => e.poste === p.nom).length;
+              return `<tr>
+      <td style="font-weight:600;color:var(--txt)">${p.nom}</td>
+      <td>${p.dept || "—"}</td>
+      <td><span class="badge badge-gray">${p.niveau || "N5"}</span></td>
+      <td><span class="ivr">${fmtIVR(p.salMin)}</span></td>
+      <td><span class="ivr">${fmtIVR(p.salMax)}</span></td>
+      <td><strong>${nb}</strong></td>
+      <td>
+        <button class="btn btn-sm btn-ghost" onclick="editPoste(${p.id})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="deletePoste(${p.id})"><i class="fa-solid fa-trash"></i></button>
+      </td>
+    </tr>`;
+            })
+            .join("");
+          document.getElementById("tcPostes").textContent = db.postes.length;
+        }
+
+        function openModal_poste() {
+          const sel = document.getElementById("posteDept");
+          sel.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.departements.map((d) => `<option>${d.nom}</option>`).join("");
+          document.getElementById("posteEditId").value = "";
+          document.getElementById("modalPosteTitle").textContent =
+            "Nouveau poste";
+          document.getElementById("modalPoste").classList.add("open");
+        }
+        // Override for poste
+        const _origOM2 = window.openModal;
+        window.openModal = function (id, mode) {
+          if (id === "modalPoste" && mode === "new") {
+            openModal_poste();
+            return;
+          }
+          _origOM2(id, mode);
+        };
+
+        function savePoste() {
+          const nom = document.getElementById("posteNom").value.trim();
+          const dept = document.getElementById("posteDept").value;
+          if (!nom || !dept) {
+            showToast("Requis", "Nom et département obligatoires.", "error");
+            return;
+          }
+          const editId = parseInt(document.getElementById("posteEditId").value);
+          const data = {
+            nom,
+            dept,
+            niveau: document.getElementById("posteNiveau").value,
+            salMin: parseInt(document.getElementById("posteSalMin").value) || 0,
+            salMax: parseInt(document.getElementById("posteSalMax").value) || 0,
+          };
+          if (editId) {
+            const idx = db.postes.findIndex((p) => p.id === editId);
+            if (idx !== -1) db.postes[idx] = { ...db.postes[idx], ...data };
+            showToast("Poste", `${nom} modifié.`, "success");
+          } else {
+            db.postes.push({ id: getNextId("poste"), ...data });
+            showToast("Poste", `${nom} créé.`, "success");
+            logAudit("CRÉER POSTE", nom);
+          }
+          closeModal("modalPoste");
+          renderPostes();
+          updateEmpDropdowns();
+        }
+
+        function editPoste(id) {
+          const p = db.postes.find((x) => x.id === id);
+          if (!p) return;
+          const sel = document.getElementById("posteDept");
+          sel.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.departements.map((d) => `<option>${d.nom}</option>`).join("");
+          document.getElementById("posteEditId").value = p.id;
+          document.getElementById("posteNom").value = p.nom;
+          document.getElementById("posteDept").value = p.dept || "";
+          document.getElementById("posteNiveau").value =
+            p.niveau || "N5 — Employé";
+          document.getElementById("posteSalMin").value = p.salMin || "";
+          document.getElementById("posteSalMax").value = p.salMax || "";
+          document.getElementById("modalPosteTitle").textContent =
+            "Modifier — " + p.nom;
+          document.getElementById("modalPoste").classList.add("open");
+        }
+
+        function deletePoste(id) {
+          const p = db.postes.find((x) => x.id === id);
+          if (!p) return;
+          confirmDelete(`Supprimer le poste "${p.nom}" ?`, () => {
+            db.postes = db.postes.filter((x) => x.id !== id);
+            showToast("Supprimé", `Poste ${p.nom} supprimé.`, "success");
+            logAudit("SUPPRIMER POSTE", p.nom);
+            renderPostes();
+          });
+        }
+
+        // ============================================================
+        //  CONTRATS
+        // ============================================================
+        function renderContrats() {
+          const tbody = document.getElementById("tbodyContrats");
+          if (!tbody) return;
+          if (!db.contrats.length) {
+            tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state" style="padding:24px"><i class="fa-solid fa-file-contract"></i><p>Aucun contrat</p><span>Ajoutez un contrat pour un employé</span></div></td></tr>`;
+            return;
+          }
+          tbody.innerHTML = db.contrats
+            .map((c) => {
+              const emp = db.employees.find((e) => e.id === c.empId);
+              const name = emp ? getEmpFullName(emp) : c.empId;
+              let dur = "—";
+              if (c.debut && c.fin) {
+                const d1 = new Date(c.debut),
+                  d2 = new Date(c.fin);
+                const months = Math.round((d2 - d1) / (1000 * 3600 * 24 * 30));
+                dur = months + " mois";
+              }
+              const sm = {
+                Actif: "badge-success",
+                Expirant: "badge-warn",
+                Expiré: "badge-danger",
+                Résilié: "badge-gray",
+              };
+              return `<tr>
+      <td style="font-weight:500;color:var(--txt)">${name}</td>
+      <td>${contratBadge(c.type || "CDI")}</td>
+      <td>${c.debut || "—"}</td>
+      <td>${c.fin || "—"}</td>
+      <td>${dur}</td>
+      <td>${staticBadge(c.statut || "Actif", sm)}</td>
+      <td>
+        <button class="btn btn-sm btn-ghost" onclick="editContrat(${c.id})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="deleteContrat(${c.id})"><i class="fa-solid fa-trash"></i></button>
+      </td>
+    </tr>`;
+            })
+            .join("");
+        }
+
+        function openModal_contrat() {
+          const sel = document.getElementById("contratEmp");
+          sel.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.employees
+              .map(
+                (e) =>
+                  `<option value="${e.id}">${getEmpFullName(e)} (${e.id})</option>`,
+              )
+              .join("");
+          document.getElementById("contratEditId").value = "";
+          document.getElementById("modalContratTitle").textContent =
+            "Nouveau contrat";
+          document.getElementById("modalContrat").classList.add("open");
+        }
+        const _origOM3 = window.openModal;
+        window.openModal = function (id, mode) {
+          if (id === "modalContrat" && mode === "new") {
+            openModal_contrat();
+            return;
+          }
+          _origOM3(id, mode);
+        };
+
+        function saveContrat() {
+          const empId = document.getElementById("contratEmp").value;
+          if (!empId) {
+            showToast("Requis", "Sélectionnez un employé.", "error");
+            return;
+          }
+          const editId = parseInt(
+            document.getElementById("contratEditId").value,
+          );
+          const data = {
+            empId,
+            type: document.getElementById("contratType").value,
+            debut: document.getElementById("contratDebut").value,
+            fin: document.getElementById("contratFin").value,
+            statut: document.getElementById("contratStatut").value,
+          };
+          if (editId) {
+            const idx = db.contrats.findIndex((c) => c.id === editId);
+            if (idx !== -1) db.contrats[idx] = { ...db.contrats[idx], ...data };
+            showToast("Contrat", "Contrat modifié.", "success");
+          } else {
+            db.contrats.push({ id: getNextId("contrat"), ...data });
+            showToast("Contrat", "Contrat créé.", "success");
+            logAudit("CRÉER CONTRAT", `${empId} — ${data.type}`);
+          }
+          closeModal("modalContrat");
+          renderContrats();
+        }
+
+        function editContrat(id) {
+          const c = db.contrats.find((x) => x.id === id);
+          if (!c) return;
+          const sel = document.getElementById("contratEmp");
+          sel.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.employees
+              .map(
+                (e) =>
+                  `<option value="${e.id}">${getEmpFullName(e)} (${e.id})</option>`,
+              )
+              .join("");
+          document.getElementById("contratEditId").value = c.id;
+          document.getElementById("contratEmp").value = c.empId;
+          document.getElementById("contratType").value = c.type;
+          document.getElementById("contratDebut").value = c.debut || "";
+          document.getElementById("contratFin").value = c.fin || "";
+          document.getElementById("contratStatut").value = c.statut || "Actif";
+          document.getElementById("modalContratTitle").textContent =
+            "Modifier contrat";
+          document.getElementById("modalContrat").classList.add("open");
+        }
+
+        function deleteContrat(id) {
+          confirmDelete("Supprimer ce contrat ?", () => {
+            db.contrats = db.contrats.filter((x) => x.id !== id);
+            showToast("Supprimé", "Contrat supprimé.", "success");
+            renderContrats();
+          });
+        }
+
+        // ============================================================
+        //  CONGÉS
+        // ============================================================
+        function renderConges() {
+          const tbody = document.getElementById("tbodyConges");
+          if (!tbody) return;
+          if (!db.conges.length) {
+            tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state" style="padding:24px"><i class="fa-solid fa-umbrella-beach"></i><p>Aucune demande de congé</p><span>Ajoutez une demande via le bouton ci-dessus</span></div></td></tr>`;
+            document.getElementById("tcConges").textContent = "0";
+            return;
+          }
+          const sm = {
+            "En attente": "badge-warn",
+            Approuvé: "badge-success",
+            Refusé: "badge-danger",
+          };
+          tbody.innerHTML = db.conges
+            .map((c) => {
+              const emp = db.employees.find((e) => e.id === c.empId);
+              const name = emp ? getEmpFullName(emp) : c.empId;
+              let jours = "—";
+              if (c.debut && c.fin) {
+                const d1 = new Date(c.debut),
+                  d2 = new Date(c.fin);
+                jours =
+                  Math.max(1, Math.round((d2 - d1) / (1000 * 3600 * 24)) + 1) +
+                  "j";
+              }
+              return `<tr>
+      <td style="font-weight:500;color:var(--txt)">${name}</td>
+      <td><span class="badge badge-info">${c.type}</span></td>
+      <td>${c.debut || "—"}</td><td>${c.fin || "—"}</td>
+      <td>${jours}</td>
+      <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.motif || "—"}</td>
+      <td>${staticBadge(c.statut || "En attente", sm)}</td>
+      <td>
+        ${c.statut === "En attente" ? `<button class="btn btn-sm btn-success" onclick="approuverConge(${c.id})"><i class="fa-solid fa-check"></i>Approuver</button>` : ""}
+        <button class="btn btn-sm btn-ghost" onclick="editConge(${c.id})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="deleteConge(${c.id})"><i class="fa-solid fa-trash"></i></button>
+      </td>
+    </tr>`;
+            })
+            .join("");
+          document.getElementById("tcConges").textContent = db.conges.filter(
+            (c) => c.statut === "En attente",
+          ).length;
+        }
+
+        function openModal_conge() {
+          const sel = document.getElementById("congeEmp");
+          sel.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.employees
+              .map(
+                (e) => `<option value="${e.id}">${getEmpFullName(e)}</option>`,
+              )
+              .join("");
+          document.getElementById("congeEditId").value = "";
+          document.getElementById("modalCongeTitle").textContent =
+            "Demande de congé";
+          document.getElementById("modalConge").classList.add("open");
+        }
+        const _origOM4 = window.openModal;
+        window.openModal = function (id, mode) {
+          if (id === "modalConge" && mode === "new") {
+            openModal_conge();
+            return;
+          }
+          _origOM4(id, mode);
+        };
+
+        function saveConge() {
+          const empId = document.getElementById("congeEmp").value;
+          if (!empId) {
+            showToast("Requis", "Sélectionnez un employé.", "error");
+            return;
+          }
+          const editId = parseInt(document.getElementById("congeEditId").value);
+          const data = {
+            empId,
+            type: document.getElementById("congeType").value,
+            debut: document.getElementById("congeDebut").value,
+            fin: document.getElementById("congeFin").value,
+            motif: document.getElementById("congeMotif").value,
+            statut: document.getElementById("congeStatut").value,
+          };
+          if (editId) {
+            const idx = db.conges.findIndex((c) => c.id === editId);
+            if (idx !== -1) db.conges[idx] = { ...db.conges[idx], ...data };
+            showToast("Congé", "Demande modifiée.", "success");
+          } else {
+            db.conges.push({ id: getNextId("conge"), ...data });
+            showToast("Congé", "Demande créée.", "success");
+            logAudit("CRÉER CONGÉ", `${empId} — ${data.type}`);
+          }
+          closeModal("modalConge");
+          renderConges();
+        }
+
+        function approuverConge(id) {
+          const c = db.conges.find((x) => x.id === id);
+          if (c) {
+            c.statut = "Approuvé";
+            showToast("Congé approuvé", "", "success");
+            renderConges();
+          }
+        }
+
+        function editConge(id) {
+          const c = db.conges.find((x) => x.id === id);
+          if (!c) return;
+          const sel = document.getElementById("congeEmp");
+          sel.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.employees
+              .map(
+                (e) => `<option value="${e.id}">${getEmpFullName(e)}</option>`,
+              )
+              .join("");
+          document.getElementById("congeEditId").value = c.id;
+          document.getElementById("congeEmp").value = c.empId;
+          document.getElementById("congeType").value = c.type;
+          document.getElementById("congeDebut").value = c.debut || "";
+          document.getElementById("congeFin").value = c.fin || "";
+          document.getElementById("congeMotif").value = c.motif || "";
+          document.getElementById("congeStatut").value =
+            c.statut || "En attente";
+          document.getElementById("modalCongeTitle").textContent =
+            "Modifier demande";
+          document.getElementById("modalConge").classList.add("open");
+        }
+
+        function deleteConge(id) {
+          confirmDelete("Supprimer cette demande de congé ?", () => {
+            db.conges = db.conges.filter((x) => x.id !== id);
+            showToast("Supprimé", "Demande supprimée.", "success");
+            renderConges();
+          });
+        }
+
+        // ============================================================
+        //  CANDIDATS
+        // ============================================================
+        function renderCandidats() {
+          const tbody = document.getElementById("tbodyCandidats");
+          if (!tbody) return;
+          if (!db.candidats.length) {
+            tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state" style="padding:24px"><i class="fa-solid fa-user-plus"></i><p>Aucun candidat</p><span>Ajoutez un candidat via le bouton ci-dessus</span></div></td></tr>`;
+            document.getElementById("tcCandidats").textContent = "0";
+            return;
+          }
+          const sm = {
+            Nouveau: "badge-info",
+            Présélectionné: "badge-purple",
+            Entretien: "badge-warn",
+            "Offre envoyée": "badge-teal",
+            Embauché: "badge-success",
+            Refusé: "badge-danger",
+          };
+          tbody.innerHTML = db.candidats
+            .map(
+              (c) => `<tr>
+    <td style="font-weight:500;color:var(--txt)">${c.nom}</td>
+    <td>${c.poste || "—"}</td>
+    <td><span class="badge badge-gray">${c.source}</span></td>
+    <td>${c.date || "—"}</td>
+    <td><strong>${c.score || "—"}</strong>/100</td>
+    <td>${staticBadge(c.statut || "Nouveau", sm)}</td>
+    <td>
+      <button class="btn btn-sm btn-ghost" onclick="editCandidat(${c.id})"><i class="fa-solid fa-pen"></i></button>
+      <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="deleteCandidat(${c.id})"><i class="fa-solid fa-trash"></i></button>
+    </td>
+  </tr>`,
+            )
+            .join("");
+          document.getElementById("tcCandidats").textContent =
+            db.candidats.length;
+        }
+
+        function openModal_candidat() {
+          const sel = document.getElementById("candidatPoste");
+          sel.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.postes.map((p) => `<option>${p.nom}</option>`).join("");
+          document.getElementById("candidatEditId").value = "";
+          document.getElementById("modalCandidatTitle").textContent =
+            "Nouveau candidat";
+          document.getElementById("modalCandidat").classList.add("open");
+        }
+        const _origOM5 = window.openModal;
+        window.openModal = function (id, mode) {
+          if (id === "modalCandidat" && mode === "new") {
+            openModal_candidat();
+            return;
+          }
+          _origOM5(id, mode);
+        };
+
+        function saveCandidat() {
+          const nom = document.getElementById("candidatNom").value.trim();
+          if (!nom) {
+            showToast("Requis", "Le nom est obligatoire.", "error");
+            return;
+          }
+          const editId = parseInt(
+            document.getElementById("candidatEditId").value,
+          );
+          const data = {
+            nom,
+            poste: document.getElementById("candidatPoste").value,
+            source: document.getElementById("candidatSource").value,
+            date: document.getElementById("candidatDate").value,
+            score:
+              parseInt(document.getElementById("candidatScore").value) || null,
+            statut: document.getElementById("candidatStatut").value,
+            notes: document.getElementById("candidatNotes").value,
+          };
+          if (editId) {
+            const idx = db.candidats.findIndex((c) => c.id === editId);
+            if (idx !== -1)
+              db.candidats[idx] = { ...db.candidats[idx], ...data };
+            showToast("Candidat", `${nom} modifié.`, "success");
+          } else {
+            db.candidats.push({ id: getNextId("candidat"), ...data });
+            showToast("Candidat", `${nom} ajouté.`, "success");
+            logAudit("AJOUTER CANDIDAT", nom);
+          }
+          closeModal("modalCandidat");
+          renderCandidats();
+        }
+
+        function editCandidat(id) {
+          const c = db.candidats.find((x) => x.id === id);
+          if (!c) return;
+          const sel = document.getElementById("candidatPoste");
+          sel.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.postes.map((p) => `<option>${p.nom}</option>`).join("");
+          document.getElementById("candidatEditId").value = c.id;
+          document.getElementById("candidatNom").value = c.nom;
+          document.getElementById("candidatPoste").value = c.poste || "";
+          document.getElementById("candidatSource").value =
+            c.source || "LinkedIn";
+          document.getElementById("candidatDate").value = c.date || "";
+          document.getElementById("candidatScore").value = c.score || "";
+          document.getElementById("candidatStatut").value =
+            c.statut || "Nouveau";
+          document.getElementById("candidatNotes").value = c.notes || "";
+          document.getElementById("modalCandidatTitle").textContent =
+            "Modifier — " + c.nom;
+          document.getElementById("modalCandidat").classList.add("open");
+        }
+
+        function deleteCandidat(id) {
+          const c = db.candidats.find((x) => x.id === id);
+          confirmDelete(`Supprimer le candidat "${c?.nom}" ?`, () => {
+            db.candidats = db.candidats.filter((x) => x.id !== id);
+            showToast("Supprimé", "Candidat supprimé.", "success");
+            renderCandidats();
+          });
+        }
+
+        // ============================================================
+        //  PROMOTIONS
+        // ============================================================
+        function renderPromos() {
+          const tbody = document.getElementById("tbodyPromos");
+          if (!tbody) return;
+          if (!db.promotions.length) {
+            tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state" style="padding:24px"><i class="fa-solid fa-arrow-trend-up"></i><p>Aucune promotion proposée</p></div></td></tr>`;
+            return;
+          }
+          const sm = {
+            "En attente": "badge-warn",
+            Approuvé: "badge-success",
+            Refusé: "badge-danger",
+          };
+          tbody.innerHTML = db.promotions
+            .map((p) => {
+              const emp = db.employees.find((e) => e.id === p.empId);
+              return `<tr>
+      <td style="font-weight:500;color:var(--txt)">${emp ? getEmpFullName(emp) : p.empId}</td>
+      <td>${p.posteActuel || "—"}</td>
+      <td>${p.nouveauPoste || "—"}</td>
+      <td><span class="ivr">${fmtIVR(p.ancienSal)}</span></td>
+      <td style="color:var(--success);font-weight:600"><span class="ivr">${fmtIVR(p.nouveauSal)}</span></td>
+      <td>${p.date || "—"}</td>
+      <td>${staticBadge(p.statut || "En attente", sm)}</td>
+      <td>
+        <button class="btn btn-sm btn-ghost" onclick="editPromo(${p.id})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="deletePromo(${p.id})"><i class="fa-solid fa-trash"></i></button>
+      </td>
+    </tr>`;
+            })
+            .join("");
+        }
+
+        function openModal_promo() {
+          const selE = document.getElementById("promoEmp");
+          selE.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.employees
+              .map(
+                (e) => `<option value="${e.id}">${getEmpFullName(e)}</option>`,
+              )
+              .join("");
+          const selP = document.getElementById("promoNouveauPoste");
+          selP.innerHTML =
+            '<option value="">— Sélect. —</option>' +
+            db.postes.map((p) => `<option>${p.nom}</option>`).join("");
+          document.getElementById("promoEditId").value = "";
+          document.getElementById("promoPosteActuel").value = "";
+          document.getElementById("promoAncienSal").value = "";
+          document.getElementById("modalPromoTitle").textContent =
+            "Proposer promotion";
+          document.getElementById("modalPromo").classList.add("open");
+          document.getElementById("promoEmp").onchange = function () {
+            const emp = db.employees.find((e) => e.id === this.value);
+            document.getElementById("promoPosteActuel").value = emp
+              ? emp.poste || ""
+              : "";
+            document.getElementById("promoAncienSal").value = emp
+              ? emp.salaire || ""
+              : "";
+          };
+        }
+        const _origOM6 = window.openModal;
+        window.openModal = function (id, mode) {
+          if (id === "modalPromo" && mode === "new") {
+            openModal_promo();
+            return;
+          }
+          _origOM6(id, mode);
+        };
+
+        function savePromo() {
+          const empId = document.getElementById("promoEmp").value;
+          const nouveauPoste =
+            document.getElementById("promoNouveauPoste").value;
+          const nouveauSal = parseInt(
+            document.getElementById("promoNouveauSal").value,
+          );
+          if (!empId || !nouveauPoste || !nouveauSal) {
+            showToast("Requis", "Remplissez tous les champs.", "error");
+            return;
+          }
+          const editId = parseInt(document.getElementById("promoEditId").value);
+          const emp = db.employees.find((e) => e.id === empId);
+          const data = {
+            empId,
+            nouveauPoste,
+            posteActuel: document.getElementById("promoPosteActuel").value,
+            ancienSal: emp ? emp.salaire : 0,
+            nouveauSal,
+            date: document.getElementById("promoDate").value,
+            statut: document.getElementById("promoStatut").value,
+          };
+          if (editId) {
+            const idx = db.promotions.findIndex((p) => p.id === editId);
+            if (idx !== -1)
+              db.promotions[idx] = { ...db.promotions[idx], ...data };
+            showToast("Promotion", "Promotion modifiée.", "success");
+          } else {
+            db.promotions.push({ id: getNextId("promo"), ...data });
+            showToast("Promotion", "Promotion proposée.", "success");
+            logAudit("PROPOSER PROMOTION", `${empId} → ${nouveauPoste}`);
+          }
+          closeModal("modalPromo");
+          renderPromos();
+        }
+
+        function editPromo(id) {
+          const p = db.promotions.find((x) => x.id === id);
+          if (!p) return;
+          openModal_promo();
+          setTimeout(() => {
+            document.getElementById("promoEditId").value = p.id;
+            document.getElementById("promoEmp").value = p.empId;
+            document.getElementById("promoPosteActuel").value =
+              p.posteActuel || "";
+            document.getElementById("promoNouveauPoste").value =
+              p.nouveauPoste || "";
+            document.getElementById("promoAncienSal").value = p.ancienSal || "";
+            document.getElementById("promoNouveauSal").value =
+              p.nouveauSal || "";
+            document.getElementById("promoDate").value = p.date || "";
+            document.getElementById("promoStatut").value =
+              p.statut || "En attente";
+          }, 50);
+        }
+
+        function deletePromo(id) {
+          confirmDelete("Supprimer cette proposition de promotion ?", () => {
+            db.promotions = db.promotions.filter((x) => x.id !== id);
+            showToast("Supprimé", "Promotion supprimée.", "success");
+            renderPromos();
+          });
+        }
+
+        // ============================================================
+        //  ÉLÉMENTS DE PAIE (gains / retenues)
+        // ============================================================
+        function renderConfigPaie() {
+          renderGains();
+          renderRetenues();
+        }
+
+        function renderGains() {
+          const el = document.getElementById("configGains");
+          if (!el) return;
+          if (!db.gains.length) {
+            el.innerHTML =
+              '<div class="empty-state" style="padding:20px"><i class="fa-solid fa-plus-circle"></i><p>Aucun gain défini</p><span>Cliquez sur "Ajouter" pour créer un élément</span></div>';
+            return;
+          }
+          el.innerHTML = db.gains
+            .map(
+              (g) => `
+    <div class="config-row">
+      <div class="config-info"><div class="clabel">${g.nom}</div><div class="cdesc">${g.desc || ""}</div></div>
+      <div class="config-val">${g.calcType === "fixe" ? fmtIVR(g.val) + " IVR" : g.calcType === "formule" ? '<i style="font-size:10px">formule</i>' : g.val + "%"}</div>
+      <button class="btn btn-sm btn-ghost" onclick="editElemPaie(${g.id},'gain')"><i class="fa-solid fa-pen"></i></button>
+      <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="deleteElemPaie(${g.id},'gain')"><i class="fa-solid fa-trash"></i></button>
+    </div>`,
+            )
+            .join("");
+        }
+
+        function renderRetenues() {
+          const el = document.getElementById("configRetenues");
+          if (!el) return;
+          if (!db.retenues.length) {
+            el.innerHTML =
+              '<div class="empty-state" style="padding:20px"><i class="fa-solid fa-minus-circle"></i><p>Aucune retenue définie</p><span>Cliquez sur "Ajouter" pour créer une retenue</span></div>';
+            return;
+          }
+          el.innerHTML = db.retenues
+            .map(
+              (r) => `
+    <div class="config-row">
+      <div class="config-info"><div class="clabel">${r.nom}</div><div class="cdesc">${r.desc || ""}</div></div>
+      <div class="config-val" style="color:var(--danger)">${r.calcType === "fixe" ? fmtIVR(r.val) + " IVR" : r.val + "%"}</div>
+      <button class="btn btn-sm btn-ghost" onclick="editElemPaie(${r.id},'retenue')"><i class="fa-solid fa-pen"></i></button>
+      <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="deleteElemPaie(${r.id},'retenue')"><i class="fa-solid fa-trash"></i></button>
+    </div>`,
+            )
+            .join("");
+        }
+
+        function toggleElemPaieMode() {
+          const v = document.getElementById("elemPaieCalcType").value;
+          document.getElementById("elemPaieValGrp").style.display =
+            v === "formule" ? "none" : "";
+          document.getElementById("elemPaieFormGrp").style.display =
+            v === "formule" ? "" : "none";
+          document.getElementById("elemPaieValLabel").textContent =
+            v === "fixe" ? "Montant fixe (IVR)" : "Valeur (%)";
+        }
+
+        function openModal_elemPaie(type) {
+          document.getElementById("elemPaieEditId").value = "";
+          document.getElementById("elemPaieTypeSection").value = type || "gain";
+          document.getElementById("elemPaieCateg").value =
+            type === "new-retenue" ? "retenue" : "gain";
+          document.getElementById("modalElemPaieTitle").textContent =
+            type === "new-retenue"
+              ? "Nouvelle retenue"
+              : "Nouvel élément de paie";
+          document.getElementById("elemPaieNom").value = "";
+          document.getElementById("elemPaieDesc").value = "";
+          document.getElementById("elemPaieCalcType").value = "pct";
+          document.getElementById("elemPaieVal").value = "";
+          document.getElementById("elemPaieFormule").value = "";
+          toggleElemPaieMode();
+          document.getElementById("modalElemPaie").classList.add("open");
+        }
+        const _origOM7 = window.openModal;
+        window.openModal = function (id, mode) {
+          if (id === "modalElemPaie") {
+            openModal_elemPaie(mode);
+            return;
+          }
+          _origOM7(id, mode);
+        };
+
+        function saveElemPaie() {
+          const nom = document.getElementById("elemPaieNom").value.trim();
+          if (!nom) {
+            showToast("Requis", "Le libellé est obligatoire.", "error");
+            return;
+          }
+          const calcType = document.getElementById("elemPaieCalcType").value;
+          const categ = document.getElementById("elemPaieCateg").value;
+          const data = {
+            nom,
+            desc: document.getElementById("elemPaieDesc").value,
+            calcType,
+            val:
+              calcType !== "formule"
+                ? parseFloat(document.getElementById("elemPaieVal").value) || 0
+                : null,
+            formule:
+              calcType === "formule"
+                ? document.getElementById("elemPaieFormule").value
+                : null,
+            categ: categ,
+          };
+          const editId = parseInt(
+            document.getElementById("elemPaieEditId").value,
+          );
+          if (editId) {
+            if (categ === "gain") {
+              const idx = db.gains.findIndex((g) => g.id === editId);
+              if (idx !== -1) db.gains[idx] = { ...db.gains[idx], ...data };
+            } else {
+              const idx = db.retenues.findIndex((r) => r.id === editId);
+              if (idx !== -1)
+                db.retenues[idx] = { ...db.retenues[idx], ...data };
+            }
+            showToast("Élément", `${nom} modifié.`, "success");
+          } else {
+            const id = getNextId("elem");
+            if ((categ = categ === "gain")) db.gains.push({ id, ...data });
+            else db.retenues.push({ id, ...data });
+
+            // redo properly
+            const newElem = { id: getNextId("elem") - 1, ...data };
+            if (data.categ === "gain") {
+              if (!editId) {
+                db.gains.push(newElem);
+              }
+            } else {
+              if (!editId) {
+                db.retenues.push(newElem);
+              }
+            }
+            showToast("Élément", `${nom} ajouté.`, "success");
+            logAudit("CRÉER ÉLÉMENT PAIE", `${nom} — ${categ}`);
+          }
+          closeModal("modalElemPaie");
+          renderConfigPaie();
+          renderPaieTable();
+        }
+
+        function editElemPaie(id, type) {
+          const list = type === "gain" ? db.gains : db.retenues;
+          const e = list.find((x) => x.id === id);
+          if (!e) return;
+          document.getElementById("elemPaieEditId").value = e.id;
+          document.getElementById("elemPaieTypeSection").value = type;
+          document.getElementById("elemPaieCateg").value = e.categ || type;
+          document.getElementById("elemPaieNom").value = e.nom;
+          document.getElementById("elemPaieDesc").value = e.desc || "";
+          document.getElementById("elemPaieCalcType").value =
+            e.calcType || "pct";
+          document.getElementById("elemPaieVal").value = e.val || "";
+          document.getElementById("elemPaieFormule").value = e.formule || "";
+          document.getElementById("modalElemPaieTitle").textContent =
+            "Modifier — " + e.nom;
+          toggleElemPaieMode();
+          document.getElementById("modalElemPaie").classList.add("open");
+        }
+
+        function deleteElemPaie(id, type) {
+          const list = type === "gain" ? db.gains : db.retenues;
+          const e = list.find((x) => x.id === id);
+          confirmDelete(`Supprimer l'élément "${e?.nom}" ?`, () => {
+            if (type === "gain") db.gains = db.gains.filter((x) => x.id !== id);
+            else db.retenues = db.retenues.filter((x) => x.id !== id);
+            showToast("Supprimé", `Élément supprimé.`, "success");
+            renderConfigPaie();
+            renderPaieTable();
+          });
+        }
+
+        // ============================================================
+        //  PAIE — CALCUL
+        // ============================================================
+        function calcEmpSalary(emp) {
+          const base = parseInt(emp.salaire) || 0;
+          let totalGains = 0;
+          db.gains.forEach((g) => {
+            if (g.calcType === "pct") totalGains += base * (g.val / 100);
+            else if (g.calcType === "fixe") totalGains += g.val;
+            else if (g.calcType === "formule" && g.formule) {
+              try {
+                const vars = { Salaire_Base: base };
+                let expr = g.formule;
+                Object.keys(vars).forEach(
+                  (k) => (expr = expr.replaceAll(k, vars[k])),
+                );
+                totalGains += eval(expr) || 0;
+              } catch (e) {}
+            }
+          });
+          let totalRetenues = 0;
+          db.retenues.forEach((r) => {
+            if (r.calcType === "pct") totalRetenues += base * (r.val / 100);
+            else if (r.calcType === "fixe") totalRetenues += r.val;
+          });
+          return {
+            base,
+            gains: Math.round(totalGains),
+            retenues: Math.round(totalRetenues),
+            net: base + Math.round(totalGains) - Math.round(totalRetenues),
+          };
+        }
+
+        function renderPaieTable() {
+          const tbody = document.getElementById("tbodyPaie");
+          if (!tbody) return;
+          if (!db.employees.length) {
+            tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state" style="padding:24px"><i class="fa-solid fa-calculator"></i><p>Aucun employé</p><span>Ajoutez des employés pour calculer la paie</span></div></td></tr>`;
+            return;
+          }
+          tbody.innerHTML = db.employees
+            .map((e, i) => {
+              const calc = calcEmpSalary(e);
+              return `<tr>
+      <td><input type="checkbox"></td>
+      <td><code style="font-size:10px">${e.id}</code></td>
+      <td><div style="display:flex;align-items:center;gap:8px">
+        <div class="avatar avatar-sm ${avatarColors[i % 3]}">${initials(getEmpFullName(e))}</div>
+        <span style="font-weight:500;color:var(--txt)">${getEmpFullName(e)}</span>
+      </div></td>
+      <td style="font-family:var(--mono)">${fmtIVR(calc.base)}</td>
+      <td style="font-family:var(--mono);color:var(--success)">+${fmtIVR(calc.gains)}</td>
+      <td style="font-family:var(--mono);color:var(--danger)">−${fmtIVR(calc.retenues)}</td>
+      <td style="font-family:var(--mono);font-weight:700">${fmtIVR(calc.net)}</td>
+      <td><span class="badge badge-success">Calculé</span></td>
+      <td><button class="btn btn-sm btn-teal" onclick="viewBulletin('${e.id}')"><i class="fa-solid fa-file-invoice"></i>Voir</button></td>
+    </tr>`;
+            })
+            .join("");
+          updatePaieKpis();
+          updateSbBulletins();
+          updateBulletinEmpSelect();
+        }
+
+        function updatePaieKpis() {
+          const el = document.getElementById("paieKpis");
+          if (!el) return;
+          let totalBrut = 0,
+            totalRet = 0;
+          db.employees.forEach((e) => {
+            const c = calcEmpSalary(e);
+            totalBrut += c.base + c.gains;
+            totalRet += c.retenues;
+          });
+          const net = totalBrut - totalRet;
+          el.innerHTML = `
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--gold)"></div><div class="kpi-val" style="font-size:16px">${fmtIVR(totalBrut)}</div><div class="kpi-label">Masse brute IVR</div></div>
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--danger)"></div><div class="kpi-val" style="font-size:16px">${fmtIVR(totalRet)}</div><div class="kpi-label">Total retenues IVR</div></div>
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--success)"></div><div class="kpi-val" style="font-size:16px">${fmtIVR(net)}</div><div class="kpi-label">Net total à payer</div></div>
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--teal)"></div><div class="kpi-val">${db.employees.length}</div><div class="kpi-label">Bulletins</div><div class="kpi-sub">Période Juin 2025</div></div>`;
+
+          const bs = document.getElementById("blockchainStatus");
+          if (bs)
+            bs.innerHTML = `
+    <div style="font-size:11px;color:var(--txt3);margin-bottom:8px;font-weight:600;text-transform:uppercase">Statut période</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff"><i class="fa-solid fa-check"></i></div><span style="font-size:12px">Calculs validés (${db.employees.length}/${db.employees.length})</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:var(--warn);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff"><i class="fa-solid fa-clock"></i></div><span style="font-size:12px">Bulletins générés (${db.employees.length}/${db.employees.length})</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff"><i class="fa-solid fa-link"></i></div><span style="font-size:12px;color:var(--txt2)">Paiement blockchain (en attente)</span></div>
+    </div>`;
+        }
+
+        function calculerTous() {
+          renderPaieTable();
+          showToast(
+            "Paie",
+            `${db.employees.length} bulletins calculés avec succès.`,
+            "success",
+          );
+          logAudit(
+            "CALCUL PAIE",
+            `${db.employees.length} bulletins — Juin 2025`,
+          );
+        }
+
+        function updateSbBulletins() {
+          const sb = document.getElementById("sbBulletins");
+          if (sb) sb.textContent = db.employees.length;
+          const tc = document.getElementById("tcBulletins");
+          if (tc) tc.textContent = db.employees.length;
+        }
+
+        // ============================================================
+        //  BULLETIN DE PAIE
+        // ============================================================
+        function updateBulletinEmpSelect() {
+          const sel = document.getElementById("selectBulletinEmp");
+          if (!sel) return;
+          sel.innerHTML =
+            '<option value="">— Choisir un employé —</option>' +
+            db.employees
+              .map(
+                (e) =>
+                  `<option value="${e.id}">${getEmpFullName(e)} (${e.id})</option>`,
+              )
+              .join("");
+        }
+
+        function openBulletinModal() {
+          const sel = document.getElementById("selectBulletinEmp");
+          const id = sel ? sel.value : "";
+          if (!id) {
+            showToast(
+              "Sélection",
+              "Choisissez un employé dans la liste.",
+              "warn",
+            );
+            return;
+          }
+          viewBulletin(id);
+        }
+
+        function viewBulletin(empId) {
+          const emp = db.employees.find((e) => e.id === empId);
+          if (!emp) {
+            showToast("Erreur", "Employé introuvable.", "error");
+            return;
+          }
+          const calc = calcEmpSalary(emp);
+          const name = getEmpFullName(emp);
+
+          document.getElementById("bulletinTitle").textContent =
+            `Bulletin de paie — ${name} · Juin 2025`;
+
+          const gainLines = db.gains
+            .map((g) => {
+              let amt = 0;
+              if (g.calcType === "pct") {
+                amt = Math.round(calc.base * (g.val / 100));
+                return `<div class="payslip-line"><span class="payslip-line-name">${g.nom}</span><span class="payslip-line-formula">${g.desc || ""}</span><span class="payslip-line-pct" style="color:var(--success)">${g.val}%</span><span class="payslip-line-amt" style="color:var(--success)">${fmtIVR(amt)} IVR</span></div>`;
+              } else if (g.calcType === "fixe") {
+                return `<div class="payslip-line"><span class="payslip-line-name">${g.nom}</span><span class="payslip-line-formula">${g.desc || "Montant fixe"}</span><span class="payslip-line-pct">—</span><span class="payslip-line-amt" style="color:var(--success)">${fmtIVR(g.val)} IVR</span></div>`;
+              }
+              return "";
+            })
+            .join("");
+
+          const retenueLines = db.retenues
+            .map((r) => {
+              let amt = 0;
+              if (r.calcType === "pct")
+                amt = Math.round(calc.base * (r.val / 100));
+              else if (r.calcType === "fixe") amt = r.val;
+              return `<div class="payslip-line deduction"><span class="payslip-line-name">${r.nom}</span><span class="payslip-line-formula">${r.desc || ""}</span><span class="payslip-line-pct">${r.calcType === "pct" ? r.val + "%" : "—"}</span><span class="payslip-line-amt">−${fmtIVR(amt)} IVR</span></div>`;
+            })
+            .join("");
+
+          document.getElementById("bulletinContent").innerHTML = `
+    <div class="payslip">
+      <div class="payslip-header">
+        <div class="payslip-company">SSIA Financial Intelligence Platform</div>
+        <div class="payslip-title">Bulletin de paie — Juin 2025</div>
+        <div class="payslip-meta">
+          <div><div class="payslip-meta-item"><label>Matricule</label><span style="font-family:var(--mono)">${emp.id}</span></div></div>
+          <div><div class="payslip-meta-item"><label>Employé</label><span>${name}</span></div></div>
+          <div><div class="payslip-meta-item"><label>Département</label><span>${emp.dept || "—"}</span></div></div>
+          <div><div class="payslip-meta-item"><label>Poste</label><span>${emp.poste || "—"}</span></div></div>
+          <div><div class="payslip-meta-item"><label>Période</label><span>01 – 30 Juin 2025</span></div></div>
+          <div><div class="payslip-meta-item"><label>Mode paiement</label><span>${emp.paiement || "Virement"}</span></div></div>
+        </div>
+      </div>
+      <div class="payslip-body">
+        <div class="payslip-section-title">Rémunération — GAINS</div>
+        <div class="payslip-line">
+          <span class="payslip-line-name">Salaire de Base</span>
+          <span class="payslip-line-formula">Base mensuelle</span>
+          <span class="payslip-line-pct">—</span>
+          <span class="payslip-line-amt">${fmtIVR(calc.base)} IVR</span>
+        </div>
+        ${gainLines || '<div style="padding:8px 0;color:var(--txt3);font-size:12px;text-align:center">Aucun gain configuré</div>'}
+        <div class="payslip-total" style="background:var(--info-bg);margin-bottom:8px">
+          <span class="payslip-total-label" style="color:var(--info)"><i class="fa-solid fa-plus-circle"></i> TOTAL BRUT</span>
+          <span class="payslip-total-amt" style="color:var(--info)">${fmtIVR(calc.base + calc.gains)} IVR</span>
+        </div>
+        <div class="payslip-section-title">Rémunération — RETENUES</div>
+        ${retenueLines || '<div style="padding:8px 0;color:var(--txt3);font-size:12px;text-align:center">Aucune retenue configurée</div>'}
+        <div class="payslip-total" style="background:var(--danger-bg);margin-bottom:8px">
+          <span class="payslip-total-label" style="color:var(--danger)"><i class="fa-solid fa-minus-circle"></i> TOTAL RETENUES</span>
+          <span class="payslip-total-amt" style="color:var(--danger)">−${fmtIVR(calc.retenues)} IVR</span>
+        </div>
+        <div class="payslip-total" style="border:2px solid var(--gold);background:var(--gold-bg)">
+          <span class="payslip-total-label" style="font-size:16px"><i class="fa-solid fa-wallet" style="color:var(--gold3)"></i> NET À PAYER</span>
+          <span class="payslip-total-amt" style="color:var(--gold2);font-size:22px">${fmtIVR(calc.net)} IVR</span>
+        </div>
+      </div>
+      <div class="payslip-footer">
+        <div>
+          <div style="font-size:10px;color:var(--txt3);margin-bottom:2px">Référence Blockchain SSIA</div>
+          <div class="blockchain-ref">Hash : 0xa3f2b8c1...9d4e · Block #${18429 + Math.floor(Math.random() * 100)}</div>
+          <div style="font-size:9px;color:var(--txt3);margin-top:2px">SSIA Chain · Smart Contract 0x8B4e...F3c1</div>
+        </div>
+        <div class="qr-placeholder"><i class="fa-solid fa-qrcode" style="font-size:22px;color:var(--txt2)"></i></div>
+      </div>
+    </div>`;
+          document.getElementById("modalBulletin").classList.add("open");
+        }
+
+        // ============================================================
+        //  FORMULES
+        // ============================================================
+        function refreshFormulas() {
+          const sel = document.getElementById("formulaSelect");
+          if (!sel) return;
+          sel.innerHTML =
+            '<option value="">— Choisir —</option>' +
+            [...db.gains, ...db.retenues]
+              .filter((e) => e.calcType === "formule")
+              .map(
+                (e) => `<option value="${e.id}:${e.categ}">${e.nom}</option>`,
+              )
+              .join("");
+          const vars = [
+            "Salaire_Base",
+            "Taux_Horaire",
+            "Heures_Supp",
+            "Commission",
+            "Jours_Travaillés",
+          ];
+          const el = document.getElementById("formulaVars");
+          if (el)
+            el.innerHTML = vars
+              .map(
+                (v) =>
+                  `<span class="var-chip" onclick="insertVar('${v}')">${v}</span>`,
+              )
+              .join("");
+        }
+
+        function loadFormula(key) {
+          if (!key) return;
+          const [id, categ] = key.split(":");
+          const list = categ === "gain" ? db.gains : db.retenues;
+          const f = list.find((e) => e.id == id);
+          if (f) {
+            document.getElementById("formulaName").value = f.nom;
+            document.getElementById("formulaExpr").value = f.formule || "";
+          }
+        }
+
+        function insertVar(v) {
+          const ta = document.getElementById("formulaExpr");
+          const pos = ta.selectionStart;
+          ta.value = ta.value.substring(0, pos) + v + ta.value.substring(pos);
+          ta.focus();
+          ta.selectionStart = ta.selectionEnd = pos + v.length;
+        }
+
+        function testFormula() {
+          const expr = document.getElementById("formulaExpr").value.trim();
+          if (!expr) return;
+          const vars = {
+            Salaire_Base: 840000,
+            Taux_Horaire: 4375,
+            Heures_Supp: 12,
+            Commission: 50000,
+            Jours_Travaillés: 22,
+          };
+          try {
+            let e = expr;
+            Object.keys(vars).forEach((k) => (e = e.replaceAll(k, vars[k])));
+            const result = eval(e);
+            const div = document.getElementById("formulaResult");
+            div.style.display = "block";
+            div.textContent =
+              "✓ Résultat : " +
+              Math.round(result).toLocaleString("fr-FR") +
+              " IVR (base test : 840 000 IVR)";
+          } catch (err) {
+            showToast(
+              "Erreur formule",
+              "Expression invalide : " + err.message,
+              "error",
+            );
+          }
+        }
+
+        function saveFormula() {
+          showToast("Formule", "Formule enregistrée et activée.", "success");
+          logAudit(
+            "SAUVEGARDER FORMULE",
+            document.getElementById("formulaName").value,
+          );
+        }
+
+        function calcForecast() {
+          const pct =
+            parseFloat(document.getElementById("forecastInput").value) || 0;
+          let totalNet = 0;
+          db.employees.forEach((e) => {
+            const c = calcEmpSalary(e);
+            totalNet += c.net;
+          });
+          const result = Math.round(totalNet * (1 + pct / 100));
+          const el = document.getElementById("forecastResult");
+          el.style.display = "block";
+          el.textContent = `Scénario ${pct >= 0 ? "+" : ""}${pct}% → ${result.toLocaleString("fr-FR")} IVR (net prévisionnel)`;
+        }
+
+        // ============================================================
+        //  UTILISATEURS
+        // ============================================================
+        function renderUsers() {
+          const tbody = document.getElementById("tbodyUsers");
+          if (!tbody) return;
+          if (!db.users.length) {
+            tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state" style="padding:24px"><i class="fa-solid fa-users-gear"></i><p>Aucun utilisateur</p></div></td></tr>`;
+            document.getElementById("tcUsers").textContent = "0";
+            return;
+          }
+          const roleColors = {
+            "Admin RH": "badge-danger",
+            "Responsable Paie": "badge-gold",
+            Manager: "badge-navy",
+            Consultant: "badge-teal",
+            Lecteur: "badge-gray",
+          };
+          tbody.innerHTML = db.users
+            .map(
+              (u) => `<tr>
+    <td style="font-weight:500;color:var(--txt)">${u.name}</td>
+    <td>${u.email}</td>
+    <td>${staticBadge(u.role, roleColors)}</td>
+    <td><span class="badge ${u.statut === "Actif" ? "badge-success" : "badge-gray"}">${u.statut}</span></td>
+    <td>
+      <button class="btn btn-sm btn-ghost" onclick="editUser(${u.id})"><i class="fa-solid fa-pen"></i></button>
+      <button class="btn btn-sm btn-ghost" style="color:var(--danger)" onclick="deleteUser(${u.id})"><i class="fa-solid fa-trash"></i></button>
+    </td>
+  </tr>`,
+            )
+            .join("");
+          document.getElementById("tcUsers").textContent = db.users.length;
+        }
+
+        function saveUser() {
+          const name = document.getElementById("userName").value.trim();
+          const email = document.getElementById("userEmail").value.trim();
+          if (!name || !email) {
+            showToast("Requis", "Nom et email obligatoires.", "error");
+            return;
+          }
+          const editId = parseInt(document.getElementById("userEditId").value);
+          const data = {
+            name,
+            email,
+            role: document.getElementById("userRole").value,
+            statut: document.getElementById("userStatut").value,
+          };
+          if (editId) {
+            const idx = db.users.findIndex((u) => u.id === editId);
+            if (idx !== -1) db.users[idx] = { ...db.users[idx], ...data };
+            showToast("Utilisateur", `${name} modifié.`, "success");
+          } else {
+            db.users.push({ id: getNextId("user"), ...data });
+            showToast("Utilisateur", `${name} créé.`, "success");
+            logAudit("CRÉER UTILISATEUR", name + " — " + data.role);
+          }
+          closeModal("modalUser");
+          renderUsers();
+        }
+
+        function editUser(id) {
+          const u = db.users.find((x) => x.id === id);
+          if (!u) return;
+          document.getElementById("userEditId").value = u.id;
+          document.getElementById("userName").value = u.name;
+          document.getElementById("userEmail").value = u.email;
+          document.getElementById("userRole").value = u.role;
+          document.getElementById("userStatut").value = u.statut;
+          document.getElementById("modalUserTitle").textContent =
+            "Modifier — " + u.name;
+          document.getElementById("modalUser").classList.add("open");
+        }
+
+        function deleteUser(id) {
+          const u = db.users.find((x) => x.id === id);
+          confirmDelete(`Supprimer l'utilisateur "${u?.name}" ?`, () => {
+            db.users = db.users.filter((x) => x.id !== id);
+            showToast("Supprimé", "Utilisateur supprimé.", "success");
+            renderUsers();
+          });
+        }
+
+        // ============================================================
+        //  ORGANIGRAMME
+        // ============================================================
+        function renderOrganigramme() {
+          const el = document.getElementById("orgContainer");
+          if (!el) return;
+          if (!db.departements.length) {
+            el.innerHTML =
+              '<div class="empty-state"><i class="fa-solid fa-sitemap"></i><p>Créez des départements pour voir l\'organigramme</p></div>';
+            return;
+          }
+          const directs = db.departements.slice(
+            0,
+            Math.ceil(db.departements.length / 2),
+          );
+          const rests = db.departements.slice(
+            Math.ceil(db.departements.length / 2),
+          );
+          el.innerHTML = `
+    <div class="org-tree">
+      <div class="org-node" style="background:var(--navy);color:var(--gold3);border-color:var(--gold2)"><div class="oname">Direction Générale</div><div class="otitle" style="color:rgba(255,255,255,.5)">SSIA</div></div>
+      <div class="org-connector"></div>
+      <div style="display:flex;gap:24px;justify-content:center">
+        ${db.departements
+          .map((d) => {
+            const effectif = db.employees.filter(
+              (e) => e.dept === d.nom,
+            ).length;
+            return `<div class="org-branch">
+            <div class="org-connector"></div>
+            <div class="org-node"><div class="oname">${d.nom}</div><div class="otitle">${d.responsable || "—"} · ${effectif} employés</div></div>
+          </div>`;
+          })
+          .join("")}
+      </div>
+    </div>`;
+        }
+
+        // ============================================================
+        //  CALENDAR
+        // ============================================================
+        function renderCalendar() {
+          const grid = document.getElementById("calGrid");
+          if (!grid || grid.children.length > 0) return;
+          const congesByDay = {};
+          db.conges
+            .filter((c) => c.statut === "Approuvé" && c.debut)
+            .forEach((c) => {
+              const d = new Date(c.debut).getDate();
+              if (!congesByDay[d]) congesByDay[d] = [];
+              const emp = db.employees.find((e) => e.id === c.empId);
+              congesByDay[d].push({
+                label: `Congé ${emp ? getEmpFullName(emp).split(" ")[0] : ""}`,
+                color: "var(--info-bg)",
+                text: "var(--info)",
+              });
+            });
+          const today = new Date().getDate();
+          for (let d = 1; d <= 30; d++) {
+            const cell = document.createElement("div");
+            cell.className = "cal-day" + (d === today ? " today" : "");
+            const evs = congesByDay[d] || [];
+            cell.innerHTML =
+              `<div class="cal-day-num">${d}</div>` +
+              evs
+                .map(
+                  (e) =>
+                    `<div class="cal-event" style="background:${e.color};color:${e.text}">${e.label}</div>`,
+                )
+                .join("");
+            grid.appendChild(cell);
+          }
+        }
+
+        // ============================================================
+        //  DASHBOARD
+        // ============================================================
+        let dashChartsInit = false;
+        let dashCharts = {};
+
+        function refreshDashboard() {
+          const nb = db.employees.length;
+          const presents = db.employees.filter(
+            (e) => e.statut === "Présent",
+          ).length;
+          const conges = db.employees.filter(
+            (e) => e.statut === "Congé",
+          ).length;
+          const absents = db.employees.filter(
+            (e) => e.statut === "Absent",
+          ).length;
+          const missions = db.employees.filter(
+            (e) => e.statut === "Mission",
+          ).length;
+
+          let totalSal = 0;
+          db.employees.forEach((e) => (totalSal += parseInt(e.salaire) || 0));
+
+          document.getElementById("dashKpi1").innerHTML = `
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--info)"></div><div class="kpi-header"><div class="kpi-icon" style="background:var(--info-bg);color:var(--info)"><i class="fa-solid fa-users"></i></div><span class="kpi-trend up"><i class="fa-solid fa-arrow-up"></i>dynamique</span></div><div class="kpi-val">${nb.toLocaleString("fr-FR")}</div><div class="kpi-label">Effectif total</div><div class="kpi-sub">Employés actifs</div></div>
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--success)"></div><div class="kpi-header"><div class="kpi-icon" style="background:var(--success-bg);color:var(--success)"><i class="fa-solid fa-user-check"></i></div><span class="kpi-trend up">${nb > 0 ? Math.round((presents / nb) * 100) : 0}%</span></div><div class="kpi-val">${presents}</div><div class="kpi-label">Présents</div><div class="kpi-sub">Du jour</div></div>
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--warn)"></div><div class="kpi-header"><div class="kpi-icon" style="background:var(--warn-bg);color:var(--warn)"><i class="fa-solid fa-umbrella-beach"></i></div><span class="kpi-trend neutral">stable</span></div><div class="kpi-val">${conges}</div><div class="kpi-label">En congé</div><div class="kpi-sub">${db.conges.filter((c) => c.statut === "En attente").length} demandes en attente</div></div>
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--danger)"></div><div class="kpi-header"><div class="kpi-icon" style="background:var(--danger-bg);color:var(--danger)"><i class="fa-solid fa-user-xmark"></i></div><span class="kpi-trend ${absents > 0 ? "down" : "neutral"}">${absents}</span></div><div class="kpi-val">${absents}</div><div class="kpi-label">Absents</div><div class="kpi-sub">Non justifiés</div></div>`;
+
+          document.getElementById("dashKpi2").innerHTML = `
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--gold)"></div><div class="kpi-header"><div class="kpi-icon" style="background:var(--gold-bg);color:var(--gold2)"><i class="fa-solid fa-money-bill-trend-up"></i></div></div><div class="kpi-val" style="font-size:20px">${fmtIVR(totalSal)}</div><div class="kpi-label">Masse sal. base mensuelle</div><div class="kpi-sub">IVR</div></div>
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--teal)"></div><div class="kpi-header"><div class="kpi-icon" style="background:var(--teal-bg);color:var(--teal)"><i class="fa-solid fa-building"></i></div></div><div class="kpi-val">${db.departements.length}</div><div class="kpi-label">Départements</div><div class="kpi-sub">${db.postes.length} postes définis</div></div>
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--purple)"></div><div class="kpi-header"><div class="kpi-icon" style="background:var(--purple-bg);color:var(--purple)"><i class="fa-solid fa-user-tie"></i></div></div><div class="kpi-val">${db.candidats.length}</div><div class="kpi-label">Candidats actifs</div><div class="kpi-sub">${db.promotions.filter((p) => p.statut === "En attente").length} promotions en attente</div></div>
+    <div class="kpi-card"><div class="kpi-accent" style="background:var(--info)"></div><div class="kpi-header"><div class="kpi-icon" style="background:var(--info-bg);color:var(--info)"><i class="fa-solid fa-file-invoice"></i></div></div><div class="kpi-val">${nb}</div><div class="kpi-label">Bulletins période</div><div class="kpi-sub">Juin 2025 — IVR</div></div>`;
+
+          document.getElementById("dashAlertes").innerHTML = `
+    <div class="alert alert-warn"><i class="fa-solid fa-file-invoice"></i><div class="alert-content"><strong>${db.conges.filter((c) => c.statut === "En attente").length} demandes de congé en attente</strong>Validation manager requise</div></div>
+    <div class="alert alert-info"><i class="fa-solid fa-star"></i><div class="alert-content"><strong>${db.promotions.filter((p) => p.statut === "En attente").length} promotions en attente</strong>Décision DG requise</div></div>
+    <div class="alert alert-success"><i class="fa-solid fa-users"></i><div class="alert-content"><strong>${nb} employé(s) dans le système</strong>${db.departements.length} département(s) · ${db.postes.length} poste(s)</div></div>
+    <div class="alert alert-info"><i class="fa-solid fa-user-plus"></i><div class="alert-content"><strong>${db.candidats.length} candidat(s) en cours</strong>Recrutement actif</div></div>`;
+
+          if (!dashChartsInit) {
+            dashChartsInit = true;
+            setTimeout(() => {
+              initDashboardCharts(presents, conges, absents, missions);
+            }, 100);
+          } else {
+            updateDashboardCharts(presents, conges, absents, missions);
+          }
+        }
+
+        function getDeptData() {
+          return db.departements.map((d) => ({
+            label: d.nom,
+            count: db.employees.filter((e) => e.dept === d.nom).length,
+          }));
+        }
+
+        function initDashboardCharts(presents, conges, absents, missions) {
+          const isDark = document.documentElement.dataset.theme === "dark";
+          const gridC = isDark ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)";
+          const txtC = isDark ? "rgba(255,255,255,.5)" : "rgba(0,0,0,.45)";
+          const depts = getDeptData();
+          const pal = [
+            "#2563eb",
+            "#1E6E6E",
+            "#16a34a",
+            "#7c3aed",
+            "#D4AF37",
+            "#d97706",
+            "#0A1628",
+            "#9ba3b2",
+          ];
+
+          const c1 = document.getElementById("chartDepts");
+          if (c1) {
+            dashCharts.depts = new Chart(c1, {
+              type: "bar",
+              data: {
+                labels: depts.map((d) => d.label),
+                datasets: [
+                  {
+                    data: depts.map((d) => d.count),
+                    backgroundColor: pal.slice(0, depts.length),
+                    borderRadius: 4,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                  x: {
+                    grid: { color: gridC },
+                    ticks: { color: txtC, font: { size: 10 } },
+                  },
+                  y: {
+                    grid: { color: gridC },
+                    ticks: { color: txtC, font: { size: 10 } },
+                  },
+                },
+              },
+            });
+          }
+          const c2 = document.getElementById("chartSalaire");
+          if (c2) {
+            const months = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin"];
+            let base = db.employees.reduce(
+              (s, e) => s + (parseInt(e.salaire) || 0),
+              0,
+            );
+            const data = months.map(
+              (_, i) =>
+                Math.round(((base * (0.92 + i * 0.016)) / 1000000) * 10) / 10,
+            );
+            dashCharts.salaire = new Chart(c2, {
+              type: "line",
+              data: {
+                labels: months,
+                datasets: [
+                  {
+                    data,
+                    borderColor: "#D4AF37",
+                    backgroundColor: "rgba(212,175,55,0.08)",
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: "#D4AF37",
+                    borderWidth: 2,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                  x: {
+                    grid: { color: gridC },
+                    ticks: { color: txtC, font: { size: 10 } },
+                  },
+                  y: {
+                    grid: { color: gridC },
+                    ticks: {
+                      color: txtC,
+                      font: { size: 10 },
+                      callback: (v) => v + "M",
+                    },
+                  },
+                },
+              },
+            });
+          }
+        }
+
+        function updateDashboardCharts(presents, conges, absents, missions) {
+          const depts = getDeptData();
+          if (dashCharts.depts && depts.length) {
+            dashCharts.depts.data.labels = depts.map((d) => d.label);
+            dashCharts.depts.data.datasets[0].data = depts.map((d) => d.count);
+            dashCharts.depts.update();
+          }
+        }
+
+        // ============================================================
+        //  ANALYTICS CHARTS
+        // ============================================================
+        let analyticsInit = false;
+        function initAnalyticsCharts() {
+          if (analyticsInit) return;
+          analyticsInit = true;
+          const isDark = document.documentElement.dataset.theme === "dark";
+          const gridC = isDark ? "rgba(255,255,255,.06)" : "rgba(0,0,0,.06)";
+          const txtC = isDark ? "rgba(255,255,255,.5)" : "rgba(0,0,0,.45)";
+          const depts = getDeptData();
+
+          const c1 = document.getElementById("chartAnalSalaire");
+          if (c1)
+            new Chart(c1, {
+              type: "bar",
+              data: {
+                labels: depts.map((d) => d.label) || ["—"],
+                datasets: [
+                  {
+                    data: db.departements.map(
+                      (d) =>
+                        db.employees
+                          .filter((e) => e.dept === d.nom)
+                          .reduce((s, e) => s + (parseInt(e.salaire) || 0), 0) /
+                        1000000,
+                    ),
+                    backgroundColor: "#1E6E6E",
+                    borderRadius: 4,
+                    label: "M IVR",
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                  x: {
+                    grid: { color: gridC },
+                    ticks: { color: txtC, font: { size: 10 } },
+                  },
+                  y: {
+                    grid: { color: gridC },
+                    ticks: {
+                      color: txtC,
+                      font: { size: 10 },
+                      callback: (v) => v + "M",
+                    },
+                  },
+                },
+              },
+            });
+          const c2 = document.getElementById("chartTurnover");
+          if (c2)
+            new Chart(c2, {
+              type: "line",
+              data: {
+                labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun"],
+                datasets: [
+                  {
+                    data: [7.2, 6.8, 7.0, 6.5, 6.9, 6.8],
+                    borderColor: "#dc2626",
+                    backgroundColor: "rgba(220,38,38,0.06)",
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    borderWidth: 2,
+                    label: "Turnover %",
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                  x: {
+                    grid: { color: gridC },
+                    ticks: { color: txtC, font: { size: 10 } },
+                  },
+                  y: {
+                    grid: { color: gridC },
+                    ticks: {
+                      color: txtC,
+                      font: { size: 10 },
+                      callback: (v) => v + "%",
+                    },
+                  },
+                },
+              },
+            });
+          const c3 = document.getElementById("chartDeptsPersonnel");
+          if (c3 && db.departements.length)
+            new Chart(c3, {
+              type: "doughnut",
+              data: {
+                labels: db.departements.map((d) => d.nom),
+                datasets: [
+                  {
+                    data: db.departements.map(
+                      (d) =>
+                        db.employees.filter((e) => e.dept === d.nom).length,
+                    ),
+                    backgroundColor: [
+                      "#2563eb",
+                      "#1E6E6E",
+                      "#16a34a",
+                      "#7c3aed",
+                      "#D4AF37",
+                      "#d97706",
+                      "#0A1628",
+                      "#9ba3b2",
+                    ],
+                    borderWidth: 0,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "55%",
+                plugins: {
+                  legend: {
+                    position: "right",
+                    labels: { color: txtC, font: { size: 9 }, boxWidth: 10 },
+                  },
+                },
+              },
+            });
+        }
+
+        // ============================================================
+        //  PRÉSENCES STATS
+        // ============================================================
+        function renderPresences() {
+          const el = document.getElementById("presencesStats");
+          if (!el) return;
+          const total = db.employees.length;
+          const presents = db.employees.filter(
+            (e) => e.statut === "Présent",
+          ).length;
+          const conges = db.employees.filter(
+            (e) => e.statut === "Congé",
+          ).length;
+          const absents = db.employees.filter(
+            (e) => e.statut === "Absent",
+          ).length;
+          const missions = db.employees.filter(
+            (e) => e.statut === "Mission",
+          ).length;
+          el.innerHTML = `
+    <div class="stat-row"><div class="stat-dot" style="background:var(--success)"></div><span class="stat-label">Présents</span><span class="stat-val">${presents}</span><span class="stat-pct">${total ? Math.round((presents / total) * 100) : 0}%</span></div>
+    <div class="stat-row"><div class="stat-dot" style="background:var(--warn)"></div><span class="stat-label">En congé</span><span class="stat-val">${conges}</span><span class="stat-pct">${total ? Math.round((conges / total) * 100) : 0}%</span></div>
+    <div class="stat-row"><div class="stat-dot" style="background:var(--danger)"></div><span class="stat-label">Absents</span><span class="stat-val">${absents}</span><span class="stat-pct">${total ? Math.round((absents / total) * 100) : 0}%</span></div>
+    <div class="stat-row"><div class="stat-dot" style="background:var(--info)"></div><span class="stat-label">En mission</span><span class="stat-val">${missions}</span><span class="stat-pct">${total ? Math.round((missions / total) * 100) : 0}%</span></div>`;
+
+          const c = document.getElementById("chartPresences");
+          if (c && !c._chart) {
+            c._chart = new Chart(c, {
+              type: "doughnut",
+              data: {
+                labels: ["Présents", "En congé", "Absents", "Mission"],
+                datasets: [
+                  {
+                    data: [presents, conges, absents, missions],
+                    backgroundColor: [
+                      "#16a34a",
+                      "#d97706",
+                      "#dc2626",
+                      "#2563eb",
+                    ],
+                    borderWidth: 0,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "65%",
+                plugins: { legend: { display: false } },
+              },
+            });
+          } else if (c && c._chart) {
+            c._chart.data.datasets[0].data = [
+              presents,
+              conges,
+              absents,
+              missions,
+            ];
+            c._chart.update();
+          }
+        }
+
+        // ============================================================
+        //  ÉVALS
+        // ============================================================
+        function renderEvals() {
+          const el = document.getElementById("evalContent");
+          if (!el) return;
+          if (!db.employees.length) {
+            el.innerHTML =
+              '<div class="empty-state"><i class="fa-solid fa-star"></i><p>Aucun employé pour évaluation</p></div>';
+            return;
+          }
+          const top = db.employees.slice(0, 3);
+          el.innerHTML = `<div style="display:flex;flex-direction:column;gap:10px">${top
+            .map((e, i) => {
+              const score =
+                [96, 92, 89][i] || Math.floor(70 + Math.random() * 30);
+              return `<div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--radius);background:${i === 0 ? "var(--gold-bg)" : "var(--surface2)"};border:1px solid ${i === 0 ? "rgba(212,175,55,.2)" : "var(--border)"}">
+      <div class="avatar ${avatarColors[i % 3]}">${i + 1}</div>
+      <div style="flex:1"><div style="font-weight:600;color:var(--txt)">${getEmpFullName(e)}</div><div style="font-size:11px;color:var(--txt2)">${e.dept || "—"} · ${e.poste || "—"}</div></div>
+      <div style="font-size:18px;font-weight:700;color:${i === 0 ? "var(--gold2)" : "var(--txt)"}">${score}/100</div>
+    </div>`;
+            })
+            .join("")}</div>`;
+        }
+
+        // ============================================================
+        //  HELPERS DROPDOWNS
+        // ============================================================
+        function updateEmpDropdowns() {
+          const sel = document.getElementById("filterDept");
+          if (sel) {
+            const v = sel.value;
+            sel.innerHTML =
+              '<option value="">Tous depts.</option>' +
+              db.departements.map((d) => `<option>${d.nom}</option>`).join("");
+            sel.value = v;
+          }
+        }
+
+        // ============================================================
+        //  PAIE PAGE REFRESH
+        // ============================================================
+        function refreshPaie() {
+          renderPaieTable();
+          renderConfigPaie();
+          refreshFormulas();
+          updateBulletinEmpSelect();
+        }
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        window.addEventListener("load", () => {
+          refreshDashboard();
+          renderEmployes();
+          renderDepts();
+          renderPostes();
+          renderContrats();
+          renderConges();
+          renderCandidats();
+          renderPromos();
+          renderPaieTable();
+          renderConfigPaie();
+          renderPresences();
+          renderEvals();
+          renderOrganigramme();
+          renderUsers();
+          renderAudit();
+          refreshFormulas();
+          updateBulletinEmpSelect();
+
+          showToast(
+            "SSIA HRMS Enterprise",
+            "Bienvenue — Plateforme prête. Toutes les données sont vides et modifiables.",
+            "info",
+          );
+        });
+      </script>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+</html>

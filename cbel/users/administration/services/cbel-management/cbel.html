@@ -1,0 +1,3507 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CBEL ERP — Scholarship &amp; Excellence Management System</title>
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/cbel.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="cbel-set">
+      <div class="app">
+        <aside id="sidebar">
+          <div class="brand">
+            <b>CBEL</b><span>Scholarship Management System</span>
+          </div>
+          <nav id="nav"></nav>
+          <div
+            style="
+              padding: 16px;
+              color: #63788f;
+              font-size: 11px;
+              border-top: 1px solid rgba(255, 255, 255, 0.08);
+              margin-top: 10px;
+            "
+          >
+            Commission de la Bourse<br />d'Excellence &amp; Leadership<br /><span
+              id="ver"
+            ></span>
+          </div>
+        </aside>
+
+        <div id="main">
+          <header id="topbar">
+            <button
+              class="btn burger"
+              onclick="
+                document.getElementById('sidebar').classList.toggle('open')
+              "
+            >
+              ☰
+            </button>
+            <div class="crumb" id="crumb"></div>
+            <div class="searchbox">
+              <input
+                id="gsearch"
+                placeholder="Où est mon dossier ? — N° dossier, nom, établissement…"
+                autocomplete="off"
+              />
+              <div class="searchres" id="gsearchres"></div>
+            </div>
+            <button class="iconbtn" onclick="UI.go('notifications')">
+              🔔<span class="badge-count" id="bellcount">0</span>
+            </button>
+            <button class="iconbtn" onclick="UI.go('taches')">
+              🗂<span class="badge-count" id="taskcount">0</span>
+            </button>
+            <div class="who">
+              <select id="roleSel" onchange="APP.setRole(this.value)"></select>
+            </div>
+          </header>
+          <div id="content"></div>
+        </div>
+      </div>
+
+      <div id="drawer-bg" onclick="UI.closeDrawer()"></div>
+      <div id="drawer">
+        <div class="drawer-hd" id="drawer-hd"></div>
+        <div class="drawer-bd" id="drawer-bd"></div>
+      </div>
+      <div
+        id="modal-bg"
+        onclick="if (event.target.id === 'modal-bg') UI.closeModal();"
+      >
+        <div id="modal"></div>
+      </div>
+      <div id="toasts"></div>
+    </section>
+  </body>
+
+  <script>
+    /* ============================================================
+   CBEL ERP — single file application
+   Modules: STORAGE DATA WORKFLOW CANDIDATES DOCUMENTS EVALUATION
+            VERIFICATION COMMITTEE DELIBERATION SCHOLARSHIPS FINANCE
+            BENEFICIARIES TASKS NOTIFICATIONS AUDIT REPORTS UI APP
+   ============================================================ */
+
+    /* ---------- SETTINGS / CURRENCY ---------- */
+    const DEFAULTS = {
+      currency: "IVR",
+      currencyLabel: "IVR — Ivoire",
+      locale: "fr-FR",
+      budgetAnnuel: 100000000,
+      seuilOrange: 75,
+      seuilRouge: 90,
+      sla: {
+        RECEPTION: 1,
+        CONTROLE: 3,
+        ANALYSE: 5,
+        VERIFICATION: 5,
+        COMITE: 3,
+        DELIBERATION: 2,
+        FINANCES: 3,
+      },
+      weights: {
+        academique: 30,
+        leadership: 20,
+        engagement: 15,
+        finance: 20,
+        projet: 15,
+      },
+      typesBourse: [
+        "Bourse complète",
+        "Bourse partielle",
+        "Bourse conditionnelle",
+      ],
+    };
+    function formatCurrency(n) {
+      n = Math.round(Number(n) || 0);
+      return (
+        n.toLocaleString(DEFAULTS.locale).replace(/\u202f|\u00a0/g, " ") +
+        " " +
+        (DB.settings ? DB.settings.currency : DEFAULTS.currency)
+      );
+    }
+    const fmtN = (n) =>
+      (Number(n) || 0).toLocaleString("fr-FR").replace(/\u202f|\u00a0/g, " ");
+    const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
+
+    /* ---------- STAGES ---------- */
+    const STAGES = [
+      {
+        k: "RECEPTION",
+        n: "Réception & Enregistrement",
+        dept: "Réception",
+        route: "reception",
+      },
+      {
+        k: "CONTROLE",
+        n: "Contrôle administratif",
+        dept: "Contrôle",
+        route: "controle",
+      },
+      {
+        k: "ANALYSE",
+        n: "Analyse & Évaluation",
+        dept: "Analyse",
+        route: "analyse",
+      },
+      {
+        k: "VERIFICATION",
+        n: "Vérification & Conformité",
+        dept: "Vérification",
+        route: "verification",
+      },
+      { k: "COMITE", n: "Comité d'examen", dept: "Comité", route: "comite" },
+      {
+        k: "DELIBERATION",
+        n: "Délibération",
+        dept: "Délibération",
+        route: "deliberation",
+      },
+      {
+        k: "FINANCES",
+        n: "Finances & Bourses",
+        dept: "Finances",
+        route: "bourses",
+      },
+      {
+        k: "BOURSIER",
+        n: "Suivi des boursiers",
+        dept: "Suivi",
+        route: "boursiers",
+      },
+    ];
+    const TERMINAL = { REFUSE: "Refusé", ATTENTE: "Liste d'attente" };
+    const stageIdx = (k) => STAGES.findIndex((s) => s.k === k);
+    const stageName = (k) =>
+      (STAGES.find((s) => s.k === k) || {}).n || TERMINAL[k] || k;
+    const stageDept = (k) => (STAGES.find((s) => s.k === k) || {}).dept || "—";
+    const nextStage = (k) => {
+      const i = stageIdx(k);
+      return i >= 0 && i < STAGES.length - 1 ? STAGES[i + 1].k : null;
+    };
+
+    const DOC_TYPES = [
+      { k: "identite", n: "Pièce d'identité" },
+      { k: "scolarite", n: "Certificat de scolarité" },
+      { k: "releves", n: "Relevés de notes" },
+      { k: "diplome", n: "Diplôme" },
+      { k: "motivation", n: "Lettre de motivation" },
+      { k: "cv", n: "CV" },
+      { k: "finances", n: "Justificatifs financiers" },
+      { k: "recommandation", n: "Lettre de recommandation" },
+    ];
+    const VERIF_CHECKS = [
+      { k: "identite", n: "Identité" },
+      { k: "etablissement", n: "Établissement" },
+      { k: "diplome", n: "Diplôme" },
+      { k: "notes", n: "Notes" },
+      { k: "references", n: "Références" },
+      { k: "situation", n: "Situation financière" },
+    ];
+    const ROLES = [
+      { k: "DIRECTION", n: "Direction CBEL", allow: "*" },
+      {
+        k: "RECEPTION",
+        n: "Agent Réception",
+        allow: [
+          "dashboard",
+          "reception",
+          "taches",
+          "notifications",
+          "pipeline",
+        ],
+      },
+      {
+        k: "CONTROLE",
+        n: "Agent Contrôle",
+        allow: ["dashboard", "controle", "taches", "notifications", "pipeline"],
+      },
+      {
+        k: "ANALYSE",
+        n: "Analyste",
+        allow: ["dashboard", "analyse", "taches", "notifications", "pipeline"],
+      },
+      {
+        k: "VERIFICATION",
+        n: "Agent Vérification",
+        allow: [
+          "dashboard",
+          "verification",
+          "taches",
+          "notifications",
+          "pipeline",
+        ],
+      },
+      {
+        k: "COMITE",
+        n: "Membre Comité",
+        allow: ["dashboard", "comite", "taches", "notifications", "pipeline"],
+      },
+      {
+        k: "DELIBERATION",
+        n: "Membre Délibération",
+        allow: [
+          "dashboard",
+          "deliberation",
+          "taches",
+          "notifications",
+          "pipeline",
+        ],
+      },
+      {
+        k: "FINANCES",
+        n: "Agent Finances",
+        allow: [
+          "dashboard",
+          "budget",
+          "bourses",
+          "paiements",
+          "taches",
+          "notifications",
+          "rapports",
+        ],
+      },
+      {
+        k: "SUIVI",
+        n: "Agent Suivi",
+        allow: [
+          "dashboard",
+          "boursiers",
+          "renouvellements",
+          "taches",
+          "notifications",
+        ],
+      },
+    ];
+    const PRIOS = {
+      URGENT: { n: "Urgent", c: "b-red", i: "🔴", w: 4 },
+      HAUTE: { n: "Haute", c: "b-orange", i: "🟠", w: 3 },
+      NORMALE: { n: "Normale", c: "b-yellow", i: "🟡", w: 2 },
+      FAIBLE: { n: "Faible", c: "b-green", i: "🟢", w: 1 },
+    };
+
+    /* ---------- STORAGE ---------- */
+    const KEY = "cbel_erp_v1";
+    const STORAGE = {
+      save() {
+        try {
+          localStorage.setItem(KEY, JSON.stringify(DB));
+        } catch (e) {
+          console.warn(e);
+        }
+      },
+      load() {
+        try {
+          const r = localStorage.getItem(KEY);
+          return r ? JSON.parse(r) : null;
+        } catch (e) {
+          return null;
+        }
+      },
+      reset() {
+        localStorage.removeItem(KEY);
+        location.reload();
+      },
+    };
+
+    /* ---------- DEMO DATA ---------- */
+    let seed = 20260923;
+    function rnd() {
+      seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+      return seed / 0x7fffffff;
+    }
+    const pick = (a) => a[Math.floor(rnd() * a.length)];
+    const ri = (a, b) => a + Math.floor(rnd() * (b - a + 1));
+    const NOMS = [
+      "Koffi",
+      "Yao",
+      "Kouassi",
+      "Traoré",
+      "Diarra",
+      "Bamba",
+      "N'Guessan",
+      "Konan",
+      "Ouattara",
+      "Cissé",
+      "Doumbia",
+      "Aka",
+      "Kone",
+      "Gbagbo",
+      "Tanoh",
+      "Sangaré",
+      "Zadi",
+      "Assi",
+      "Meité",
+      "Bakayoko",
+    ];
+    const PRENOMS = [
+      "Awa",
+      "Kader",
+      "Fatou",
+      "Éric",
+      "Mariam",
+      "Serge",
+      "Aminata",
+      "Jean-Marc",
+      "Rokia",
+      "Ibrahim",
+      "Nadège",
+      "Ismaël",
+      "Grace",
+      "Yannick",
+      "Salimata",
+      "Thierry",
+      "Adjoua",
+      "Moussa",
+      "Laetitia",
+      "Cédric",
+    ];
+    const ETABS = [
+      "Université Félix Houphouët-Boigny",
+      "INP-HB Yamoussoukro",
+      "Université Alassane Ouattara",
+      "ESATIC",
+      "Université Nangui Abrogoua",
+      "ENSEA",
+      "Institut Polytechnique du Littoral",
+      "Université Jean Lorougnon Guédé",
+    ];
+    const FILS = [
+      "Génie logiciel",
+      "Médecine",
+      "Droit public",
+      "Économie",
+      "Agronomie",
+      "Génie civil",
+      "Sciences de l'éducation",
+      "Statistique",
+      "Biotechnologie",
+      "Finance",
+    ];
+    const VILLES = [
+      "Abidjan",
+      "Bouaké",
+      "Yamoussoukro",
+      "Daloa",
+      "San-Pédro",
+      "Korhogo",
+      "Man",
+      "Abengourou",
+    ];
+    const NIVEAUX = [
+      "Licence 1",
+      "Licence 2",
+      "Licence 3",
+      "Master 1",
+      "Master 2",
+      "Doctorat",
+    ];
+    const AGENTS = {
+      RECEPTION: ["Agent Réception 01", "Agent Réception 02"],
+      CONTROLE: ["Agent Contrôle 01", "Agent Contrôle 02", "Agent Contrôle 03"],
+      ANALYSE: ["Analyste 01", "Analyste 02"],
+      VERIFICATION: ["Agent Vérification 01", "Agent Vérification 02"],
+      COMITE: ["Comité — Rapporteur", "Comité — Secrétaire"],
+      DELIBERATION: ["Président de séance"],
+      FINANCES: ["Contrôleur budgétaire"],
+      SUIVI: ["Chargé de suivi 01", "Chargé de suivi 02"],
+      REFUSE: ["—"],
+      ATTENTE: ["Secrétariat CBEL"],
+    };
+    const daysAgo = (d) => new Date(Date.now() - d * 86400000).toISOString();
+
+    function buildDemo() {
+      const db = {
+        settings: JSON.parse(JSON.stringify(DEFAULTS)),
+        candidates: [],
+        notifications: [],
+        tasks: [],
+        audit: [],
+        role: "DIRECTION",
+        counter: 400,
+        sessions: [],
+      };
+      const plan = [
+        ["RECEPTION", 7],
+        ["CONTROLE", 8],
+        ["ANALYSE", 7],
+        ["VERIFICATION", 6],
+        ["COMITE", 5],
+        ["DELIBERATION", 4],
+        ["FINANCES", 4],
+        ["BOURSIER", 6],
+        ["REFUSE", 3],
+        ["ATTENTE", 3],
+      ];
+      plan.forEach(([st, count]) => {
+        for (let i = 0; i < count; i++) {
+          db.counter++;
+          const id = "CBEL-2026-" + String(db.counter).padStart(5, "0");
+          const idx = stageIdx(st);
+          const c = {
+            id,
+            nom: pick(NOMS),
+            prenom: pick(PRENOMS),
+            genre: pick(["F", "M"]),
+            age: ri(18, 31),
+            email: "",
+            tel:
+              "+225 0" +
+              ri(1, 7) +
+              " " +
+              ri(10, 99) +
+              " " +
+              ri(10, 99) +
+              " " +
+              ri(10, 99),
+            ville: pick(VILLES),
+            etablissement: pick(ETABS),
+            filiere: pick(FILS),
+            niveau: pick(NIVEAUX),
+            stage: st,
+            priority: pick(["URGENT", "HAUTE", "NORMALE", "NORMALE", "FAIBLE"]),
+            createdAt: daysAgo(ri(6, 90)),
+            enteredStage: daysAgo(ri(0, 9)),
+            assignee: pick(AGENTS[st] || ["Secrétariat CBEL"]),
+            montantDemande: ri(8, 25) * 100000,
+            docs: {},
+            scores: null,
+            verification: null,
+            committee: null,
+            deliberation: null,
+            finance: { engage: 0, verse: 0, paiements: [] },
+            boursier: null,
+            history: [],
+            complet: false,
+          };
+          c.email =
+            (c.prenom + "." + c.nom)
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[^a-z.]/g, "") + "@mail.ci";
+          DOC_TYPES.forEach((d) => {
+            c.docs[d.k] =
+              idx >= 1
+                ? rnd() < 0.12
+                  ? "MANQUANT"
+                  : idx >= 3
+                    ? "VERIFIE"
+                    : "RECU"
+                : rnd() < 0.4
+                  ? "MANQUANT"
+                  : "RECU";
+          });
+          c.complet = Object.values(c.docs).every(
+            (s) => s !== "MANQUANT" && s !== "REJETE",
+          );
+          if (idx >= 2 || st === "REFUSE" || st === "ATTENTE") {
+            c.scores = {
+              academique: ri(45, 98),
+              leadership: ri(40, 97),
+              engagement: ri(40, 96),
+              finance: ri(45, 99),
+              projet: ri(45, 97),
+            };
+          }
+          if (idx >= 3 || st === "REFUSE" || st === "ATTENTE") {
+            const ck = {};
+            VERIF_CHECKS.forEach((v) => (ck[v.k] = rnd() < 0.88));
+            const bad = Object.values(ck).filter((x) => !x).length;
+            c.verification = {
+              checks: ck,
+              risque: bad === 0 ? "Faible" : bad === 1 ? "Moyen" : "Élevé",
+              avis:
+                bad === 0
+                  ? "CONFORME"
+                  : bad === 1
+                    ? "CONFORME SOUS RÉSERVE"
+                    : "NON CONFORME",
+              note: bad
+                ? "Incohérence relevée sur " + bad + " point(s) de contrôle."
+                : "Aucune anomalie relevée.",
+            };
+          }
+          if (idx >= 4)
+            c.committee = {
+              examined: idx >= 5,
+              note: idx >= 5 ? "Dossier retenu pour délibération." : "",
+              complement: rnd() < 0.15,
+            };
+          if (idx >= 5 || st === "REFUSE" || st === "ATTENTE") {
+            let dec =
+              st === "REFUSE"
+                ? "REFUS"
+                : st === "ATTENTE"
+                  ? "ATTENTE"
+                  : rnd() < 0.45
+                    ? "COMPLETE"
+                    : rnd() < 0.8
+                      ? "PARTIELLE"
+                      : "CONDITIONNELLE";
+            if (idx >= 6 && dec === "REFUS") dec = "COMPLETE";
+            const taux =
+              dec === "COMPLETE"
+                ? 100
+                : dec === "PARTIELLE"
+                  ? pick([25, 50, 75])
+                  : dec === "CONDITIONNELLE"
+                    ? 50
+                    : 0;
+            c.deliberation = {
+              decision: dec,
+              taux,
+              montantAccorde: Math.round((c.montantDemande * taux) / 100),
+              votes: { pour: ri(4, 9), contre: ri(0, 3), abstention: ri(0, 2) },
+              pv: "Décision adoptée en séance plénière.",
+              date: daysAgo(ri(1, 20)),
+            };
+          }
+          if (idx >= 6 && c.deliberation) {
+            c.finance.engage = c.deliberation.montantAccorde;
+          }
+          if (st === "BOURSIER") {
+            const m = c.deliberation.montantAccorde;
+            const v = Math.round(m * pick([0.25, 0.5, 0.75]));
+            c.finance.verse = v;
+            c.finance.paiements = [
+              {
+                date: daysAgo(ri(10, 60)),
+                montant: v,
+                libelle: "Versement tranche 1",
+              },
+            ];
+            c.boursier = {
+              actif: true,
+              moyenne: (ri(100, 180) / 10).toFixed(1),
+              renouvellement: new Date(
+                Date.now() + ri(5, 180) * 86400000,
+              ).toISOString(),
+              conditions: "Moyenne ≥ 12/20 et assiduité",
+              alerte: rnd() < 0.22,
+            };
+          }
+          c.history = [
+            {
+              date: c.createdAt,
+              user: "Agent Réception 01",
+              dept: "Réception",
+              action: "Candidature enregistrée",
+            },
+          ];
+          if (idx >= 1)
+            c.history.push({
+              date: daysAgo(ri(10, 40)),
+              user: "Agent Contrôle 01",
+              dept: "Contrôle",
+              action: "Documents contrôlés",
+            });
+          if (idx >= 2)
+            c.history.push({
+              date: daysAgo(ri(8, 30)),
+              user: "Analyste 01",
+              dept: "Analyse",
+              action: "Scoring réalisé",
+            });
+          if (idx >= 3)
+            c.history.push({
+              date: daysAgo(ri(5, 20)),
+              user: "Agent Vérification 02",
+              dept: "Vérification",
+              action: "Avis de conformité émis",
+            });
+          if (idx >= 5)
+            c.history.push({
+              date: daysAgo(ri(1, 10)),
+              user: "Président de séance",
+              dept: "Délibération",
+              action: "Décision enregistrée",
+            });
+          db.candidates.push(c);
+        }
+      });
+      return db;
+    }
+
+    /* ---------- DB / DATA ---------- */
+    let DB = STORAGE.load();
+    if (!DB || !DB.candidates) {
+      DB = buildDemo();
+    }
+    DB.settings = Object.assign({}, DEFAULTS, DB.settings || {});
+
+    const DATA = {
+      all: () => DB.candidates,
+      byStage: (k) => DB.candidates.filter((c) => c.stage === k),
+      get: (id) => DB.candidates.find((c) => c.id === id),
+      save: () => STORAGE.save(),
+    };
+
+    /* ---------- SLA ---------- */
+    const days = (iso) =>
+      Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+    function sla(c) {
+      const lim = DB.settings.sla[c.stage];
+      if (!lim)
+        return {
+          limit: 0,
+          elapsed: days(c.enteredStage),
+          rest: 0,
+          late: false,
+          text: "—",
+        };
+      const e = days(c.enteredStage),
+        rest = lim - e;
+      return {
+        limit: lim,
+        elapsed: e,
+        rest,
+        late: rest < 0,
+        text:
+          rest < 0
+            ? "En retard de " + Math.abs(rest) + " j"
+            : rest === 0
+              ? "Échéance aujourd'hui"
+              : rest + " j restant" + (rest > 1 ? "s" : ""),
+      };
+    }
+    const isLate = (c) => sla(c).late;
+    const scoreOf = (c) => {
+      if (!c.scores) return null;
+      const w = DB.settings.weights;
+      return (
+        (c.scores.academique * w.academique +
+          c.scores.leadership * w.leadership +
+          c.scores.engagement * w.engagement +
+          c.scores.finance * w.finance +
+          c.scores.projet * w.projet) /
+        100
+      );
+    };
+
+    /* ---------- AUDIT / NOTIF / TASKS ---------- */
+    const AUDIT = {
+      log(dossier, action, dept, user) {
+        DB.audit.unshift({
+          date: new Date().toISOString(),
+          user: user || APP.currentUser(),
+          dept: dept || stageDept(DB.role),
+          dossier: dossier || "—",
+          action,
+        });
+        if (DB.audit.length > 600) DB.audit.length = 600;
+        const c = dossier && DATA.get(dossier);
+        if (c)
+          c.history.push({
+            date: new Date().toISOString(),
+            user: APP.currentUser(),
+            dept: dept || "—",
+            action,
+          });
+      },
+    };
+    const NOTIFICATIONS = {
+      push(dept, text, level) {
+        DB.notifications.unshift({
+          id: "N" + Date.now() + Math.floor(rnd() * 999),
+          date: new Date().toISOString(),
+          dept: dept || "Système",
+          text,
+          level: level || "info",
+          read: false,
+        });
+      },
+      unread: () => DB.notifications.filter((n) => !n.read).length,
+      markAll() {
+        DB.notifications.forEach((n) => (n.read = true));
+        DATA.save();
+        UI.render();
+      },
+    };
+    const TASKS = {
+      list() {
+        // tasks are derived from files in queue + manual tasks
+        const derived = DB.candidates
+          .filter(
+            (c) =>
+              STAGES.some((s) => s.k === c.stage) && c.stage !== "BOURSIER",
+          )
+          .map((c) => ({
+            id: "T-" + c.id,
+            titre: TASKS.label(c.stage),
+            dossier: c.id,
+            dept: stageDept(c.stage),
+            priority: isLate(c) ? "URGENT" : c.priority,
+            echeance: sla(c).text,
+            statut: "À faire",
+            stage: c.stage,
+          }));
+        return derived.concat(DB.tasks || []);
+      },
+      label(st) {
+        return (
+          {
+            RECEPTION: "Enregistrer & affecter",
+            CONTROLE: "Contrôler les documents",
+            ANALYSE: "Évaluer et scorer",
+            VERIFICATION: "Vérifier la conformité",
+            COMITE: "Examiner le dossier",
+            DELIBERATION: "Délibérer et décider",
+            FINANCES: "Engager le financement",
+          }[st] || "Traiter"
+        );
+      },
+      forRole() {
+        const r = DB.role;
+        if (r === "DIRECTION") return TASKS.list();
+        const d = stageDept(r);
+        return TASKS.list().filter((t) => t.dept === d);
+      },
+    };
+
+    /* ---------- WORKFLOW (règles métier) ---------- */
+    const WORKFLOW = {
+      can(c, target) {
+        const i = stageIdx(c.stage),
+          j = stageIdx(target);
+        if (j !== i + 1)
+          return {
+            ok: false,
+            msg:
+              "Le workflow doit être suivi étape par étape (" +
+              stageName(c.stage) +
+              " → " +
+              stageName(nextStage(c.stage) || "—") +
+              ").",
+          };
+        if (
+          target === "ANALYSE" &&
+          !Object.values(c.docs).every((s) => s === "RECU" || s === "VERIFIE")
+        )
+          return {
+            ok: false,
+            msg: "Dossier incomplet : impossible de transmettre à l'analyse.",
+          };
+        if (target === "VERIFICATION" && !c.scores)
+          return {
+            ok: false,
+            msg: "Le scoring doit être réalisé avant la vérification.",
+          };
+        if (
+          target === "COMITE" &&
+          (!c.verification || c.verification.avis === "NON CONFORME")
+        )
+          return {
+            ok: false,
+            msg: "Dossier non conforme ou non vérifié : présentation au comité impossible.",
+          };
+        if (
+          target === "DELIBERATION" &&
+          (!c.committee || !c.committee.examined)
+        )
+          return {
+            ok: false,
+            msg: "Le comité doit avoir examiné le dossier avant délibération.",
+          };
+        if (
+          target === "FINANCES" &&
+          (!c.deliberation ||
+            !["COMPLETE", "PARTIELLE", "CONDITIONNELLE"].includes(
+              c.deliberation.decision,
+            ))
+        )
+          return {
+            ok: false,
+            msg: "Aucune décision d'attribution : transfert aux finances impossible.",
+          };
+        if (
+          target === "FINANCES" &&
+          c.deliberation.montantAccorde > FINANCE.disponible()
+        )
+          return {
+            ok: false,
+            msg: "Budget disponible insuffisant pour engager ce montant.",
+          };
+        if (target === "BOURSIER" && c.finance.engage <= 0)
+          return {
+            ok: false,
+            msg: "Le financement doit être engagé avant le suivi du boursier.",
+          };
+        return { ok: true };
+      },
+      advance(id, note) {
+        const c = DATA.get(id);
+        if (!c) return;
+        const t = nextStage(c.stage);
+        if (!t) {
+          UI.toast("Dernière étape atteinte.");
+          return;
+        }
+        const v = WORKFLOW.can(c, t);
+        if (!v.ok) {
+          UI.toast("⛔ " + v.msg);
+          return;
+        }
+        const from = stageDept(c.stage);
+        c.stage = t;
+        c.enteredStage = new Date().toISOString();
+        c.assignee = pick(AGENTS[t] || ["Secrétariat CBEL"]);
+        if (t === "FINANCES") {
+          c.finance.engage = c.deliberation.montantAccorde;
+        }
+        if (t === "BOURSIER") {
+          c.boursier = c.boursier || {
+            actif: true,
+            moyenne: "—",
+            renouvellement: new Date(Date.now() + 365 * 86400000).toISOString(),
+            conditions: "Moyenne ≥ 12/20 et assiduité",
+            alerte: false,
+          };
+        }
+        AUDIT.log(
+          c.id,
+          (note || "Dossier transmis") + " → " + stageName(t),
+          from,
+        );
+        NOTIFICATIONS.push(
+          stageDept(t),
+          "Nouveau dossier disponible : " +
+            c.id +
+            " — " +
+            c.prenom +
+            " " +
+            c.nom +
+            " (transmis par " +
+            from +
+            ").",
+          "info",
+        );
+        DATA.save();
+        UI.toast("✓ " + c.id + " transmis à " + stageDept(t));
+        UI.render();
+        if (UI.openId === id) UI.openDossier(id);
+      },
+      retour(id, motif) {
+        const c = DATA.get(id);
+        const i = stageIdx(c.stage);
+        if (i <= 0) {
+          UI.toast("Déjà au premier service.");
+          return;
+        }
+        const from = stageDept(c.stage);
+        c.stage = STAGES[i - 1].k;
+        c.enteredStage = new Date().toISOString();
+        c.priority = "HAUTE";
+        c.assignee = pick(AGENTS[c.stage]);
+        AUDIT.log(
+          c.id,
+          "Dossier retourné — " + (motif || "motif non précisé"),
+          from,
+        );
+        NOTIFICATIONS.push(
+          stageDept(c.stage),
+          "Dossier retourné : " + c.id + " — " + (motif || "à corriger"),
+          "warn",
+        );
+        DATA.save();
+        UI.toast("↩ Dossier retourné à " + stageDept(c.stage));
+        UI.render();
+        if (UI.openId === id) UI.openDossier(id);
+      },
+      terminal(id, kind, motif) {
+        const c = DATA.get(id);
+        c.stage = kind;
+        c.enteredStage = new Date().toISOString();
+        c.assignee = kind === "REFUSE" ? "—" : "Secrétariat CBEL";
+        AUDIT.log(
+          c.id,
+          (kind === "REFUSE" ? "Refus prononcé" : "Placé en liste d'attente") +
+            " — " +
+            (motif || ""),
+          "Délibération",
+        );
+        DATA.save();
+        UI.render();
+        if (UI.openId === id) UI.openDossier(id);
+      },
+    };
+
+    /* ---------- FINANCE ---------- */
+    const FINANCE = {
+      engage: () =>
+        DB.candidates.reduce(
+          (s, c) => s + (c.finance ? c.finance.engage : 0),
+          0,
+        ),
+      verse: () =>
+        DB.candidates.reduce(
+          (s, c) => s + (c.finance ? c.finance.verse : 0),
+          0,
+        ),
+      attribue: () =>
+        DB.candidates
+          .filter((c) => c.deliberation && c.deliberation.montantAccorde > 0)
+          .reduce((s, c) => s + c.deliberation.montantAccorde, 0),
+      disponible: () => DB.settings.budgetAnnuel - FINANCE.engage(),
+      taux: () => pct(FINANCE.engage(), DB.settings.budgetAnnuel),
+      pay(id, montant) {
+        const c = DATA.get(id);
+        if (!c.deliberation || c.finance.engage <= 0) {
+          UI.toast("⛔ Aucun financement engagé : paiement impossible.");
+          return;
+        }
+        montant = Math.min(
+          Number(montant) || 0,
+          c.finance.engage - c.finance.verse,
+        );
+        if (montant <= 0) {
+          UI.toast("⛔ Montant invalide ou bourse déjà soldée.");
+          return;
+        }
+        c.finance.verse += montant;
+        c.finance.paiements.push({
+          date: new Date().toISOString(),
+          montant,
+          libelle: "Versement",
+        });
+        AUDIT.log(c.id, "Versement de " + formatCurrency(montant), "Finances");
+        NOTIFICATIONS.push(
+          "Suivi",
+          "Versement enregistré pour " + c.id + " : " + formatCurrency(montant),
+          "ok",
+        );
+        DATA.save();
+        UI.toast("✓ Versement enregistré");
+        UI.render();
+        if (UI.openId === id) UI.openDossier(id);
+      },
+    };
+
+    /* ---------- REPORTS ---------- */
+    const REPORTS = {
+      toCSV(rows) {
+        return rows
+          .map((r) =>
+            r
+              .map(
+                (v) =>
+                  '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"',
+              )
+              .join(";"),
+          )
+          .join("\n");
+      },
+      download(name, rows) {
+        const blob = new Blob(["\ufeff" + REPORTS.toCSV(rows)], {
+          type: "text/csv;charset=utf-8",
+        });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = name;
+        a.click();
+        UI.toast("✓ Export " + name);
+      },
+      candidatures() {
+        return [
+          [
+            "Dossier",
+            "Candidat",
+            "Établissement",
+            "Filière",
+            "Étape",
+            "Responsable",
+            "Priorité",
+            "Score",
+            "Demandé (IVR)",
+            "Accordé (IVR)",
+            "SLA",
+          ],
+        ].concat(
+          DB.candidates.map((c) => [
+            c.id,
+            c.prenom + " " + c.nom,
+            c.etablissement,
+            c.filiere,
+            stageName(c.stage),
+            c.assignee,
+            PRIOS[c.priority] ? PRIOS[c.priority].n : "",
+            scoreOf(c) ? scoreOf(c).toFixed(1) : "",
+            c.montantDemande,
+            c.deliberation ? c.deliberation.montantAccorde : 0,
+            sla(c).text,
+          ]),
+        );
+      },
+      financier() {
+        return [
+          ["Indicateur", "Montant IVR"],
+          ["Budget annuel", DB.settings.budgetAnnuel],
+          ["Engagé", FINANCE.engage()],
+          ["Attribué", FINANCE.attribue()],
+          ["Versé", FINANCE.verse()],
+          ["Disponible", FINANCE.disponible()],
+        ];
+      },
+      departements() {
+        return [
+          [
+            "Département",
+            "En file",
+            "En retard",
+            "Traités (historique)",
+            "Temps moyen (j)",
+          ],
+        ].concat(
+          STAGES.map((s) => {
+            const q = DATA.byStage(s.k);
+            return [
+              s.dept,
+              q.length,
+              q.filter(isLate).length,
+              DB.candidates.filter((c) => stageIdx(c.stage) > stageIdx(s.k))
+                .length,
+              (
+                q.reduce((a, c) => a + sla(c).elapsed, 0) / (q.length || 1)
+              ).toFixed(1),
+            ];
+          }),
+        );
+      },
+      boursiers() {
+        return [
+          [
+            "Dossier",
+            "Boursier",
+            "Montant accordé",
+            "Versé",
+            "Reste",
+            "Moyenne",
+            "Renouvellement",
+          ],
+        ].concat(
+          DATA.byStage("BOURSIER").map((c) => [
+            c.id,
+            c.prenom + " " + c.nom,
+            c.deliberation.montantAccorde,
+            c.finance.verse,
+            c.deliberation.montantAccorde - c.finance.verse,
+            c.boursier.moyenne,
+            new Date(c.boursier.renouvellement).toLocaleDateString("fr-FR"),
+          ]),
+        );
+      },
+    };
+
+    /* ---------- UI HELPERS ---------- */
+    const esc = (s) =>
+      String(s == null ? "" : s).replace(
+        /[&<>"]/g,
+        (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[m],
+      );
+    const dt = (iso) =>
+      new Date(iso).toLocaleDateString("fr-FR") +
+      " — " +
+      new Date(iso).toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    const dOnly = (iso) => new Date(iso).toLocaleDateString("fr-FR");
+    const prioBadge = (p) => {
+      const o = PRIOS[p] || PRIOS.NORMALE;
+      return (
+        '<span class="badge ' +
+        o.c +
+        '">' +
+        o.i +
+        " " +
+        o.n.toUpperCase() +
+        "</span>"
+      );
+    };
+    const slaBadge = (c) => {
+      const s = sla(c);
+      return (
+        '<span class="badge ' +
+        (s.late ? "b-red" : s.rest <= 1 ? "b-orange" : "b-green") +
+        '">' +
+        s.text +
+        "</span>"
+      );
+    };
+    const stageBadge = (k) =>
+      '<span class="badge ' +
+      (k === "REFUSE"
+        ? "b-red"
+        : k === "ATTENTE"
+          ? "b-yellow"
+          : k === "BOURSIER"
+            ? "b-green"
+            : "b-ink") +
+      '">' +
+      stageName(k) +
+      "</span>";
+    function kpi(label, val, sub, cls) {
+      return (
+        '<div class="kpi ' +
+        (cls || "") +
+        '"><small>' +
+        label +
+        "</small><b>" +
+        val +
+        "</b>" +
+        (sub ? '<div class="sub">' + sub + "</div>" : "") +
+        "</div>"
+      );
+    }
+    function card(title, body, actions) {
+      return (
+        '<section class="card"><div class="hd"><h3>' +
+        title +
+        '</h3><div class="row noprint">' +
+        (actions || "") +
+        '</div></div><div class="bd">' +
+        body +
+        "</div></section>"
+      );
+    }
+    function queueTable(list, extraCol) {
+      if (!list.length)
+        return '<p class="muted">Aucun dossier dans cette file. ✓</p>';
+      return (
+        '<div class="tablewrap"><table><thead><tr><th>Dossier</th><th>Candidat</th><th>Établissement</th><th>Priorité</th><th>Délai SLA</th><th>Responsable</th>' +
+        (extraCol ? "<th>" + extraCol.head + "</th>" : "") +
+        "<th>Action</th></tr></thead><tbody>" +
+        list
+          .map(
+            (c) =>
+              '<tr><td class="mono">' +
+              c.id +
+              "</td><td><b>" +
+              esc(c.prenom + " " + c.nom) +
+              '</b><div class="muted" style="font-size:11.5px">' +
+              esc(c.filiere) +
+              "</div></td><td>" +
+              esc(c.etablissement) +
+              "</td><td>" +
+              prioBadge(isLate(c) ? "URGENT" : c.priority) +
+              "</td><td>" +
+              slaBadge(c) +
+              "</td><td>" +
+              esc(c.assignee) +
+              "</td>" +
+              (extraCol ? "<td>" + extraCol.cell(c) + "</td>" : "") +
+              '<td class="noprint"><button class="btn sm" onclick="UI.openDossier(\'' +
+              c.id +
+              '\')">Ouvrir</button> <button class="btn sm primary" onclick="WORKFLOW.advance(\'' +
+              c.id +
+              "')\">Transmettre</button></td></tr>",
+          )
+          .join("") +
+        "</tbody></table></div>"
+      );
+    }
+    function deptPerf(stageKey) {
+      const q = DATA.byStage(stageKey),
+        late = q.filter(isLate).length;
+      const done = DB.candidates.filter(
+        (c) =>
+          stageIdx(c.stage) > stageIdx(stageKey) ||
+          ["REFUSE", "ATTENTE"].includes(c.stage),
+      ).length;
+      const moy = (
+        q.reduce((a, c) => a + sla(c).elapsed, 0) / (q.length || 1)
+      ).toFixed(1);
+      const taux = pct(done, done + q.length);
+      return (
+        '<div class="grid kpis">' +
+        kpi("Dossiers traités", done) +
+        kpi("Temps moyen", moy + " j") +
+        kpi("En retard", late, "", late ? "k-red" : "") +
+        kpi(
+          "Taux de traitement",
+          taux + " %",
+          "",
+          taux >= 85 ? "k-green" : "",
+        ) +
+        "</div>"
+      );
+    }
+
+    /* ---------- PAGES ---------- */
+    const PAGES = {};
+
+    PAGES.dashboard = () => {
+      const all = DB.candidates,
+        inTrait = all.filter((c) =>
+          ["CONTROLE", "ANALYSE", "VERIFICATION"].includes(c.stage),
+        ).length;
+      const attente = all.filter(
+        (c) => c.stage === "RECEPTION" || c.stage === "ATTENTE",
+      ).length;
+      const comite = DATA.byStage("COMITE").length,
+        accordees = all.filter(
+          (c) => c.deliberation && c.deliberation.montantAccorde > 0,
+        ).length;
+      const retard = all.filter(
+        (c) => STAGES.some((s) => s.k === c.stage) && isLate(c),
+      ).length;
+      const maxQ = Math.max(...STAGES.map((s) => DATA.byStage(s.k).length), 1);
+      const flow = STAGES.map((s) => {
+        const q = DATA.byStage(s.k);
+        const l = q.filter(isLate).length;
+        return (
+          '<div class="flowrow" onclick="UI.go(\'' +
+          s.route +
+          '\')"><div class="fname">' +
+          s.dept +
+          '</div><div class="bar ' +
+          (l ? "o" : "") +
+          '"><i style="width:' +
+          Math.max(4, pct(q.length, maxQ)) +
+          '%"></i></div><div class="muted mono">' +
+          q.length +
+          " dossier" +
+          (q.length > 1 ? "s" : "") +
+          (l
+            ? ' · <span style="color:var(--red)">' + l + " en retard</span>"
+            : "") +
+          "</div></div>"
+        );
+      }).join("");
+      const urgents = all
+        .filter((c) => STAGES.some((s) => s.k === c.stage) && isLate(c))
+        .sort((a, b) => sla(a).rest - sla(b).rest)
+        .slice(0, 8);
+      return (
+        '<div class="page-head"><div><h1>Dashboard de Direction</h1><p>Vision consolidée du traitement des candidatures — exercice 2026</p></div>' +
+        '<div class="row noprint"><button class="btn" onclick="window.print()">Imprimer</button><button class="btn" onclick="REPORTS.download(\'cbel_candidatures.csv\',REPORTS.candidatures())">Exporter CSV</button><button class="btn primary" onclick="CANDIDATES.newForm()">+ Nouvelle candidature</button></div></div>' +
+        '<div class="grid kpis" style="margin-bottom:14px">' +
+        kpi("Candidatures", fmtN(all.length), "Exercice en cours") +
+        kpi(
+          "En traitement",
+          inTrait,
+          "Contrôle · Analyse · Vérification",
+          "k-blue",
+        ) +
+        kpi("En attente", attente, "Réception & liste d'attente") +
+        kpi("Prêtes pour comité", comite, "", "k-gold") +
+        kpi("Bourses accordées", accordees, "", "k-green") +
+        kpi(
+          "Budget engagé",
+          formatCurrency(FINANCE.engage()),
+          FINANCE.taux() + " % du budget annuel",
+          "k-gold",
+        ) +
+        kpi(
+          "Budget disponible",
+          formatCurrency(FINANCE.disponible()),
+          "",
+          "k-green",
+        ) +
+        kpi("Dossiers en retard", retard, "Hors SLA", "k-red") +
+        "</div>" +
+        '<div class="split">' +
+        card(
+          "Situation du workflow",
+          flow,
+          '<button class="btn sm" onclick="UI.go(\'pipeline\')">Pipeline global</button>',
+        ) +
+        '<div class="stack">' +
+        card("Consommation du budget", budgetWidget()) +
+        card(
+          "Dossiers critiques",
+          urgents.length
+            ? '<div class="tablewrap"><table><tbody>' +
+                urgents
+                  .map(
+                    (c) =>
+                      '<tr><td class="mono">' +
+                      c.id +
+                      "</td><td>" +
+                      esc(c.nom) +
+                      "</td><td>" +
+                      stageBadge(c.stage) +
+                      "</td><td>" +
+                      slaBadge(c) +
+                      '</td><td class="noprint"><button class="btn sm" onclick="UI.openDossier(\'' +
+                      c.id +
+                      "')\">Voir</button></td></tr>",
+                  )
+                  .join("") +
+                "</tbody></table></div>"
+            : '<p class="muted">Aucun dossier hors délai.</p>',
+        ) +
+        "</div>" +
+        "</div>"
+      );
+    };
+    function budgetWidget() {
+      const t = FINANCE.taux(),
+        cls =
+          t >= DB.settings.seuilRouge
+            ? "r"
+            : t >= DB.settings.seuilOrange
+              ? "o"
+              : "g";
+      return (
+        '<div class="kv" style="margin-bottom:10px"><span class="muted">Budget annuel</span><b>' +
+        formatCurrency(DB.settings.budgetAnnuel) +
+        "</b>" +
+        '<span class="muted">Engagé</span><b>' +
+        formatCurrency(FINANCE.engage()) +
+        "</b>" +
+        '<span class="muted">Versé</span><b>' +
+        formatCurrency(FINANCE.verse()) +
+        "</b>" +
+        '<span class="muted">Disponible</span><b>' +
+        formatCurrency(FINANCE.disponible()) +
+        "</b></div>" +
+        '<div class="bar ' +
+        cls +
+        '"><i style="width:' +
+        Math.min(100, t) +
+        '%"></i></div><div class="muted" style="margin-top:6px;font-size:12px">' +
+        t +
+        " % du budget engagé</div>" +
+        (t >= DB.settings.seuilRouge
+          ? '<div class="badge b-red" style="margin-top:8px">🔴 Seuil critique atteint (' +
+            DB.settings.seuilRouge +
+            " %)</div>"
+          : t >= DB.settings.seuilOrange
+            ? '<div class="badge b-orange" style="margin-top:8px">🟠 ' +
+              DB.settings.seuilOrange +
+              " % du budget engagé</div>"
+            : '<div class="badge b-green" style="margin-top:8px">🟢 Budget sous contrôle</div>')
+      );
+    }
+
+    PAGES.pipeline = () => {
+      const cols = STAGES.map((s) => {
+        const q = DATA.byStage(s.k);
+        return (
+          '<div class="kcol"><h4><span>' +
+          s.dept +
+          "</span><span>" +
+          q.length +
+          "</span></h4>" +
+          q
+            .slice(0, 8)
+            .map(
+              (c) =>
+                '<div class="kcard" onclick="UI.openDossier(\'' +
+                c.id +
+                '\')"><b class="mono">' +
+                c.id +
+                "</b><div>" +
+                esc(c.prenom + " " + c.nom) +
+                '</div><div style="margin-top:5px">' +
+                prioBadge(isLate(c) ? "URGENT" : c.priority) +
+                "</div></div>",
+            )
+            .join("") +
+          (q.length > 8
+            ? '<div class="muted" style="font-size:11.5px">+ ' +
+              (q.length - 8) +
+              " autres</div>"
+            : "") +
+          '<div class="muted" style="font-size:11px;margin-top:6px">Resp. : ' +
+          (AGENTS[s.k] ? AGENTS[s.k][0] : "—") +
+          "<br>En retard : " +
+          q.filter(isLate).length +
+          "</div></div>"
+        );
+      }).join("");
+      return (
+        '<div class="page-head"><div><h1>Pipeline global</h1><p>Parcours complet d\'une candidature, de la réception au suivi du boursier</p></div></div>' +
+        '<div class="kanban">' +
+        cols +
+        "</div>"
+      );
+    };
+
+    function deptPage(key, title, sub, kpisHtml, extra) {
+      const q = DATA.byStage(key);
+      return (
+        '<div class="page-head"><div><h1>' +
+        title +
+        "</h1><p>" +
+        sub +
+        '</p></div><div class="row noprint">' +
+        '<button class="btn" onclick="REPORTS.download(\'' +
+        key.toLowerCase() +
+        ".csv',REPORTS.candidatures())\">Exporter CSV</button>" +
+        (key === "RECEPTION"
+          ? '<button class="btn primary" onclick="CANDIDATES.newForm()">+ Enregistrer une candidature</button>'
+          : "") +
+        "</div></div>" +
+        '<div class="grid kpis" style="margin-bottom:14px">' +
+        kpisHtml +
+        "</div>" +
+        (extra || "") +
+        card(
+          "Ma file de travail — " + q.length + " dossier(s)",
+          queueTable(q, QUEUE_EXTRA[key]),
+        ) +
+        '<div style="height:14px"></div>' +
+        card("Activité du département", deptPerf(key))
+      );
+    }
+    const QUEUE_EXTRA = {
+      CONTROLE: {
+        head: "Documents",
+        cell: (c) => {
+          const ok = Object.values(c.docs).filter(
+            (s) => s !== "MANQUANT" && s !== "REJETE",
+          ).length;
+          return (
+            '<div class="bar ' +
+            (ok === 8 ? "g" : "o") +
+            '" style="width:80px"><i style="width:' +
+            pct(ok, 8) +
+            '%"></i></div><span class="muted mono">' +
+            ok +
+            "/8</span>"
+          );
+        },
+      },
+      ANALYSE: {
+        head: "Score",
+        cell: (c) =>
+          c.scores
+            ? '<b class="mono">' + scoreOf(c).toFixed(1) + "</b>"
+            : '<span class="badge b-grey">à évaluer</span>',
+      },
+      VERIFICATION: {
+        head: "Conformité",
+        cell: (c) =>
+          c.verification
+            ? '<span class="badge ' +
+              (c.verification.avis === "CONFORME"
+                ? "b-green"
+                : c.verification.avis === "NON CONFORME"
+                  ? "b-red"
+                  : "b-orange") +
+              '">' +
+              c.verification.avis +
+              "</span>"
+            : '<span class="badge b-grey">en attente</span>',
+      },
+      COMITE: {
+        head: "Score",
+        cell: (c) =>
+          c.scores ? '<b class="mono">' + scoreOf(c).toFixed(1) + "</b>" : "—",
+      },
+      DELIBERATION: {
+        head: "Demandé",
+        cell: (c) =>
+          '<span class="mono">' + formatCurrency(c.montantDemande) + "</span>",
+      },
+      FINANCES: {
+        head: "Accordé",
+        cell: (c) =>
+          '<span class="mono">' +
+          formatCurrency(c.deliberation ? c.deliberation.montantAccorde : 0) +
+          "</span>",
+      },
+    };
+
+    PAGES.reception = () => {
+      const q = DATA.byStage("RECEPTION");
+      return deptPage(
+        "RECEPTION",
+        "Département 01 — Réception & Enregistrement",
+        "Réception des candidatures, numérotation des dossiers et affectation au contrôle",
+        kpi("Mes dossiers reçus", q.length) +
+          kpi(
+            "Nouvelles candidatures",
+            q.filter((c) => days(c.createdAt) < 7).length,
+            "7 derniers jours",
+            "k-blue",
+          ) +
+          kpi("À affecter", q.filter((c) => c.complet).length, "", "k-green") +
+          kpi("Incomplets", q.filter((c) => !c.complet).length, "", "k-gold") +
+          kpi(
+            "Actions urgentes",
+            q.filter((c) => isLate(c) || c.priority === "URGENT").length,
+            "",
+            "k-red",
+          ),
+      );
+    };
+
+    PAGES.controle = () => {
+      const q = DATA.byStage("CONTROLE");
+      const manquants = q.reduce(
+        (s, c) =>
+          s + Object.values(c.docs).filter((d) => d === "MANQUANT").length,
+        0,
+      );
+      return deptPage(
+        "CONTROLE",
+        "Département 02 — Contrôle administratif",
+        "Vérification documentaire, complétude et conformité administrative des dossiers",
+        kpi("Dossiers à contrôler", q.length) +
+          kpi(
+            "Dossiers complets",
+            q.filter((c) =>
+              Object.values(c.docs).every((s) => s !== "MANQUANT"),
+            ).length,
+            "",
+            "k-green",
+          ) +
+          kpi(
+            "Dossiers incomplets",
+            q.filter((c) => Object.values(c.docs).some((s) => s === "MANQUANT"))
+              .length,
+            "",
+            "k-gold",
+          ) +
+          kpi("Documents manquants", manquants, "", "k-red") +
+          kpi("Contrôles en retard", q.filter(isLate).length, "", "k-red"),
+      );
+    };
+
+    PAGES.analyse = () => {
+      const q = DATA.byStage("ANALYSE");
+      const scored = q.filter((c) => c.scores),
+        moy = scored.length
+          ? (
+              scored.reduce((s, c) => s + scoreOf(c), 0) / scored.length
+            ).toFixed(1)
+          : "—";
+      return deptPage(
+        "ANALYSE",
+        "Département 03 — Analyse & Évaluation",
+        "Analyse académique, leadership, engagement et projet professionnel",
+        kpi("Dossiers à analyser", q.filter((c) => !c.scores).length) +
+          kpi("Analyses en cours", scored.length, "", "k-blue") +
+          kpi("Score moyen file", moy + " /100", "", "k-gold") +
+          kpi(
+            "Dossiers urgents",
+            q.filter((c) => isLate(c) || c.priority === "URGENT").length,
+            "",
+            "k-red",
+          ) +
+          kpi(
+            "Analyses terminées",
+            DB.candidates.filter((c) => stageIdx(c.stage) > 2).length,
+            "",
+            "k-green",
+          ),
+      );
+    };
+
+    PAGES.verification = () => {
+      const q = DATA.byStage("VERIFICATION");
+      const anomalies = DB.candidates.filter(
+        (c) => c.verification && c.verification.avis !== "CONFORME",
+      );
+      const alertes = anomalies.length
+        ? '<div style="margin-bottom:14px">' +
+          card(
+            "Alertes de conformité",
+            '<div class="tablewrap"><table><thead><tr><th>Dossier</th><th>Candidat</th><th>Avis</th><th>Risque</th><th>Observation</th><th></th></tr></thead><tbody>' +
+              anomalies
+                .slice(0, 10)
+                .map(
+                  (c) =>
+                    '<tr><td class="mono">' +
+                    c.id +
+                    "</td><td>" +
+                    esc(c.prenom + " " + c.nom) +
+                    '</td><td><span class="badge ' +
+                    (c.verification.avis === "NON CONFORME"
+                      ? "b-red"
+                      : "b-orange") +
+                    '">' +
+                    c.verification.avis +
+                    '</span></td><td><span class="badge ' +
+                    (c.verification.risque === "Élevé"
+                      ? "b-red"
+                      : c.verification.risque === "Moyen"
+                        ? "b-orange"
+                        : "b-green") +
+                    '">' +
+                    c.verification.risque +
+                    '</span></td><td class="muted">' +
+                    esc(c.verification.note) +
+                    '</td><td class="noprint"><button class="btn sm" onclick="UI.openDossier(\'' +
+                    c.id +
+                    "')\">Investiguer</button></td></tr>",
+                )
+                .join("") +
+              "</tbody></table></div>",
+          ) +
+          "</div>"
+        : "";
+      return deptPage(
+        "VERIFICATION",
+        "Département 04 — Vérification & Conformité",
+        "Authenticité des informations, établissements, diplômes et références",
+        kpi(
+          "Vérifications en attente",
+          q.filter((c) => !c.verification).length,
+        ) +
+          kpi(
+            "Vérifications terminées",
+            DB.candidates.filter((c) => c.verification).length,
+            "",
+            "k-green",
+          ) +
+          kpi("Anomalies détectées", anomalies.length, "", "k-red") +
+          kpi(
+            "Risque élevé",
+            DB.candidates.filter(
+              (c) => c.verification && c.verification.risque === "Élevé",
+            ).length,
+            "",
+            "k-red",
+          ) +
+          kpi("En retard", q.filter(isLate).length, "", "k-gold"),
+        alertes,
+      );
+    };
+
+    PAGES.comite = () => {
+      const q = DATA.byStage("COMITE");
+      const ordre = q
+        .slice()
+        .sort((a, b) => (scoreOf(b) || 0) - (scoreOf(a) || 0));
+      const odj = card(
+        "Ordre du jour — prochaine session",
+        '<div class="tablewrap"><table><thead><tr><th>#</th><th>Dossier</th><th>Candidat</th><th>Score CBEL</th><th>Conformité</th><th>Montant demandé</th><th>Examen</th></tr></thead><tbody>' +
+          (ordre.length
+            ? ordre
+                .map(
+                  (c, i) =>
+                    "<tr><td>" +
+                    (i + 1) +
+                    '</td><td class="mono">' +
+                    c.id +
+                    "</td><td>" +
+                    esc(c.prenom + " " + c.nom) +
+                    '</td><td><b class="mono">' +
+                    (scoreOf(c) ? scoreOf(c).toFixed(1) : "—") +
+                    "</b></td><td>" +
+                    (c.verification
+                      ? '<span class="badge ' +
+                        (c.verification.avis === "CONFORME"
+                          ? "b-green"
+                          : "b-orange") +
+                        '">' +
+                        c.verification.avis +
+                        "</span>"
+                      : "—") +
+                    '</td><td class="mono">' +
+                    formatCurrency(c.montantDemande) +
+                    '</td><td class="noprint">' +
+                    (c.committee && c.committee.examined
+                      ? '<span class="badge b-green">Examiné</span>'
+                      : '<button class="btn sm" onclick="COMMITTEE.examine(\'' +
+                        c.id +
+                        "')\">Marquer examiné</button>") +
+                    "</td></tr>",
+                )
+                .join("")
+            : '<tr><td colspan="7" class="muted">Aucun dossier à l\'ordre du jour.</td></tr>') +
+          "</tbody></table></div>",
+        '<button class="btn sm" onclick="window.print()">Imprimer l\'ordre du jour</button>',
+      );
+      return deptPage(
+        "COMITE",
+        "Département 05 — Comité d'examen",
+        "Examen des dossiers finalisés et préparation de la délibération",
+        kpi("Dossiers prêts", q.length) +
+          kpi(
+            "Dossiers examinés",
+            q.filter((c) => c.committee && c.committee.examined).length,
+            "",
+            "k-green",
+          ) +
+          kpi(
+            "Compléments demandés",
+            q.filter((c) => c.committee && c.committee.complement).length,
+            "",
+            "k-gold",
+          ) +
+          kpi(
+            "Décisions en attente",
+            DATA.byStage("DELIBERATION").length,
+            "",
+            "k-blue",
+          ) +
+          kpi(
+            "Session à venir",
+            dOnly(new Date(Date.now() + 7 * 86400000).toISOString()),
+          ),
+        '<div style="margin-bottom:14px">' + odj + "</div>",
+      );
+    };
+
+    PAGES.deliberation = () => {
+      const q = DATA.byStage("DELIBERATION");
+      const decid = DB.candidates.filter((c) => c.deliberation);
+      const session = card(
+        "Session de délibération — " + dOnly(new Date().toISOString()),
+        q.length
+          ? q
+              .map((c) => {
+                const s = scoreOf(c);
+                return (
+                  '<div style="border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px">' +
+                  '<div class="row" style="justify-content:space-between"><div><b class="mono">' +
+                  c.id +
+                  "</b> — <b>" +
+                  esc(c.prenom + " " + c.nom) +
+                  '</b><div class="muted" style="font-size:12px">' +
+                  esc(c.etablissement + " · " + c.filiere + " · " + c.niveau) +
+                  "</div></div>" +
+                  '<div class="row"><span class="badge b-ink">Score ' +
+                  (s ? s.toFixed(1) : "—") +
+                  "/100</span>" +
+                  (c.verification
+                    ? '<span class="badge ' +
+                      (c.verification.avis === "CONFORME"
+                        ? "b-green"
+                        : "b-orange") +
+                      '">' +
+                      c.verification.avis +
+                      "</span>"
+                    : "") +
+                  '<span class="badge b-grey">Demande ' +
+                  formatCurrency(c.montantDemande) +
+                  "</span></div></div>" +
+                  '<div class="row" style="margin-top:10px">' +
+                  '<select id="dec-' +
+                  c.id +
+                  '" class="btn"><option value="COMPLETE">Bourse complète (100 %)</option><option value="PARTIELLE">Bourse partielle</option><option value="CONDITIONNELLE">Bourse conditionnelle</option><option value="ATTENTE">Liste d\'attente</option><option value="REFUS">Refus</option></select>' +
+                  '<select id="taux-' +
+                  c.id +
+                  '" class="btn"><option value="25">25 %</option><option value="50" selected>50 %</option><option value="75">75 %</option></select>' +
+                  '<input id="perso-' +
+                  c.id +
+                  '" class="btn" style="width:150px" placeholder="Montant personnalisé">' +
+                  '<button class="btn primary" onclick="DELIBERATION.decide(\'' +
+                  c.id +
+                  "')\">Enregistrer la décision</button>" +
+                  '<span class="muted" style="font-size:12px">Budget disponible : ' +
+                  formatCurrency(FINANCE.disponible()) +
+                  "</span></div></div>"
+                );
+              })
+              .join("")
+          : '<p class="muted">Aucun dossier en délibération.</p>',
+      );
+      return deptPage(
+        "DELIBERATION",
+        "Département 06 — Délibération",
+        "Vote, décision, type de bourse, montant et procès-verbal",
+        kpi("Dossiers en délibération", q.length) +
+          kpi("Décisions prises", decid.length, "", "k-green") +
+          kpi(
+            "Bourses complètes",
+            decid.filter((c) => c.deliberation.decision === "COMPLETE").length,
+            "",
+            "k-green",
+          ) +
+          kpi(
+            "Bourses partielles",
+            decid.filter((c) => c.deliberation.decision === "PARTIELLE").length,
+            "",
+            "k-gold",
+          ) +
+          kpi(
+            "Refus / attente",
+            DB.candidates.filter((c) => ["REFUSE", "ATTENTE"].includes(c.stage))
+              .length,
+            "",
+            "k-red",
+          ),
+        '<div style="margin-bottom:14px">' + session + "</div>",
+      );
+    };
+
+    PAGES.budget = () => {
+      const parDept = STAGES.map((s) => {
+        const m = DATA.byStage(s.k).reduce(
+          (a, c) => a + (c.deliberation ? c.deliberation.montantAccorde : 0),
+          0,
+        );
+        return (
+          '<div class="flowrow"><div class="fname">' +
+          s.dept +
+          '</div><div class="bar"><i style="width:' +
+          Math.min(100, pct(m, DB.settings.budgetAnnuel)) +
+          '%"></i></div><div class="mono muted">' +
+          formatCurrency(m) +
+          "</div></div>"
+        );
+      }).join("");
+      return (
+        '<div class="page-head"><div><h1>Département 07 — Budget</h1><p>Pilotage de l\'enveloppe annuelle en ' +
+        DB.settings.currency +
+        "</p></div>" +
+        '<div class="row noprint"><button class="btn" onclick="REPORTS.download(\'cbel_financier.csv\',REPORTS.financier())">Exporter CSV</button><button class="btn" onclick="window.print()">Imprimer</button></div></div>' +
+        '<div class="grid kpis" style="margin-bottom:14px">' +
+        kpi("Budget annuel", formatCurrency(DB.settings.budgetAnnuel)) +
+        kpi(
+          "Engagé",
+          formatCurrency(FINANCE.engage()),
+          FINANCE.taux() + " %",
+          "k-gold",
+        ) +
+        kpi("Attribué", formatCurrency(FINANCE.attribue()), "", "k-blue") +
+        kpi("Versé", formatCurrency(FINANCE.verse()), "", "k-green") +
+        kpi("Disponible", formatCurrency(FINANCE.disponible()), "", "k-green") +
+        "</div>" +
+        '<div class="split">' +
+        card("Consommation du budget", budgetWidget()) +
+        card("Répartition par étape", parDept) +
+        "</div>"
+      );
+    };
+
+    PAGES.bourses = () => {
+      const q = DATA.byStage("FINANCES");
+      return deptPage(
+        "FINANCES",
+        "Département 07 — Bourses & Engagements",
+        "Engagement des montants attribués et préparation des décaissements",
+        kpi("Dossiers à engager", q.length) +
+          kpi(
+            "Bourses complètes",
+            DB.candidates.filter(
+              (c) => c.deliberation && c.deliberation.decision === "COMPLETE",
+            ).length,
+            "",
+            "k-green",
+          ) +
+          kpi(
+            "Bourses partielles",
+            DB.candidates.filter(
+              (c) => c.deliberation && c.deliberation.decision === "PARTIELLE",
+            ).length,
+            "",
+            "k-gold",
+          ) +
+          kpi(
+            "Budget disponible",
+            formatCurrency(FINANCE.disponible()),
+            "",
+            "k-blue",
+          ) +
+          kpi(
+            "Décaissements à effectuer",
+            DB.candidates.filter((c) => c.finance.engage > c.finance.verse)
+              .length,
+            "",
+            "k-red",
+          ),
+      );
+    };
+
+    PAGES.paiements = () => {
+      const rows = DB.candidates.filter((c) => c.finance.engage > 0);
+      return (
+        '<div class="page-head"><div><h1>Paiements & Décaissements</h1><p>Suivi des versements — ' +
+        DB.settings.currency +
+        "</p></div>" +
+        '<div class="row noprint"><button class="btn" onclick="REPORTS.download(\'cbel_paiements.csv\',REPORTS.boursiers())">Exporter CSV</button></div></div>' +
+        card(
+          "Échéancier des versements",
+          '<div class="tablewrap"><table><thead><tr><th>Dossier</th><th>Bénéficiaire</th><th>Engagé</th><th>Versé</th><th>Reste</th><th>Progression</th><th>Action</th></tr></thead><tbody>' +
+            rows
+              .map((c) => {
+                const r = c.finance.engage - c.finance.verse;
+                return (
+                  '<tr><td class="mono">' +
+                  c.id +
+                  "</td><td>" +
+                  esc(c.prenom + " " + c.nom) +
+                  '</td><td class="mono">' +
+                  formatCurrency(c.finance.engage) +
+                  '</td><td class="mono">' +
+                  formatCurrency(c.finance.verse) +
+                  '</td><td class="mono">' +
+                  formatCurrency(r) +
+                  "</td>" +
+                  '<td><div class="bar g" style="width:90px"><i style="width:' +
+                  pct(c.finance.verse, c.finance.engage) +
+                  '%"></i></div></td>' +
+                  '<td class="noprint">' +
+                  (r > 0
+                    ? '<button class="btn sm primary" onclick="UI.payForm(\'' +
+                      c.id +
+                      "')\">Enregistrer un versement</button>"
+                    : '<span class="badge b-green">Soldé</span>') +
+                  "</td></tr>"
+                );
+              })
+              .join("") +
+            "</tbody></table></div>",
+        )
+      );
+    };
+
+    PAGES.boursiers = () => {
+      const q = DATA.byStage("BOURSIER");
+      const alerte = q.filter((c) => c.boursier && c.boursier.alerte);
+      return (
+        '<div class="page-head"><div><h1>Département 08 — Suivi des boursiers</h1><p>Bénéficiaires actifs, résultats académiques et conditions de maintien</p></div>' +
+        '<div class="row noprint"><button class="btn" onclick="REPORTS.download(\'cbel_boursiers.csv\',REPORTS.boursiers())">Exporter CSV</button></div></div>' +
+        '<div class="grid kpis" style="margin-bottom:14px">' +
+        kpi("Boursiers actifs", q.length, "", "k-green") +
+        kpi(
+          "Renouvellements < 90 j",
+          q.filter((c) => days(c.boursier.renouvellement) > -90).length,
+          "",
+          "k-gold",
+        ) +
+        kpi(
+          "Résultats à vérifier",
+          q.filter((c) => c.boursier.moyenne === "—").length,
+        ) +
+        kpi("En situation d'alerte", alerte.length, "", "k-red") +
+        kpi(
+          "Montant suivi",
+          formatCurrency(q.reduce((s, c) => s + c.finance.engage, 0)),
+          "",
+          "k-blue",
+        ) +
+        "</div>" +
+        card(
+          "Portefeuille des boursiers",
+          '<div class="tablewrap"><table><thead><tr><th>Dossier</th><th>Boursier</th><th>Établissement</th><th>Moyenne</th><th>Bourse</th><th>Renouvellement</th><th>Statut</th><th></th></tr></thead><tbody>' +
+            q
+              .map(
+                (c) =>
+                  '<tr><td class="mono">' +
+                  c.id +
+                  "</td><td>" +
+                  esc(c.prenom + " " + c.nom) +
+                  "</td><td>" +
+                  esc(c.etablissement) +
+                  '</td><td class="mono">' +
+                  c.boursier.moyenne +
+                  '/20</td><td class="mono">' +
+                  formatCurrency(c.finance.engage) +
+                  "</td><td>" +
+                  dOnly(c.boursier.renouvellement) +
+                  "</td><td>" +
+                  (c.boursier.alerte
+                    ? '<span class="badge b-red">Alerte</span>'
+                    : '<span class="badge b-green">Conforme</span>') +
+                  '</td><td class="noprint"><button class="btn sm" onclick="UI.openDossier(\'' +
+                  c.id +
+                  "')\">Ouvrir</button></td></tr>",
+              )
+              .join("") +
+            "</tbody></table></div>",
+        )
+      );
+    };
+
+    PAGES.renouvellements = () => {
+      const q = DATA.byStage("BOURSIER")
+        .filter(
+          (c) =>
+            new Date(c.boursier.renouvellement) - Date.now() < 180 * 86400000,
+        )
+        .sort(
+          (a, b) =>
+            new Date(a.boursier.renouvellement) -
+            new Date(b.boursier.renouvellement),
+        );
+      return (
+        '<div class="page-head"><div><h1>Renouvellements</h1><p>Échéances des bourses et conditions de maintien</p></div></div>' +
+        card(
+          "Échéances à venir",
+          '<div class="tablewrap"><table><thead><tr><th>Dossier</th><th>Boursier</th><th>Échéance</th><th>Dans</th><th>Moyenne</th><th>Condition</th><th>Action</th></tr></thead><tbody>' +
+            (q.length
+              ? q
+                  .map((c) => {
+                    const j = Math.round(
+                      (new Date(c.boursier.renouvellement) - Date.now()) /
+                        86400000,
+                    );
+                    return (
+                      '<tr><td class="mono">' +
+                      c.id +
+                      "</td><td>" +
+                      esc(c.prenom + " " + c.nom) +
+                      "</td><td>" +
+                      dOnly(c.boursier.renouvellement) +
+                      '</td><td><span class="badge ' +
+                      (j < 30 ? "b-red" : j < 90 ? "b-orange" : "b-green") +
+                      '">' +
+                      j +
+                      ' jours</span></td><td class="mono">' +
+                      c.boursier.moyenne +
+                      '/20</td><td class="muted">' +
+                      esc(c.boursier.conditions) +
+                      "</td>" +
+                      '<td class="noprint"><button class="btn sm primary" onclick="BENEFICIARIES.renew(\'' +
+                      c.id +
+                      '\')">Renouveler</button> <button class="btn sm danger" onclick="BENEFICIARIES.suspend(\'' +
+                      c.id +
+                      "')\">Suspendre</button></td></tr>"
+                    );
+                  })
+                  .join("")
+              : '<tr><td colspan="7" class="muted">Aucune échéance proche.</td></tr>') +
+            "</tbody></table></div>",
+        )
+      );
+    };
+
+    PAGES.rapports = () => {
+      const list = [
+        ["Rapport général CBEL", "candidatures"],
+        ["Rapport par département", "departements"],
+        ["Rapport des candidatures", "candidatures"],
+        ["Rapport financier", "financier"],
+        ["Rapport des boursiers", "boursiers"],
+      ];
+      return (
+        '<div class="page-head"><div><h1>Rapports</h1><p>Éditions institutionnelles, export CSV et impression</p></div><div class="row noprint"><button class="btn" onclick="window.print()">Imprimer la page</button></div></div>' +
+        '<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">' +
+        list
+          .map(
+            ([n, k]) =>
+              '<div class="card"><div class="bd"><h3 style="font-size:14px">' +
+              n +
+              '</h3><p class="muted" style="font-size:12.5px">Données consolidées au ' +
+              dOnly(new Date().toISOString()) +
+              '.</p><div class="row noprint"><button class="btn sm primary" onclick="REPORTS.download(\'' +
+              k +
+              ".csv',REPORTS." +
+              k +
+              '())">Exporter CSV</button><button class="btn sm" onclick="window.print()">Imprimer</button></div></div></div>',
+          )
+          .join("") +
+        '</div><div style="height:14px"></div>' +
+        card(
+          "Rapport des délais par département",
+          '<div class="tablewrap"><table><thead><tr><th>Département</th><th>SLA</th><th>En file</th><th>Temps moyen</th><th>En retard</th><th>Respect du SLA</th></tr></thead><tbody>' +
+            STAGES.map((s) => {
+              const q = DATA.byStage(s.k),
+                l = q.filter(isLate).length,
+                moy = (
+                  q.reduce((a, c) => a + sla(c).elapsed, 0) / (q.length || 1)
+                ).toFixed(1);
+              return (
+                "<tr><td>" +
+                s.dept +
+                '</td><td class="mono">' +
+                (DB.settings.sla[s.k] || "—") +
+                " j</td><td>" +
+                q.length +
+                '</td><td class="mono">' +
+                moy +
+                " j</td><td>" +
+                l +
+                '</td><td><span class="badge ' +
+                (l === 0 ? "b-green" : l < 3 ? "b-orange" : "b-red") +
+                '">' +
+                pct(q.length - l, q.length || 1) +
+                " %</span></td></tr>"
+              );
+            }).join("") +
+            "</tbody></table></div>",
+        )
+      );
+    };
+
+    PAGES.audit = () => {
+      return (
+        '<div class="page-head"><div><h1>Piste d\'audit</h1><p>Traçabilité complète des actions par agent et par département</p></div>' +
+        "<div class=\"row noprint\"><button class=\"btn\" onclick=\"REPORTS.download('cbel_audit.csv',[['Date','Agent','Département','Dossier','Action']].concat(DB.audit.map(a=>[a.date,a.user,a.dept,a.dossier,a.action])))\">Exporter CSV</button></div></div>" +
+        card(
+          "Journal des actions (" + DB.audit.length + ")",
+          DB.audit.length
+            ? '<div class="tablewrap"><table><thead><tr><th>Date</th><th>Agent</th><th>Département</th><th>Dossier</th><th>Action</th></tr></thead><tbody>' +
+                DB.audit
+                  .slice(0, 200)
+                  .map(
+                    (a) =>
+                      '<tr><td class="mono">' +
+                      dt(a.date) +
+                      "</td><td>" +
+                      esc(a.user) +
+                      "</td><td>" +
+                      esc(a.dept) +
+                      '</td><td class="mono">' +
+                      esc(a.dossier) +
+                      "</td><td>" +
+                      esc(a.action) +
+                      "</td></tr>",
+                  )
+                  .join("") +
+                "</tbody></table></div>"
+            : '<p class="muted">Aucune action enregistrée depuis l\'ouverture de la session. Traitez un dossier pour alimenter le journal.</p>',
+        )
+      );
+    };
+
+    let notifFilter = "all";
+    PAGES.notifications = () => {
+      let list = DB.notifications.slice();
+      if (notifFilter === "unread") list = list.filter((n) => !n.read);
+      if (notifFilter === "urgent")
+        list = list.filter((n) => n.level === "warn");
+      if (notifFilter === "mine")
+        list = list.filter(
+          (n) => n.dept === stageDept(DB.role) || DB.role === "DIRECTION",
+        );
+      if (notifFilter === "sys")
+        list = list.filter((n) => n.dept === "Système");
+      const f = (k, n) =>
+        '<button class="btn sm ' +
+        (notifFilter === k ? "primary" : "") +
+        '" onclick="notifFilter=\'' +
+        k +
+        "';UI.render()\">" +
+        n +
+        "</button>";
+      return (
+        '<div class="page-head"><div><h1>Centre de notifications</h1><p>' +
+        NOTIFICATIONS.unread() +
+        " notification(s) non lue(s)</p></div>" +
+        '<div class="row noprint">' +
+        f("all", "Toutes") +
+        f("unread", "Non lues") +
+        f("urgent", "Urgentes") +
+        f("mine", "Mon département") +
+        f("sys", "Système") +
+        '<button class="btn sm" onclick="NOTIFICATIONS.markAll()">Tout marquer comme lu</button></div></div>' +
+        '<section class="card">' +
+        (list.length
+          ? list
+              .map(
+                (n) =>
+                  '<div class="notif ' +
+                  (n.read ? "" : "unread") +
+                  '" onclick="UI.toggleNotif(\'' +
+                  n.id +
+                  '\')"><div class="dot" style="background:' +
+                  (n.level === "warn"
+                    ? "var(--orange)"
+                    : n.level === "ok"
+                      ? "var(--green)"
+                      : "var(--blue)") +
+                  '"></div><div style="flex:1"><b>' +
+                  esc(n.dept) +
+                  '</b> <span class="muted" style="font-size:11.5px">' +
+                  dt(n.date) +
+                  "</span><div>" +
+                  esc(n.text) +
+                  '</div></div><span class="badge ' +
+                  (n.read ? "b-grey" : "b-blue") +
+                  '">' +
+                  (n.read ? "Lue" : "Non lue") +
+                  "</span></div>",
+              )
+              .join("")
+          : '<div class="bd muted">Aucune notification pour ce filtre.</div>') +
+        "</section>"
+      );
+    };
+
+    PAGES.taches = () => {
+      const t = TASKS.forRole().sort(
+        (a, b) => PRIOS[b.priority].w - PRIOS[a.priority].w,
+      );
+      const urgent = t.filter((x) => x.priority === "URGENT");
+      return (
+        '<div class="page-head"><div><h1>Task Center — Mes tâches</h1><p>Rôle actif : ' +
+        (ROLES.find((r) => r.k === DB.role) || {}).n +
+        "</p></div>" +
+        "<div class=\"row noprint\"><button class=\"btn\" onclick=\"REPORTS.download('cbel_taches.csv',[['Tâche','Dossier','Département','Priorité','Échéance']].concat(TASKS.forRole().map(x=>[x.titre,x.dossier,x.dept,x.priority,x.echeance])))\">Exporter CSV</button></div></div>" +
+        '<div class="grid kpis" style="margin-bottom:14px">' +
+        kpi("Tâches ouvertes", t.length) +
+        kpi("Urgentes", urgent.length, "", "k-red") +
+        kpi(
+          "Échéance aujourd'hui",
+          t.filter((x) => x.echeance.indexOf("aujourd") > -1).length,
+          "",
+          "k-gold",
+        ) +
+        kpi(
+          "En retard",
+          t.filter((x) => x.echeance.indexOf("retard") > -1).length,
+          "",
+          "k-red",
+        ) +
+        "</div>" +
+        card(
+          "Toutes mes tâches",
+          '<div class="tablewrap"><table><thead><tr><th>Tâche</th><th>Dossier</th><th>Département</th><th>Priorité</th><th>Échéance</th><th>Statut</th><th>Action</th></tr></thead><tbody>' +
+            (t.length
+              ? t
+                  .map(
+                    (x) =>
+                      "<tr><td>" +
+                      esc(x.titre) +
+                      '</td><td class="mono">' +
+                      x.dossier +
+                      "</td><td>" +
+                      x.dept +
+                      "</td><td>" +
+                      prioBadge(x.priority) +
+                      "</td><td>" +
+                      x.echeance +
+                      '</td><td><span class="badge b-grey">' +
+                      x.statut +
+                      '</span></td><td class="noprint"><button class="btn sm" onclick="UI.openDossier(\'' +
+                      x.dossier +
+                      "')\">Traiter</button></td></tr>",
+                  )
+                  .join("")
+              : '<tr><td colspan="7" class="muted">Aucune tâche en attente. ✓</td></tr>') +
+            "</tbody></table></div>",
+        )
+      );
+    };
+
+    PAGES.parametres = () => {
+      const s = DB.settings;
+      return (
+        '<div class="page-head"><div><h1>Paramètres</h1><p>Configuration institutionnelle du système CBEL</p></div>' +
+        '<div class="row noprint"><button class="btn danger" onclick="UI.confirmReset()">Réinitialiser la démonstration</button></div></div>' +
+        '<div class="split"><div class="stack">' +
+        card(
+          "Monnaie & budget",
+          '<div class="field"><label>Monnaie officielle</label><select id="set-cur"><option value="IVR" selected>IVR — Ivoire (par défaut)</option><option value="XOF">XOF</option><option value="EUR">EUR</option></select></div>' +
+            '<div class="field"><label>Budget annuel (' +
+            s.currency +
+            ')</label><input id="set-budget" value="' +
+            s.budgetAnnuel +
+            '"></div>' +
+            '<div class="row"><div class="field" style="flex:1"><label>Seuil alerte orange (%)</label><input id="set-o" value="' +
+            s.seuilOrange +
+            '"></div><div class="field" style="flex:1"><label>Seuil alerte rouge (%)</label><input id="set-r" value="' +
+            s.seuilRouge +
+            '"></div></div>' +
+            '<button class="btn primary" onclick="APP.saveSettings()">Enregistrer</button>',
+        ) +
+        card(
+          "Délais SLA par département",
+          Object.keys(s.sla)
+            .map(
+              (k) =>
+                '<div class="checkline"><span>' +
+                stageName(k) +
+                '</span><span><input style="width:64px;border:1px solid var(--line);border-radius:6px;padding:4px 8px" id="sla-' +
+                k +
+                '" value="' +
+                s.sla[k] +
+                '"> j</span></div>',
+            )
+            .join("") +
+            '<div style="height:10px"></div><button class="btn primary" onclick="APP.saveSLA()">Mettre à jour les SLA</button>',
+        ) +
+        '</div><div class="stack">' +
+        card(
+          "Critères de scoring",
+          Object.entries(s.weights)
+            .map(
+              ([k, v]) =>
+                '<div class="checkline"><span>' +
+                k.charAt(0).toUpperCase() +
+                k.slice(1) +
+                "</span><b>" +
+                v +
+                " %</b></div>",
+            )
+            .join(""),
+        ) +
+        card(
+          "Types de bourses",
+          s.typesBourse
+            .map(
+              (t) =>
+                '<div class="checkline"><span>' +
+                t +
+                '</span><span class="badge b-green">Actif</span></div>',
+            )
+            .join("") +
+            '<div class="checkline"><span>Liste d\'attente / Refus</span><span class="badge b-grey">Statuts terminaux</span></div>',
+        ) +
+        card(
+          "Types de documents",
+          DOC_TYPES.map(
+            (d) =>
+              '<div class="checkline"><span>' +
+              d.n +
+              '</span><span class="badge b-blue">Obligatoire</span></div>',
+          ).join(""),
+        ) +
+        card(
+          "Utilisateurs simulés",
+          ROLES.map(
+            (r) =>
+              '<div class="checkline"><span>' +
+              r.n +
+              '</span><span class="badge ' +
+              (DB.role === r.k ? "b-green" : "b-grey") +
+              '">' +
+              (DB.role === r.k ? "Connecté" : "Disponible") +
+              "</span></div>",
+          ).join(""),
+        ) +
+        "</div></div>"
+      );
+    };
+
+    /* ---------- MODULES métier ---------- */
+    const CANDIDATES = {
+      newForm() {
+        UI.modal(
+          "Nouvelle candidature",
+          '<div class="field"><label>Prénom</label><input id="f-prenom"></div>' +
+            '<div class="field"><label>Nom</label><input id="f-nom"></div>' +
+            '<div class="field"><label>Établissement</label><input id="f-etab" value="Université Félix Houphouët-Boigny"></div>' +
+            '<div class="field"><label>Filière</label><input id="f-fil"></div>' +
+            '<div class="field"><label>Niveau</label><select id="f-niv">' +
+            NIVEAUX.map((n) => "<option>" + n + "</option>").join("") +
+            "</select></div>" +
+            '<div class="field"><label>Montant demandé (' +
+            DB.settings.currency +
+            ')</label><input id="f-mt" value="1500000"></div>' +
+            '<div class="field"><label>Priorité</label><select id="f-prio"><option value="NORMALE">Normale</option><option value="HAUTE">Haute</option><option value="URGENT">Urgent</option><option value="FAIBLE">Faible</option></select></div>',
+          '<button class="btn primary" onclick="CANDIDATES.create()">Enregistrer la candidature</button>',
+        );
+      },
+      create() {
+        const g = (id) => document.getElementById(id).value.trim();
+        if (!g("f-nom") || !g("f-prenom")) {
+          UI.toast("⛔ Nom et prénom obligatoires.");
+          return;
+        }
+        DB.counter++;
+        const id = "CBEL-2026-" + String(DB.counter).padStart(5, "0");
+        const c = {
+          id,
+          nom: g("f-nom"),
+          prenom: g("f-prenom"),
+          genre: "—",
+          age: "—",
+          email: "",
+          tel: "",
+          ville: "Abidjan",
+          etablissement: g("f-etab"),
+          filiere: g("f-fil") || "—",
+          niveau: g("f-niv"),
+          stage: "RECEPTION",
+          priority: g("f-prio"),
+          createdAt: new Date().toISOString(),
+          enteredStage: new Date().toISOString(),
+          assignee: AGENTS.RECEPTION[0],
+          montantDemande: Number(g("f-mt")) || 0,
+          docs: {},
+          scores: null,
+          verification: null,
+          committee: null,
+          deliberation: null,
+          finance: { engage: 0, verse: 0, paiements: [] },
+          boursier: null,
+          history: [],
+          complet: false,
+        };
+        DOC_TYPES.forEach((d) => (c.docs[d.k] = "MANQUANT"));
+        DB.candidates.unshift(c);
+        AUDIT.log(id, "Candidature enregistrée", "Réception");
+        NOTIFICATIONS.push(
+          "Réception",
+          "Nouvelle candidature enregistrée : " +
+            id +
+            " — " +
+            c.prenom +
+            " " +
+            c.nom,
+          "info",
+        );
+        DATA.save();
+        UI.closeModal();
+        UI.toast("✓ Dossier " + id + " créé");
+        UI.render();
+        UI.openDossier(id);
+      },
+      setPriority(id, p) {
+        const c = DATA.get(id);
+        c.priority = p;
+        AUDIT.log(id, "Priorité modifiée : " + p);
+        DATA.save();
+        UI.render();
+        UI.openDossier(id);
+      },
+      assign(id, a) {
+        const c = DATA.get(id);
+        c.assignee = a;
+        AUDIT.log(id, "Dossier assigné à " + a);
+        DATA.save();
+        UI.toast("✓ Assigné à " + a);
+        UI.openDossier(id);
+      },
+    };
+    const DOCUMENTS = {
+      set(id, doc, val) {
+        const c = DATA.get(id);
+        c.docs[doc] = val;
+        c.complet = Object.values(c.docs).every(
+          (s) => s === "RECU" || s === "VERIFIE",
+        );
+        AUDIT.log(
+          id,
+          "Document « " + DOC_TYPES.find((d) => d.k === doc).n + " » → " + val,
+          "Contrôle",
+        );
+        DATA.save();
+        UI.openDossier(id, "documents");
+      },
+    };
+    const EVALUATION = {
+      save(id) {
+        const c = DATA.get(id),
+          g = (k) =>
+            Math.max(
+              0,
+              Math.min(
+                100,
+                Number(document.getElementById("sc-" + k).value) || 0,
+              ),
+            );
+        c.scores = {
+          academique: g("academique"),
+          leadership: g("leadership"),
+          engagement: g("engagement"),
+          finance: g("finance"),
+          projet: g("projet"),
+        };
+        AUDIT.log(
+          id,
+          "Score CBEL enregistré : " + scoreOf(c).toFixed(1) + "/100",
+          "Analyse",
+        );
+        DATA.save();
+        UI.toast("✓ Score " + scoreOf(c).toFixed(1) + "/100");
+        UI.openDossier(id, "analyse");
+        UI.render();
+      },
+    };
+    const VERIFICATION = {
+      save(id) {
+        const c = DATA.get(id),
+          ck = {};
+        VERIF_CHECKS.forEach(
+          (v) => (ck[v.k] = document.getElementById("vk-" + v.k).checked),
+        );
+        const bad = Object.values(ck).filter((x) => !x).length;
+        c.verification = {
+          checks: ck,
+          risque: document.getElementById("v-risque").value,
+          avis: document.getElementById("v-avis").value,
+          note: document.getElementById("v-note").value,
+        };
+        AUDIT.log(
+          id,
+          "Avis de conformité : " +
+            c.verification.avis +
+            " (risque " +
+            c.verification.risque +
+            ")",
+          "Vérification",
+        );
+        if (c.verification.avis !== "CONFORME")
+          NOTIFICATIONS.push(
+            "Direction",
+            "Anomalie de conformité sur " + id + " — " + c.verification.avis,
+            "warn",
+          );
+        DATA.save();
+        UI.toast("✓ Avis enregistré (" + bad + " anomalie(s))");
+        UI.openDossier(id, "verification");
+        UI.render();
+      },
+    };
+    const COMMITTEE = {
+      examine(id) {
+        const c = DATA.get(id);
+        c.committee = c.committee || {};
+        c.committee.examined = true;
+        c.committee.note = "Examiné en séance.";
+        AUDIT.log(id, "Dossier examiné par le comité", "Comité");
+        DATA.save();
+        UI.toast("✓ Dossier examiné");
+        UI.render();
+      },
+      complement(id) {
+        const c = DATA.get(id);
+        c.committee = c.committee || {};
+        c.committee.complement = true;
+        AUDIT.log(id, "Complément demandé par le comité", "Comité");
+        NOTIFICATIONS.push(
+          "Contrôle",
+          "Complément demandé par le comité sur " + id,
+          "warn",
+        );
+        WORKFLOW.retour(id, "Complément demandé par le comité");
+      },
+    };
+    const DELIBERATION = {
+      decide(id) {
+        const c = DATA.get(id),
+          dec = document.getElementById("dec-" + id).value;
+        const taux = Number(document.getElementById("taux-" + id).value);
+        const perso = Number(document.getElementById("perso-" + id).value) || 0;
+        if (dec === "REFUS") {
+          c.deliberation = {
+            decision: "REFUS",
+            taux: 0,
+            montantAccorde: 0,
+            votes: { pour: 0, contre: 0, abstention: 0 },
+            pv: "Refus prononcé.",
+            date: new Date().toISOString(),
+          };
+          DATA.save();
+          WORKFLOW.terminal(id, "REFUSE", "Décision du comité de délibération");
+          UI.toast("Décision : refus");
+          return;
+        }
+        if (dec === "ATTENTE") {
+          c.deliberation = {
+            decision: "ATTENTE",
+            taux: 0,
+            montantAccorde: 0,
+            votes: { pour: 0, contre: 0, abstention: 0 },
+            pv: "Placé en liste d'attente.",
+            date: new Date().toISOString(),
+          };
+          DATA.save();
+          WORKFLOW.terminal(id, "ATTENTE", "Budget à confirmer");
+          UI.toast("Décision : liste d'attente");
+          return;
+        }
+        const p = dec === "COMPLETE" ? 100 : taux;
+        const montant =
+          perso > 0 ? perso : Math.round((c.montantDemande * p) / 100);
+        if (montant > FINANCE.disponible()) {
+          UI.toast(
+            "⛔ Budget disponible insuffisant (" +
+              formatCurrency(FINANCE.disponible()) +
+              ").",
+          );
+          return;
+        }
+        c.deliberation = {
+          decision: dec,
+          taux: perso > 0 ? pct(perso, c.montantDemande) : p,
+          montantAccorde: montant,
+          votes: { pour: ri(5, 9), contre: ri(0, 2), abstention: ri(0, 2) },
+          pv: "Décision adoptée en séance.",
+          date: new Date().toISOString(),
+        };
+        AUDIT.log(
+          id,
+          "Décision : " + dec + " — " + formatCurrency(montant),
+          "Délibération",
+        );
+        NOTIFICATIONS.push(
+          "Finances",
+          "Décision d'attribution sur " +
+            id +
+            " : " +
+            formatCurrency(montant) +
+            " à engager.",
+          "ok",
+        );
+        DATA.save();
+        UI.toast("✓ Décision enregistrée — " + formatCurrency(montant));
+        WORKFLOW.advance(id, "Décision de délibération");
+      },
+    };
+    const BENEFICIARIES = {
+      renew(id) {
+        const c = DATA.get(id);
+        c.boursier.renouvellement = new Date(
+          Date.now() + 365 * 86400000,
+        ).toISOString();
+        c.boursier.alerte = false;
+        AUDIT.log(id, "Bourse renouvelée pour 12 mois", "Suivi");
+        DATA.save();
+        UI.toast("✓ Bourse renouvelée");
+        UI.render();
+      },
+      suspend(id) {
+        const c = DATA.get(id);
+        c.boursier.actif = false;
+        c.boursier.alerte = true;
+        AUDIT.log(id, "Bourse suspendue (conditions non remplies)", "Suivi");
+        NOTIFICATIONS.push("Direction", "Bourse suspendue : " + id, "warn");
+        DATA.save();
+        UI.toast("Bourse suspendue");
+        UI.render();
+      },
+      grade(id) {
+        const c = DATA.get(id);
+        const v = prompt("Moyenne académique /20 :", c.boursier.moyenne);
+        if (v === null) return;
+        c.boursier.moyenne = v;
+        c.boursier.alerte = Number(v) < 12;
+        AUDIT.log(id, "Résultat académique enregistré : " + v + "/20", "Suivi");
+        DATA.save();
+        UI.openDossier(id, "suivi");
+      },
+    };
+
+    /* ---------- DOSSIER (fiche complète) ---------- */
+    function dossierHTML(c, tab) {
+      tab = tab || "profil";
+      const idx = stageIdx(c.stage);
+      const timeline = STAGES.concat([{ k: "FIN", n: "—" }])
+        .slice(0, 8)
+        .map((s, i) => {
+          const cls = ["REFUSE", "ATTENTE"].includes(c.stage)
+            ? i < 5
+              ? "done"
+              : ""
+            : i < idx
+              ? "done"
+              : i === idx
+                ? "cur"
+                : "";
+          return '<div class="' + cls + '">' + s.dept + "</div>";
+        })
+        .join("");
+      const tabs = [
+        ["profil", "Profil"],
+        ["candidature", "Candidature"],
+        ["documents", "Documents"],
+        ["controle", "Contrôle"],
+        ["analyse", "Analyse"],
+        ["verification", "Vérification"],
+        ["comite", "Comité"],
+        ["deliberation", "Délibération"],
+        ["finance", "Finance"],
+        ["suivi", "Suivi"],
+        ["historique", "Historique"],
+      ];
+      const s = sla(c);
+      let body = "";
+      if (tab === "profil")
+        body = card(
+          "Identité du candidat",
+          '<div class="kv">' +
+            '<span class="muted">Nom complet</span><b>' +
+            esc(c.prenom + " " + c.nom) +
+            "</b>" +
+            '<span class="muted">Âge / Genre</span><b>' +
+            c.age +
+            " ans · " +
+            c.genre +
+            "</b>" +
+            '<span class="muted">Ville</span><b>' +
+            esc(c.ville) +
+            "</b>" +
+            '<span class="muted">Téléphone</span><b>' +
+            esc(c.tel) +
+            "</b>" +
+            '<span class="muted">E-mail</span><b>' +
+            esc(c.email) +
+            "</b>" +
+            '<span class="muted">Établissement</span><b>' +
+            esc(c.etablissement) +
+            "</b>" +
+            '<span class="muted">Filière / Niveau</span><b>' +
+            esc(c.filiere + " · " + c.niveau) +
+            "</b></div>",
+        );
+      if (tab === "candidature")
+        body = card(
+          "Dossier de candidature",
+          '<div class="kv">' +
+            '<span class="muted">Numéro de dossier</span><b class="mono">' +
+            c.id +
+            "</b>" +
+            '<span class="muted">Date de dépôt</span><b>' +
+            dOnly(c.createdAt) +
+            "</b>" +
+            '<span class="muted">Montant demandé</span><b>' +
+            formatCurrency(c.montantDemande) +
+            "</b>" +
+            '<span class="muted">Étape actuelle</span><b>' +
+            stageName(c.stage) +
+            "</b>" +
+            '<span class="muted">Responsable</span><b>' +
+            esc(c.assignee) +
+            "</b>" +
+            '<span class="muted">Depuis</span><b>' +
+            s.elapsed +
+            " jour(s)</b>" +
+            '<span class="muted">Délai SLA</span><b>' +
+            s.text +
+            "</b>" +
+            '<span class="muted">Prochaine étape</span><b>' +
+            (nextStage(c.stage) ? stageName(nextStage(c.stage)) : "—") +
+            "</b></div>" +
+            '<div class="row" style="margin-top:12px">' +
+            Object.keys(PRIOS)
+              .map(
+                (p) =>
+                  '<button class="btn sm" onclick="CANDIDATES.setPriority(\'' +
+                  c.id +
+                  "','" +
+                  p +
+                  "')\">" +
+                  PRIOS[p].i +
+                  " " +
+                  PRIOS[p].n +
+                  "</button>",
+              )
+              .join("") +
+            "</div>",
+        );
+      if (tab === "documents" || tab === "controle")
+        body = card(
+          "Contrôle documentaire",
+          DOC_TYPES.map((d) => {
+            const v = c.docs[d.k];
+            return (
+              '<div class="checkline"><span><b>' +
+              d.n +
+              '</b> <span class="badge ' +
+              (v === "VERIFIE"
+                ? "b-green"
+                : v === "RECU"
+                  ? "b-blue"
+                  : v === "REJETE"
+                    ? "b-red"
+                    : "b-grey") +
+              '">' +
+              v +
+              "</span></span>" +
+              '<span class="row noprint">' +
+              ["MANQUANT", "RECU", "VERIFIE", "REJETE"]
+                .map(
+                  (x) =>
+                    '<button class="btn sm" onclick="DOCUMENTS.set(\'' +
+                    c.id +
+                    "','" +
+                    d.k +
+                    "','" +
+                    x +
+                    "')\">" +
+                    x.charAt(0) +
+                    x.slice(1).toLowerCase() +
+                    "</button>",
+                )
+                .join("") +
+              "</span></div>"
+            );
+          }).join("") +
+            '<div class="row" style="margin-top:12px"><span class="badge ' +
+            (c.complet ? "b-green" : "b-orange") +
+            '">' +
+            (c.complet ? "Dossier complet" : "Dossier incomplet") +
+            "</span>" +
+            '<button class="btn danger sm noprint" onclick="WORKFLOW.retour(\'' +
+            c.id +
+            "','Documents manquants')\">Retourner le dossier</button></div>",
+        );
+      if (tab === "analyse") {
+        const sc = c.scores || {
+          academique: 0,
+          leadership: 0,
+          engagement: 0,
+          finance: 0,
+          projet: 0,
+        };
+        const w = DB.settings.weights;
+        body = card(
+          "Scoring CBEL (/100)",
+          Object.keys(w)
+            .map(
+              (k) =>
+                '<div class="field"><label>' +
+                k +
+                " — pondération " +
+                w[k] +
+                ' %</label><input id="sc-' +
+                k +
+                '" value="' +
+                sc[k] +
+                '"></div>',
+            )
+            .join("") +
+            '<button class="btn primary noprint" onclick="EVALUATION.save(\'' +
+            c.id +
+            "')\">Calculer & enregistrer</button>" +
+            (c.scores
+              ? '<div style="margin-top:14px"><small class="muted">SCORE CBEL</small><div style="font-size:30px;font-weight:700">' +
+                scoreOf(c).toFixed(1) +
+                ' / 100</div><div class="bar g"><i style="width:' +
+                scoreOf(c) +
+                '%"></i></div></div>'
+              : ""),
+        );
+      }
+      if (tab === "verification") {
+        const v = c.verification || {
+          checks: {},
+          risque: "Faible",
+          avis: "CONFORME",
+          note: "",
+        };
+        body = card(
+          "Checklist de conformité",
+          VERIF_CHECKS.map(
+            (x) =>
+              '<div class="checkline"><span>' +
+              x.n +
+              '</span><input type="checkbox" id="vk-' +
+              x.k +
+              '" ' +
+              (v.checks[x.k] ? "checked" : "") +
+              "></div>",
+          ).join("") +
+            '<div class="field" style="margin-top:12px"><label>Niveau de risque</label><select id="v-risque">' +
+            ["Faible", "Moyen", "Élevé"]
+              .map(
+                (r) =>
+                  "<option " +
+                  (v.risque === r ? "selected" : "") +
+                  ">" +
+                  r +
+                  "</option>",
+              )
+              .join("") +
+            "</select></div>" +
+            '<div class="field"><label>Avis de conformité</label><select id="v-avis">' +
+            ["CONFORME", "CONFORME SOUS RÉSERVE", "NON CONFORME"]
+              .map(
+                (a) =>
+                  "<option " +
+                  (v.avis === a ? "selected" : "") +
+                  ">" +
+                  a +
+                  "</option>",
+              )
+              .join("") +
+            "</select></div>" +
+            '<div class="field"><label>Observation</label><textarea id="v-note" rows="3">' +
+            esc(v.note) +
+            "</textarea></div>" +
+            '<button class="btn primary noprint" onclick="VERIFICATION.save(\'' +
+            c.id +
+            "')\">Enregistrer l'avis</button>",
+        );
+      }
+      if (tab === "comite")
+        body = card(
+          "Comité d'examen",
+          '<div class="kv"><span class="muted">Score CBEL</span><b>' +
+            (c.scores ? scoreOf(c).toFixed(1) + "/100" : "—") +
+            "</b>" +
+            '<span class="muted">Conformité</span><b>' +
+            (c.verification ? c.verification.avis : "—") +
+            "</b>" +
+            '<span class="muted">Examiné</span><b>' +
+            (c.committee && c.committee.examined ? "Oui" : "Non") +
+            "</b></div>" +
+            '<div class="row noprint" style="margin-top:12px"><button class="btn primary" onclick="COMMITTEE.examine(\'' +
+            c.id +
+            "')\">Marquer comme examiné</button>" +
+            '<button class="btn" onclick="COMMITTEE.complement(\'' +
+            c.id +
+            "')\">Demander un complément</button></div>",
+        );
+      if (tab === "deliberation") {
+        const d = c.deliberation;
+        body = card(
+          "Délibération",
+          d
+            ? '<div class="kv"><span class="muted">Décision</span><b>' +
+                d.decision +
+                "</b>" +
+                '<span class="muted">Taux de financement</span><b>' +
+                d.taux +
+                " %</b>" +
+                '<span class="muted">Montant accordé</span><b>' +
+                formatCurrency(d.montantAccorde) +
+                "</b>" +
+                '<span class="muted">Votes</span><b>' +
+                d.votes.pour +
+                " pour · " +
+                d.votes.contre +
+                " contre · " +
+                d.votes.abstention +
+                " abstention</b>" +
+                '<span class="muted">Procès-verbal</span><b>' +
+                esc(d.pv) +
+                "</b></div>"
+            : '<p class="muted">Dossier non encore délibéré. Il doit d\'abord être examiné par le comité.</p>',
+        );
+      }
+      if (tab === "finance")
+        body = card(
+          "Dossier financier",
+          '<div class="kv">' +
+            '<span class="muted">Montant demandé</span><b>' +
+            formatCurrency(c.montantDemande) +
+            "</b>" +
+            '<span class="muted">Montant accordé</span><b>' +
+            formatCurrency(c.deliberation ? c.deliberation.montantAccorde : 0) +
+            "</b>" +
+            '<span class="muted">Engagé</span><b>' +
+            formatCurrency(c.finance.engage) +
+            "</b>" +
+            '<span class="muted">Versé</span><b>' +
+            formatCurrency(c.finance.verse) +
+            "</b>" +
+            '<span class="muted">Reste à verser</span><b>' +
+            formatCurrency(c.finance.engage - c.finance.verse) +
+            "</b></div>" +
+            (c.finance.paiements.length
+              ? '<div style="margin-top:12px"><table><thead><tr><th>Date</th><th>Libellé</th><th>Montant</th></tr></thead><tbody>' +
+                c.finance.paiements
+                  .map(
+                    (p) =>
+                      "<tr><td>" +
+                      dOnly(p.date) +
+                      "</td><td>" +
+                      esc(p.libelle) +
+                      '</td><td class="mono">' +
+                      formatCurrency(p.montant) +
+                      "</td></tr>",
+                  )
+                  .join("") +
+                "</tbody></table></div>"
+              : "") +
+            '<div class="row noprint" style="margin-top:12px"><button class="btn primary" onclick="UI.payForm(\'' +
+            c.id +
+            "')\">Enregistrer un versement</button></div>",
+        );
+      if (tab === "suivi")
+        body = card(
+          "Suivi du boursier",
+          c.boursier
+            ? '<div class="kv">' +
+                '<span class="muted">Statut</span><b>' +
+                (c.boursier.actif ? "Boursier actif" : "Suspendu") +
+                "</b>" +
+                '<span class="muted">Moyenne</span><b>' +
+                c.boursier.moyenne +
+                "/20</b>" +
+                '<span class="muted">Conditions</span><b>' +
+                esc(c.boursier.conditions) +
+                "</b>" +
+                '<span class="muted">Renouvellement</span><b>' +
+                dOnly(c.boursier.renouvellement) +
+                "</b></div>" +
+                '<div class="row noprint" style="margin-top:12px"><button class="btn" onclick="BENEFICIARIES.grade(\'' +
+                c.id +
+                "')\">Saisir un résultat</button>" +
+                '<button class="btn primary" onclick="BENEFICIARIES.renew(\'' +
+                c.id +
+                "')\">Renouveler</button>" +
+                '<button class="btn danger" onclick="BENEFICIARIES.suspend(\'' +
+                c.id +
+                "')\">Suspendre</button></div>"
+            : '<p class="muted">Le candidat n\'est pas encore boursier. La bourse doit être attribuée et engagée.</p>',
+        );
+      if (tab === "historique")
+        body = card(
+          "Historique du dossier",
+          '<div class="tablewrap"><table><tbody>' +
+            c.history
+              .slice()
+              .reverse()
+              .map(
+                (h) =>
+                  '<tr><td class="mono">' +
+                  dt(h.date) +
+                  "</td><td>" +
+                  esc(h.user) +
+                  "</td><td>" +
+                  esc(h.dept) +
+                  "</td><td>" +
+                  esc(h.action) +
+                  "</td></tr>",
+              )
+              .join("") +
+            "</tbody></table></div>",
+        );
+
+      return {
+        hd:
+          '<div><div class="row"><b class="mono" style="font-size:16px">' +
+          c.id +
+          "</b>" +
+          stageBadge(c.stage) +
+          prioBadge(isLate(c) ? "URGENT" : c.priority) +
+          slaBadge(c) +
+          "</div>" +
+          '<div class="muted" style="font-size:12.5px">' +
+          esc(c.prenom + " " + c.nom) +
+          " · " +
+          esc(c.etablissement) +
+          " · Responsable : " +
+          esc(c.assignee) +
+          "</div></div>" +
+          '<div class="row"><button class="btn" onclick="window.print()">Imprimer</button>' +
+          (nextStage(c.stage)
+            ? '<button class="btn primary" onclick="WORKFLOW.advance(\'' +
+              c.id +
+              "')\">Transmettre → " +
+              stageDept(nextStage(c.stage)) +
+              "</button>"
+            : "") +
+          '<button class="btn" onclick="UI.closeDrawer()">✕</button></div>',
+        bd:
+          '<div class="card" style="padding:14px;margin-bottom:14px"><div class="tl">' +
+          timeline +
+          "</div></div>" +
+          '<div class="tabs noprint">' +
+          tabs
+            .map(
+              ([k, n]) =>
+                '<button class="' +
+                (tab === k ? "active" : "") +
+                '" onclick="UI.openDossier(\'' +
+                c.id +
+                "','" +
+                k +
+                "')\">" +
+                n +
+                "</button>",
+            )
+            .join("") +
+          "</div>" +
+          body,
+      };
+    }
+
+    /* ---------- UI ---------- */
+    const NAV = [
+      [
+        "Direction",
+        [
+          ["dashboard", "Dashboard général"],
+          ["pipeline", "Pipeline global"],
+        ],
+      ],
+      [
+        "Opérations",
+        [
+          ["reception", "Réception"],
+          ["controle", "Contrôle"],
+          ["analyse", "Analyse & Évaluation"],
+          ["verification", "Vérification"],
+          ["comite", "Comité"],
+          ["deliberation", "Délibérations"],
+        ],
+      ],
+      [
+        "Finances",
+        [
+          ["budget", "Budget"],
+          ["bourses", "Bourses"],
+          ["paiements", "Paiements"],
+        ],
+      ],
+      [
+        "Suivi",
+        [
+          ["boursiers", "Boursiers"],
+          ["renouvellements", "Renouvellements"],
+        ],
+      ],
+      [
+        "Pilotage",
+        [
+          ["rapports", "Rapports"],
+          ["audit", "Audit"],
+          ["taches", "Mes tâches"],
+          ["notifications", "Notifications"],
+          ["parametres", "Paramètres"],
+        ],
+      ],
+    ];
+    const COUNTS = {
+      reception: () => DATA.byStage("RECEPTION").length,
+      controle: () => DATA.byStage("CONTROLE").length,
+      analyse: () => DATA.byStage("ANALYSE").length,
+      verification: () => DATA.byStage("VERIFICATION").length,
+      comite: () => DATA.byStage("COMITE").length,
+      deliberation: () => DATA.byStage("DELIBERATION").length,
+      bourses: () => DATA.byStage("FINANCES").length,
+      boursiers: () => DATA.byStage("BOURSIER").length,
+      notifications: () => NOTIFICATIONS.unread(),
+      taches: () => TASKS.forRole().length,
+    };
+
+    const UI = {
+      route: "dashboard",
+      openId: null,
+      go(r) {
+        UI.route = r;
+        document.getElementById("sidebar").classList.remove("open");
+        UI.render();
+        window.scrollTo(0, 0);
+      },
+      allowed(r) {
+        const role = ROLES.find((x) => x.k === DB.role);
+        return role.allow === "*" || role.allow.includes(r);
+      },
+      render() {
+        // nav
+        document.getElementById("nav").innerHTML = NAV.map(
+          ([g, items]) =>
+            '<div class="navgroup">' +
+            g +
+            "</div>" +
+            items
+              .filter(([r]) => UI.allowed(r))
+              .map(([r, n]) => {
+                const c = COUNTS[r] ? COUNTS[r]() : 0;
+                return (
+                  '<div class="navitem ' +
+                  (UI.route === r ? "active" : "") +
+                  '" onclick="UI.go(\'' +
+                  r +
+                  "')\"><span>" +
+                  n +
+                  "</span>" +
+                  (c
+                    ? '<span class="pill ' +
+                      (r === "notifications" && c ? "hot" : "") +
+                      '">' +
+                      c +
+                      "</span>"
+                    : "") +
+                  "</div>"
+                );
+              })
+              .join(""),
+        ).join("");
+        document.getElementById("roleSel").innerHTML = ROLES.map(
+          (r) =>
+            '<option value="' +
+            r.k +
+            '" ' +
+            (DB.role === r.k ? "selected" : "") +
+            ">" +
+            r.n +
+            "</option>",
+        ).join("");
+        document.getElementById("bellcount").textContent =
+          NOTIFICATIONS.unread();
+        document.getElementById("taskcount").textContent =
+          TASKS.forRole().length;
+        document.getElementById("ver").textContent =
+          "v1.0 · " +
+          DB.candidates.length +
+          " dossiers · " +
+          DB.settings.currency;
+        if (!UI.allowed(UI.route)) UI.route = "dashboard";
+        const label = (NAV.flatMap((g) => g[1]).find(
+          (i) => i[0] === UI.route,
+        ) || ["", "—"])[1];
+        document.getElementById("crumb").innerHTML =
+          "CBEL / <b>" + label + "</b>";
+        document.getElementById("content").innerHTML = (
+          PAGES[UI.route] || PAGES.dashboard
+        )();
+      },
+      openDossier(id, tab) {
+        const c = DATA.get(id);
+        if (!c) return;
+        UI.openId = id;
+        const h = dossierHTML(c, tab);
+        document.getElementById("drawer-hd").innerHTML = h.hd;
+        document.getElementById("drawer-bd").innerHTML = h.bd;
+        document.getElementById("drawer").style.display = "block";
+        document.getElementById("drawer-bg").style.display = "block";
+        requestAnimationFrame(() =>
+          document.getElementById("drawer").classList.add("open"),
+        );
+      },
+      closeDrawer() {
+        UI.openId = null;
+        document.getElementById("drawer").classList.remove("open");
+        setTimeout(() => {
+          document.getElementById("drawer").style.display = "none";
+          document.getElementById("drawer-bg").style.display = "none";
+        }, 200);
+      },
+      modal(title, body, actions) {
+        document.getElementById("modal").innerHTML =
+          '<div class="card" style="border:0;box-shadow:none"><div class="hd"><h3>' +
+          title +
+          '</h3><button class="btn sm" onclick="UI.closeModal()">✕</button></div><div class="bd">' +
+          body +
+          '<div class="row" style="margin-top:10px">' +
+          (actions || "") +
+          "</div></div></div>";
+        document.getElementById("modal-bg").style.display = "flex";
+      },
+      closeModal() {
+        document.getElementById("modal-bg").style.display = "none";
+      },
+      payForm(id) {
+        const c = DATA.get(id);
+        const reste = c.finance.engage - c.finance.verse;
+        UI.modal(
+          "Versement — " + id,
+          '<p class="muted">Reste à verser : <b>' +
+            formatCurrency(reste) +
+            '</b></p><div class="field"><label>Montant (' +
+            DB.settings.currency +
+            ')</label><input id="pay-mt" value="' +
+            Math.round(reste / 2) +
+            '"></div>',
+          '<button class="btn primary" onclick="FINANCE.pay(\'' +
+            id +
+            "',document.getElementById('pay-mt').value);UI.closeModal()\">Enregistrer le versement</button>",
+        );
+      },
+      toggleNotif(nid) {
+        const n = DB.notifications.find((x) => x.id === nid);
+        n.read = !n.read;
+        DATA.save();
+        UI.render();
+      },
+      toast(m) {
+        const d = document.createElement("div");
+        d.className = "toast";
+        d.textContent = m;
+        document.getElementById("toasts").appendChild(d);
+        setTimeout(() => d.remove(), 3200);
+      },
+      confirmReset() {
+        UI.modal(
+          "Réinitialiser la démonstration",
+          "<p>Toutes les modifications enregistrées (dossiers, décisions, notifications, journal d'audit) seront définitivement supprimées et les données de démonstration seront restaurées.</p><p><b>Confirmez-vous la réinitialisation ?</b></p>",
+          '<button class="btn" onclick="UI.closeModal()">Annuler</button><button class="btn danger" onclick="STORAGE.reset()">Oui, réinitialiser</button>',
+        );
+      },
+      where(id) {
+        const c = DATA.get(id);
+        if (!c) return;
+        UI.modal(
+          "Où est le dossier " + c.id + " ?",
+          '<div class="kv">' +
+            '<span class="muted">Département actuel</span><b>' +
+            stageName(c.stage) +
+            "</b>" +
+            '<span class="muted">Responsable</span><b>' +
+            esc(c.assignee) +
+            "</b>" +
+            '<span class="muted">Statut</span><b>' +
+            stageName(c.stage) +
+            "</b>" +
+            '<span class="muted">Depuis</span><b>' +
+            sla(c).elapsed +
+            " jour(s)</b>" +
+            '<span class="muted">Prochaine étape</span><b>' +
+            (nextStage(c.stage) ? stageName(nextStage(c.stage)) : "—") +
+            "</b>" +
+            '<span class="muted">Action attendue</span><b>' +
+            TASKS.label(c.stage) +
+            "</b>" +
+            '<span class="muted">Délai</span><b>' +
+            sla(c).text +
+            "</b></div>",
+          '<button class="btn primary" onclick="UI.closeModal();UI.openDossier(\'' +
+            c.id +
+            "')\">Ouvrir la fiche</button>",
+        );
+      },
+    };
+
+    /* ---------- APP ---------- */
+    const APP = {
+      currentUser() {
+        const r = ROLES.find((x) => x.k === DB.role);
+        return r ? r.n : "Utilisateur";
+      },
+      setRole(k) {
+        DB.role = k;
+        DATA.save();
+        UI.go(
+          k === "DIRECTION"
+            ? "dashboard"
+            : (STAGES.find((s) => s.k === k) || { route: "taches" }).route ||
+                "taches",
+        );
+        UI.toast("Session : " + APP.currentUser());
+      },
+      saveSettings() {
+        DB.settings.currency = document.getElementById("set-cur").value;
+        DB.settings.budgetAnnuel =
+          Number(document.getElementById("set-budget").value) ||
+          DB.settings.budgetAnnuel;
+        DB.settings.seuilOrange =
+          Number(document.getElementById("set-o").value) || 75;
+        DB.settings.seuilRouge =
+          Number(document.getElementById("set-r").value) || 90;
+        AUDIT.log("—", "Paramètres financiers mis à jour", "Direction");
+        DATA.save();
+        UI.toast("✓ Paramètres enregistrés");
+        UI.render();
+      },
+      saveSLA() {
+        Object.keys(DB.settings.sla).forEach((k) => {
+          DB.settings.sla[k] =
+            Number(document.getElementById("sla-" + k).value) ||
+            DB.settings.sla[k];
+        });
+        AUDIT.log("—", "Délais SLA mis à jour", "Direction");
+        DATA.save();
+        UI.toast("✓ SLA mis à jour");
+        UI.render();
+      },
+      bootNotifications() {
+        if (DB.notifications.length) return;
+        const n = (d, t, l) => NOTIFICATIONS.push(d, t, l);
+        n(
+          "Contrôle",
+          DATA.byStage("CONTROLE").length +
+            " dossiers attendent votre contrôle.",
+          "info",
+        );
+        n(
+          "Analyse",
+          DATA.byStage("ANALYSE").length + " dossiers sont prêts pour analyse.",
+          "info",
+        );
+        n(
+          "Vérification",
+          DB.candidates.filter(
+            (c) => c.verification && c.verification.avis !== "CONFORME",
+          ).length + " dossiers présentent une anomalie.",
+          "warn",
+        );
+        n(
+          "Comité",
+          DATA.byStage("COMITE").length +
+            " dossiers sont prêts pour la prochaine session.",
+          "info",
+        );
+        n(
+          "Finances",
+          "Budget engagé : " + FINANCE.taux() + " % de l'enveloppe annuelle.",
+          FINANCE.taux() >= 75 ? "warn" : "ok",
+        );
+        n(
+          "Suivi",
+          DATA.byStage("BOURSIER").filter(
+            (c) =>
+              new Date(c.boursier.renouvellement) - Date.now() < 30 * 86400000,
+          ).length + " bourses arrivent à échéance dans 30 jours.",
+          "warn",
+        );
+        n(
+          "Système",
+          "Bienvenue dans CBEL ERP — monnaie officielle : " +
+            DB.settings.currency +
+            ".",
+          "info",
+        );
+        DATA.save();
+      },
+      search(q) {
+        q = q.trim().toLowerCase();
+        const box = document.getElementById("gsearchres");
+        if (q.length < 2) {
+          box.style.display = "none";
+          return;
+        }
+        const res = DB.candidates
+          .filter((c) =>
+            (c.id + " " + c.nom + " " + c.prenom + " " + c.etablissement)
+              .toLowerCase()
+              .includes(q),
+          )
+          .slice(0, 10);
+        box.innerHTML = res.length
+          ? res
+              .map(
+                (c) =>
+                  "<div onclick=\"UI.where('" +
+                  c.id +
+                  "');document.getElementById('gsearchres').style.display='none'\"><b class=\"mono\">" +
+                  c.id +
+                  "</b> — " +
+                  esc(c.prenom + " " + c.nom) +
+                  ' <span class="muted">· ' +
+                  stageName(c.stage) +
+                  "</span></div>",
+              )
+              .join("")
+          : '<div class="muted">Aucun dossier trouvé.</div>';
+        box.style.display = "block";
+      },
+      init() {
+        APP.bootNotifications();
+        document
+          .getElementById("gsearch")
+          .addEventListener("input", (e) => APP.search(e.target.value));
+        document.addEventListener("click", (e) => {
+          if (!e.target.closest(".searchbox"))
+            document.getElementById("gsearchres").style.display = "none";
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            UI.closeModal();
+            UI.closeDrawer();
+          }
+        });
+        UI.render();
+      },
+    };
+    APP.init();
+  </script>
+  <script src="../../assets/js/render-sidebar.js"></script>
+</html>

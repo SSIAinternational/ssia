@@ -51,7 +51,7 @@
   position: relative;
 }
 
-.stage-set i {
+.stage-set .fa-plus {
   color: white;
   background: var(--versity-blue);
   position: absolute;
@@ -165,6 +165,91 @@
   display: flex;
   flex-direction: column;
   align-items: end;
+}
+
+.stage-set .add-stage-form {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  transform: translateX(50%);
+  width: 40%;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  background: white;
+  border: solid 1px #629bbe;
+  border-radius: 7px;
+}
+
+.add-stage-form .stage-form-close {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.stage-form-close .fa-close {
+  background: rgb(173, 1, 1);
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+}
+
+.add-stage-form h4 {
+  font-size: 1.1rem;
+  color: var(--versity-blue);
+}
+
+.add-stage-form .input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.add-stage-form .input-group label {
+  font-size: 0.8rem;
+  color: var(--versity-blue);
+  font-weight: 600;
+  margin: 0;
+}
+
+.add-stage-form .input-group input,
+.add-stage-form .input-group select,
+.add-stage-form .input-group textarea {
+  border: solid 1px var(--versity-blue);
+  border-radius: 5px;
+  font-size: 0.7rem;
+  padding: 3px 5px;
+  color: #629bbe;
+  font-weight: 600;
+  outline: none;
+}
+
+.add-stage-form .save-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.save-btn button {
+  border: none;
+  background: var(--versity-blue);
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 5px;
+  width: max-content;
 }
 
 .hide {

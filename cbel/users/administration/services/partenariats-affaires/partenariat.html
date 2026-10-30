@@ -1,0 +1,1885 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      SSIAVERSITY ERP — Direction Partenariats Stratégiques & Développement des
+      Affaires
+    </title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/partenariat.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="partenariat-set">
+      <div class="app">
+        <aside class="sidebar">
+          <div class="brand">
+            <div class="brand-logo">
+              <img src="../../../../../img/logoci.jpg" alt="" srcset="" />
+            </div>
+            <div class="brand-text">
+              <h1>SSIAVERSITY</h1>
+              <small>ERP — Partenariats & Dév. des Affaires</small>
+            </div>
+          </div>
+          <nav class="nav" id="nav"></nav>
+          <div class="foot">
+            © SSIAVERSITY • DPSDA<br />Université Numérique — 21 Collèges
+          </div>
+        </aside>
+        <main class="main">
+          <header class="topbar">
+            <div>
+              <div class="crumb" id="crumb">Tableau de bord</div>
+              <h2 id="pageTitle">Dashboard Exécutif</h2>
+            </div>
+            <div class="spacer"></div>
+            <div class="search">
+              <span>🔎</span
+              ><input
+                id="globalSearch"
+                placeholder="Rechercher partenaires, contrats, événements…"
+              />
+            </div>
+            <button class="btn" onclick="exportAll()">⬇ Export</button>
+            <div class="user">
+              <div class="avatar" id="userAv">DP</div>
+              <div>
+                <div style="font-size: 13px; font-weight: 600">Direction</div>
+                <div style="font-size: 11px; color: var(--muted)">
+                  DPSDA · SSIAVERSITY
+                </div>
+              </div>
+            </div>
+          </header>
+          <section class="content" id="view"></section>
+        </main>
+      </div>
+
+      <div class="modal-backdrop" id="modal">
+        <div class="modal">
+          <div class="hd">
+            <h4 id="mTitle">Titre</h4>
+            <button class="btn ghost" onclick="closeModal()">✕</button>
+          </div>
+          <div class="bd" id="mBody"></div>
+          <div class="ft" id="mFoot"></div>
+        </div>
+      </div>
+      <div class="toast-host" id="toastHost"></div>
+
+      <script>
+        /* ============================================================
+   SSIAVERSITY ERP — Single-file dynamic app (no seed data)
+   ============================================================ */
+
+        const MODULES = [
+          {
+            id: "dashboard",
+            group: "Pilotage",
+            label: "Dashboard Exécutif",
+            icon: "fa-solid fa-chalkboard",
+          },
+          {
+            id: "partners",
+            group: "CRM",
+            label: "CRM Partenaires",
+            icon: "fa-solid fa-handshake",
+          },
+          {
+            id: "pipeline",
+            group: "CRM",
+            label: "Pipeline Commercial",
+            icon: "fa-solid fa-clock",
+          },
+          {
+            id: "investors",
+            group: "Finance",
+            label: "Investisseurs & Bourse",
+            icon: "fa-solid fa-money-bill-trend-up",
+          },
+          {
+            id: "funding",
+            group: "Finance",
+            label: "Financements & Subventions",
+            icon: "fa-solid fa-sack-dollar",
+          },
+          {
+            id: "contracts",
+            group: "Juridique",
+            label: "Contrats & Conventions",
+            icon: "fa-solid fa-file-contract",
+          },
+          {
+            id: "events",
+            group: "Opérations",
+            label: "Événements & Roadshows",
+            icon: "fa-solid fa-bullhorn",
+          },
+          {
+            id: "colleges",
+            group: "Académique",
+            label: "21 Collèges & Partenariats",
+            icon: "fa-solid fa-school",
+          },
+          {
+            id: "team",
+            group: "Organisation",
+            label: "Équipe & RH Direction",
+            icon: "fa-solid fa-users",
+          },
+          {
+            id: "costs",
+            group: "Finance",
+            label: "Centre de Coûts",
+            icon: "fa-solid fa-file-invoice-dollar",
+          },
+          {
+            id: "analytics",
+            group: "Pilotage",
+            label: "Analytics & Forecasting",
+            icon: "fa-solid fa-chart-line",
+          },
+          {
+            id: "reports",
+            group: "Pilotage",
+            label: "Reporting Professionnel",
+            icon: "fa-solid fa-file",
+          },
+        ];
+
+        const PIPELINE_STAGES = [
+          "Identification",
+          "Qualification",
+          "Proposition",
+          "Négociation",
+          "Signature",
+          "Gagné",
+        ];
+        const PARTNER_TYPES = [
+          "Académique",
+          "Entreprise",
+          "Institutionnel",
+          "Technologique",
+          "Financier",
+          "Investisseur",
+        ];
+        const CONTRACT_TYPES = [
+          "Convention cadre",
+          "MoU",
+          "Partenariat commercial",
+          "Licence",
+          "Sponsoring",
+          "Recherche",
+          "Investissement",
+        ];
+        const CURRENCIES = ["IV"];
+
+        /* ---------- Storage ---------- */
+        const DB_KEY = "ssia_erp_v1";
+        const defaultDB = () => ({
+          partners: [],
+          deals: [],
+          investors: [],
+          fundings: [],
+          contracts: [],
+          events: [],
+          colleges: [],
+          team: [],
+          costs: [],
+          reports: [],
+          activities: [], // audit log
+        });
+        let db = load();
+        function load() {
+          try {
+            return Object.assign(
+              defaultDB(),
+              JSON.parse(localStorage.getItem(DB_KEY) || "{}"),
+            );
+          } catch (e) {
+            return defaultDB();
+          }
+        }
+        function save() {
+          localStorage.setItem(DB_KEY, JSON.stringify(db));
+        }
+        function uid() {
+          return (
+            "id_" +
+            Math.random().toString(36).slice(2, 10) +
+            Date.now().toString(36).slice(-4)
+          );
+        }
+        function log(action, entity, ref) {
+          db.activities.unshift({
+            id: uid(),
+            ts: Date.now(),
+            action,
+            entity,
+            ref,
+          });
+          db.activities = db.activities.slice(0, 200);
+          save();
+        }
+
+        /* ---------- Utils ---------- */
+        const fmtMoney = (n) => {
+          return (
+            new Intl.NumberFormat("fr-FR", {
+              maximumFractionDigits: 2,
+            }).format(n || 0) + " IV"
+          );
+        };
+        const fmtDate = (d) =>
+          d ? new Date(d).toLocaleDateString("fr-FR") : "—";
+        const todayISO = () => new Date().toISOString().slice(0, 10);
+        function toast(msg, kind = "") {
+          const t = document.createElement("div");
+          t.className = "toast " + kind;
+          t.textContent = msg;
+          document.getElementById("toastHost").appendChild(t);
+          setTimeout(() => t.remove(), 3000);
+        }
+        function confirmDelete(name, cb) {
+          openModal({
+            title: "Confirmer la suppression",
+            body: `<p>Supprimer définitivement <b>${escapeHtml(name)}</b> ?</p>`,
+            footer: [
+              { label: "Annuler", action: closeModal },
+              {
+                label: "Supprimer",
+                cls: "danger",
+                action: () => {
+                  cb();
+                  closeModal();
+                },
+              },
+            ],
+          });
+        }
+        function escapeHtml(s) {
+          return String(s ?? "").replace(
+            /[&<>"']/g,
+            (c) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              })[c],
+          );
+        }
+        function downloadFile(name, content, type = "text/plain") {
+          const b = new Blob([content], { type });
+          const u = URL.createObjectURL(b);
+          const a = document.createElement("a");
+          a.href = u;
+          a.download = name;
+          a.click();
+          URL.revokeObjectURL(u);
+        }
+        function toCSV(rows) {
+          if (!rows.length) return "";
+          const keys = Object.keys(rows[0]);
+          const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+          return [
+            keys.join(","),
+            ...rows.map((r) => keys.map((k) => esc(r[k])).join(",")),
+          ].join("\n");
+        }
+
+        /* ---------- Modal ---------- */
+        function openModal({ title, body, footer = [] }) {
+          document.getElementById("mTitle").textContent = title;
+          document.getElementById("mBody").innerHTML =
+            typeof body === "string" ? body : "";
+          if (typeof body !== "string")
+            document.getElementById("mBody").appendChild(body);
+          const ft = document.getElementById("mFoot");
+          ft.innerHTML = "";
+          footer.forEach((b) => {
+            const btn = document.createElement("button");
+            btn.className = "btn " + (b.cls || "");
+            btn.textContent = b.label;
+            btn.onclick = b.action;
+            ft.appendChild(btn);
+          });
+          document.getElementById("modal").classList.add("open");
+        }
+        function closeModal() {
+          document.getElementById("modal").classList.remove("open");
+        }
+
+        /* ---------- Navigation ---------- */
+        let current = "dashboard";
+        function buildNav() {
+          const nav = document.getElementById("nav");
+          nav.innerHTML = "";
+          const groups = [...new Set(MODULES.map((m) => m.group))];
+          groups.forEach((g) => {
+            const h = document.createElement("div");
+            h.className = "group";
+            h.textContent = g;
+            nav.appendChild(h);
+            MODULES.filter((m) => m.group === g).forEach((m) => {
+              const b = document.createElement("button");
+              b.innerHTML = `<i class="ico ${m.icon}"></i><span>${m.label}</span>`;
+              if (m.id === current) b.classList.add("active");
+              b.onclick = () => go(m.id);
+              nav.appendChild(b);
+            });
+          });
+        }
+        function go(id) {
+          current = id;
+          buildNav();
+          render();
+        }
+        function render() {
+          const m = MODULES.find((x) => x.id === current);
+          document.getElementById("crumb").textContent =
+            m.group + " / " + m.label;
+          document.getElementById("pageTitle").textContent = m.label;
+          const v = document.getElementById("view");
+          v.innerHTML = "";
+          views[current](v);
+        }
+
+        /* ---------- KPI Cards ---------- */
+        function kpiCard(lbl, val, delta, icon = "★", kind = "flat") {
+          return `<div class="card kpi"><div class="ico">${icon}</div>
+    <div class="lbl">${lbl}</div><div class="val">${val}</div>
+    <div class="delta ${kind}">${delta || ""}</div></div>`;
+        }
+
+        /* ---------- Views ---------- */
+        const views = {};
+
+        /* DASHBOARD */
+        views.dashboard = (root) => {
+          const partners = db.partners.length;
+          const deals = db.deals;
+          const pipelineValue = deals
+            .filter((d) => d.stage !== "Gagné")
+            .reduce((s, d) => s + (+d.amount || 0), 0);
+          const wonValue = deals
+            .filter((d) => d.stage === "Gagné")
+            .reduce((s, d) => s + (+d.amount || 0), 0);
+          const investors = db.investors.length;
+          const contractsActive = db.contracts.filter(
+            (c) => c.status === "Actif",
+          ).length;
+          const events = db.events.length;
+          const fundingTotal = db.fundings.reduce(
+            (s, f) => s + (+f.amount || 0),
+            0,
+          );
+          const conv = deals.length
+            ? Math.round(
+                (deals.filter((d) => d.stage === "Gagné").length /
+                  deals.length) *
+                  100,
+              )
+            : 0;
+
+          root.innerHTML = `
+    <div class="page-title">
+      <div><h3>Vue d'ensemble — Direction Partenariats Stratégiques</h3>
+      <p>Pilotage temps réel des partenariats académiques, entreprises, institutionnels, technologiques, financiers et investisseurs.</p></div>
+      <div class="btn-row">
+        <button class="btn" onclick="go('analytics')">Analytics</button>
+        <button class="btn primary" onclick="go('pipeline')">+ Nouvelle opportunité</button>
+      </div>
+    </div>
+    <div class="grid kpi-grid">
+      ${kpiCard("Partenaires actifs", partners, partners ? "Base à jour" : "Base vide", "🤝", "flat")}
+      ${kpiCard("Pipeline ouvert", fmtMoney(pipelineValue), deals.length + " opportunités", "🧭", "up")}
+      ${kpiCard("Affaires gagnées", fmtMoney(wonValue), conv + "% taux de conversion", "🏆", "up")}
+      ${kpiCard("Investisseurs", investors, "Relation IR active", "📈", "flat")}
+      ${kpiCard("Contrats actifs", contractsActive, db.contracts.length + " au total", "📜", "flat")}
+      ${kpiCard("Financements obtenus", fmtMoney(fundingTotal), db.fundings.length + " dossiers", "💰", "up")}
+      ${kpiCard("Événements planifiés", events, "12 derniers mois", "🎤", "flat")}
+      ${kpiCard("Collèges connectés", db.colleges.length + " / 21", "Cartographie partenariats", "🎓", "flat")}
+    </div>
+    <div class="grid" style="grid-template-columns:2fr 1fr;margin-top:14px">
+      <div class="card"><div class="hd"><h4>Pipeline par étape</h4><span class="sub">Valeur (€)</span></div><div class="bd"><canvas id="cPipe" height="120"></canvas></div></div>
+      <div class="card"><div class="hd"><h4>Mix partenaires</h4><span class="sub">Par typologie</span></div><div class="bd"><canvas id="cMix" height="120"></canvas></div></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:14px">
+      <div class="card"><div class="hd"><h4>Activité récente</h4></div><div class="bd" id="activityFeed"></div></div>
+      <div class="card"><div class="hd"><h4>Échéances contrats</h4></div><div class="bd" id="dueFeed"></div></div>
+    </div>
+  `;
+          // charts
+          const stageVals = PIPELINE_STAGES.map((s) =>
+            deals
+              .filter((d) => d.stage === s)
+              .reduce((a, b) => a + (+b.amount || 0), 0),
+          );
+          new Chart(document.getElementById("cPipe"), {
+            type: "bar",
+            data: {
+              labels: PIPELINE_STAGES,
+              datasets: [
+                {
+                  label: "€",
+                  data: stageVals,
+                  backgroundColor: "#1f4ed8",
+                  borderRadius: 6,
+                },
+              ],
+            },
+            options: {
+              plugins: { legend: { display: false } },
+              scales: {
+                y: {
+                  ticks: { callback: (v) => (v >= 1000 ? v / 1000 + "k" : v) },
+                },
+              },
+            },
+          });
+          const mixCounts = PARTNER_TYPES.map(
+            (t) => db.partners.filter((p) => p.type === t).length,
+          );
+          new Chart(document.getElementById("cMix"), {
+            type: "doughnut",
+            data: {
+              labels: PARTNER_TYPES,
+              datasets: [
+                {
+                  data: mixCounts,
+                  backgroundColor: [
+                    "#1f4ed8",
+                    "#0ea579",
+                    "#d97706",
+                    "#0284c7",
+                    "#b8881f",
+                    "#7c3aed",
+                  ],
+                },
+              ],
+            },
+            options: {
+              plugins: {
+                legend: { position: "bottom", labels: { boxWidth: 10 } },
+              },
+            },
+          });
+          // feeds
+          const fa = document.getElementById("activityFeed");
+          fa.innerHTML = db.activities.length
+            ? db.activities
+                .slice(0, 8)
+                .map(
+                  (a) =>
+                    `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--border)"><span>${escapeHtml(a.action)} · <b>${escapeHtml(a.entity)}</b> ${a.ref ? '<span style="color:var(--muted)">' + escapeHtml(a.ref) + "</span>" : ""}</span><span style="color:var(--muted);font-size:12px">${fmtDate(a.ts)}</span></div>`,
+                )
+                .join("")
+            : emptyHTML(
+                "Aucune activité",
+                "Les actions effectuées dans l'ERP apparaîtront ici.",
+              );
+          const due = document.getElementById("dueFeed");
+          const upcoming = db.contracts
+            .filter((c) => c.endDate)
+            .sort((a, b) => new Date(a.endDate) - new Date(b.endDate))
+            .slice(0, 8);
+          due.innerHTML = upcoming.length
+            ? upcoming
+                .map(
+                  (c) =>
+                    `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--border)"><span><b>${escapeHtml(c.title)}</b> · ${escapeHtml(c.partner || "—")}</span><span class="badge ${dueBadge(c.endDate)}">${fmtDate(c.endDate)}</span></div>`,
+                )
+                .join("")
+            : emptyHTML(
+                "Aucune échéance",
+                "Ajoutez des contrats pour suivre les échéances.",
+              );
+        };
+        function dueBadge(d) {
+          const days = (new Date(d) - new Date()) / 86400000;
+          if (days < 0) return "red";
+          if (days < 30) return "amber";
+          return "green";
+        }
+        function emptyHTML(title, sub) {
+          return `<div class="empty"><div class="em-ico">📭</div><div class="em-title">${escapeHtml(title)}</div><div>${escapeHtml(sub)}</div></div>`;
+        }
+
+        /* ---------- Generic CRUD scaffolding ---------- */
+        function crudView({
+          root,
+          title,
+          subtitle,
+          collection,
+          columns,
+          fields,
+          addLabel = "Nouveau",
+          extraActions = [],
+          filters = [],
+        }) {
+          const wrap = document.createElement("div");
+          wrap.innerHTML = `
+    <div class="page-title"><div><h3>${title}</h3><p>${subtitle || ""}</p></div>
+      <div class="btn-row">
+        ${extraActions.map((a, i) => `<button class="btn" data-x="${i}">${a.label}</button>`).join("")}
+        <button class="btn" id="exp">⬇ Exporter CSV</button>
+        <button class="btn primary" id="add">+ ${addLabel}</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="bd">
+        <div class="row-tools">
+          <div class="left">
+            <input id="q" placeholder="Rechercher…"/>
+            ${filters.map((f) => `<select data-f="${f.key}"><option value="">${f.label}: Tous</option>${f.options.map((o) => `<option>${o}</option>`).join("")}</select>`).join("")}
+          </div>
+          <div style="color:var(--muted);font-size:12px" id="cnt"></div>
+        </div>
+        <div class="table-wrap"><table class="t"><thead><tr>${columns.map((c) => `<th>${c.label}</th>`).join("")}<th style="width:120px">Actions</th></tr></thead><tbody id="tb"></tbody></table></div>
+      </div>
+    </div>`;
+          root.appendChild(wrap);
+
+          const refresh = () => {
+            const q = (wrap.querySelector("#q").value || "").toLowerCase();
+            const fs = {};
+            wrap
+              .querySelectorAll("select[data-f]")
+              .forEach((s) => (fs[s.dataset.f] = s.value));
+            let rows = db[collection].slice();
+            rows = rows.filter((r) => {
+              if (
+                q &&
+                !columns.some((c) =>
+                  String(r[c.key] ?? "")
+                    .toLowerCase()
+                    .includes(q),
+                )
+              )
+                return false;
+              for (const k in fs) {
+                if (fs[k] && String(r[k] || "") !== fs[k]) return false;
+              }
+              return true;
+            });
+            const tb = wrap.querySelector("#tb");
+            if (!rows.length) {
+              tb.innerHTML = `<tr><td colspan="${columns.length + 1}">${emptyHTML("Aucune donnée", 'Cliquez sur "+ ' + addLabel + '" pour créer votre premier enregistrement.')}</td></tr>`;
+            } else {
+              tb.innerHTML = rows
+                .map(
+                  (
+                    r,
+                  ) => `<tr>${columns.map((c) => `<td>${c.render ? c.render(r) : escapeHtml(r[c.key] ?? "—")}</td>`).join("")}
+        <td><button class="btn sm" data-edit="${r.id}">✎</button> <button class="btn sm danger" data-del="${r.id}">🗑</button></td></tr>`,
+                )
+                .join("");
+            }
+            wrap.querySelector("#cnt").textContent =
+              rows.length + " enregistrement(s)";
+            tb.querySelectorAll("[data-edit]").forEach(
+              (b) => (b.onclick = () => openForm(b.dataset.edit)),
+            );
+            tb.querySelectorAll("[data-del]").forEach(
+              (b) =>
+                (b.onclick = () => {
+                  const it = db[collection].find((x) => x.id === b.dataset.del);
+                  confirmDelete(
+                    it.name || it.title || it.label || "cet élément",
+                    () => {
+                      db[collection] = db[collection].filter(
+                        (x) => x.id !== it.id,
+                      );
+                      save();
+                      log("Suppression", title, it.name || it.title || "");
+                      toast("Supprimé", "red");
+                      refresh();
+                    },
+                  );
+                }),
+            );
+          };
+
+          const openForm = (id) => {
+            const item = id ? db[collection].find((x) => x.id === id) : {};
+            const form = document.createElement("div");
+            form.className = "form-grid";
+            fields.forEach((f) => {
+              const wrapF = document.createElement("label");
+              wrapF.className = "f" + (f.full ? " full" : "");
+              if (f.full) wrapF.style.gridColumn = "1/-1";
+              let input;
+              if (f.type === "select") {
+                input = document.createElement("select");
+                (f.options || []).forEach((o) => {
+                  const op = document.createElement("option");
+                  op.value = o;
+                  op.textContent = o;
+                  input.appendChild(op);
+                });
+              } else if (f.type === "textarea") {
+                input = document.createElement("textarea");
+              } else {
+                input = document.createElement("input");
+                input.type = f.type || "text";
+                if (f.step) input.step = f.step;
+              }
+              input.value = item[f.key] ?? f.default ?? "";
+              input.dataset.k = f.key;
+              if (f.required) input.required = true;
+              wrapF.innerHTML = `<span>${f.label}${f.required ? " *" : ""}</span>`;
+              wrapF.appendChild(input);
+              form.appendChild(wrapF);
+            });
+            openModal({
+              title: (id ? "Modifier " : "Nouveau ") + title.toLowerCase(),
+              body: form,
+              footer: [
+                { label: "Annuler", action: closeModal },
+                {
+                  label: id ? "Enregistrer" : "Créer",
+                  cls: "primary",
+                  action: () => {
+                    const data = {};
+                    let ok = true;
+                    form.querySelectorAll("[data-k]").forEach((el) => {
+                      if (el.required && !el.value) {
+                        ok = false;
+                        el.style.borderColor = "var(--danger)";
+                      }
+                      data[el.dataset.k] = el.value;
+                    });
+                    if (!ok) {
+                      toast(
+                        "Veuillez compléter les champs obligatoires",
+                        "red",
+                      );
+                      return;
+                    }
+                    if (id) {
+                      Object.assign(item, data);
+                      log("Modification", title, data.name || data.title || "");
+                      toast("Mise à jour effectuée", "green");
+                    } else {
+                      data.id = uid();
+                      data.createdAt = Date.now();
+                      db[collection].push(data);
+                      log("Création", title, data.name || data.title || "");
+                      toast(title + " créé", "green");
+                    }
+                    save();
+                    closeModal();
+                    refresh();
+                  },
+                },
+              ],
+            });
+          };
+
+          wrap.querySelector("#add").onclick = () => openForm();
+          wrap.querySelector("#q").oninput = refresh;
+          wrap
+            .querySelectorAll("select[data-f]")
+            .forEach((s) => (s.onchange = refresh));
+          wrap.querySelector("#exp").onclick = () => {
+            const rows = db[collection];
+            if (!rows.length) {
+              toast("Rien à exporter");
+              return;
+            }
+            downloadFile(collection + ".csv", toCSV(rows), "text/csv");
+          };
+          extraActions.forEach((a, i) => {
+            wrap.querySelector(`[data-x="${i}"]`).onclick = () =>
+              a.action(refresh, openForm);
+          });
+          refresh();
+          return { refresh, openForm };
+        }
+
+        /* PARTNERS */
+        views.partners = (root) => {
+          crudView({
+            root,
+            title: "CRM Partenaires",
+            subtitle:
+              "Base 360° des partenaires académiques, entreprises, institutionnels, technologiques, financiers et investisseurs.",
+            collection: "partners",
+            addLabel: "Partenaire",
+            filters: [
+              { key: "type", label: "Type", options: PARTNER_TYPES },
+              {
+                key: "status",
+                label: "Statut",
+                options: ["Prospect", "Actif", "En pause", "Clôturé"],
+              },
+            ],
+            columns: [
+              { key: "name", label: "Nom" },
+              {
+                key: "type",
+                label: "Type",
+                render: (r) =>
+                  `<span class="badge">${escapeHtml(r.type || "—")}</span>`,
+              },
+              { key: "country", label: "Pays" },
+              { key: "contact", label: "Contact" },
+              { key: "email", label: "Email" },
+              {
+                key: "status",
+                label: "Statut",
+                render: (r) =>
+                  `<span class="badge ${{ Actif: "green", Prospect: "amber", "En pause": "gray", Clôturé: "red" }[r.status] || "gray"}">${escapeHtml(r.status || "—")}</span>`,
+              },
+              { key: "owner", label: "Responsable" },
+            ],
+            fields: [
+              { key: "name", label: "Nom du partenaire", required: true },
+              {
+                key: "type",
+                label: "Typologie",
+                type: "select",
+                options: PARTNER_TYPES,
+                required: true,
+              },
+              { key: "country", label: "Pays" },
+              { key: "sector", label: "Secteur" },
+              { key: "contact", label: "Contact principal" },
+              { key: "role", label: "Fonction" },
+              { key: "email", label: "Email", type: "email" },
+              { key: "phone", label: "Téléphone" },
+              { key: "website", label: "Site web" },
+              { key: "owner", label: "Responsable interne" },
+              {
+                key: "status",
+                label: "Statut",
+                type: "select",
+                options: ["Prospect", "Actif", "En pause", "Clôturé"],
+                default: "Prospect",
+              },
+              { key: "notes", label: "Notes", type: "textarea", full: true },
+            ],
+          });
+        };
+
+        /* PIPELINE */
+        views.pipeline = (root) => {
+          root.innerHTML = `
+  <div class="page-title">
+    <div><h3>Pipeline Commercial</h3><p>Suivi des opportunités de partenariats — vue kanban et tableau.</p></div>
+    <div class="btn-row">
+      <button class="btn" id="tabT">Vue Tableau</button>
+      <button class="btn" id="tabK">Vue Kanban</button>
+      <button class="btn primary" id="addD">+ Opportunité</button>
+    </div>
+  </div>
+  <div class="grid kpi-grid" style="margin-bottom:14px">
+    ${kpiCard("Opportunités", db.deals.length, "", "🧭")}
+    ${kpiCard("Valeur pipeline", fmtMoney(db.deals.filter((d) => d.stage !== "Gagné").reduce((s, d) => s + (+d.amount || 0), 0)), "", "💼")}
+    ${kpiCard("Gagnées", db.deals.filter((d) => d.stage === "Gagné").length, "", "🏆", "up")}
+    ${kpiCard("Probab. moyenne", (db.deals.length ? Math.round(db.deals.reduce((s, d) => s + (+d.proba || 0), 0) / db.deals.length) : 0) + "%", "", "🎯")}
+  </div>
+  <div id="pipeBody"></div>`;
+          const body = root.querySelector("#pipeBody");
+          let mode = "kanban";
+          const renderBody = () => {
+            if (mode === "kanban") renderKanban(body);
+            else renderDealsTable(body);
+          };
+          root.querySelector("#tabK").onclick = () => {
+            mode = "kanban";
+            renderBody();
+          };
+          root.querySelector("#tabT").onclick = () => {
+            mode = "table";
+            renderBody();
+          };
+          root.querySelector("#addD").onclick = () =>
+            dealForm(null, renderBody);
+          renderBody();
+        };
+        function renderKanban(host) {
+          host.innerHTML = `<div class="kanban">${PIPELINE_STAGES.map((s) => {
+            const items = db.deals.filter((d) => d.stage === s);
+            const total = items.reduce((a, b) => a + (+b.amount || 0), 0);
+            return `<div class="kcol" data-stage="${s}"><h5>${s}<span class="badge gray">${items.length} · ${fmtMoney(total)}</span></h5>${items
+              .map(
+                (d) => `
+      <div class="kcard" draggable="true" data-id="${d.id}" onclick="dealForm('${d.id}', ()=>views.pipeline(document.getElementById('view')))">
+        <div class="nm">${escapeHtml(d.name || "—")}</div>
+        <div style="font-size:12px;color:var(--text-soft);margin-top:2px">${escapeHtml(d.partner || "—")}</div>
+        <div class="meta"><span>${fmtMoney(d.amount || 0)}</span><span>${d.proba || 0}%</span></div>
+      </div>`,
+              )
+              .join("")}</div>`;
+          }).join("")}</div>`;
+          // drag
+          host.querySelectorAll(".kcard").forEach((c) => {
+            c.addEventListener("dragstart", (e) => {
+              e.dataTransfer.setData("text/plain", c.dataset.id);
+              c.classList.add("drag");
+            });
+            c.addEventListener("dragend", () => c.classList.remove("drag"));
+          });
+          host.querySelectorAll(".kcol").forEach((col) => {
+            col.addEventListener("dragover", (e) => e.preventDefault());
+            col.addEventListener("drop", (e) => {
+              e.preventDefault();
+              const id = e.dataTransfer.getData("text/plain");
+              const d = db.deals.find((x) => x.id === id);
+              if (d) {
+                d.stage = col.dataset.stage;
+                save();
+                log("Étape pipeline", d.name, d.stage);
+                toast("Étape mise à jour : " + d.stage, "green");
+                views.pipeline(document.getElementById("view"));
+              }
+            });
+          });
+        }
+        function renderDealsTable(host) {
+          host.innerHTML = `<div class="card"><div class="bd"><div class="table-wrap"><table class="t"><thead><tr>
+    <th>Nom</th><th>Partenaire</th><th>Étape</th><th>Montant</th><th>Probab.</th><th>Clôture</th><th>Responsable</th><th></th></tr></thead><tbody id="tb"></tbody></table></div></div></div>`;
+          const tb = host.querySelector("#tb");
+          if (!db.deals.length) {
+            tb.innerHTML = `<tr><td colspan="8">${emptyHTML("Aucune opportunité", "Créez votre première opportunité pour alimenter le pipeline.")}</td></tr>`;
+            return;
+          }
+          tb.innerHTML = db.deals
+            .map(
+              (d) => `<tr>
+    <td><b>${escapeHtml(d.name || "—")}</b></td>
+    <td>${escapeHtml(d.partner || "—")}</td>
+    <td><span class="badge">${escapeHtml(d.stage)}</span></td>
+    <td>${fmtMoney(d.amount || 0)}</td>
+    <td><div class="progress"><i style="width:${+d.proba || 0}%"></i></div><div style="font-size:11px;color:var(--muted);margin-top:3px">${+d.proba || 0}%</div></td>
+    <td>${fmtDate(d.closeDate)}</td>
+    <td>${escapeHtml(d.owner || "—")}</td>
+    <td><button class="btn sm" onclick="dealForm('${d.id}', ()=>views.pipeline(document.getElementById('view')))">✎</button>
+        <button class="btn sm danger" onclick="deleteDeal('${d.id}')">🗑</button></td></tr>`,
+            )
+            .join("");
+        }
+        function deleteDeal(id) {
+          const d = db.deals.find((x) => x.id === id);
+          if (!d) return;
+          confirmDelete(d.name || "", () => {
+            db.deals = db.deals.filter((x) => x.id !== id);
+            save();
+            log("Suppression", "Opportunité", d.name);
+            views.pipeline(document.getElementById("view"));
+          });
+        }
+        function dealForm(id, cb) {
+          const item = id
+            ? db.deals.find((x) => x.id === id)
+            : { stage: "Identification", proba: 10, currency: "IV" };
+          const form = document.createElement("div");
+          form.className = "form-grid";
+          const partners = ["", ...db.partners.map((p) => p.name)];
+          const fields = [
+            { k: "name", l: "Intitulé", req: true },
+            { k: "partner", l: "Partenaire", type: "select", opts: partners },
+            {
+              k: "stage",
+              l: "Étape",
+              type: "select",
+              opts: PIPELINE_STAGES,
+              req: true,
+            },
+            { k: "amount", l: "Montant", type: "number" },
+            { k: "currency", l: "Devise", type: "select", opts: CURRENCIES },
+            { k: "proba", l: "Probabilité (%)", type: "number" },
+            { k: "closeDate", l: "Date clôture prévue", type: "date" },
+            { k: "owner", l: "Responsable" },
+            { k: "source", l: "Source" },
+            {
+              k: "description",
+              l: "Description",
+              type: "textarea",
+              full: true,
+            },
+          ];
+          fields.forEach((f) => {
+            const w = document.createElement("label");
+            w.className = "f" + (f.full ? " full" : "");
+            if (f.full) w.style.gridColumn = "1/-1";
+            let inp;
+            if (f.type === "select") {
+              inp = document.createElement("select");
+              f.opts.forEach((o) => {
+                const op = document.createElement("option");
+                op.value = o;
+                op.textContent = o || "—";
+                inp.appendChild(op);
+              });
+            } else if (f.type === "textarea") {
+              inp = document.createElement("textarea");
+            } else {
+              inp = document.createElement("input");
+              inp.type = f.type || "text";
+            }
+            inp.value = item[f.k] ?? "";
+            inp.dataset.k = f.k;
+            if (f.req) inp.required = true;
+            w.innerHTML = `<span>${f.l}${f.req ? " *" : ""}</span>`;
+            w.appendChild(inp);
+            form.appendChild(w);
+          });
+          openModal({
+            title: id ? "Modifier opportunité" : "Nouvelle opportunité",
+            body: form,
+            footer: [
+              { label: "Annuler", action: closeModal },
+              {
+                label: id ? "Enregistrer" : "Créer",
+                cls: "primary",
+                action: () => {
+                  const data = {};
+                  let ok = true;
+                  form.querySelectorAll("[data-k]").forEach((el) => {
+                    if (el.required && !el.value) {
+                      ok = false;
+                      el.style.borderColor = "var(--danger)";
+                    }
+                    data[el.dataset.k] = el.value;
+                  });
+                  if (!ok) {
+                    toast("Champs obligatoires manquants", "red");
+                    return;
+                  }
+                  if (id) {
+                    Object.assign(item, data);
+                    log("Mise à jour", "Opportunité", data.name);
+                  } else {
+                    data.id = uid();
+                    data.createdAt = Date.now();
+                    db.deals.push(data);
+                    log("Création", "Opportunité", data.name);
+                  }
+                  save();
+                  closeModal();
+                  toast("Opportunité enregistrée", "green");
+                  cb && cb();
+                },
+              },
+            ],
+          });
+        }
+
+        /* INVESTORS */
+        views.investors = (root) => {
+          root.innerHTML = `
+  <div class="page-title"><div><h3>Investisseurs & Relations Bourse</h3><p>SSIAVERSITY est cotée en bourse — suivez la base actionnariale et la communication financière.</p></div></div>
+  <div class="grid kpi-grid" style="margin-bottom:14px">
+    ${kpiCard("Investisseurs", db.investors.length, "", "📈")}
+    ${kpiCard("Capital tracké", fmtMoney(db.investors.reduce((s, i) => s + (+i.holding || 0), 0)), "", "💼")}
+    ${kpiCard("Institutionnels", db.investors.filter((i) => i.type === "Institutionnel").length, "", "🏛")}
+    ${kpiCard("Roadshows IR", db.events.filter((e) => e.kind === "Roadshow Investisseurs").length, "", "🎤")}
+  </div>
+  <div id="inv"></div>`;
+          crudView({
+            root: root.querySelector("#inv"),
+            title: "Base Investisseurs",
+            subtitle: "",
+            collection: "investors",
+            addLabel: "Investisseur",
+            filters: [
+              {
+                key: "type",
+                label: "Type",
+                options: [
+                  "Institutionnel",
+                  "Particulier",
+                  "Fonds",
+                  "Family Office",
+                  "Corporate",
+                ],
+              },
+            ],
+            columns: [
+              { key: "name", label: "Nom" },
+              {
+                key: "type",
+                label: "Type",
+                render: (r) =>
+                  `<span class="badge purple">${escapeHtml(r.type || "—")}</span>`,
+              },
+              { key: "country", label: "Pays" },
+              {
+                key: "holding",
+                label: "Capital (€)",
+                render: (r) => fmtMoney(r.holding || 0),
+              },
+              { key: "shares", label: "Titres" },
+              { key: "contact", label: "Contact IR" },
+              { key: "email", label: "Email" },
+            ],
+            fields: [
+              { key: "name", label: "Nom investisseur", required: true },
+              {
+                key: "type",
+                label: "Type",
+                type: "select",
+                options: [
+                  "Institutionnel",
+                  "Particulier",
+                  "Fonds",
+                  "Family Office",
+                  "Corporate",
+                ],
+              },
+              { key: "country", label: "Pays" },
+              { key: "holding", label: "Capital détenu (€)", type: "number" },
+              { key: "shares", label: "Nombre de titres", type: "number" },
+              { key: "contact", label: "Contact IR" },
+              { key: "email", label: "Email", type: "email" },
+              { key: "phone", label: "Téléphone" },
+              { key: "lastMeeting", label: "Dernière réunion", type: "date" },
+              {
+                key: "sentiment",
+                label: "Sentiment",
+                type: "select",
+                options: ["Positif", "Neutre", "Vigilant"],
+              },
+              { key: "notes", label: "Notes IR", type: "textarea", full: true },
+            ],
+          });
+        };
+
+        /* FUNDING */
+        views.funding = (root) => {
+          crudView({
+            root,
+            title: "Financements & Subventions",
+            subtitle:
+              "Suivi des appels à projets, subventions, levées et financements bancaires.",
+            collection: "fundings",
+            addLabel: "Financement",
+            filters: [
+              {
+                key: "type",
+                label: "Type",
+                options: [
+                  "Subvention",
+                  "Appel à projets",
+                  "Levée de fonds",
+                  "Prêt",
+                  "Mécénat",
+                ],
+              },
+              {
+                key: "status",
+                label: "Statut",
+                options: [
+                  "Identifié",
+                  "En montage",
+                  "Déposé",
+                  "Accordé",
+                  "Refusé",
+                ],
+              },
+            ],
+            columns: [
+              { key: "title", label: "Intitulé" },
+              { key: "source", label: "Source" },
+              {
+                key: "type",
+                label: "Type",
+                render: (r) =>
+                  `<span class="badge">${escapeHtml(r.type || "—")}</span>`,
+              },
+              {
+                key: "amount",
+                label: "Montant",
+                render: (r) => fmtMoney(r.amount || 0),
+              },
+              {
+                key: "deadline",
+                label: "Échéance",
+                render: (r) => fmtDate(r.deadline),
+              },
+              {
+                key: "status",
+                label: "Statut",
+                render: (r) =>
+                  `<span class="badge ${{ Accordé: "green", Refusé: "red", Déposé: "amber" }[r.status] || "gray"}">${escapeHtml(r.status || "—")}</span>`,
+              },
+            ],
+            fields: [
+              { key: "title", label: "Intitulé", required: true },
+              { key: "source", label: "Source / Bailleur" },
+              {
+                key: "type",
+                label: "Type",
+                type: "select",
+                options: [
+                  "Subvention",
+                  "Appel à projets",
+                  "Levée de fonds",
+                  "Prêt",
+                  "Mécénat",
+                ],
+              },
+              { key: "amount", label: "Montant", type: "number" },
+              {
+                key: "currency",
+                label: "Devise",
+                type: "select",
+                options: CURRENCIES,
+              },
+              { key: "deadline", label: "Échéance", type: "date" },
+              {
+                key: "status",
+                label: "Statut",
+                type: "select",
+                options: [
+                  "Identifié",
+                  "En montage",
+                  "Déposé",
+                  "Accordé",
+                  "Refusé",
+                ],
+              },
+              { key: "owner", label: "Responsable" },
+              {
+                key: "description",
+                label: "Description",
+                type: "textarea",
+                full: true,
+              },
+            ],
+          });
+        };
+
+        /* CONTRACTS */
+        views.contracts = (root) => {
+          crudView({
+            root,
+            title: "Contrats & Conventions",
+            subtitle:
+              "Cycle de vie complet : rédaction, signature, exécution, renouvellement.",
+            collection: "contracts",
+            addLabel: "Contrat",
+            filters: [
+              { key: "type", label: "Type", options: CONTRACT_TYPES },
+              {
+                key: "status",
+                label: "Statut",
+                options: [
+                  "Brouillon",
+                  "En négociation",
+                  "Signé",
+                  "Actif",
+                  "Expiré",
+                  "Résilié",
+                ],
+              },
+            ],
+            columns: [
+              { key: "title", label: "Référence" },
+              { key: "partner", label: "Partenaire" },
+              {
+                key: "type",
+                label: "Type",
+                render: (r) =>
+                  `<span class="badge">${escapeHtml(r.type || "—")}</span>`,
+              },
+              {
+                key: "value",
+                label: "Valeur",
+                render: (r) => fmtMoney(r.value || 0),
+              },
+              {
+                key: "startDate",
+                label: "Début",
+                render: (r) => fmtDate(r.startDate),
+              },
+              {
+                key: "endDate",
+                label: "Fin",
+                render: (r) => fmtDate(r.endDate),
+              },
+              {
+                key: "status",
+                label: "Statut",
+                render: (r) =>
+                  `<span class="badge ${{ Actif: "green", Signé: "green", Expiré: "red", Résilié: "red", "En négociation": "amber" }[r.status] || "gray"}">${escapeHtml(r.status || "—")}</span>`,
+              },
+            ],
+            fields: [
+              { key: "title", label: "Référence / Intitulé", required: true },
+              { key: "partner", label: "Partenaire" },
+              {
+                key: "type",
+                label: "Type",
+                type: "select",
+                options: CONTRACT_TYPES,
+              },
+              { key: "value", label: "Valeur", type: "number" },
+              {
+                key: "currency",
+                label: "Devise",
+                type: "select",
+                options: CURRENCIES,
+              },
+              { key: "startDate", label: "Date de début", type: "date" },
+              { key: "endDate", label: "Date de fin", type: "date" },
+              {
+                key: "status",
+                label: "Statut",
+                type: "select",
+                options: [
+                  "Brouillon",
+                  "En négociation",
+                  "Signé",
+                  "Actif",
+                  "Expiré",
+                  "Résilié",
+                ],
+              },
+              { key: "owner", label: "Responsable juridique" },
+              {
+                key: "object",
+                label: "Objet du contrat",
+                type: "textarea",
+                full: true,
+              },
+            ],
+          });
+        };
+
+        /* EVENTS */
+        views.events = (root) => {
+          crudView({
+            root,
+            title: "Événements & Roadshows",
+            subtitle:
+              "Conférences, salons, roadshows investisseurs, signatures de partenariats.",
+            collection: "events",
+            addLabel: "Événement",
+            filters: [
+              {
+                key: "kind",
+                label: "Type",
+                options: [
+                  "Conférence",
+                  "Salon",
+                  "Roadshow Investisseurs",
+                  "Signature",
+                  "Webinaire",
+                  "Visite officielle",
+                ],
+              },
+            ],
+            columns: [
+              { key: "title", label: "Titre" },
+              {
+                key: "kind",
+                label: "Type",
+                render: (r) =>
+                  `<span class="badge">${escapeHtml(r.kind || "—")}</span>`,
+              },
+              { key: "date", label: "Date", render: (r) => fmtDate(r.date) },
+              { key: "location", label: "Lieu" },
+              { key: "attendees", label: "Participants" },
+              {
+                key: "budget",
+                label: "Budget",
+                render: (r) => fmtMoney(r.budget || 0),
+              },
+              {
+                key: "status",
+                label: "Statut",
+                render: (r) =>
+                  `<span class="badge ${{ Planifié: "amber", Confirmé: "green", Terminé: "gray", Annulé: "red" }[r.status] || "gray"}">${escapeHtml(r.status || "—")}</span>`,
+              },
+            ],
+            fields: [
+              { key: "title", label: "Titre", required: true },
+              {
+                key: "kind",
+                label: "Type",
+                type: "select",
+                options: [
+                  "Conférence",
+                  "Salon",
+                  "Roadshow Investisseurs",
+                  "Signature",
+                  "Webinaire",
+                  "Visite officielle",
+                ],
+              },
+              { key: "date", label: "Date", type: "date" },
+              { key: "location", label: "Lieu" },
+              {
+                key: "attendees",
+                label: "Nombre de participants",
+                type: "number",
+              },
+              { key: "budget", label: "Budget (€)", type: "number" },
+              {
+                key: "status",
+                label: "Statut",
+                type: "select",
+                options: ["Planifié", "Confirmé", "Terminé", "Annulé"],
+              },
+              { key: "owner", label: "Responsable" },
+              {
+                key: "objectives",
+                label: "Objectifs & KPI",
+                type: "textarea",
+                full: true,
+              },
+            ],
+          });
+        };
+
+        /* COLLEGES */
+        views.colleges = (root) => {
+          crudView({
+            root,
+            title: "21 Collèges — Partenariats par Collège",
+            subtitle:
+              "Cartographiez les partenariats portés par chacun des 21 collèges SSIAVERSITY.",
+            collection: "colleges",
+            addLabel: "Collège",
+            columns: [
+              { key: "name", label: "Collège" },
+              { key: "dean", label: "Doyen" },
+              { key: "students", label: "Étudiants" },
+              { key: "partnerships", label: "Partenariats actifs" },
+              { key: "focus", label: "Domaines clés" },
+            ],
+            fields: [
+              { key: "name", label: "Nom du collège", required: true },
+              { key: "dean", label: "Doyen / Directeur" },
+              { key: "students", label: "Nombre d'étudiants", type: "number" },
+              {
+                key: "partnerships",
+                label: "Partenariats actifs",
+                type: "number",
+              },
+              { key: "focus", label: "Domaines clés" },
+              { key: "contact", label: "Contact partenariats" },
+              { key: "email", label: "Email", type: "email" },
+              {
+                key: "notes",
+                label: "Notes stratégiques",
+                type: "textarea",
+                full: true,
+              },
+            ],
+          });
+        };
+
+        /* TEAM */
+        views.team = (root) => {
+          crudView({
+            root,
+            title: "Équipe de la Direction",
+            subtitle:
+              "Organisation, périmètres, objectifs et performance individuelle.",
+            collection: "team",
+            addLabel: "Collaborateur",
+            filters: [
+              {
+                key: "role",
+                label: "Rôle",
+                options: [
+                  "Directeur",
+                  "Manager",
+                  "Business Developer",
+                  "Chargé Partenariats",
+                  "IR Officer",
+                  "Analyste",
+                  "Juriste",
+                  "Assistant",
+                ],
+              },
+            ],
+            columns: [
+              { key: "name", label: "Nom" },
+              {
+                key: "role",
+                label: "Rôle",
+                render: (r) =>
+                  `<span class="badge">${escapeHtml(r.role || "—")}</span>`,
+              },
+              { key: "scope", label: "Périmètre" },
+              { key: "email", label: "Email" },
+              {
+                key: "target",
+                label: "Objectif annuel",
+                render: (r) => fmtMoney(r.target || 0),
+              },
+              {
+                key: "achieved",
+                label: "Réalisé",
+                render: (r) => fmtMoney(r.achieved || 0),
+              },
+              {
+                key: "perf",
+                label: "Atteinte",
+                render: (r) => {
+                  const t = +r.target || 0,
+                    a = +r.achieved || 0;
+                  const p = t ? Math.round((a / t) * 100) : 0;
+                  return `<div class="progress"><i style="width:${Math.min(p, 100)}%"></i></div><div style="font-size:11px;color:var(--muted);margin-top:3px">${p}%</div>`;
+                },
+              },
+            ],
+            fields: [
+              { key: "name", label: "Nom complet", required: true },
+              {
+                key: "role",
+                label: "Rôle",
+                type: "select",
+                options: [
+                  "Directeur",
+                  "Manager",
+                  "Business Developer",
+                  "Chargé Partenariats",
+                  "IR Officer",
+                  "Analyste",
+                  "Juriste",
+                  "Assistant",
+                ],
+              },
+              { key: "scope", label: "Périmètre (typologies / zones)" },
+              { key: "email", label: "Email", type: "email" },
+              { key: "phone", label: "Téléphone" },
+              { key: "target", label: "Objectif annuel (€)", type: "number" },
+              { key: "achieved", label: "Réalisé (€)", type: "number" },
+              { key: "manager", label: "Manager" },
+            ],
+          });
+        };
+
+        /* COSTS */
+        views.costs = (root) => {
+          root.innerHTML = `<div class="page-title"><div><h3>Centre de Coûts</h3><p>Budget de la direction, engagements et suivi des dépenses.</p></div></div>
+  <div class="grid kpi-grid" style="margin-bottom:14px">
+    ${kpiCard("Budget engagé", fmtMoney(db.costs.reduce((s, c) => s + (+c.amount || 0), 0)), "", "🧾")}
+    ${kpiCard("Lignes", db.costs.length, "", "📑")}
+    ${kpiCard("Catégories", new Set(db.costs.map((c) => c.category)).size, "", "🏷")}
+    ${kpiCard("Moyenne / ligne", fmtMoney(db.costs.length ? db.costs.reduce((s, c) => s + (+c.amount || 0), 0) / db.costs.length : 0), "", "📊")}
+  </div>
+  <div id="cc"></div>`;
+          crudView({
+            root: root.querySelector("#cc"),
+            title: "Lignes budgétaires",
+            collection: "costs",
+            addLabel: "Dépense",
+            filters: [
+              {
+                key: "category",
+                label: "Catégorie",
+                options: [
+                  "Mission",
+                  "Événementiel",
+                  "Marketing",
+                  "Honoraires",
+                  "Logiciels",
+                  "Communication IR",
+                  "Autres",
+                ],
+              },
+            ],
+            columns: [
+              { key: "label", label: "Libellé" },
+              {
+                key: "category",
+                label: "Catégorie",
+                render: (r) =>
+                  `<span class="badge">${escapeHtml(r.category || "—")}</span>`,
+              },
+              {
+                key: "amount",
+                label: "Montant",
+                render: (r) => fmtMoney(r.amount || 0),
+              },
+              { key: "date", label: "Date", render: (r) => fmtDate(r.date) },
+              { key: "owner", label: "Responsable" },
+              {
+                key: "status",
+                label: "Statut",
+                render: (r) =>
+                  `<span class="badge ${{ Payée: "green", Engagée: "amber", Rejetée: "red" }[r.status] || "gray"}">${escapeHtml(r.status || "—")}</span>`,
+              },
+            ],
+            fields: [
+              { key: "label", label: "Libellé", required: true },
+              {
+                key: "category",
+                label: "Catégorie",
+                type: "select",
+                options: [
+                  "Mission",
+                  "Événementiel",
+                  "Marketing",
+                  "Honoraires",
+                  "Logiciels",
+                  "Communication IR",
+                  "Autres",
+                ],
+              },
+              {
+                key: "amount",
+                label: "Montant (€)",
+                type: "number",
+                required: true,
+              },
+              { key: "date", label: "Date", type: "date" },
+              { key: "owner", label: "Responsable" },
+              {
+                key: "status",
+                label: "Statut",
+                type: "select",
+                options: ["Engagée", "Payée", "Rejetée"],
+              },
+              { key: "notes", label: "Notes", type: "textarea", full: true },
+            ],
+          });
+        };
+
+        /* ANALYTICS */
+        views.analytics = (root) => {
+          root.innerHTML = `
+  <div class="page-title"><div><h3>Analytics & Forecasting</h3><p>Vue analytique consolidée — tendances et projections.</p></div></div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:14px">
+    <div class="card"><div class="hd"><h4>Pipeline par étape</h4></div><div class="bd"><canvas id="a1" height="160"></canvas></div></div>
+    <div class="card"><div class="hd"><h4>Partenaires par typologie</h4></div><div class="bd"><canvas id="a2" height="160"></canvas></div></div>
+    <div class="card"><div class="hd"><h4>Contrats par statut</h4></div><div class="bd"><canvas id="a3" height="160"></canvas></div></div>
+    <div class="card"><div class="hd"><h4>Forecast revenus pondérés</h4><span class="sub">Montant × probabilité</span></div><div class="bd"><canvas id="a4" height="160"></canvas></div></div>
+  </div>`;
+          const stageVals = PIPELINE_STAGES.map((s) =>
+            db.deals
+              .filter((d) => d.stage === s)
+              .reduce((a, b) => a + (+b.amount || 0), 0),
+          );
+          new Chart(document.getElementById("a1"), {
+            type: "bar",
+            data: {
+              labels: PIPELINE_STAGES,
+              datasets: [
+                {
+                  label: "€",
+                  data: stageVals,
+                  backgroundColor: "#1f4ed8",
+                  borderRadius: 6,
+                },
+              ],
+            },
+            options: { plugins: { legend: { display: false } } },
+          });
+          new Chart(document.getElementById("a2"), {
+            type: "polarArea",
+            data: {
+              labels: PARTNER_TYPES,
+              datasets: [
+                {
+                  data: PARTNER_TYPES.map(
+                    (t) => db.partners.filter((p) => p.type === t).length,
+                  ),
+                  backgroundColor: [
+                    "#1f4ed8",
+                    "#0ea579",
+                    "#d97706",
+                    "#0284c7",
+                    "#b8881f",
+                    "#7c3aed",
+                  ],
+                },
+              ],
+            },
+          });
+          const statuses = [
+            "Brouillon",
+            "En négociation",
+            "Signé",
+            "Actif",
+            "Expiré",
+            "Résilié",
+          ];
+          new Chart(document.getElementById("a3"), {
+            type: "bar",
+            data: {
+              labels: statuses,
+              datasets: [
+                {
+                  label: "Contrats",
+                  data: statuses.map(
+                    (s) => db.contracts.filter((c) => c.status === s).length,
+                  ),
+                  backgroundColor: "#0ea579",
+                  borderRadius: 6,
+                },
+              ],
+            },
+            options: { plugins: { legend: { display: false } } },
+          });
+          // forecast: weighted amount by close month
+          const months = {};
+          db.deals.forEach((d) => {
+            if (!d.closeDate) return;
+            const k = d.closeDate.slice(0, 7);
+            months[k] =
+              (months[k] || 0) + (+d.amount || 0) * ((+d.proba || 0) / 100);
+          });
+          const keys = Object.keys(months).sort();
+          new Chart(document.getElementById("a4"), {
+            type: "line",
+            data: {
+              labels: keys,
+              datasets: [
+                {
+                  label: "Forecast (€)",
+                  data: keys.map((k) => months[k]),
+                  borderColor: "#1f4ed8",
+                  backgroundColor: "rgba(31,78,216,.15)",
+                  fill: true,
+                  tension: 0.3,
+                },
+              ],
+            },
+          });
+        };
+
+        /* REPORTS */
+        views.reports = (root) => {
+          root.innerHTML = `
+  <div class="page-title"><div><h3>Reporting Professionnel</h3><p>Générez et exportez les rapports consolidés de la direction.</p></div>
+    <div class="btn-row"><button class="btn primary" id="genRep">+ Générer un rapport</button></div>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:14px">
+    <div class="card"><div class="bd"><b>📈 Rapport pipeline</b><p style="color:var(--text-soft);font-size:13px">Synthèse des opportunités, valeur pondérée, conversion.</p><button class="btn" onclick="exportReport('pipeline')">Exporter CSV</button></div></div>
+    <div class="card"><div class="bd"><b>🤝 Rapport partenaires</b><p style="color:var(--text-soft);font-size:13px">Base partenaires consolidée avec typologie et statuts.</p><button class="btn" onclick="exportReport('partners')">Exporter CSV</button></div></div>
+    <div class="card"><div class="bd"><b>📜 Rapport contrats</b><p style="color:var(--text-soft);font-size:13px">Portefeuille contractuel avec échéances et valeur.</p><button class="btn" onclick="exportReport('contracts')">Exporter CSV</button></div></div>
+    <div class="card"><div class="bd"><b>📈 Rapport investisseurs</b><p style="color:var(--text-soft);font-size:13px">Base IR, capital tracké, sentiment.</p><button class="btn" onclick="exportReport('investors')">Exporter CSV</button></div></div>
+    <div class="card"><div class="bd"><b>💰 Rapport financements</b><p style="color:var(--text-soft);font-size:13px">Dossiers en cours, accordés et refusés.</p><button class="btn" onclick="exportReport('fundings')">Exporter CSV</button></div></div>
+    <div class="card"><div class="bd"><b>🧾 Rapport centre de coûts</b><p style="color:var(--text-soft);font-size:13px">Engagements et dépenses par catégorie.</p><button class="btn" onclick="exportReport('costs')">Exporter CSV</button></div></div>
+  </div>
+  <div class="card"><div class="hd"><h4>Rapports archivés</h4></div><div class="bd"><div id="repList"></div></div></div>`;
+          const list = root.querySelector("#repList");
+          const renderList = () => {
+            if (!db.reports.length) {
+              list.innerHTML = emptyHTML(
+                "Aucun rapport archivé",
+                "Cliquez sur « Générer un rapport » pour archiver un instantané.",
+              );
+              return;
+            }
+            list.innerHTML = `<div class="table-wrap"><table class="t"><thead><tr><th>Titre</th><th>Période</th><th>Date</th><th>Auteur</th><th></th></tr></thead><tbody>${db.reports
+              .map(
+                (r) => `<tr>
+      <td><b>${escapeHtml(r.title)}</b></td><td>${escapeHtml(r.period || "—")}</td><td>${fmtDate(r.date)}</td><td>${escapeHtml(r.author || "—")}</td>
+      <td><button class="btn sm" onclick='downloadFile(${JSON.stringify(r.title + ".json")}, ${JSON.stringify(JSON.stringify(r, null, 2))}, "application/json")'>⬇</button>
+      <button class="btn sm danger" onclick="db.reports=db.reports.filter(x=>x.id!=='${r.id}');save();views.reports(document.getElementById('view'));">🗑</button></td></tr>`,
+              )
+              .join("")}</tbody></table></div>`;
+          };
+          renderList();
+          root.querySelector("#genRep").onclick = () => {
+            const form = document.createElement("div");
+            form.className = "form-grid";
+            form.innerHTML = `<label class="f"><span>Titre *</span><input id="rt"/></label>
+      <label class="f"><span>Période</span><input id="rp" placeholder="Ex : T3 2026"/></label>
+      <label class="f full" style="grid-column:1/-1"><span>Auteur</span><input id="ra"/></label>`;
+            openModal({
+              title: "Générer un rapport",
+              body: form,
+              footer: [
+                { label: "Annuler", action: closeModal },
+                {
+                  label: "Générer",
+                  cls: "primary",
+                  action: () => {
+                    const t = form.querySelector("#rt").value.trim();
+                    if (!t) {
+                      toast("Titre requis", "red");
+                      return;
+                    }
+                    const snap = {
+                      id: uid(),
+                      title: t,
+                      period: form.querySelector("#rp").value,
+                      author: form.querySelector("#ra").value,
+                      date: Date.now(),
+                      snapshot: {
+                        partners: db.partners.length,
+                        deals: db.deals.length,
+                        investors: db.investors.length,
+                        contracts: db.contracts.length,
+                        pipelineValue: db.deals.reduce(
+                          (s, d) => s + (+d.amount || 0),
+                          0,
+                        ),
+                        fundings: db.fundings.reduce(
+                          (s, f) => s + (+f.amount || 0),
+                          0,
+                        ),
+                      },
+                    };
+                    db.reports.unshift(snap);
+                    save();
+                    log("Génération", "Rapport", t);
+                    toast("Rapport archivé", "green");
+                    closeModal();
+                    renderList();
+                  },
+                },
+              ],
+            });
+          };
+        };
+        function exportReport(kind) {
+          const map = {
+            pipeline: "deals",
+            partners: "partners",
+            contracts: "contracts",
+            investors: "investors",
+            fundings: "fundings",
+            costs: "costs",
+          };
+          const rows = db[map[kind]];
+          if (!rows.length) {
+            toast("Aucune donnée à exporter");
+            return;
+          }
+          downloadFile(
+            kind + "_" + todayISO() + ".csv",
+            toCSV(rows),
+            "text/csv",
+          );
+          toast("Export généré", "green");
+        }
+        function exportAll() {
+          downloadFile(
+            "ssiaversity_erp_backup_" + todayISO() + ".json",
+            JSON.stringify(db, null, 2),
+            "application/json",
+          );
+          toast("Sauvegarde exportée", "green");
+        }
+
+        /* Global search */
+        document
+          .getElementById("globalSearch")
+          .addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              const q = e.target.value.toLowerCase().trim();
+              if (!q) return;
+              const hits = [];
+              db.partners.forEach((p) => {
+                if (JSON.stringify(p).toLowerCase().includes(q))
+                  hits.push({
+                    m: "CRM Partenaires",
+                    id: "partners",
+                    n: p.name,
+                  });
+              });
+              db.deals.forEach((p) => {
+                if (JSON.stringify(p).toLowerCase().includes(q))
+                  hits.push({ m: "Pipeline", id: "pipeline", n: p.name });
+              });
+              db.contracts.forEach((p) => {
+                if (JSON.stringify(p).toLowerCase().includes(q))
+                  hits.push({ m: "Contrats", id: "contracts", n: p.title });
+              });
+              db.events.forEach((p) => {
+                if (JSON.stringify(p).toLowerCase().includes(q))
+                  hits.push({ m: "Événements", id: "events", n: p.title });
+              });
+              db.investors.forEach((p) => {
+                if (JSON.stringify(p).toLowerCase().includes(q))
+                  hits.push({ m: "Investisseurs", id: "investors", n: p.name });
+              });
+              const body = document.createElement("div");
+              body.innerHTML = hits.length
+                ? `<ul style="list-style:none;padding:0;margin:0">${hits
+                    .slice(0, 40)
+                    .map(
+                      (h) =>
+                        `<li style="padding:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><span><b>${escapeHtml(h.n || "—")}</b></span><a href="#" data-go="${h.id}"><span class="badge">${h.m}</span></a></li>`,
+                    )
+                    .join("")}</ul>`
+                : '<div class="empty"><div class="em-ico">🔍</div><div class="em-title">Aucun résultat</div></div>';
+              openModal({
+                title: "Résultats — “" + escapeHtml(q) + "”",
+                body,
+                footer: [{ label: "Fermer", action: closeModal }],
+              });
+              body.querySelectorAll("[data-go]").forEach(
+                (a) =>
+                  (a.onclick = (ev) => {
+                    ev.preventDefault();
+                    closeModal();
+                    go(a.dataset.go);
+                  }),
+              );
+            }
+          });
+
+        /* Boot */
+        buildNav();
+        render();
+        window.dealForm = dealForm;
+        window.deleteDeal = deleteDeal;
+        window.exportReport = exportReport;
+        window.exportAll = exportAll;
+        window.downloadFile = downloadFile;
+        window.go = go;
+        window.views = views;
+      </script>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+</html>

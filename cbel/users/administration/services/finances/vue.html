@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pédagogie - SSIAVERSITY | Analyse des demandes d'admission</title>
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/vue.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <div class="vue-set">
+      <div class="vue-header">
+        <div class="vue-header-card">
+          <div
+            style="background: rgba(0, 159, 90, 0.377); color: rgb(0, 159, 90)"
+            class="card-icon"
+          >
+            <i></i>
+          </div>
+          <div class="card-text">
+            <p>Solde total alloué</p>
+            <p>1 344 Ivoire</p>
+            <p>Tout les comptes confondus</p>
+          </div>
+          <div class="card-trend">
+            <p style="background: rgba(0, 128, 0, 0.15); color: green">
+              +12.54%
+            </p>
+          </div>
+        </div>
+        <div class="vue-header-card">
+          <div
+            style="background: rgba(0, 159, 90, 0.377); color: rgb(0, 159, 90)"
+            class="card-icon"
+          >
+            <i></i>
+          </div>
+          <div class="card-text">
+            <p>Nombre de comptes</p>
+            <p>8</p>
+            <p>Comptes actifs</p>
+          </div>
+          <div class="card-trend">
+            <p style="background: rgba(0, 128, 0, 0.15); color: green">
+              +12.54%
+            </p>
+          </div>
+        </div>
+        <div class="vue-header-card">
+          <div
+            style="background: rgba(0, 159, 90, 0.377); color: rgb(0, 159, 90)"
+            class="card-icon"
+          >
+            <i></i>
+          </div>
+          <div class="card-text">
+            <p>Transations</p>
+            <p>127</p>
+            <p>Sur la période</p>
+          </div>
+          <div class="card-trend">
+            <p style="background: rgba(0, 128, 0, 0.15); color: green">
+              +9.04%
+            </p>
+          </div>
+        </div>
+        <div class="vue-header-card">
+          <div
+            style="background: rgba(0, 159, 90, 0.377); color: rgb(0, 159, 90)"
+            class="card-icon"
+          >
+            <i></i>
+          </div>
+          <div class="card-text">
+            <p>Montant réglées</p>
+            <p>544 Ivoire</p>
+            <p>Sur la période</p>
+          </div>
+          <div class="card-trend">
+            <p style="background: rgba(0, 128, 0, 0.15); color: green">
+              +10.98%
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="vue-body">
+        <section class="balances">
+          <h3 class="vue-body-section-title">Soldes alloués par dépatement</h3>
+          <div class="allocated-balance">
+            <div class="allocated-balance-item">
+              <div class="icon-name">
+                <div class="icon"></div>
+                <span class="name">Vie estudiantine</span>
+              </div>
+              <div class="level-bar-amount">
+                <div class="level-bar">
+                  <div class="level"></div>
+                </div>
+                <span class="amount">249 IV</span>
+                <span class="badge"> + 12.45% </span>
+              </div>
+            </div>
+            <div class="allocated-balance-item">
+              <div class="icon-name">
+                <div class="icon"></div>
+                <span class="name">Vie estudiantine</span>
+              </div>
+              <div class="level-bar-amount">
+                <div class="level-bar">
+                  <div class="level"></div>
+                </div>
+                <span class="amount">249 IV</span>
+                <span class="badge"> + 12.45% </span>
+              </div>
+            </div>
+            <div class="allocated-balance-item">
+              <div class="icon-name">
+                <div class="icon"></div>
+                <span class="name">Vie estudiantine</span>
+              </div>
+              <div class="level-bar-amount">
+                <div class="level-bar">
+                  <div class="level"></div>
+                </div>
+                <span class="amount">249 IV</span>
+                <span class="badge"> + 12.45% </span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="chart">
+          <h3 class="vue-body-section-title">Evolution des factures réglées</h3>
+          <div class="allocated-balance-chart">
+            <canvas id="allocatedBalanceChart"></canvas>
+          </div>
+        </section>
+        <section class="active">
+          <h3 class="vue-body-section-title">Comptes les plus actifs</h3>
+          <div class="active-account">
+            <div class="active-account-item">
+              <div class="icon-name">
+                <div class="icon"></div>
+                <span class="name">Vie estudiantine</span>
+              </div>
+              <span class="amount">304 IV</span>
+            </div>
+            <div class="active-account-item">
+              <div class="icon-name">
+                <div class="icon"></div>
+                <span class="name">Vie estudiantine</span>
+              </div>
+              <span class="amount">304 IV</span>
+            </div>
+          </div>
+        </section>
+        <section class="activities">
+          <h3 class="vue-body-section-title">Règlement récents</h3>
+          <div class="activities-content">
+            <div class="activities-item">
+              <span class="activities-name">Vie estudiantine</span>
+              <span class="activities-amount"
+                >20 IV <i class="fa-solid fa-check"></i
+              ></span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+  <script src="../../assets/js/transfert.js"></script>
+  <script src="../../assets/js/facture.js"></script>
+  <script src="../../assets/js/ue.js"></script>
+  <script>
+    const ctx = document
+      .getElementById("allocatedBalanceChart")
+      .getContext("2d");
+
+    const allocatedBalanceChart = new Chart(ctx, {
+      type: "line",
+
+      data: {
+        labels: [
+          "15 Juil.",
+          "16 Juil.",
+          "17 Juil.",
+          "18 Juil.",
+          "19 Juil.",
+          "20 Juil.",
+          "21 Juil.",
+        ],
+
+        datasets: [
+          {
+            label: "Solde total",
+            data: [500, 620, 780, 980, 970, 1200, 1400],
+
+            borderColor: "#2962ff",
+            backgroundColor: "rgba(41, 98, 255, 0.12)",
+
+            borderWidth: 3,
+
+            fill: true,
+
+            tension: 0.4,
+
+            pointRadius: 5,
+            pointBackgroundColor: "#2962ff",
+            pointBorderColor: "#fff",
+            pointBorderWidth: 2,
+          },
+        ],
+      },
+
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
+        plugins: {
+          legend: {
+            display: false,
+          },
+
+          tooltip: {
+            enabled: true,
+          },
+        },
+
+        scales: {
+          x: {
+            grid: {
+              display: false,
+            },
+          },
+
+          y: {
+            beginAtZero: true,
+
+            grid: {
+              color: "#eef0f5",
+            },
+
+            ticks: {
+              color: "#7a8499",
+            },
+          },
+        },
+      },
+    });
+  </script>
+</html>

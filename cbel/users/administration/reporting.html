@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Administration | CAMPUS SSIAVERSITY</title>
+    <link rel="icon" href="../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="assets/css/navbar.css" />
+    <link rel="stylesheet" href="assets/css/reporting.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+    <section class="reporting">
+      <div class="reporting-sidebar">
+        <span class="reporting-nav__active">Déposer un rapport</span>
+        <span>Rapports reçus</span>
+      </div>
+      <div class="reporting-sections__set">
+        <div class="drop-report--report-droped">
+          <div class="drop-report">
+            <h5>Dépot de rapport</h5>
+            <div class="write-report__form">
+              <div class="input-group__set">
+                <div class="input-group">
+                  <label for="">Titre</label>
+                  <input type="text" />
+                </div>
+                <div class="input-group">
+                  <label for="">Rapport pdf</label>
+                  <input type="file" />
+                </div>
+                <div class="input-group">
+                  <label for="">Type de rapport</label>
+                  <select name="" id="">
+                    <option value="">Rapport d'activité</option>
+                    <option value="">Rapport hebdomadaire</option>
+                    <option value="">Rapport mensuel</option>
+                    <option value="">Rapport annuel</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label for="">Statut du rapport</label>
+                  <select name="" id="">
+                    <option value="">En cours</option>
+                    <option value="">Terminer</option>
+                  </select>
+                </div>
+              </div>
+              <div class="action">
+                <button>Envoyer le rapport</button>
+              </div>
+            </div>
+          </div>
+          <div class="report-droped">
+            <h5>Liste des rapports déposés</h5>
+            <div class="report-droped__list">
+              <h6>Ce mois-ci</h6>
+              <div class="droped-list__item">
+                <div class="list-item__details">
+                  <span>#REPO-2025-10-11-637638</span>
+                  <span>Titre</span>
+                  <div class="send-to">
+                    <span>Envoyé au <u>Chef de service</u></span>
+                    <img src="../../../img/lebondo.jpg" alt="" srcset="" />
+                    <span>Lebondo</span>
+                  </div>
+                  <div class="type-statut">
+                    <span>Rapport semestriel</span>
+                    <span class="in-progress">En cours</span>
+                  </div>
+                </div>
+                <div class="list-item__date--action-download">
+                  <span>Déposé le 10/12/2025 à 10h12</span
+                  ><i class="fa-solid fa-download"></i>
+                </div>
+              </div>
+              <div class="droped-list__item">
+                <div class="list-item__details">
+                  <span>#REPO-2025-10-11-637638</span>
+                  <span>Titre</span>
+                  <div class="send-to">
+                    <span>Envoyé au <u>Chef de service</u></span>
+                    <img src="../../../img/lebondo.jpg" alt="" srcset="" />
+                    <span>Lebondo</span>
+                  </div>
+                  <div class="type-statut">
+                    <span>Rapport semestriel</span>
+                    <span class="done">Terminer</span>
+                  </div>
+                </div>
+                <div class="list-item__date--action-download">
+                  <span>Déposé le 10/12/2025 à 10h12</span
+                  ><i class="fa-solid fa-download"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="recieved-reports hide">
+          <div class="recieved-reports__content">
+            <h5>Liste des rapports reçus</h5>
+            <div class="reports-content__period">
+              <h6>Ce mois-ci</h6>
+              <div class="period-list">
+                <div class="period-list__item">
+                  <div class="list-item__details">
+                    <span>#REPO-2025-10-11-637638</span>
+                    <span>Titre</span>
+                    <div class="droped-by">
+                      <span>Déposé par <u>Stagiaire</u></span>
+                      <img src="../../../img/marie.JPG" alt="" srcset="" />
+                      <span>Djakalet Marie</span>
+                    </div>
+                    <div class="type-statut">
+                      <span>Rapport semestriel</span>
+                      <span class="in-progress">En cours</span>
+                    </div>
+                  </div>
+                  <div class="list-item__date--action-download">
+                    <span>Déposé le 10/12/2025 à 10h12</span
+                    ><i class="fa-solid fa-download"></i>
+                  </div>
+                </div>
+                <div class="period-list__item">
+                  <div class="list-item__details">
+                    <span>#REPO-2025-10-11-637638</span>
+                    <span>Titre</span>
+                    <div class="droped-by">
+                      <span>Déposé par <u>Stagiaire</u></span>
+                      <img src="../../../img/marie.JPG" alt="" srcset="" />
+                      <span>Djakalet Marie</span>
+                    </div>
+                    <div class="type-statut">
+                      <span>Rapport semestriel</span>
+                      <span class="done">Terminer</span>
+                    </div>
+                  </div>
+                  <div class="list-item__date--action-download">
+                    <span>Déposé le 10/12/2025 à 10h12</span
+                    ><i class="fa-solid fa-download"></i>
+                  </div>
+                </div>
+                <div class="period-list__item">
+                  <div class="list-item__details">
+                    <span>#REPO-2025-10-11-637638</span>
+                    <span>Titre</span>
+                    <div class="droped-by">
+                      <span>Déposé par <u>Stagiaire</u></span>
+                      <img src="../../../img/marie.JPG" alt="" srcset="" />
+                      <span>Djakalet Marie</span>
+                    </div>
+                    <div class="type-statut">
+                      <span>Rapport semestriel</span>
+                      <span class="in-progress">En cours</span>
+                    </div>
+                  </div>
+                  <div class="list-item__date--action-download">
+                    <span>Déposé le 10/12/2025 à 10h12</span
+                    ><i class="fa-solid fa-download"></i>
+                  </div>
+                </div>
+                <div class="period-list__item">
+                  <div class="list-item__details">
+                    <span>#REPO-2025-10-11-637638</span>
+                    <span>Titre</span>
+                    <div class="droped-by">
+                      <span>Déposé par <u>Stagiaire</u></span>
+                      <img src="../../../img/marie.JPG" alt="" srcset="" />
+                      <span>Djakalet Marie</span>
+                    </div>
+                    <div class="type-statut">
+                      <span>Rapport semestriel</span>
+                      <span class="done">Terminer</span>
+                    </div>
+                  </div>
+                  <div class="list-item__date--action-download">
+                    <span>Déposé le 10/12/2025 à 10h12</span
+                    ><i class="fa-solid fa-download"></i>
+                  </div>
+                </div>
+                <div class="period-list__item">
+                  <div class="list-item__details">
+                    <span>#REPO-2025-10-11-637638</span>
+                    <span>Titre</span>
+                    <div class="droped-by">
+                      <span>Déposé par <u>Stagiaire</u></span>
+                      <img src="../../../img/marie.JPG" alt="" srcset="" />
+                      <span>Djakalet Marie</span>
+                    </div>
+                    <div class="type-statut">
+                      <span>Rapport semestriel</span>
+                      <span class="in-progress">En cours</span>
+                    </div>
+                  </div>
+                  <div class="list-item__date--action-download">
+                    <span>Déposé le 10/12/2025 à 10h12</span
+                    ><i class="fa-solid fa-download"></i>
+                  </div>
+                </div>
+                <div class="period-list__item">
+                  <div class="list-item__details">
+                    <span>#REPO-2025-10-11-637638</span>
+                    <span>Titre</span>
+                    <div class="droped-by">
+                      <span>Déposé par <u>Stagiaire</u></span>
+                      <img src="../../../img/marie.JPG" alt="" srcset="" />
+                      <span>Djakalet Marie</span>
+                    </div>
+                    <div class="type-statut">
+                      <span>Rapport semestriel</span>
+                      <span class="done">Terminer</span>
+                    </div>
+                  </div>
+                  <div class="list-item__date--action-download">
+                    <span>Déposé le 10/12/2025 à 10h12</span
+                    ><i class="fa-solid fa-download"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script src="assets/js/render-sidebar.js"></script>
+  <script src="assets/js/reporting-sections.js"></script>
+</html>

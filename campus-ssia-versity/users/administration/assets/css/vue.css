@@ -8,7 +8,6 @@
   gap: 0.5rem;
   position: relative;
   overflow-y: auto;
-  border: solid red;
 }
 
 .vue-set .vue-header {
@@ -24,8 +23,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  padding: 15px;
+  gap: 15px;
+  padding: 25px 15px;
   border-radius: 10px;
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.06);
 }
@@ -44,7 +43,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
   height: 100%;
 }
 
@@ -81,6 +80,219 @@
   margin: 0;
   padding: 1px 4px;
   border-radius: 20px;
+}
+
+.vue-set .vue-body {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr 0.6fr;
+  grid-template-rows: auto auto;
+  gap: 10px;
+}
+
+.vue-body section {
+  background: var(--white);
+  width: 100%;
+  height: 100%;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.balances {
+  grid-row: 1 / 3;
+}
+
+.allocated-balance {
+  display: flex;
+  flex-direction: column;
+}
+
+.allocated-balance-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid 1px rgba(177, 172, 172, 0.3);
+  width: 100%;
+  padding: 5px 10px;
+  gap: 10px;
+}
+
+.icon-name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 40%;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  background: rgba(0, 159, 90, 0.2);
+}
+
+.name {
+  font-size: 0.8rem;
+  color: var(--gray);
+  font-weight: 600;
+}
+
+.level-bar-amount {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 60%;
+  gap: 10px;
+}
+
+.level-bar {
+  background: rgba(177, 172, 172, 0.3);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 5px;
+  border-radius: 10px;
+  width: 60%;
+}
+
+.level {
+  background: rgba(0, 159, 90);
+  width: 60%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.amount {
+  font-size: 0.7rem;
+  color: black;
+  font-weight: 600;
+}
+
+.badge {
+  background: rgba(0, 159, 90, 0.2);
+  color: rgb(0, 159, 90);
+  padding: 2px 5px;
+  font-size: 0.5rem;
+  font-weight: 600;
+}
+
+.chart {
+  grid-column: 2 / 4;
+  height: max-content;
+  height: max-content !important;
+  overflow: hidden;
+}
+
+.allocated-balance-chart {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#allocatedBalanceChart {
+  height: 100%;
+  width: 100%;
+  height: 200px;
+}
+
+.active {
+  grid-column: 2;
+  height: 200px !important;
+}
+
+.active-account {
+  display: flex;
+  flex-direction: column;
+}
+
+.active-account-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid 1px rgba(177, 172, 172, 0.3);
+  width: 100%;
+  padding: 5px 10px;
+  gap: 10px;
+}
+
+.active-account-item .icon {
+  height: 25px;
+  width: 25px;
+  flex-shrink: 0;
+}
+
+.active-account-item .name {
+  font-size: 0.6rem;
+}
+
+.active-account-item .amount {
+  font-size: 0.6rem;
+}
+
+.activities {
+  grid-column: 3;
+}
+
+.activities-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.activities-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid 1px rgba(177, 172, 172, 0.3);
+  width: 100%;
+  padding: 5px 10px;
+  gap: 10px;
+}
+
+.activities-name {
+  font-size: 0.7rem;
+  color: var(--gray);
+  font-weight: 600;
+}
+
+.activities-amount {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+  align-items: center;
+  font-size: 0.6rem;
+  color: black;
+  font-weight: 600;
+}
+
+.activities-amount .fa-check {
+  background: rgba(0, 159, 90);
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  color: var(--white);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.4rem;
+}
+
+.vue-body-section-title {
+  font-size: 1rem;
+  color: black;
+  margin: 0;
 }
 
 /****************************************************/

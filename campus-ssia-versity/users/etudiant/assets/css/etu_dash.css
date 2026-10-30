@@ -638,6 +638,75 @@
   cursor: pointer;
 }
 
+.vie-estudiantine-clubs-chat {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+  height: 90%;
+}
+
+.vie-estudiantine-clubs {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  width: 30%;
+  height: 100%;
+  background: var(--white);
+  border-radius: 7px;
+  overflow-y: scroll;
+}
+
+.clubs-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid rgb(239, 239, 239);
+  width: 100%;
+}
+
+.clubs-item:hover {
+  background: rgb(239, 239, 239);
+}
+
+.clubs-item img {
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  background: var(--versity-blue);
+}
+
+.clubs-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.clubs-item-text span:first-of-type {
+  font-weight: 600;
+  font-size: 0.7rem;
+  color: black;
+}
+
+.clubs-item-text span:nth-of-type(2) {
+  font-size: 0.6rem;
+  color: rgb(74, 74, 74);
+  width: 100%;
+}
+
+.vie-estudiantine-chat {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 100%;
+  justify-content: space-between;
+}
+
 .forum-chat {
   width: 100%;
   height: 80%;
@@ -928,6 +997,98 @@
   padding: 10px;
 }
 
+.sms-friends-messages {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.sms-friends {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: 100%;
+  width: 30%;
+  background: var(--white);
+  border-radius: 7px;
+  padding: 10px;
+}
+
+.sms-search-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sms-search-bar input {
+  border: solid 1px black;
+  font-size: 0.5rem;
+  color: var(--versity-blue);
+  border-radius: 30px;
+  padding: 2px 4px;
+}
+
+.sms-search-bar i {
+  background: var(--versity-blue);
+  height: 20px;
+  width: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  color: var(--white);
+  font-size: 0.6rem;
+}
+
+.friends-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.friends-list-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+  gap: 5px;
+  border-radius: 5px;
+  border: solid 1px rgb(239, 239, 239);
+}
+
+.friends-list-item img {
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  background: var(--versity-blue);
+}
+
+.friends-list-item span {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: black;
+}
+
+.friends-list-item:hover {
+  background: rgb(239, 239, 239);
+}
+
+.sms-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  width: 70%;
+  border-radius: 7px;
+}
+
 .sms-name-img {
   display: flex;
   flex-direction: row;
@@ -952,7 +1113,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 80%;
+  height: 100%;
   background: var(--white);
   border-radius: 10px;
   padding: 10px;
@@ -1050,6 +1211,7 @@
   height: 100%;
   position: absolute;
   top: 0;
+  left: 0;
   padding: 10px;
 }
 
@@ -1090,21 +1252,66 @@
   padding: 3px 4px;
 }
 
-.contact-list {
+.contact-search-added {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: 100%;
+}
+
+.contact-search {
   background: var(--white);
   border-radius: 10px;
-  height: 90%;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.contact-search::-webkit-scrollbar {
+  display: none;
+}
+
+.contact-search-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contact-search-bar input {
+  border: solid 1px black;
+  font-size: 0.5rem;
+  color: var(--versity-blue);
+  border-radius: 30px;
+  padding: 2px 4px;
+}
+
+.contact-search-bar i {
+  background: var(--versity-blue);
+  height: 20px;
+  width: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  color: var(--white);
+  font-size: 0.6rem;
+}
+
+.club-list {
+  height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   padding: 10px;
   overflow-y: scroll;
   column-gap: 5px;
   row-gap: 10px;
-}
-
-.contact-list::-webkit-scrollbar {
-  display: none;
 }
 
 .contact-item {
@@ -1116,6 +1323,7 @@
   border-radius: 5px;
   padding: 5px;
   transition: ease 0.3s;
+  border: solid 1px rgb(239, 239, 239);
 }
 
 .contact-item:hover {
@@ -1131,7 +1339,7 @@
 }
 
 .contact-img {
-  background: white;
+  background: rgb(239, 239, 239);
   width: 40px;
   height: 40px;
   position: relative;
@@ -1153,6 +1361,94 @@
   padding: 3px 3px 2px 3px;
   border-radius: 3px;
   color: var(--white);
+}
+
+.subscribe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: max-content;
+  width: 100%;
+}
+
+.subscribe span {
+  color: var(--white);
+  background: var(--versity-blue);
+  border: none;
+  outline: none;
+  font-size: 0.4rem;
+  border-radius: 3px;
+  padding: 1px 3px;
+}
+
+.followed {
+  color: black;
+  font-size: 8px;
+  text-align: center;
+}
+
+.contact-added {
+  background: var(--white);
+  border-radius: 10px;
+  height: 100%;
+  width: 50%;
+  padding: 10px;
+  overflow-y: scroll;
+}
+
+.contact-added h3 {
+  font-size: 1rem;
+  color: black;
+}
+
+.contact-added::-webkit-scrollbar {
+  display: none;
+}
+
+.contact-added-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 5px;
+  overflow-y: scroll;
+}
+
+.added-item {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  padding: 5px;
+  border-radius: 5px;
+  border: solid 1px rgb(239, 239, 239);
+}
+
+.added-item:hover {
+  background: rgb(239, 239, 239);
+}
+
+.added-item img {
+  background: rgb(239, 239, 239);
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+}
+
+.added-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.added-item-text span:first-of-type {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: black;
+}
+
+.added-item-text span:nth-of-type(2) {
+  font-size: 0.6rem;
 }
 
 .contact-notif {
@@ -1179,7 +1475,6 @@
 .contact-notif .notif-item {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   gap: 10px;
   align-items: center;
   background: var(--white);
@@ -1189,10 +1484,17 @@
   width: 30px;
   height: 30px;
   border-radius: 100%;
+  background: var(--versity-blue);
 }
 
-.contact-notif .notif-item p {
-  font-size: 9px;
+.notif-item .notif-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.notif-item .notif-item-text p {
+  font-size: 0.6rem;
   color: black;
   margin: 0;
 }
@@ -1681,7 +1983,7 @@
 .case1 video {
   width: 100%;
   height: 100%;
-  transform: scale(3.3);
+  transform: scale(3.3) !important;
   position: absolute;
   top: 70%;
 }
@@ -1761,7 +2063,7 @@
 .case2 video {
   width: 100%;
   height: 100%;
-  transform: scale(3.4);
+  transform: scale(3.4) !important;
   position: absolute;
   top: 10%;
 }

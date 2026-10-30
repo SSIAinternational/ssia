@@ -109,7 +109,7 @@
         settings: {
           year: new Date().getFullYear(),
           quarter: "Q" + Math.floor(new Date().getMonth() / 3 + 1),
-          currency: "EUR",
+          currency: "IV",
           targetLeads: 0,
           targetRecruits: 0,
           targetROI: 0,
@@ -146,12 +146,11 @@
         return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
       }
       function fmt(n) {
-        const c = STATE.settings.currency || "EUR";
-        return new Intl.NumberFormat("fr-FR", {
-          style: "currency",
-          currency: c,
-          maximumFractionDigits: 0,
-        }).format(n || 0);
+        return (
+          new Intl.NumberFormat("fr-FR", {
+            maximumFractionDigits: 2,
+          }).format(n || 0) + " IV"
+        );
       }
       function num(n) {
         return new Intl.NumberFormat("fr-FR").format(n || 0);
@@ -270,7 +269,7 @@
           items.forEach((m) => {
             const d = document.createElement("div");
             d.className = "nav-item" + (m.id === CURRENT ? " active" : "");
-            d.innerHTML = `<i class="ico ${m.icon}"></i><span>${m.label}</span>`;
+            d.innerHTML = `<i class="icon ${m.icon}"></i><span>${m.label}</span>`;
             d.onclick = () => {
               CURRENT = m.id;
               renderNav();
@@ -1521,7 +1520,7 @@
       <div class="form-row row-3">
         <div><label>Année active</label><input type="number" id="set_year" value="${s.year}"/></div>
         <div><label>Trimestre actif</label><select id="set_q">${["Q1", "Q2", "Q3", "Q4"].map((q) => `<option ${q === s.quarter ? "selected" : ""}>${q}</option>`).join("")}</select></div>
-        <div><label>Devise</label><select id="set_curr">${["EUR", "USD", "GBP", "XOF", "XAF", "MAD", "CHF"].map((c) => `<option ${c === s.currency ? "selected" : ""}>${c}</option>`).join("")}</select></div>
+        <div><label>Devise</label><select id="set_curr">${["IV"].map((c) => `<option ${c === s.currency ? "selected" : ""}>${c}</option>`).join("")}</select></div>
       </div>
       <div class="form-row row-3">
         <div><label>Budget annuel cible</label><input type="number" id="set_budget" value="${s.annualBudget || 0}"/></div>

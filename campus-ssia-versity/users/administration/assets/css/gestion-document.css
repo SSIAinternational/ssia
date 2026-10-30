@@ -1,0 +1,427 @@
+:root {
+  --primary: #003a62;
+  --primary-light: #e8f0f5;
+  --primary-mid: #5a89a3;
+  --bg: #f6f8fa;
+  --surface: #ffffff;
+  --border: #dce3e8;
+  --text: #1c2a33;
+  --text-soft: #5c6b74;
+  --ok: #1c7d4d;
+  --ok-bg: #e6f4ec;
+  --wait: #b5750f;
+  --wait-bg: #fdf1de;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0, 58, 98, 0.08), 0 1px 2px rgba(0, 58, 98, 0.06);
+  font-size: 16px;
+}
+
+.document-set {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+header.app-header {
+  background: var(--primary);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+}
+header.app-header i {
+  font-size: 1.4rem;
+}
+header.app-header h1 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--white);
+}
+header.app-header span.subtitle {
+  font-size: 0.8rem;
+  color: var(--primary-light);
+  opacity: 0.85;
+  display: block;
+}
+
+nav.breadcrumb {
+  width: 80%;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+nav.breadcrumb button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font: inherit;
+  cursor: pointer;
+  padding: 0.15rem 0.3rem;
+  border-radius: 6px;
+}
+nav.breadcrumb button:hover {
+  background: var(--primary-light);
+}
+nav.breadcrumb .crumb-current {
+  color: var(--text);
+  font-weight: 600;
+}
+nav.breadcrumb i.fa-chevron-right {
+  font-size: 0.65rem;
+  color: #a8b6bd;
+}
+
+main {
+  width: 100%;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+h2.view-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+/* Grille des catégories */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.1rem;
+}
+.category-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.6rem 1.3rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
+  text-align: left;
+}
+.category-card:hover,
+.category-card:focus-visible {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+.category-card .icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+.category-card h3 {
+  font-size: 1.05rem;
+  color: var(--text);
+}
+.category-card p {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+/* Liste des personnes */
+.person-list {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.person-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  text-align: left;
+  width: 100%;
+}
+.person-row:hover,
+.person-row:focus-visible {
+  border-color: var(--primary-mid);
+}
+.person-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.person-info {
+  flex: 1;
+  min-width: 0;
+}
+.person-info .person-name {
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+.person-info .person-meta {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+}
+.person-row i.fa-chevron-right {
+  color: var(--text-soft);
+}
+
+/* Onglets documents */
+.tabs {
+  display: flex;
+  gap: 0.4rem;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 1.1rem;
+}
+.tab-btn {
+  background: none;
+  border: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--text-soft);
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+.tab-btn .count-pill {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 0.72rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+  flex-wrap: wrap;
+}
+.btn {
+  font: inherit;
+  border: none;
+  border-radius: 8px;
+  padding: 0.55rem 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: #00294a;
+}
+.btn-ghost {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+.btn-ghost:hover {
+  background: #d7e6ee;
+}
+
+.doc-list {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.doc-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.85rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  box-shadow: var(--shadow);
+  flex-wrap: wrap;
+}
+.doc-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.doc-info {
+  flex: 1;
+  min-width: 160px;
+}
+.doc-info .doc-name {
+  font-weight: 600;
+  font-size: 0.94rem;
+}
+.doc-info .doc-sub {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+.status-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.status-ok {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+.status-wait {
+  background: var(--wait-bg);
+  color: var(--wait);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--text-soft);
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+.empty-state i {
+  font-size: 1.8rem;
+  color: var(--primary-mid);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 20, 35, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 100;
+  border: solid;
+}
+.modal-overlay[hidden] {
+  display: none;
+}
+.modal-box {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 30px rgba(0, 20, 35, 0.25);
+}
+.modal-box h3 {
+  color: var(--primary);
+  margin-bottom: 0.9rem;
+  font-size: 1.05rem;
+}
+.modal-box label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: var(--text);
+}
+.modal-box select {
+  width: 100%;
+  padding: 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  margin-bottom: 1.1rem;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+.btn-outline {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+}
+
+.toast {
+  position: fixed;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 200;
+}
+.toast[hidden] {
+  display: none;
+}
+
+@media (max-width: 560px) {
+  header.app-header h1 {
+    font-size: 1rem;
+  }
+  main {
+    padding: 1rem;
+  }
+}

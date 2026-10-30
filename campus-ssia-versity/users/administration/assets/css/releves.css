@@ -150,15 +150,21 @@
   background: #b4b4b4 !important;
 }
 
+.new-transaction-content {
+  position: relative;
+}
+
 .new-transaction-form {
-  display: flex;
   flex-direction: column;
   gap: 0.3rem;
   background: var(--white);
   border-radius: 5px;
   padding: 20px 10px;
   border: solid 1px var(--versity-blue);
-  display: none;
+  width: calc(100% + 50%);
+  position: absolute;
+  right: 0;
+  transform: translateY(10px);
 }
 
 .new-transaction-form .input-group {
@@ -182,13 +188,138 @@
   outline: none;
 }
 
-.finance-set__top-bar button.new-transaction-btn {
+.new-transaction-form .save {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.new-transaction-form .save button {
+  font-size: 0.6rem;
+  background: var(--versity-blue);
+  padding: 0.2rem 0.5rem;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  outline: none;
+}
+
+.finance-set__top-bar button.new-transaction-btn,
+.finance-set__top-bar button.balance-btn {
   font-size: 0.7rem;
   background: var(--versity-blue);
   padding: 0.3rem 0.5rem;
   border: none;
   border-radius: 3px;
   color: white;
+  outline: none;
+}
+
+.balance-content {
+  width: max-content;
+  position: relative;
+}
+
+.balance-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--white);
+  border-radius: 5px;
+  padding: 20px 10px;
+  border: solid 1px var(--versity-blue);
+  width: 1000px;
+  position: absolute;
+  transform: translate(-70%, 10px);
+}
+
+.balance-items table {
+  border: 1px solid rgb(189, 189, 189);
+  width: 100%;
+  font-size: 0.75rem;
+}
+
+.balance-items table thead {
+  background: var(--versity-blue);
+  width: 100%;
+  color: var(--white);
+}
+
+.balance-items table thead tr th {
+  padding: 5px;
+}
+
+.balance-items table thead tr:first-of-type {
+  text-align: center;
+  width: 100%;
+}
+
+.balance-items table thead tr:nth-of-type(2) th {
+  text-align: center;
+}
+
+.balance-items .balance-item {
+  padding: 0.3rem 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.balance-items .balance-item:not(:last-of-type) {
+  border-bottom: 1px solid rgb(189, 189, 189);
+}
+
+.balance-items table tbody {
+  color: black;
+  font-size: 0.7rem;
+}
+
+.balance-items table tbody tr td {
+  padding: 5px;
+  text-align: center;
+  border-bottom: 1px solid rgb(189, 189, 189);
+}
+
+.balance-cloture {
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.balance-cloture form {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.balance-cloture-btn {
+  border: none;
+  padding: 7px;
+  border-radius: 3px;
+  font-size: 0.6rem;
+  color: var(--white);
+  background: var(--versity-blue);
+}
+
+.balance-items .balance-item span:first-of-type {
+  font-size: 0.6rem;
+  font-weight: 600;
+  background: #406e8a;
+  padding: 0.1rem 0.2rem !important;
+  height: max-content;
+  border-radius: 3px;
+  color: var(--white);
+  padding: 0;
+}
+
+.balance-items .balance-item span:nth-of-type(2) {
+  font-size: 0.6rem;
+  color: black;
 }
 
 .transaction-table {
@@ -241,6 +372,21 @@ td > span img {
   border-radius: 100%;
 }
 
+.transaction-table button {
+  border: none;
+  background: rgb(174, 0, 0);
+  color: var(--white);
+  font-size: 0.5rem;
+  height: 20px;
+  width: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  outline: none;
+}
+
 .credit {
   color: rgb(13, 138, 61);
   font-weight: 500;
@@ -286,6 +432,72 @@ td > span img {
   padding: 0.1rem;
   color: black;
   border: solid 1px var(--versity-blue);
+}
+
+.cloture {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+@keyframes moove-up {
+  0% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+.cloture .cloture-btn {
+  background: var(--versity-blue);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  animation: moove-up 1.5s infinite linear;
+}
+
+.cloture form {
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 5px;
+  border-radius: 5px;
+  background: white;
+  border: solid #406e8a 1px;
+}
+
+.cloture .cloture-form .input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.input-group label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--versity-blue);
+}
+
+.input-group input {
+  color: var(--versity-blue);
+  background: var(--white);
+  border: none;
+  border-radius: 5px;
+  font-size: 0.55rem;
+  padding: 5px;
+  outline: none;
+  border: solid #406e8a 1px;
 }
 
 .show {

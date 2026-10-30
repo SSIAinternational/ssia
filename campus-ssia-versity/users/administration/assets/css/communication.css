@@ -83,20 +83,22 @@ label {
   flex-direction: column;
   gap: 10px;
   grid-area: side;
-  background: var(--sidebg);
-  color: rgba(var(--sidetext), 0.7);
+  color: black;
+  background: white;
   padding: 14px 10px;
   overflow: hidden;
   height: 100%;
   width: 20%;
-  border-right: solid 2px rgb(248, 231, 196);
+  border-right: solid 1px
+    color-mix(in srgb, var(--versity-blue) 10%, transparent);
 }
 .brand {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 8px 10px 16px;
-  border-bottom: 1px solid rgba(var(--sidetext), 0.08);
+  border-bottom: solid 1px
+    color-mix(in srgb, var(--versity-blue) 10%, transparent);
   margin-bottom: 10px;
 }
 
@@ -132,7 +134,7 @@ label {
 
 .brand-sub {
   font-size: 11px;
-  color: rgba(var(--sidetext), 0.7);
+  color: rgb(148, 148, 148);
 }
 
 .nav {
@@ -142,7 +144,7 @@ label {
   align-items: start;
   overflow-y: scroll;
   padding: 10px 8px;
-  background: var(--sidebg);
+  background: white;
   box-shadow: none;
 }
 
@@ -154,7 +156,7 @@ label {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: rgba(var(--sidetext));
+  color: rgb(148, 148, 148);
   font-weight: 700;
   margin: 14px 12px 10px 0;
 }
@@ -164,7 +166,7 @@ label {
   align-items: center;
   gap: 10px;
   padding: 5px 12px;
-  color: rgba(var(--sidetext), 0.7);
+  color: rgb(148, 148, 148);
   border-radius: 8px;
   margin: 2px 0;
   font-size: 12px;
@@ -173,27 +175,28 @@ label {
   cursor: pointer;
 }
 
-.nav-item .ico {
+.nav-item .icon {
   background: none;
   padding: 0;
-  color: rgba(var(--sidetext), 0.7);
+  color: rgb(148, 148, 148);
 }
 
 .nav-item:hover {
-  background: rgba(var(--sidetext), 0.4);
+  background: #eef2ff;
   text-decoration: none;
-  color: #fff;
+  color: var(--versity-blue);
 }
 
-.nav-item:hover .ico {
+.nav-item:hover .icon {
+  background: none;
   text-decoration: none;
-  color: #fff;
+  color: var(--versity-blue);
 }
 
 .nav-item.active,
-.nav-item.active .ico {
-  background: rgba(var(--sidetext));
-  color: #fff;
+.nav-item.active .icon {
+  background: var(--versity-blue);
+  color: white;
 }
 .nav-icon {
   width: 18px;
@@ -203,9 +206,9 @@ label {
 
 .nav-foot {
   padding: 10px;
-  border-top: 1px solid rgba(var(--sidetext), 0.08);
+  border-top: solid 1px color-mix(in srgb, var(--versity-blue) 10%, transparent);
   font-size: 11px;
-  color: rgba(var(--sidetext), 0.7);
+  color: rgb(148, 148, 148);
 }
 
 .main-wrap {

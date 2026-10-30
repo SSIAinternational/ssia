@@ -680,8 +680,8 @@ export const collegeList = [
       "Gestion des Ressources Naturelles",
       "Environnement et Durabilité",
     ],
-    tsac: false,
-    scoreTsac: false,
+    tsac: true,
+    scoreTsac: 50,
     testimonial: [
       {
         studentName: "Elena Petrova",
@@ -719,8 +719,8 @@ export const collegeList = [
       "Gestion de la Qualité",
       "Gestion des Opérations",
     ],
-    tsac: false,
-    scoreTsac: false,
+    tsac: true,
+    scoreTsac: 50,
     testimonial: [
       {
         studentName: "Marta Silva",
@@ -756,8 +756,8 @@ export const collegeList = [
       "Développement Logiciel",
       "Management Stratégique",
     ],
-    tsac: false,
-    scoreTsac: false,
+    tsac: true,
+    scoreTsac: 50,
     testimonial: [
       {
         studentName: "Mason Reed",
@@ -793,8 +793,8 @@ export const collegeList = [
       "Marketing et Communication",
       "Gestion de Projet",
     ],
-    tsac: false,
-    scoreTsac: false,
+    tsac: true,
+    scoreTsac: 50,
     testimonial: [
       {
         studentName: "Emily Davis",

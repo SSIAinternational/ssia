@@ -125,11 +125,11 @@
         <div class="form">
           <div class="label-input">
             <label for="">Nom <span>*</span></label>
-            <input type="text" />
+            <input type="text" placeholder="Titulaire de la carte" />
           </div>
           <div class="label-input">
             <label for="">Prémons <span>*</span></label>
-            <input type="text" />
+            <input type="text" placeholder="Titulaire de la carte" />
           </div>
           <div class="label-input">
             <label for="">Matricule étudiant<span>*</span></label>
@@ -162,16 +162,11 @@
           </div>
           <div class="label-input">
             <label for="">Année académique <span>*</span></label>
-            <select name="" id="">
-              <option value="">2025-2026</option>
-              <option value="">2026-2027</option>
-              <option value="">2027-2028</option>
-              <option value="">2028-2029</option>
-              <option value="">2029-2030</option>
-            </select>
+            <input type="text" value="2025-2026" disabled />
           </div>
+          <!--
           <div class="submit"><button>Soumettre</button></div>
-        </div>
+        --></div>
         <div class="img-logo">
           <img src="../../img/versity-modify.png" alt="" srcset="" />
         </div>
@@ -180,8 +175,30 @@
         <h1>Frais d'inscription</h1>
         <div class="paiement">
           <div class="paiement-type-swipe">
-            <span class="paiement-active">Mobile-money</span
-            ><span>International</span>
+            <span class="paiement-active">Paiement SSIA</span>
+          </div>
+          <div class="paiement-form">
+            <form action="">
+              <div class="label-input">
+                <label for="">Numero de carte <span>*</span></label>
+                <input type="text" placeholder="XXXX XXXX XXXX XXXX" />
+              </div>
+              <div class="label-input">
+                <label for="">Date d'expiration <span>*</span></label>
+                <input type="text" placeholder="MM/AA" />
+              </div>
+              <div class="label-input">
+                <label for="">Cryptogramme visuel <span>*</span></label>
+                <input type="text" placeholder="CVV" />
+              </div>
+              <div class="label-input">
+                <label for="">Montant <span>*</span></label>
+                <input type="text" />
+              </div>
+            </form>
+            <div class="paiement-form-button">
+              <button>Régler frais d'inscription</button>
+            </div>
           </div>
         </div>
       </div>

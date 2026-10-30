@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pédagogie - SSIAVERSITY | Programmation des entretiens</title>
+    <link rel="icon" href="../../../../img/versity-icon.png" />
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Libraries Indicatifs -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../../../../css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/pay-order.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo-navlinks"></div>
+      <div class="logout"></div>
+    </nav>
+
+    <section class="pay-order">
+      <div class="pay-container">
+        <!-- En-tête -->
+        <div class="pay-header">
+          <div class="pay-heading">
+            <span class="pay-icon">
+              <i class="fa-solid fa-money-check-dollar"></i>
+            </span>
+
+            <div>
+              <h2>Ordres de paiement</h2>
+              <p>Suivi des paiements des frais d'inscription.</p>
+            </div>
+          </div>
+
+          <span class="pay-header-badge">
+            <i class="fa-solid fa-receipt"></i>
+            Frais d'inscription
+          </span>
+        </div>
+
+        <!-- Indicateurs -->
+        <div class="pay-summary">
+          <div class="pay-summary-card">
+            <span class="pay-summary-icon pay-summary-blue">
+              <i class="fa-solid fa-file-invoice"></i>
+            </span>
+            <div>
+              <p>Total des ordres</p>
+              <h3 id="payTotal">0</h3>
+            </div>
+          </div>
+
+          <div class="pay-summary-card">
+            <span class="pay-summary-icon pay-summary-orange">
+              <i class="fa-solid fa-clock"></i>
+            </span>
+            <div>
+              <p>En cours</p>
+              <h3 id="payPending">0</h3>
+            </div>
+          </div>
+
+          <div class="pay-summary-card">
+            <span class="pay-summary-icon pay-summary-green">
+              <i class="fa-solid fa-circle-check"></i>
+            </span>
+            <div>
+              <p>Acceptés</p>
+              <h3 id="payAccepted">0</h3>
+            </div>
+          </div>
+
+          <div class="pay-summary-card">
+            <span class="pay-summary-icon pay-summary-red">
+              <i class="fa-solid fa-circle-xmark"></i>
+            </span>
+            <div>
+              <p>Refusés</p>
+              <h3 id="payRejected">0</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recherche et filtre -->
+        <div class="pay-toolbar">
+          <div class="pay-controls">
+            <div class="pay-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+
+              <input
+                type="search"
+                id="paySearch"
+                placeholder="Matricule ou numéro de compte..."
+                aria-label="Rechercher par matricule ou numéro de compte"
+                autocomplete="off"
+              />
+
+              <button
+                type="button"
+                id="payClear"
+                class="pay-clear"
+                aria-label="Effacer la recherche"
+                hidden
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <div class="pay-filter">
+              <i class="fa-solid fa-filter"></i>
+
+              <select id="payStatusFilter" aria-label="Filtrer par statut">
+                <option value="Tous">Tous les statuts</option>
+                <option value="En cours">En cours</option>
+                <option value="Accepté">Acceptés</option>
+                <option value="Refusé">Refusés</option>
+              </select>
+
+              <i class="fa-solid fa-chevron-down pay-filter-arrow"></i>
+            </div>
+          </div>
+
+          <span class="pay-result-count" id="payResultCount"> 0 ordre </span>
+        </div>
+
+        <!-- Tableau -->
+        <div class="pay-table-wrapper">
+          <table class="pay-table">
+            <thead>
+              <tr>
+                <th class="pay-col-number">N°</th>
+                <th>Nom et prénoms</th>
+                <th>Matricule</th>
+                <th>Numéro de compte</th>
+                <th>Montant</th>
+                <th>Statut</th>
+                <th>Date & heure</th>
+              </tr>
+            </thead>
+
+            <tbody id="payTableBody">
+              <!-- Généré par JavaScript -->
+            </tbody>
+          </table>
+
+          <!-- État vide -->
+          <div class="pay-empty" id="payEmpty" hidden>
+            <span class="pay-empty-icon">
+              <i class="fa-solid fa-file-circle-question"></i>
+            </span>
+
+            <h3>Aucun ordre de paiement trouvé</h3>
+
+            <p>
+              Aucun ordre ne correspond à votre recherche. Essayez un autre
+              numéro de compte.
+            </p>
+
+            <button type="button" id="payReset">
+              Afficher tous les ordres
+            </button>
+          </div>
+        </div>
+
+        <!-- Pied de tableau -->
+        <div class="pay-footer">
+          <p id="payFooterText">Suivi des ordres de paiement</p>
+
+          <span class="pay-footer-brand">
+            <i class="fa-solid fa-shield-halved"></i>
+            SSIAVERSITY
+          </span>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script src="../../assets/js/render-sidebar.js"></script>
+  <script src="../../assets/js/pay-order.js"></script>
+</html>
