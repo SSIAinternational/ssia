@@ -3,6 +3,8 @@
          Pour ajouter une institution : ajouter un objet à ENTITIES.
          `accent` : couleur RGB séparée par des espaces (utilisée en CSS).
          ------------------------------------------------------------------ */
+import { MAIN_URL } from "./app.js";
+
 const CONFIG = {
   openInNewTab: false,
 };
@@ -11,61 +13,61 @@ const ENTITIES = [
   {
     name: "SSIA Capital Holding",
     img: "assets/img/logo_holding.png",
-    url: "https://example.com/holding",
+    url: `${MAIN_URL}capital-holding/index.html`,
     accent: "124 140 255",
   },
   {
     name: "Campus SSIAVERSITY",
     img: "assets/img/versity.png",
-    url: "https://example.com/versity",
+    url: `${MAIN_URL}campus-ssia-versity/index.html`,
     accent: "56 189 248",
   },
   {
     name: "SSIA VaultBridge",
     img: "assets/img/vault.png",
-    url: "https://example.com/vaultbridge",
+    url: "",
     accent: "52 211 153",
   },
   {
     name: "OneSSIA Market",
     img: "assets/img/market.png",
-    url: "https://example.com/market",
+    url: "",
     accent: "251 191 36",
   },
   {
     name: "SSIA Mosaic",
     img: "assets/img/mosaic.jpeg",
-    url: "https://example.com/mosaic",
+    url: "",
     accent: "244 114 182",
   },
   {
     name: "CRVE-SSIA",
     img: "assets/img/crve.jpg",
-    url: "https://example.com/crve",
+    url: "",
     accent: "167 139 250",
   },
   {
     name: "CBEL-SSIA",
     img: "assets/img/cbel.jpg",
-    url: "https://example.com/cbel",
+    url: "",
     accent: "45 212 191",
   },
   {
     name: "CRMB-SSIA",
     img: "assets/img/crmb.jpg",
-    url: "https://example.com/crmb",
+    url: "",
     accent: "248 113 113",
   },
   {
     name: "BCS-SSIA",
     img: "assets/img/brotherhood.jpg",
-    url: "https://example.com/bcs",
+    url: "",
     accent: "96 165 250",
   },
   {
     name: "Management Pôle",
     img: "assets/img/young_community.jpg",
-    url: "https://example.com/management",
+    url: "",
     accent: "251 146 60",
   },
 ];

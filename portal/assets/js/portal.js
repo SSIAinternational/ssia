@@ -1,3 +1,5 @@
+import { MAIN_URL } from "./app.js";
+
 const portalContent = document.querySelector(".portal-content");
 const textsEntitesSubject = document.querySelector(".texts-entites-subtexts");
 const entites = document.querySelector(".entites");
@@ -47,7 +49,7 @@ const entitesTab = [
         icon: "fa-solid fa-lock",
       },
     ],
-    href: "../campus-ssia-versity/users/administration/profil-admin.html",
+    href: `${MAIN_URL}campus-ssia-versity/users/administration/profil-admin.html`,
   },
   {
     nom: "SSIA VaultBridge",
@@ -142,7 +144,7 @@ const entitesTab = [
         icon: "fa-solid fa-lock",
       },
     ],
-    href: "../cbel/users/administration/profil-admin.html",
+    href: `${MAIN_URL}cbel/users/administration/profil-admin.html`,
   },
   {
     nom: "CRMB-SSIA",
@@ -372,8 +374,7 @@ function updateForm(entite) {
     document
       .querySelector(".connect-as-teacher b")
       .addEventListener("click", () => {
-        window.location.href =
-          "campus-ssia-versity/users/professeur/connexion.html";
+        window.location.href = `${MAIN_URL}campus-ssia-versity/users/professeur/connexion.html`;
       });
   }
 }
