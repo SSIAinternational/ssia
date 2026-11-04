@@ -1,4 +1,4 @@
-import { MAIN_URL } from "./app.js";
+import { MAIN_URL } from "http://localhost:5501/app.js";
 
 const portalContent = document.querySelector(".portal-content");
 const textsEntitesSubject = document.querySelector(".texts-entites-subtexts");
@@ -15,7 +15,7 @@ let entiteSelectionnee = null;
 const entitesTab = [
   {
     nom: "SSIA Capital Holding",
-    img: "assets/img/logo_holding.png",
+    img: "portal/assets/img/logo_holding.png",
     inputs: [
       {
         label: "E-Mail",
@@ -34,7 +34,7 @@ const entitesTab = [
   },
   {
     nom: "Campus SSIAVERSITY",
-    img: "assets/img/versity.png",
+    img: "portal/assets/img/versity.png",
     inputs: [
       {
         label: "E-Mail",
@@ -53,7 +53,7 @@ const entitesTab = [
   },
   {
     nom: "SSIA VaultBridge",
-    img: "assets/img/vault.png",
+    img: "portal/assets/img/vault.png",
     inputs: [
       {
         label: "E-Mail",
@@ -72,7 +72,7 @@ const entitesTab = [
   },
   {
     nom: "OneSSIA Market",
-    img: "assets/img/market.png",
+    img: "portal/assets/img/market.png",
     inputs: [
       {
         label: "E-Mail",
@@ -91,7 +91,7 @@ const entitesTab = [
   },
   {
     nom: "SSIA Mosaic",
-    img: "assets/img/mosaic.jpeg",
+    img: "portal/assets/img/mosaic.jpeg",
     inputs: [
       {
         label: "E-Mail",
@@ -110,7 +110,7 @@ const entitesTab = [
   },
   {
     nom: "CRVE-SSIA",
-    img: "assets/img/crve.jpg",
+    img: "portal/assets/img/crve.jpg",
     inputs: [
       {
         label: "E-Mail",
@@ -129,7 +129,7 @@ const entitesTab = [
   },
   {
     nom: "CBEL-SSIA",
-    img: "assets/img/cbel.jpg",
+    img: "portal/assets/img/cbel.jpg",
     inputs: [
       {
         label: "E-Mail",
@@ -148,7 +148,7 @@ const entitesTab = [
   },
   {
     nom: "CRMB-SSIA",
-    img: "assets/img/crmb.jpg",
+    img: "portal/assets/img/crmb.jpg",
     inputs: [
       {
         label: "E-Mail",
@@ -167,7 +167,7 @@ const entitesTab = [
   },
   {
     nom: "BCS-SSIA",
-    img: "assets/img/brotherhood.jpg",
+    img: "portal/assets/img/brotherhood.jpg",
     inputs: [
       {
         label: "E-Mail",
@@ -186,7 +186,7 @@ const entitesTab = [
   },
   {
     nom: "Management Pôle",
-    img: "assets/img/young_community.jpg",
+    img: "portal/assets/img/young_community.jpg",
     inputs: [
       {
         label: "E-Mail",

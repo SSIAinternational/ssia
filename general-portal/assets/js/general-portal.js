@@ -3,7 +3,7 @@
          Pour ajouter une institution : ajouter un objet à ENTITIES.
          `accent` : couleur RGB séparée par des espaces (utilisée en CSS).
          ------------------------------------------------------------------ */
-import { MAIN_URL } from "./app.js";
+import { MAIN_URL } from "http://localhost:5501/app.js";
 
 const CONFIG = {
   openInNewTab: false,
@@ -12,62 +12,62 @@ const CONFIG = {
 const ENTITIES = [
   {
     name: "SSIA Capital Holding",
-    img: "assets/img/logo_holding.png",
+    img: "general-portal/assets/img/logo_holding.png",
     url: `${MAIN_URL}capital-holding/index.html`,
     accent: "124 140 255",
   },
   {
     name: "Campus SSIAVERSITY",
-    img: "assets/img/versity.png",
+    img: "general-portal/assets/img/versity.png",
     url: `${MAIN_URL}campus-ssia-versity/index.html`,
     accent: "56 189 248",
   },
   {
     name: "SSIA VaultBridge",
-    img: "assets/img/vault.png",
-    url: "",
+    img: "general-portal/assets/img/vault.png",
+    url: "#",
     accent: "52 211 153",
   },
   {
     name: "OneSSIA Market",
-    img: "assets/img/market.png",
-    url: "",
+    img: "general-portal/assets/img/market.png",
+    url: "#",
     accent: "251 191 36",
   },
   {
     name: "SSIA Mosaic",
-    img: "assets/img/mosaic.jpeg",
-    url: "",
+    img: "general-portal/assets/img/mosaic.jpeg",
+    url: "#",
     accent: "244 114 182",
   },
   {
     name: "CRVE-SSIA",
-    img: "assets/img/crve.jpg",
-    url: "",
+    img: "general-portal/assets/img/crve.jpg",
+    url: "#",
     accent: "167 139 250",
   },
   {
     name: "CBEL-SSIA",
-    img: "assets/img/cbel.jpg",
-    url: "",
+    img: "general-portal/assets/img/cbel.jpg",
+    url: "#",
     accent: "45 212 191",
   },
   {
     name: "CRMB-SSIA",
-    img: "assets/img/crmb.jpg",
-    url: "",
+    img: "general-portal/assets/img/crmb.jpg",
+    url: "#",
     accent: "248 113 113",
   },
   {
     name: "BCS-SSIA",
-    img: "assets/img/brotherhood.jpg",
-    url: "",
+    img: "general-portal/assets/img/brotherhood.jpg",
+    url: "#",
     accent: "96 165 250",
   },
   {
     name: "Management Pôle",
-    img: "assets/img/young_community.jpg",
-    url: "",
+    img: "general-portal/assets/img/young_community.jpg",
+    url: "#",
     accent: "251 146 60",
   },
 ];
