@@ -3,7 +3,7 @@
          Pour ajouter une institution : ajouter un objet à ENTITIES.
          `accent` : couleur RGB séparée par des espaces (utilisée en CSS).
          ------------------------------------------------------------------ */
-import { MAIN_URL } from "/app.js";
+import { MAIN_URL } from "app.js";
 
 const defaultPath = "general-portal/general-portal.html";
 
