@@ -3,7 +3,9 @@
          Pour ajouter une institution : ajouter un objet à ENTITIES.
          `accent` : couleur RGB séparée par des espaces (utilisée en CSS).
          ------------------------------------------------------------------ */
-import { MAIN_URL } from "http://localhost:5501/app.js";
+import { MAIN_URL } from "/app.js";
+
+const defaultPath = "general-portal/general-portal.html";
 
 const CONFIG = {
   openInNewTab: false,
@@ -25,49 +27,49 @@ const ENTITIES = [
   {
     name: "SSIA VaultBridge",
     img: "general-portal/assets/img/vault.png",
-    url: "#",
+    url: `${MAIN_URL}${defaultPath}`,
     accent: "52 211 153",
   },
   {
     name: "OneSSIA Market",
     img: "general-portal/assets/img/market.png",
-    url: "#",
+    url: `${MAIN_URL}${defaultPath}`,
     accent: "251 191 36",
   },
   {
     name: "SSIA Mosaic",
     img: "general-portal/assets/img/mosaic.jpeg",
-    url: "#",
+    url: `${MAIN_URL}${defaultPath}`,
     accent: "244 114 182",
   },
   {
     name: "CRVE-SSIA",
     img: "general-portal/assets/img/crve.jpg",
-    url: "#",
+    url: `${MAIN_URL}${defaultPath}`,
     accent: "167 139 250",
   },
   {
     name: "CBEL-SSIA",
     img: "general-portal/assets/img/cbel.jpg",
-    url: "#",
+    url: `${MAIN_URL}${defaultPath}`,
     accent: "45 212 191",
   },
   {
     name: "CRMB-SSIA",
     img: "general-portal/assets/img/crmb.jpg",
-    url: "#",
+    url: `${MAIN_URL}${defaultPath}`,
     accent: "248 113 113",
   },
   {
     name: "BCS-SSIA",
     img: "general-portal/assets/img/brotherhood.jpg",
-    url: "#",
+    url: `${MAIN_URL}${defaultPath}`,
     accent: "96 165 250",
   },
   {
     name: "Management Pôle",
     img: "general-portal/assets/img/young_community.jpg",
-    url: "#",
+    url: `${MAIN_URL}${defaultPath}`,
     accent: "251 146 60",
   },
 ];
