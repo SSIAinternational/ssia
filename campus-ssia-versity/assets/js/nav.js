@@ -76,7 +76,7 @@ function renderNav() {
   });
 
   connectBtn.addEventListener("click", () => {
-    window.location.pathname = "/campus-ssia-versity/authentification.html";
+    window.location.pathname = "ssia/campus-ssia-versity/authentification.html";
   });
 
   nav.appendChild(connectBtn);

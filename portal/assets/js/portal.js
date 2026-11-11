@@ -1,4 +1,4 @@
-import { MAIN_URL } from "/app.js";
+import { MAIN_URL } from "/ssia/app.js";
 
 const portalContent = document.querySelector(".portal-content");
 const textsEntitesSubject = document.querySelector(".texts-entites-subtexts");

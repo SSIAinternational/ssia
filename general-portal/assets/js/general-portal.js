@@ -3,7 +3,7 @@
          Pour ajouter une institution : ajouter un objet à ENTITIES.
          `accent` : couleur RGB séparée par des espaces (utilisée en CSS).
          ------------------------------------------------------------------ */
-import { MAIN_URL } from "app.js";
+import { MAIN_URL } from "/ssia/app.js";
 
 const defaultPath = "general-portal/general-portal.html";
 
@@ -39,13 +39,13 @@ const ENTITIES = [
   {
     name: "SSIA Mosaic",
     img: "general-portal/assets/img/mosaic.jpeg",
-    url: `${MAIN_URL}${defaultPath}`,
+    url: ``,
     accent: "244 114 182",
   },
   {
     name: "CRVE-SSIA",
     img: "general-portal/assets/img/crve.jpg",
-    url: `${MAIN_URL}${defaultPath}`,
+    url: ``,
     accent: "167 139 250",
   },
   {
@@ -121,12 +121,15 @@ function createLogo(entity) {
 }
 
 function createCard(entity, index) {
+  const linkExist =
+    entity.url !== `${MAIN_URL}${defaultPath}` && entity.url !== ``;
   const link = createElement(
     "a",
     {
       className: "card__link",
       href: entity.url,
       ariaLabel: `Accéder à ${entity.name}`,
+      ...(linkExist && { target: "_blank", rel: "noopener noreferrer" }),
     },
     createLogo(entity),
     createElement("span", {

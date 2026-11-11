@@ -320,7 +320,8 @@ authFormBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
   if (isLogin) {
-    window.location.pathname = "campus-ssia-versity/users/etudiant/dash.html";
+    window.location.pathname =
+      "ssia/campus-ssia-versity/users/etudiant/dash.html";
   } else {
     alert("Inscription en maintenance");
   }

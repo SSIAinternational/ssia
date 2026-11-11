@@ -1,9 +1,11 @@
 "use strict";
 
+import { MAIN_URL } from "/ssia/app.js";
+
 /* ================================
    CONFIG GÉNÉRALE
 ================================ */
-const ADMIN_BASE_PATH = "/campus-ssia-versity/users/administration/";
+const ADMIN_BASE_PATH = "campus-ssia-versity/users/administration/";
 const logoImgUrl = `${ADMIN_BASE_PATH}img/versity-modify.png`;
 
 const nav = document.querySelector(".navbar");

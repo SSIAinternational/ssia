@@ -1,9 +1,11 @@
 "use strict";
 
+import { MAIN_URL } from "/ssia/app.js";
+
 /* ================================
    CONFIG GÉNÉRALE
 ================================ */
-const ADMIN_BASE_PATH = "/cbel/users/administration/";
+const ADMIN_BASE_PATH = "/ssia/cbel/users/administration/";
 const logoImgUrl = `${ADMIN_BASE_PATH}img/cbel.jpg`;
 
 const nav = document.querySelector(".navbar");
